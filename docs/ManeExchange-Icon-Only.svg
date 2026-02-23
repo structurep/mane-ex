@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300">
+  <defs>
+    <linearGradient id="foldShadow" x1="0%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" style="stop-color:#C9A84C;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#8A8070;stop-opacity:0.3" />
+    </linearGradient>
+  </defs>
+
+  <!-- Circular background -->
+  <circle cx="150" cy="150" r="140" fill="#FAFAF8" stroke="#E5DFD3" stroke-width="1"/>
+
+  <!-- Origami horse head - centered -->
+  <g transform="translate(55, 20) scale(0.95)">
+    <polygon points="80,260 120,140 160,100 180,120 170,180 140,240 100,270"
+             fill="#C9A84C" opacity="0.95"/>
+    <polygon points="120,140 160,100 200,60 210,40 195,30 170,50 140,90"
+             fill="#D4B65E" opacity="0.95"/>
+    <polygon points="195,30 210,40 215,10 205,5"
+             fill="#C9A84C"/>
+    <polygon points="170,50 195,30 185,15 168,35"
+             fill="#B8972F" opacity="0.8"/>
+    <line x1="160" y1="100" x2="195" y2="30" stroke="#B8972F" stroke-width="1.2" opacity="0.5"/>
+    <polygon points="160,100 180,120 200,100 210,40 200,60"
+             fill="url(#foldShadow)" opacity="0.6"/>
+    <polygon points="120,140 140,90 160,100 145,130"
+             fill="#BF9B3A" opacity="0.7"/>
+    <circle cx="185" cy="65" r="4" fill="#2E2D28"/>
+    <circle cx="186" cy="64" r="1.5" fill="#FAFAF8" opacity="0.6"/>
+    <path d="M170,50 C155,70 130,100 115,150 C110,165 108,180 112,200"
+          fill="none" stroke="#B8972F" stroke-width="2" opacity="0.6"/>
+    <path d="M168,55 C150,80 125,115 110,165 C105,185 105,200 108,220"
+          fill="none" stroke="#C9A84C" stroke-width="1.5" opacity="0.5"/>
+    <path d="M165,60 C145,90 118,130 105,180 C100,200 100,215 104,235"
+          fill="none" stroke="#D4B65E" stroke-width="1" opacity="0.4"/>
+    <ellipse cx="128" cy="133" rx="3" ry="4" fill="#8A8070" opacity="0.4"/>
+  </g>
+</svg>

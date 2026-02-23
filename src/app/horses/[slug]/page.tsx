@@ -1,0 +1,197 @@
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
+import { Button } from "@/components/ui/button";
+import {
+  ChevronRight,
+  MessageCircle,
+} from "lucide-react";
+import type { HorseListing } from "@/types/listings";
+import type { SellerScore } from "@/types/scoring";
+import { OfferModal } from "@/components/offer-modal";
+import { ListingGallery } from "@/components/listing-gallery";
+import { ListingTabs, type ListingTabsData } from "./listing-tabs";
+
+type Props = {
+  params: Promise<{ slug: string }>;
+};
+
+async function getListing(slug: string) {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("horse_listings")
+    .select(
+      `
+      *,
+      seller:profiles!seller_id(id, display_name, full_name, avatar_url, seller_tier, identity_verified),
+      media:listing_media(id, url, alt_text, caption, sort_order, is_primary, type)
+    `
+    )
+    .eq("slug", slug)
+    .in("status", ["active", "under_offer", "sold"])
+    .single();
+
+  if (error || !data) return null;
+
+  // Fetch seller's Mane Score
+  const { data: sellerScore } = await supabase
+    .from("seller_scores")
+    .select("mane_score, grade, badges")
+    .eq("seller_id", data.seller.id)
+    .single();
+
+  return { ...data, seller_score: sellerScore as Pick<SellerScore, "mane_score" | "grade" | "badges"> | null };
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const listing = await getListing(slug);
+
+  if (!listing) {
+    return { title: "Horse Not Found" };
+  }
+
+  const l = listing as unknown as HorseListing;
+  const priceStr = l.price
+    ? `$${(l.price / 100).toLocaleString()}`
+    : "Contact for price";
+  const description = [
+    l.breed,
+    l.gender,
+    l.height_hands ? `${l.height_hands}hh` : null,
+    l.age_years ? `${l.age_years}yo` : null,
+    l.location_state,
+    priceStr,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+
+  return {
+    title: l.name,
+    description: `${l.name} — ${description}. View details, vet records, and show history on ManeExchange.`,
+    openGraph: {
+      title: `${l.name} — ${priceStr}`,
+      description,
+      type: "website",
+    },
+  };
+}
+
+export default async function ListingDetailPage({ params }: Props) {
+  const { slug } = await params;
+  const listing = await getListing(slug);
+
+  if (!listing) {
+    notFound();
+  }
+
+  const l = listing as unknown as HorseListing & {
+    seller: { id: string; display_name: string; full_name: string; avatar_url: string | null; seller_tier: string; identity_verified: boolean };
+    media: { id: string; url: string; alt_text: string | null; caption: string | null; sort_order: number; is_primary: boolean; type: "photo" | "video" }[];
+    seller_score: Pick<SellerScore, "mane_score" | "grade" | "badges"> | null;
+  };
+
+  const priceStr = l.price
+    ? `$${(l.price / 100).toLocaleString()}`
+    : "Contact for price";
+
+  // JSON-LD structured data for SEO
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: l.name,
+    description: l.show_record || l.training_history || `${l.breed || "Horse"} for sale on ManeExchange`,
+    image: l.media?.filter((m: { is_primary: boolean }) => m.is_primary).map((m: { url: string }) => m.url) || [],
+    brand: l.breed ? { "@type": "Brand", name: l.breed } : undefined,
+    offers: l.price
+      ? {
+          "@type": "Offer",
+          priceCurrency: "USD",
+          price: (l.price / 100).toFixed(2),
+          availability:
+            l.status === "active"
+              ? "https://schema.org/InStock"
+              : l.status === "sold"
+                ? "https://schema.org/SoldOut"
+                : "https://schema.org/LimitedAvailability",
+          seller: {
+            "@type": "Organization",
+            name: l.seller?.display_name || "ManeExchange Seller",
+          },
+        }
+      : undefined,
+    additionalProperty: [
+      l.height_hands && { "@type": "PropertyValue", name: "Height", value: `${l.height_hands} hands` },
+      l.age_years && { "@type": "PropertyValue", name: "Age", value: `${l.age_years} years` },
+      l.gender && { "@type": "PropertyValue", name: "Gender", value: l.gender },
+      l.color && { "@type": "PropertyValue", name: "Color", value: l.color },
+      l.location_state && { "@type": "PropertyValue", name: "Location", value: l.location_state },
+    ].filter(Boolean),
+  };
+
+  return (
+    <div className="min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <Header />
+
+      <main className="px-4 py-8 md:px-8">
+        <div className="mx-auto max-w-[1200px]">
+          {/* Breadcrumb */}
+          <nav className="mb-4 flex items-center gap-1 text-sm text-ink-light">
+            <Link href="/browse" className="hover:text-ink-black">
+              Browse
+            </Link>
+            <ChevronRight className="h-3 w-3" />
+            <span className="text-ink-mid">{l.name}</span>
+          </nav>
+
+          {/* Gallery — always visible above tabs */}
+          <div className="mb-2 lg:grid lg:grid-cols-3 lg:gap-8">
+            <div className="lg:col-span-2">
+              <ListingGallery media={l.media || []} />
+            </div>
+            {/* Empty spacer to align with sidebar grid */}
+            <div className="hidden lg:block" />
+          </div>
+
+          {/* Tabbed layout + sidebar */}
+          <ListingTabs listing={l as unknown as ListingTabsData} />
+        </div>
+      </main>
+
+      {/* Mobile sticky CTA */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-border bg-paper-white p-3 md:hidden">
+        <div className="flex items-center gap-3">
+          <div className="flex-1">
+            <p className="text-lg font-bold text-ink-black">{priceStr}</p>
+          </div>
+          <Button size="sm">
+            <MessageCircle className="mr-1 h-4 w-4" />
+            Message
+          </Button>
+          {l.status === "active" && (
+            <OfferModal
+              listingId={l.id}
+              listingName={l.name}
+              listingPrice={l.price}
+              completenessScore={l.completeness_score}
+              trigger={
+                <Button variant="outline" size="sm">
+                  Make Offer
+                </Button>
+              }
+            />
+          )}
+        </div>
+      </div>
+
+      <Footer />
+    </div>
+  );
+}

@@ -1,0 +1,132 @@
+"use server";
+
+import { createClient } from "@/lib/supabase/server";
+import { fullListingSchema } from "@/lib/validators/listing";
+import { redirect } from "next/navigation";
+
+export type ListingActionState = {
+  error?: string;
+  fieldErrors?: Record<string, string>;
+  listingId?: string;
+};
+
+export async function createListing(
+  _prevState: ListingActionState,
+  formData: FormData
+): Promise<ListingActionState> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { error: "You must be logged in to create a listing." };
+  }
+
+  // Parse form data into object
+  const raw: Record<string, unknown> = {};
+  formData.forEach((value, key) => {
+    if (key === "discipline_ids") {
+      // Handle array fields
+      const existing = raw[key] as string[] | undefined;
+      raw[key] = existing ? [...existing, value as string] : [value as string];
+    } else if (key === "price") {
+      // Convert dollars to cents
+      raw[key] = Math.round(Number(value) * 100);
+    } else if (value === "true" || value === "false") {
+      raw[key] = value === "true";
+    } else if (value === "") {
+      // Skip empty strings
+    } else {
+      raw[key] = value;
+    }
+  });
+
+  const parsed = fullListingSchema.safeParse(raw);
+
+  if (!parsed.success) {
+    const fieldErrors: Record<string, string> = {};
+    parsed.error.issues.forEach((issue) => {
+      const path = issue.path.join(".");
+      fieldErrors[path] = issue.message;
+    });
+    return { fieldErrors, error: "Please fix the errors below." };
+  }
+
+  const { data, error } = await supabase
+    .from("horse_listings")
+    .insert({
+      seller_id: user.id,
+      status: "draft",
+      ...parsed.data,
+    })
+    .select("id, slug")
+    .single();
+
+  if (error) {
+    return { error: error.message };
+  }
+
+  redirect(`/horses/${data.slug}`);
+}
+
+export async function publishListing(listingId: string): Promise<ListingActionState> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { error: "You must be logged in." };
+  }
+
+  const { error } = await supabase
+    .from("horse_listings")
+    .update({
+      status: "active",
+      published_at: new Date().toISOString(),
+    })
+    .eq("id", listingId)
+    .eq("seller_id", user.id);
+
+  if (error) {
+    return { error: error.message };
+  }
+
+  return { listingId };
+}
+
+export async function toggleFavorite(
+  listingId: string
+): Promise<{ favorited: boolean; error?: string }> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { favorited: false, error: "You must be logged in to save horses." };
+  }
+
+  // Check if already favorited
+  const { data: existing } = await supabase
+    .from("listing_favorites")
+    .select("id")
+    .eq("listing_id", listingId)
+    .eq("user_id", user.id)
+    .single();
+
+  if (existing) {
+    await supabase
+      .from("listing_favorites")
+      .delete()
+      .eq("listing_id", listingId)
+      .eq("user_id", user.id);
+    return { favorited: false };
+  }
+
+  await supabase
+    .from("listing_favorites")
+    .insert({ listing_id: listingId, user_id: user.id });
+  return { favorited: true };
+}
