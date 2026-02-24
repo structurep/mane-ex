@@ -4,7 +4,6 @@ import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
 import { ReviewCard } from "@/components/review-card";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 type ReviewData = {
   id: string;
   rating: number;
