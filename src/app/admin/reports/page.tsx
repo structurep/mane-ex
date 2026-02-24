@@ -22,7 +22,7 @@ export default async function AdminReportsPage({
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-ink-black">
+        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">
           Reports
         </h1>
         <p className="mt-1 text-sm text-ink-mid">

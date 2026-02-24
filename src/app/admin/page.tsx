@@ -38,7 +38,7 @@ export default async function AdminOverviewPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-ink-black">
+        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">
           Admin Overview
         </h1>
         <p className="mt-1 text-sm text-ink-mid">
@@ -54,7 +54,7 @@ export default async function AdminOverviewPage() {
               <Users className="h-5 w-5 text-blue-600" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-ink-black">
+              <p className="font-serif text-2xl font-bold text-ink-black">
                 {stats.totalUsers}
               </p>
               <p className="text-xs text-ink-mid">Total Users</p>
@@ -68,7 +68,7 @@ export default async function AdminOverviewPage() {
               <ListChecks className="h-5 w-5 text-green-600" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-ink-black">
+              <p className="font-serif text-2xl font-bold text-ink-black">
                 {stats.activeListings}
               </p>
               <p className="text-xs text-ink-mid">Active Listings</p>
@@ -82,7 +82,7 @@ export default async function AdminOverviewPage() {
               <Flag className="h-5 w-5 text-red-600" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-ink-black">
+              <p className="font-serif text-2xl font-bold text-ink-black">
                 {stats.openReports}
               </p>
               <p className="text-xs text-ink-mid">Open Reports</p>
@@ -96,7 +96,7 @@ export default async function AdminOverviewPage() {
               <DollarSign className="h-5 w-5 text-amber-600" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-ink-black">
+              <p className="font-serif text-2xl font-bold text-ink-black">
                 {stats.activeEscrows}
               </p>
               <p className="text-xs text-ink-mid">Active Escrows</p>
@@ -128,7 +128,7 @@ export default async function AdminOverviewPage() {
                 }) => (
                   <div
                     key={entry.id}
-                    className="flex items-center justify-between border-b border-border pb-3 last:border-0 last:pb-0"
+                    className="flex items-center justify-between border-b border-crease-light pb-3 last:border-0 last:pb-0"
                   >
                     <div className="flex items-center gap-3">
                       <Badge variant="outline" className="text-xs">
