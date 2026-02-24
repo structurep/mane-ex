@@ -77,7 +77,7 @@ export async function createReport(
 }
 
 export async function getMyReports(): Promise<{
-  reports: any[];
+  reports: Record<string, unknown>[];
   error?: string;
 }> {
   const supabase = await createClient();
@@ -140,7 +140,7 @@ export async function markNotificationRead(
 
 export async function getNotifications(
   limit: number = 20
-): Promise<{ notifications: any[]; unreadCount: number; error?: string }> {
+): Promise<{ notifications: Record<string, unknown>[]; unreadCount: number; error?: string }> {
   const supabase = await createClient();
   const {
     data: { user },

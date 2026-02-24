@@ -151,7 +151,7 @@ export async function updateFarm(
   return { farmId, success: true };
 }
 
-export async function getFarm(): Promise<{ farm: any; error?: string }> {
+export async function getFarm(): Promise<{ farm: Record<string, unknown> | null; error?: string }> {
   const supabase = await createClient();
   const {
     data: { user },
@@ -176,7 +176,7 @@ export async function getFarm(): Promise<{ farm: any; error?: string }> {
 
 export async function getPublicFarm(
   slug: string
-): Promise<{ farm: any; listings: any[]; staff: any[]; error?: string }> {
+): Promise<{ farm: Record<string, unknown> | null; listings: Record<string, unknown>[]; staff: Record<string, unknown>[]; error?: string }> {
   const supabase = await createClient();
 
   // Fetch farm by slug

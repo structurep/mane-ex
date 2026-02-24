@@ -174,7 +174,7 @@ export default async function OfferDetailPage({ params }: Props) {
                 Negotiation History
               </h2>
               <div className="space-y-3">
-                {counterOffers.map((co: any) => (
+                {counterOffers.map((co) => (
                   <div
                     key={co.id}
                     className="flex items-center justify-between rounded-md border-0 bg-paper-white p-3 shadow-flat"
@@ -330,7 +330,7 @@ function OfferStatusBadge({ status }: { status: string }) {
   );
 }
 
-function EscrowTimeline({ escrow }: { escrow: any }) {
+function EscrowTimeline({ escrow }: { escrow: { status: string; auto_release_at?: string | null; dispute_reason?: string | null } }) {
   const steps = [
     {
       key: "awaiting_payment",

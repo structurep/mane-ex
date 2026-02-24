@@ -481,7 +481,7 @@ export async function withdrawOffer(
  * Returns offers grouped by role with listing + participant enrichment.
  */
 export async function getOffers(role: "buyer" | "seller"): Promise<{
-  offers: any[];
+  offers: Record<string, unknown>[];
   error?: string;
 }> {
   const supabase = await createClient();
@@ -540,7 +540,7 @@ export async function getOffers(role: "buyer" | "seller"): Promise<{
     .in("parent_offer_id", offerIds)
     .order("created_at", { ascending: true });
 
-  const counterMap = new Map<string, any[]>();
+  const counterMap = new Map<string, Record<string, unknown>[]>();
   for (const co of counterOffers ?? []) {
     const existing = counterMap.get(co.parent_offer_id) ?? [];
     existing.push(co);
@@ -565,7 +565,7 @@ export async function getOffers(role: "buyer" | "seller"): Promise<{
  * Fetch a single offer with full details for the offer detail page.
  */
 export async function getOfferDetail(offerId: string): Promise<{
-  offer: any | null;
+  offer: Record<string, unknown> | null;
   error?: string;
 }> {
   const supabase = await createClient();

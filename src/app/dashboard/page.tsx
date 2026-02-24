@@ -35,6 +35,16 @@ const statusConfig: Record<
   removed: { label: "Removed", variant: "destructive" },
 };
 
+function timeAgo(dateStr: string): string {
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 60) return `${mins}m ago`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  return `${days}d ago`;
+}
+
 export default async function DashboardPage() {
   const supabase = await createClient();
   const {
@@ -136,7 +146,7 @@ export default async function DashboardPage() {
           .neq("sender_id", user.id)
           .order("created_at", { ascending: false })
           .limit(3)
-      : Promise.resolve({ data: [] as any[] }),
+      : Promise.resolve({ data: [] as Record<string, unknown>[] }),
   ]);
 
   const totalViews =
@@ -173,16 +183,6 @@ export default async function DashboardPage() {
     { stage: "Closed", count: statusCounts["sold"] || 0, color: "bg-forest/10", textColor: "text-forest" },
   ];
 
-  // Format relative time for messages
-  function timeAgo(dateStr: string): string {
-    const diff = Date.now() - new Date(dateStr).getTime();
-    const mins = Math.floor(diff / 60000);
-    if (mins < 60) return `${mins}m ago`;
-    const hours = Math.floor(mins / 60);
-    if (hours < 24) return `${hours}h ago`;
-    const days = Math.floor(hours / 24);
-    return `${days}d ago`;
-  }
 
   const stats = [
     {

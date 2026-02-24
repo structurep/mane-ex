@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   addToCollection,
   createCollection,
@@ -40,15 +40,16 @@ export function CollectionPicker({ listingId, trigger }: CollectionPickerProps) 
   const [newName, setNewName] = useState("");
   const [creating, setCreating] = useState(false);
 
-  useEffect(() => {
-    if (open) {
+  function handleOpenChange(nextOpen: boolean) {
+    setOpen(nextOpen);
+    if (nextOpen) {
       setLoading(true);
       getMyCollections().then((result) => {
         setCollections((result.data ?? []) as SimpleCollection[]);
         setLoading(false);
       });
     }
-  }, [open]);
+  }
 
   async function handleAdd(collectionId: string) {
     setAdding(collectionId);
@@ -87,7 +88,7 @@ export function CollectionPicker({ listingId, trigger }: CollectionPickerProps) 
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         {trigger ?? (
           <Button variant="outline" size="sm" className="gap-2">

@@ -10,7 +10,7 @@ import { FileText, CheckCircle, Loader2 } from "lucide-react";
 
 type BillOfSaleSectionProps = {
   escrowId: string;
-  billOfSaleData: any; // JSONB from DB
+  billOfSaleData: BillOfSaleData | null;
   isBuyer: boolean;
   isSeller: boolean;
 };

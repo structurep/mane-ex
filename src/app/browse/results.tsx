@@ -32,6 +32,10 @@ type Props = {
 
 const PAGE_SIZE = 12;
 
+function daysSince(dateStr: string): number {
+  return Math.floor((Date.now() - new Date(dateStr).getTime()) / 86400000);
+}
+
 export async function BrowseResults({ params }: Props) {
   const supabase = await createClient();
   const page = parseInt(params.page || "1");
@@ -141,7 +145,7 @@ export async function BrowseResults({ params }: Props) {
 
           // FOMO badge: New (<3 days) > Popular (>5 saves) > Featured (score >800)
           const daysListed = l.published_at
-            ? Math.floor((Date.now() - new Date(l.published_at).getTime()) / 86400000)
+            ? daysSince(l.published_at)
             : 999;
           const fomoBadge =
             daysListed < 3

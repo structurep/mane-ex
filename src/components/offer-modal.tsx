@@ -62,12 +62,13 @@ export function OfferModal({
   const amountCents = Math.round(Number(amountDollars) * 100) || 0;
   const useACH = shouldDefaultToACH(amountCents);
 
-  // Default to ACH when amount exceeds threshold
-  useEffect(() => {
-    if (useACH) {
+  function handleAmountChange(value: string) {
+    setAmountDollars(value);
+    const cents = Math.round(Number(value) * 100) || 0;
+    if (shouldDefaultToACH(cents)) {
       setPaymentMethod("ach");
     }
-  }, [useACH]);
+  }
 
   // Toast + redirect on success
   useEffect(() => {
@@ -195,7 +196,7 @@ export function OfferModal({
                     min="1"
                     step="1"
                     value={amountDollars}
-                    onChange={(e) => setAmountDollars(e.target.value)}
+                    onChange={(e) => handleAmountChange(e.target.value)}
                     className="bg-paper-white pl-9"
                     placeholder="Enter amount"
                   />

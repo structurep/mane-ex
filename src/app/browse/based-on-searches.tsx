@@ -8,11 +8,16 @@ type RecommendedListing = HorseListing & {
   match_reason?: string;
 };
 
-export async function BasedOnSearches({
-  excludeIds,
-}: {
-  excludeIds?: string[];
-}) {
+type RecommendedData = {
+  listings: RecommendedListing[];
+  sectionTitle: string;
+  sectionSubtitle: string;
+  isPersonalized: boolean;
+};
+
+async function fetchRecommendations(
+  excludeIds?: string[]
+): Promise<RecommendedData | null> {
   try {
     const supabase = await createClient();
     const {
@@ -200,13 +205,28 @@ export async function BasedOnSearches({
       isPersonalized = false;
     }
 
-    // Don't render the section if we have no recommendations
     if (listings.length === 0) {
       return null;
     }
 
-    return (
-      <section className="mt-12">
+    return { listings, sectionTitle, sectionSubtitle, isPersonalized };
+  } catch {
+    return null;
+  }
+}
+
+export async function BasedOnSearches({
+  excludeIds,
+}: {
+  excludeIds?: string[];
+}) {
+  const data = await fetchRecommendations(excludeIds);
+  if (!data) return null;
+
+  const { listings, sectionTitle, sectionSubtitle, isPersonalized } = data;
+
+  return (
+    <section className="mt-12">
         {/* Section header */}
         <div className="mb-4 flex items-center gap-2">
           {isPersonalized ? (
@@ -292,8 +312,4 @@ export async function BasedOnSearches({
         </div>
       </section>
     );
-  } catch {
-    // Gracefully hide the section on any error
-    return null;
-  }
 }

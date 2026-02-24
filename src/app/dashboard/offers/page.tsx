@@ -164,8 +164,8 @@ function OfferCard({
   otherParty,
   otherPartyLabel,
 }: {
-  offer: any;
-  otherParty: any;
+  offer: { id: string; status: string; amount_cents: number; created_at: string; message?: string | null; listing?: { name?: string } | null };
+  otherParty: { display_name?: string | null } | null;
   otherPartyLabel: string;
 }) {
   const config = STATUS_CONFIG[offer.status] ?? STATUS_CONFIG.pending;

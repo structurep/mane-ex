@@ -178,7 +178,7 @@ export async function markAsRead(conversationId: string): Promise<void> {
  * Fetch the current user's conversation list with other-participant info and optional listing context.
  */
 export async function getConversations(): Promise<{
-  conversations: any[];
+  conversations: Record<string, unknown>[];
   error?: string;
 }> {
   const supabase = await createClient();

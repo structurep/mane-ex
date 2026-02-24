@@ -4,6 +4,17 @@ import { Bell } from "lucide-react";
 import Link from "next/link";
 import { MarkAllReadButton } from "./mark-all-read-button";
 
+function timeAgo(dateStr: string): string {
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 60) return `${mins}m ago`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  if (days < 7) return `${days}d ago`;
+  return new Date(dateStr).toLocaleDateString();
+}
+
 export default async function NotificationsPage() {
   const { data: notifications } = await getNotifications(50);
   const allNotifications = (notifications ?? []) as Array<{
@@ -17,17 +28,6 @@ export default async function NotificationsPage() {
   }>;
 
   const unread = allNotifications.filter((n) => !n.read_at).length;
-
-  function timeAgo(dateStr: string): string {
-    const diff = Date.now() - new Date(dateStr).getTime();
-    const mins = Math.floor(diff / 60000);
-    if (mins < 60) return `${mins}m ago`;
-    const hours = Math.floor(mins / 60);
-    if (hours < 24) return `${hours}h ago`;
-    const days = Math.floor(hours / 24);
-    if (days < 7) return `${days}d ago`;
-    return new Date(dateStr).toLocaleDateString();
-  }
 
   return (
     <div className="space-y-6">

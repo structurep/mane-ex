@@ -289,7 +289,7 @@ export async function recalculateAllScores(): Promise<{
 async function generateSuggestions(
   supabase: Awaited<ReturnType<typeof createClient>>,
   sellerId: string,
-  score: any
+  score: SellerScore | Record<string, unknown> | null
 ): Promise<ScoreSuggestion[]> {
   const suggestions: ScoreSuggestion[] = [];
 
@@ -379,10 +379,9 @@ async function generateSuggestions(
   }
 
   // Engagement suggestion if completeness is high but engagement is low
-  if (
-    score?.completeness_component >= 300 &&
-    score?.engagement_component < 100
-  ) {
+  const completeness = score && "completeness_component" in score ? Number(score.completeness_component) : 0;
+  const engagement = score && "engagement_component" in score ? Number(score.engagement_component) : 0;
+  if (completeness >= 300 && engagement < 100) {
     suggestions.push({
       action: "Share your listings to boost engagement",
       points: "+50-100 pts",

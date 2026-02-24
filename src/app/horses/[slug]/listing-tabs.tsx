@@ -61,6 +61,10 @@ export type ListingTabsData = HorseListing & {
   seller_score: SellerScoreInfo;
 };
 
+function daysSincePublished(dateStr: string): number {
+  return Math.max(1, Math.floor((Date.now() - new Date(dateStr).getTime()) / 86400000));
+}
+
 function getCompletenessColor(grade: string | null) {
   switch (grade) {
     case "excellent":
@@ -82,6 +86,7 @@ export function ListingTabs({ listing }: { listing: ListingTabsData }) {
     : "Contact for price";
 
   const completenessColor = getCompletenessColor(l.completeness_grade);
+  const daysOnMarket = l.published_at ? daysSincePublished(l.published_at) : null;
 
   return (
     <div className="grid gap-8 lg:grid-cols-3">
@@ -148,8 +153,8 @@ export function ListingTabs({ listing }: { listing: ListingTabsData }) {
             </span>
             <span className="flex items-center gap-1">
               <Clock className="h-3 w-3" />
-              {l.published_at
-                ? `${Math.max(1, Math.floor((Date.now() - new Date(l.published_at).getTime()) / 86400000))} days on market`
+              {daysOnMarket !== null
+                ? `${daysOnMarket} days on market`
                 : "Listed recently"}
             </span>
           </div>

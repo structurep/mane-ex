@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { matchIso } from "@/actions/isos";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -42,9 +42,10 @@ export function IsoMatchModal({
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  // Fetch user's active listings when modal opens
-  useEffect(() => {
-    if (!open) return;
+  function handleOpenChange(nextOpen: boolean) {
+    setOpen(nextOpen);
+    if (!nextOpen) return;
+
     setLoadingListings(true);
     setError(null);
     setSuccess(false);
@@ -77,7 +78,7 @@ export function IsoMatchModal({
           setLoadingListings(false);
         });
     });
-  }, [open]);
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -101,7 +102,7 @@ export function IsoMatchModal({
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>

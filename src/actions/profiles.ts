@@ -81,7 +81,7 @@ export async function updateProfile(
 }
 
 export async function getProfile(): Promise<{
-  profile: any;
+  profile: Record<string, unknown> | null;
   error?: string;
 }> {
   const supabase = await createClient();
@@ -108,7 +108,7 @@ export async function getProfile(): Promise<{
 
 export async function getPublicProfile(
   profileId: string
-): Promise<{ profile: any; listings: any[]; farm: any; error?: string }> {
+): Promise<{ profile: Record<string, unknown> | null; listings: Record<string, unknown>[]; farm: Record<string, unknown> | null; error?: string }> {
   const supabase = await createClient();
 
   // Fetch profile
