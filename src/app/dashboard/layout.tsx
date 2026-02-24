@@ -12,7 +12,7 @@ export default function DashboardLayout({
   return (
     <div className="min-h-screen bg-paper-white">
       {/* Top bar */}
-      <header className="sticky top-0 z-40 border-b border-border bg-paper-white/95 backdrop-blur-sm">
+      <header className="sticky top-0 z-40 border-b border-crease-light bg-paper-white/95 backdrop-blur-sm">
         <div className="flex h-14 items-center justify-between px-4 md:px-6">
           <Link href="/" className="flex items-center gap-2">
             <Image src="/icon.svg" alt="ManeExchange" width={28} height={28} />

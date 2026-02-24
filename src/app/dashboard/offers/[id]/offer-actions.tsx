@@ -15,7 +15,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Separator } from "@/components/ui/separator";
 import {
   CheckCircle,
   XCircle,
@@ -25,6 +24,8 @@ import {
   AlertTriangle,
   Shield,
 } from "lucide-react";
+import { toast } from "sonner";
+import { celebrateSuccess } from "@/lib/confetti";
 
 type OfferActionsProps = {
   offerId: string;
@@ -61,8 +62,29 @@ export function OfferActions({
     setLoading(null);
     if (result.error) {
       setError(result.error);
+      toast.error(result.error);
     } else {
       router.refresh();
+      if (actionName === "accept") {
+        celebrateSuccess();
+        toast.success("Offer accepted", {
+          description: "Congratulations! The buyer will be notified to proceed with payment.",
+        });
+      } else if (actionName === "reject") {
+        toast("Offer declined");
+      } else if (actionName === "withdraw") {
+        toast("Offer withdrawn");
+      } else if (actionName === "escrow") {
+        toast.success("Payment initiated", {
+          description: "Funds are being held securely in ManeVault escrow.",
+        });
+      } else if (actionName === "delivery") {
+        toast.success("Delivery confirmed", {
+          description: "Your 14-day review period has begun.",
+        });
+      } else if (actionName === "dispute") {
+        toast("Dispute submitted — our team will review it shortly.");
+      }
     }
   }
 
@@ -77,7 +99,7 @@ export function OfferActions({
 
       {/* Seller actions on pending offer */}
       {isSeller && offerStatus === "pending" && (
-        <div className="rounded-lg border border-border bg-paper-cream p-4">
+        <div className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat">
           <p className="mb-3 font-medium text-ink-dark">Respond to this offer</p>
           <div className="flex flex-wrap gap-2">
             <Button
@@ -180,7 +202,7 @@ export function OfferActions({
 
       {/* Buyer: confirm delivery */}
       {isBuyer && escrowStatus === "funds_held" && (
-        <div className="rounded-lg border border-border bg-paper-cream p-4">
+        <div className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat">
           <div className="flex items-center gap-2">
             <Truck className="h-4 w-4 text-blue" />
             <span className="font-medium text-ink-dark">
@@ -233,7 +255,7 @@ export function OfferActions({
 
       {/* Buyer: open dispute */}
       {isBuyer && escrowStatus === "delivery_confirmed" && (
-        <div className="rounded-lg border border-border bg-paper-cream p-4">
+        <div className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat">
           <Button
             variant="outline"
             onClick={() => setShowDispute(!showDispute)}
@@ -315,7 +337,7 @@ function CounterOfferForm({
 
   return (
     <form action={formAction} className="mt-4 space-y-3">
-      <Separator />
+      <div className="crease-divider" />
       <input type="hidden" name="offer_id" value={offerId} />
       <input type="hidden" name="counter_amount_cents" value={amountCents} />
 

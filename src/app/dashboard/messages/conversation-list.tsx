@@ -23,7 +23,7 @@ export function ConversationList({
   conversations: ConversationItem[];
 }) {
   return (
-    <div className="divide-y divide-border rounded-lg border border-border bg-paper-cream">
+    <div className="divide-y divide-crease-light rounded-lg border-0 bg-paper-cream shadow-flat">
       {conversations.map((c) => {
         const name =
           c.otherParticipant?.display_name ||

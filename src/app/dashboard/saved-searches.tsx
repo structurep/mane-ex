@@ -28,7 +28,7 @@ export function SavedSearchesWidget() {
             <Link
               key={search.id}
               href={`/browse?${searchParams}`}
-              className="flex items-center gap-3 rounded-lg border border-border bg-paper-white p-3 transition-colors hover:bg-paper-cream"
+              className="flex items-center gap-3 rounded-lg border-0 bg-paper-white p-3 shadow-flat transition-colors hover:bg-paper-cream"
             >
               <Bookmark className="h-4 w-4 shrink-0 text-ink-mid" />
               <div className="min-w-0 flex-1">

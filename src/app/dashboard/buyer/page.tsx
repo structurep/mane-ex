@@ -151,7 +151,7 @@ export default async function BuyerPortalPage() {
     <div>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-ink-black">Buyer Portal</h1>
+        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">Buyer Portal</h1>
         <p className="mt-1 text-sm text-ink-mid">
           Your personalized horse-finding hub
         </p>
@@ -169,14 +169,14 @@ export default async function BuyerPortalPage() {
                   <ArrowRight className="h-3 w-3 text-ink-faint" />
                 )}
               </div>
-              <p className="mt-3 text-2xl font-bold text-ink-black">
+              <p className="mt-3 font-serif text-2xl font-bold text-ink-black">
                 {stat.value.toLocaleString()}
               </p>
               <p className="mt-0.5 text-xs text-ink-mid">{stat.label}</p>
             </>
           );
           const className =
-            "rounded-lg border border-border bg-paper-cream p-4 shadow-flat transition-elevation hover-lift hover:shadow-folded";
+            "rounded-lg border-0 bg-paper-cream p-4 shadow-flat transition-elevation hover-lift hover:shadow-lifted";
           return stat.href ? (
             <Link key={stat.label} href={stat.href} className={className}>
               {content}
@@ -210,7 +210,7 @@ export default async function BuyerPortalPage() {
             <Link
               key={horse.id}
               href={`/horses/${horse.slug}`}
-              className="group rounded-lg border border-border bg-paper-cream shadow-flat transition-elevation hover-lift hover:shadow-folded"
+              className="group rounded-lg border-0 bg-paper-cream shadow-flat transition-elevation hover-lift hover:shadow-lifted"
             >
               {/* Image placeholder */}
               <div className="relative aspect-[4/3] rounded-t-lg bg-paper-warm">
@@ -225,7 +225,7 @@ export default async function BuyerPortalPage() {
                   {horse.name}
                 </p>
                 <p className="text-xs text-ink-mid">{horse.breed}</p>
-                <p className="mt-1 text-sm font-semibold text-ink-black">
+                <p className="mt-1 font-serif text-sm font-semibold text-ink-black">
                   ${horse.price.toLocaleString()}
                 </p>
                 <p className="mt-1 text-xs text-ink-light leading-snug">
@@ -242,8 +242,8 @@ export default async function BuyerPortalPage() {
         <h2 className="mb-4 text-lg font-semibold text-ink-black">
           Recent Activity
         </h2>
-        <div className="rounded-lg border border-border bg-paper-cream shadow-flat">
-          <div className="divide-y divide-border">
+        <div className="rounded-lg border-0 bg-paper-cream shadow-flat">
+          <div className="divide-y divide-crease-light">
             {recentActivity.map((item) => {
               const Icon = item.icon;
               return (
@@ -283,7 +283,7 @@ export default async function BuyerPortalPage() {
           {connectedTrainers.map((trainer) => (
             <div
               key={trainer.id}
-              className="flex items-center gap-3 rounded-lg border border-border bg-paper-cream p-4 shadow-flat"
+              className="flex items-center gap-3 rounded-lg border-0 bg-paper-cream p-4 shadow-flat"
             >
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-paper-warm text-sm font-semibold text-ink-mid">
                 {trainer.initials}

@@ -93,7 +93,7 @@ export function BillOfSaleSection({
         // Bill of Sale exists
         <div className="space-y-4">
           {/* Summary card */}
-          <div className="rounded-lg border border-border bg-paper-cream p-4">
+          <div className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <FileText className="h-4 w-4 text-ink-mid" />

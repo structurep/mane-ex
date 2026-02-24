@@ -32,7 +32,7 @@ export default async function AnalyticsPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-ink-black">Analytics</h1>
+        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">Analytics</h1>
         <p className="mt-1 text-sm text-ink-mid">
           Your Mane Score and seller performance metrics.
         </p>
@@ -62,7 +62,7 @@ export default async function AnalyticsPage() {
 
           {/* Component Breakdown */}
           {score && (
-            <div className="rounded-lg border border-border bg-paper-cream p-6 shadow-flat">
+            <div className="rounded-lg border-0 bg-paper-cream p-6 shadow-flat">
               <h2 className="mb-4 font-medium text-ink-dark">
                 Score Breakdown
               </h2>
@@ -154,7 +154,7 @@ export default async function AnalyticsPage() {
 
           {/* Badges */}
           {score && (
-            <div className="rounded-lg border border-border bg-paper-cream p-6 shadow-flat">
+            <div className="rounded-lg border-0 bg-paper-cream p-6 shadow-flat">
               <h2 className="mb-4 font-medium text-ink-dark">Badges</h2>
               <BadgeShowcase earnedBadges={score.badges} variant="grid" />
             </div>
@@ -162,7 +162,7 @@ export default async function AnalyticsPage() {
 
           {/* Improvement suggestions */}
           {suggestions.length > 0 && (
-            <div className="rounded-lg border border-border bg-paper-cream p-6 shadow-flat">
+            <div className="rounded-lg border-0 bg-paper-cream p-6 shadow-flat">
               <div className="mb-4 flex items-center gap-2">
                 <Lightbulb className="h-5 w-5 text-gold" />
                 <h2 className="font-medium text-ink-dark">
@@ -174,7 +174,7 @@ export default async function AnalyticsPage() {
                   <Link
                     key={i}
                     href={suggestion.link}
-                    className="flex items-center justify-between rounded-md border border-border bg-paper-white p-3 transition-colors hover:bg-paper-warm"
+                    className="flex items-center justify-between rounded-md border-0 bg-paper-white p-3 shadow-flat transition-colors hover:bg-paper-warm"
                   >
                     <div className="min-w-0 flex-1">
                       <p className="text-sm text-ink-dark">
@@ -203,7 +203,7 @@ export default async function AnalyticsPage() {
       {/* Views Over Time */}
       <section className="mt-8">
         <h2 className="mb-4 text-lg font-semibold text-ink-black">Views Over Time</h2>
-        <div className="rounded-lg border border-border bg-paper-white p-6">
+        <div className="rounded-lg border-0 bg-paper-white p-6 shadow-flat">
           {/* Simple bar chart visualization using divs */}
           <div className="flex items-end gap-2 h-40">
             {[
@@ -232,7 +232,7 @@ export default async function AnalyticsPage() {
       <section className="mt-8">
         <h2 className="mb-4 text-lg font-semibold text-ink-black">Traffic Sources</h2>
         <div className="grid gap-4 md:grid-cols-2">
-          <div className="rounded-lg border border-border bg-paper-white p-6">
+          <div className="rounded-lg border-0 bg-paper-white p-6 shadow-flat">
             <div className="space-y-4">
               {[
                 { source: "Direct", percent: 42, color: "bg-blue" },
@@ -252,7 +252,7 @@ export default async function AnalyticsPage() {
               ))}
             </div>
           </div>
-          <div className="rounded-lg border border-border bg-paper-white p-6">
+          <div className="rounded-lg border-0 bg-paper-white p-6 shadow-flat">
             <h3 className="mb-4 font-medium text-ink-black">Conversion Funnel</h3>
             <div className="space-y-3">
               {[
@@ -281,10 +281,10 @@ export default async function AnalyticsPage() {
       {/* Per-Listing Performance */}
       <section className="mt-8">
         <h2 className="mb-4 text-lg font-semibold text-ink-black">Listing Performance</h2>
-        <div className="rounded-lg border border-border overflow-hidden">
+        <div className="rounded-lg border-0 overflow-hidden shadow-flat">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-border bg-paper-cream">
+              <tr className="border-b border-crease-light bg-paper-cream">
                 <th className="px-4 py-3 text-left text-xs font-medium text-ink-mid">Listing</th>
                 <th className="px-4 py-3 text-right text-xs font-medium text-ink-mid">Views</th>
                 <th className="px-4 py-3 text-right text-xs font-medium text-ink-mid">Saves</th>
@@ -300,7 +300,7 @@ export default async function AnalyticsPage() {
                 { name: "Sapphire Blue", views: 178, saves: 14, inquiries: 5, offers: 1, score: 780 },
                 { name: "Thunder Road", views: 112, saves: 8, inquiries: 3, offers: 0, score: 650 },
               ].map((listing) => (
-                <tr key={listing.name} className="border-b border-border last:border-0">
+                <tr key={listing.name} className="border-b border-crease-light last:border-0">
                   <td className="px-4 py-3 text-sm font-medium text-ink-black">{listing.name}</td>
                   <td className="px-4 py-3 text-right text-sm text-ink-mid">{listing.views}</td>
                   <td className="px-4 py-3 text-right text-sm text-ink-mid">{listing.saves}</td>

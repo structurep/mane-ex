@@ -130,7 +130,7 @@ export default function DisputesPage() {
     <div>
       {/* Page header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-ink-black">
+        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">
           Dispute Resolution
         </h1>
         <p className="mt-1 text-sm text-ink-mid">
@@ -189,7 +189,7 @@ export default function DisputesPage() {
 
       {/* Dispute cards */}
       {filtered.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-lg border border-border bg-paper-white py-16 text-center">
+        <div className="flex flex-col items-center justify-center rounded-lg border-0 bg-paper-white py-16 text-center shadow-flat">
           <AlertTriangle className="mb-3 h-10 w-10 text-ink-light" />
           <h3 className="text-lg font-medium text-ink-black">
             No disputes found.
@@ -203,7 +203,7 @@ export default function DisputesPage() {
           {filtered.map((dispute) => (
             <div
               key={dispute.id}
-              className="rounded-lg border border-border bg-paper-white p-5 shadow-flat"
+              className="rounded-lg border-0 bg-paper-white p-5 shadow-flat"
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0 flex-1">

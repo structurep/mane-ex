@@ -217,7 +217,7 @@ export default function TrainerPortalPage() {
     <div>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-ink-black">Trainer Portal</h1>
+        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">Trainer Portal</h1>
         <p className="mt-1 text-sm text-ink-mid">
           Manage clients, match ISOs, and grow your training business.
         </p>
@@ -243,10 +243,10 @@ export default function TrainerPortalPage() {
               return (
                 <div
                   key={stat.label}
-                  className="rounded-lg border border-border bg-paper-cream p-4 shadow-flat"
+                  className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat"
                 >
                   <Icon className="h-5 w-5 text-ink-light" />
-                  <p className="mt-3 text-2xl font-bold text-ink-black">
+                  <p className="mt-3 font-serif text-2xl font-bold text-ink-black">
                     {stat.value}
                   </p>
                   <p className="mt-0.5 text-xs text-ink-mid">{stat.label}</p>
@@ -260,7 +260,7 @@ export default function TrainerPortalPage() {
             <h2 className="mb-4 text-lg font-semibold text-ink-black">
               Client Activity
             </h2>
-            <div className="rounded-lg border border-border bg-paper-cream shadow-flat divide-y divide-border">
+            <div className="rounded-lg border-0 bg-paper-cream shadow-flat divide-y divide-crease-light">
               {clientActivity.map((item, i) => (
                 <div
                   key={i}
@@ -326,7 +326,7 @@ export default function TrainerPortalPage() {
             {clients.map((client) => (
               <div
                 key={client.name}
-                className="rounded-lg border border-border bg-paper-cream p-4 shadow-flat"
+                className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat"
               >
                 {/* Avatar + name */}
                 <div className="mb-3 flex items-center gap-3">
@@ -407,7 +407,7 @@ export default function TrainerPortalPage() {
             {isos.map((iso, i) => (
               <div
                 key={i}
-                className="rounded-lg border border-border bg-paper-cream p-4 shadow-flat"
+                className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0 flex-1">
@@ -461,11 +461,11 @@ export default function TrainerPortalPage() {
         {/* Tab 4: Barn Profile                                              */}
         {/* ---------------------------------------------------------------- */}
         <TabsContent value="barn">
-          <div className="rounded-lg border border-border bg-paper-cream p-6 shadow-flat">
+          <div className="rounded-lg border-0 bg-paper-cream p-6 shadow-flat">
             {/* Header */}
             <div className="mb-6 flex items-start justify-between">
               <div>
-                <h2 className="text-xl font-bold text-ink-black">
+                <h2 className="text-xl font-semibold text-ink-black">
                   {barnProfile.name}
                 </h2>
                 <p className="mt-1 flex items-center gap-1 text-sm text-ink-mid">

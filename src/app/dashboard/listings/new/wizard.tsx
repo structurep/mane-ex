@@ -69,9 +69,9 @@ export function ListingWizard() {
   ];
 
   return (
-    <div className="rounded-lg border border-border bg-paper-cream shadow-flat">
+    <div className="rounded-lg border-0 bg-paper-cream shadow-folded">
       {/* Step navigation */}
-      <div className="border-b border-border px-6 pt-4 pb-3">
+      <div className="border-b border-crease-light px-6 pt-4 pb-3">
         <div className="mb-3 flex items-center gap-2 overflow-x-auto">
           {WIZARD_STEPS.map((ws, i) => (
             <button
@@ -115,7 +115,7 @@ export function ListingWizard() {
         })}
 
         <div className="mb-4">
-          <h2 className="text-lg font-semibold text-ink-black">
+          <h2 className="font-heading text-lg font-semibold text-ink-black">
             {currentStep.label}
           </h2>
           <p className="text-sm text-ink-mid">
@@ -134,7 +134,7 @@ export function ListingWizard() {
         {steps[state.step]}
 
         {/* Navigation */}
-        <div className="mt-8 flex items-center justify-between border-t border-border pt-4">
+        <div className="mt-8 flex items-center justify-between border-t border-crease-light pt-4">
           <Button
             type="button"
             variant="ghost"

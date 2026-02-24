@@ -86,7 +86,7 @@ export function ProfileForm({
       )}
 
       {/* Section: Profile */}
-      <section className="rounded-lg border border-border bg-paper-cream p-6 shadow-flat">
+      <section className="rounded-lg border-0 bg-paper-cream p-6 shadow-flat">
         <div className="mb-4 flex items-center gap-2">
           <User className="h-4 w-4 text-ink-light" />
           <span className="overline text-ink-light">Profile</span>
@@ -138,7 +138,7 @@ export function ProfileForm({
       </section>
 
       {/* Section: Location */}
-      <section className="rounded-lg border border-border bg-paper-cream p-6 shadow-flat">
+      <section className="rounded-lg border-0 bg-paper-cream p-6 shadow-flat">
         <div className="mb-4 flex items-center gap-2">
           <MapPin className="h-4 w-4 text-ink-light" />
           <span className="overline text-ink-light">Location</span>
@@ -189,7 +189,7 @@ export function ProfileForm({
       </section>
 
       {/* Section: Contact */}
-      <section className="rounded-lg border border-border bg-paper-cream p-6 shadow-flat">
+      <section className="rounded-lg border-0 bg-paper-cream p-6 shadow-flat">
         <div className="mb-4 flex items-center gap-2">
           <Phone className="h-4 w-4 text-ink-light" />
           <span className="overline text-ink-light">Contact</span>
@@ -235,7 +235,7 @@ export function ProfileForm({
       </section>
 
       {/* Section: Social */}
-      <section className="rounded-lg border border-border bg-paper-cream p-6 shadow-flat">
+      <section className="rounded-lg border-0 bg-paper-cream p-6 shadow-flat">
         <div className="mb-4 flex items-center gap-2">
           <Globe className="h-4 w-4 text-ink-light" />
           <span className="overline text-ink-light">Social</span>
@@ -284,7 +284,7 @@ export function ProfileForm({
 
       {/* Section: Buyer Preferences (only for buyers) */}
       {isBuyer && (
-        <section className="rounded-lg border border-border bg-paper-cream p-6 shadow-flat">
+        <section className="rounded-lg border-0 bg-paper-cream p-6 shadow-flat">
           <div className="mb-4 flex items-center gap-2">
             <Heart className="h-4 w-4 text-ink-light" />
             <span className="overline text-ink-light">Buyer Preferences</span>
@@ -303,7 +303,7 @@ export function ProfileForm({
                   return (
                     <label
                       key={discipline}
-                      className="flex cursor-pointer items-center gap-2 rounded-md border border-border bg-paper-white px-3 py-2 text-sm text-ink-mid transition-colors has-[:checked]:border-ink-black has-[:checked]:bg-ink-black has-[:checked]:text-paper-white"
+                      className="flex cursor-pointer items-center gap-2 rounded-md border border-crease-light bg-paper-white px-3 py-2 text-sm text-ink-mid transition-colors has-[:checked]:border-ink-black has-[:checked]:bg-ink-black has-[:checked]:text-paper-white"
                     >
                       <input
                         type="checkbox"

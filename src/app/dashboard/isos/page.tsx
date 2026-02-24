@@ -71,16 +71,16 @@ export default async function DashboardIsosPage() {
 
       {/* Stats */}
       <div className="grid gap-4 sm:grid-cols-3">
-        <Card className="p-4 text-center">
-          <p className="text-3xl font-bold text-ink-black">{allIsos.length}</p>
+        <Card className="border-0 p-4 text-center shadow-flat">
+          <p className="font-serif text-3xl font-bold text-ink-black">{allIsos.length}</p>
           <p className="mt-1 text-xs text-ink-light">Total ISOs</p>
         </Card>
-        <Card className="p-4 text-center">
-          <p className="text-3xl font-bold text-forest">{activeCount}</p>
+        <Card className="border-0 p-4 text-center shadow-flat">
+          <p className="font-serif text-3xl font-bold text-forest">{activeCount}</p>
           <p className="mt-1 text-xs text-ink-light">Active</p>
         </Card>
-        <Card className="p-4 text-center">
-          <p className="text-3xl font-bold text-ink-black">
+        <Card className="border-0 p-4 text-center shadow-flat">
+          <p className="font-serif text-3xl font-bold text-ink-black">
             {allIsos.reduce((sum, i) => sum + i.match_count, 0)}
           </p>
           <p className="mt-1 text-xs text-ink-light">Total Matches</p>
@@ -89,7 +89,7 @@ export default async function DashboardIsosPage() {
 
       {/* ISO List */}
       {allIsos.length === 0 ? (
-        <Card className="flex flex-col items-center gap-3 border-dashed p-12 text-center">
+        <Card className="flex flex-col items-center gap-3 border-0 p-12 text-center shadow-flat">
           <Search className="h-10 w-10 text-ink-faint" />
           <div>
             <p className="font-medium text-ink-black">No ISOs yet</p>
@@ -108,7 +108,7 @@ export default async function DashboardIsosPage() {
             const matches = matchesByIso[iso.id] ?? [];
 
             return (
-              <Card key={iso.id} className="overflow-hidden">
+              <Card key={iso.id} className="overflow-hidden border-0 shadow-flat">
                 <div className="p-4">
                   <div className="flex items-start justify-between">
                     <div className="flex-1 space-y-1">
@@ -169,7 +169,8 @@ export default async function DashboardIsosPage() {
 
                   {/* Matches section */}
                   {matches.length > 0 && (
-                    <div className="mt-4 border-t border-crease-light pt-4">
+                    <div className="mt-4 pt-4">
+                      <div className="crease-divider mb-4" />
                       <p className="overline mb-3 text-ink-light">MATCHED HORSES</p>
                       <div className="space-y-2">
                         {matches.map((match) => {
@@ -179,7 +180,7 @@ export default async function DashboardIsosPage() {
                           return (
                             <div
                               key={String(match.id)}
-                              className="flex items-center justify-between rounded-md border border-crease-light p-3"
+                              className="flex items-center justify-between rounded-md border-0 bg-paper-cream p-3 shadow-flat"
                             >
                               <div className="space-y-0.5">
                                 {listing ? (

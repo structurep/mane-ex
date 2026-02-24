@@ -214,7 +214,7 @@ export default function SchedulePage() {
       {/* Page header */}
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-ink-black">Schedule</h1>
+          <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">Schedule</h1>
           <p className="mt-1 text-sm text-ink-mid">
             Manage viewings, trials, PPEs, and video calls.
           </p>
@@ -228,7 +228,7 @@ export default function SchedulePage() {
       {/* Two-column layout */}
       <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
         {/* LEFT — Calendar */}
-        <div className="rounded-lg border border-border bg-paper-white p-4 shadow-flat">
+        <div className="rounded-lg border-0 bg-paper-white p-4 shadow-flat">
           <div className="mb-4 flex items-center justify-between">
             <button
               onClick={prevMonth}
@@ -293,7 +293,7 @@ export default function SchedulePage() {
           </div>
 
           {/* Legend */}
-          <div className="mt-4 flex flex-wrap gap-3 border-t border-border pt-3">
+          <div className="mt-4 flex flex-wrap gap-3 border-t border-crease-light pt-3">
             {Object.entries(eventTypeConfig).map(([key, cfg]) => (
               <span
                 key={key}
@@ -309,7 +309,7 @@ export default function SchedulePage() {
         {/* RIGHT — Day detail sidebar */}
         <div className="space-y-4">
           {/* Selected date header */}
-          <div className="rounded-lg border border-border bg-paper-white p-4 shadow-flat">
+          <div className="rounded-lg border-0 bg-paper-white p-4 shadow-flat">
             <h3 className="font-medium text-ink-black">
               {formatSelectedDate(selectedDate)}
             </h3>
@@ -328,7 +328,7 @@ export default function SchedulePage() {
               return (
                 <div
                   key={event.id}
-                  className="rounded-lg border border-border bg-paper-white p-4 shadow-flat"
+                  className="rounded-lg border-0 bg-paper-white p-4 shadow-flat"
                 >
                   <div className="flex items-start gap-3">
                     <div
@@ -364,13 +364,13 @@ export default function SchedulePage() {
               );
             })
           ) : (
-            <div className="rounded-lg border border-border bg-paper-cream py-8 text-center">
+            <div className="rounded-lg border-0 bg-paper-cream py-8 text-center shadow-flat">
               <p className="text-sm text-ink-mid">No events scheduled</p>
             </div>
           )}
 
           {/* Quick actions */}
-          <div className="rounded-lg border border-border bg-paper-white p-4 shadow-flat">
+          <div className="rounded-lg border-0 bg-paper-white p-4 shadow-flat">
             <h3 className="mb-3 text-sm font-medium text-ink-black">
               Quick Actions
             </h3>
@@ -404,7 +404,7 @@ export default function SchedulePage() {
               return (
                 <div
                   key={event.id}
-                  className="flex items-center gap-4 rounded-lg border border-border bg-paper-white px-4 py-3 shadow-flat"
+                  className="flex items-center gap-4 rounded-lg border-0 bg-paper-white px-4 py-3 shadow-flat"
                 >
                   <span className="w-24 shrink-0 text-sm text-ink-mid">
                     {formatShortDate(event.date)}
@@ -439,7 +439,7 @@ export default function SchedulePage() {
               );
             })
           ) : (
-            <div className="rounded-lg border border-border bg-paper-cream py-8 text-center">
+            <div className="rounded-lg border-0 bg-paper-cream py-8 text-center shadow-flat">
               <p className="text-sm text-ink-mid">
                 No upcoming events scheduled
               </p>

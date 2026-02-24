@@ -4,7 +4,6 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { formatCentsToDollars, calculatePlatformFee, calculateSellerNet, DISPUTE_WINDOW_DAYS } from "@/lib/stripe/config";
 import {
   ChevronLeft,
@@ -112,7 +111,7 @@ export default async function OfferDetailPage({ params }: Props) {
           <div>
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h1 className="text-2xl font-bold text-ink-black">
+                <h1 className="font-serif text-2xl font-bold text-ink-black">
                   {formatCentsToDollars(offer.amount_cents)}
                 </h1>
                 <p className="mt-1 text-ink-mid">
@@ -178,7 +177,7 @@ export default async function OfferDetailPage({ params }: Props) {
                 {counterOffers.map((co: any) => (
                   <div
                     key={co.id}
-                    className="flex items-center justify-between rounded-md border border-border bg-paper-white p-3"
+                    className="flex items-center justify-between rounded-md border-0 bg-paper-white p-3 shadow-flat"
                   >
                     <div className="flex items-center gap-2">
                       <ArrowLeftRight className="h-4 w-4 text-blue" />
@@ -244,7 +243,7 @@ export default async function OfferDetailPage({ params }: Props) {
         <div className="lg:col-span-1">
           <div className="sticky top-20 space-y-4">
             {/* Listing card */}
-            <div className="rounded-lg border border-border bg-paper-cream p-4 shadow-flat">
+            <div className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat">
               <div className="mb-3 aspect-[4/3] rounded-md bg-paper-warm" />
               <p className="font-medium text-ink-black">
                 {offer.listing?.name}
@@ -262,7 +261,7 @@ export default async function OfferDetailPage({ params }: Props) {
             </div>
 
             {/* Fee breakdown */}
-            <div className="rounded-lg border border-border bg-paper-cream p-4 shadow-flat">
+            <div className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat">
               <p className="overline mb-3 text-ink-light">TRANSACTION SUMMARY</p>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
@@ -279,7 +278,7 @@ export default async function OfferDetailPage({ params }: Props) {
                     )}
                   </span>
                 </div>
-                <Separator />
+                <div className="crease-divider" />
                 <div className="flex justify-between">
                   <span className="font-medium text-ink-dark">
                     Seller receives
@@ -294,7 +293,7 @@ export default async function OfferDetailPage({ params }: Props) {
             </div>
 
             {/* ManeVault badge */}
-            <div className="rounded-lg border border-border bg-paper-warm p-4">
+            <div className="rounded-lg border-0 bg-paper-warm p-4 shadow-flat">
               <div className="flex items-center gap-2">
                 <Shield className="h-4 w-4 text-forest" />
                 <span className="text-sm font-medium text-ink-dark">

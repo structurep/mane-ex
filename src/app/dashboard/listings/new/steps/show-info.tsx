@@ -48,7 +48,7 @@ export function StepShowInfo({ data, setField }: StepProps) {
                 onChange={() => toggleDiscipline(d)}
                 className="peer sr-only"
               />
-              <span className="block rounded-full border border-border px-3 py-1.5 text-xs font-medium text-ink-mid transition-colors peer-checked:border-ink-black peer-checked:bg-ink-black peer-checked:text-paper-white">
+              <span className="block rounded-full border border-crease-light px-3 py-1.5 text-xs font-medium text-ink-mid transition-colors peer-checked:border-ink-black peer-checked:bg-ink-black peer-checked:text-paper-white">
                 {d}
               </span>
             </label>
@@ -63,7 +63,7 @@ export function StepShowInfo({ data, setField }: StepProps) {
           id="level"
           value={(data.level as string) || ""}
           onChange={(e) => setField("level", e.target.value)}
-          className="mt-1.5 w-full rounded-md border border-border bg-paper-white px-3 py-2 text-sm text-ink-black"
+          className="mt-1.5 w-full rounded-md border-0 bg-paper-white px-3 py-2 text-sm text-ink-black shadow-flat"
         >
           <option value="">Select level...</option>
           {levels.map((l) => (

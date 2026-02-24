@@ -46,7 +46,7 @@ export default async function NotificationsPage() {
       </div>
 
       {allNotifications.length === 0 ? (
-        <Card className="flex flex-col items-center gap-3 border-dashed p-12 text-center">
+        <Card className="flex flex-col items-center gap-3 border-0 p-12 text-center shadow-flat">
           <Bell className="h-10 w-10 text-ink-faint" />
           <div>
             <p className="font-medium text-ink-black">No notifications</p>

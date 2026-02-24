@@ -59,14 +59,14 @@ export default async function MessagesPage() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-ink-black">Messages</h1>
+        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">Messages</h1>
         <p className="mt-1 text-sm text-ink-mid">
           Your conversations with buyers and sellers.
         </p>
       </div>
 
       {enriched.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-crease-mid bg-paper-cream p-12 text-center">
+        <div className="rounded-lg border-0 bg-paper-cream p-12 text-center shadow-flat">
           <MessageCircle className="mx-auto h-10 w-10 text-ink-faint" />
           <h3 className="mt-4 font-medium text-ink-dark">No messages yet</h3>
           <p className="mt-1 text-sm text-ink-mid">

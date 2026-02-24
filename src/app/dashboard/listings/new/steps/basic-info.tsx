@@ -71,7 +71,7 @@ export function StepBasicInfo({ data, setField }: StepProps) {
                 onChange={() => setField("gender", opt.value)}
                 className="peer sr-only"
               />
-              <span className="block rounded-md border border-border px-4 py-2 text-sm font-medium text-ink-mid transition-colors peer-checked:border-ink-black peer-checked:bg-ink-black peer-checked:text-paper-white">
+              <span className="block rounded-md border border-crease-light px-4 py-2 text-sm font-medium text-ink-mid transition-colors peer-checked:border-ink-black peer-checked:bg-ink-black peer-checked:text-paper-white">
                 {opt.label}
               </span>
             </label>
@@ -137,7 +137,7 @@ export function StepBasicInfo({ data, setField }: StepProps) {
           id="registry"
           value={(data.registry as string) || ""}
           onChange={(e) => setField("registry", e.target.value)}
-          className="mt-1.5 w-full rounded-md border border-border bg-paper-white px-3 py-2 text-sm text-ink-black"
+          className="mt-1.5 w-full rounded-md border-0 bg-paper-white px-3 py-2 text-sm text-ink-black shadow-flat"
         >
           <option value="">Select registry...</option>
           {registries.map((r) => (

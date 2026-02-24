@@ -73,7 +73,7 @@ export function StepMedia({ data, setField }: StepProps) {
             increase buyer engagement.
           </p>
           <div className="relative mt-4">
-            <label className="cursor-pointer rounded-md border border-border px-4 py-2 text-sm font-medium text-ink-dark transition-colors hover:bg-paper-warm">
+            <label className="cursor-pointer rounded-md border border-crease-light px-4 py-2 text-sm font-medium text-ink-dark transition-colors hover:bg-paper-warm">
               <Upload className="mr-2 inline h-4 w-4" />
               Choose Videos
               <input

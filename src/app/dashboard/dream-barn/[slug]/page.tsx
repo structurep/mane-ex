@@ -2,7 +2,6 @@ import { getCollectionWithItems } from "@/actions/collections";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -84,11 +83,11 @@ export default async function CollectionDetailPage({
         />
       </div>
 
-      <Separator />
+      <div className="crease-divider" />
 
       {/* Items grid */}
       {items.length === 0 ? (
-        <Card className="flex flex-col items-center gap-3 border-dashed p-12 text-center">
+        <Card className="flex flex-col items-center gap-3 border-0 p-12 text-center shadow-flat">
           <p className="font-medium text-ink-black">No horses yet</p>
           <p className="mt-1 text-sm text-ink-mid">
             Save horses from the browse page to add them here.
@@ -107,7 +106,7 @@ export default async function CollectionDetailPage({
             const priceChange = item.price_change_cents;
 
             return (
-              <Card key={item.id} className="group overflow-hidden transition-shadow hover:shadow-folded">
+              <Card key={item.id} className="group overflow-hidden border-0 shadow-flat transition-elevation hover-lift hover:shadow-lifted">
                 {/* Placeholder image area */}
                 <div className="flex h-40 items-center justify-center bg-paper-cream">
                   <span className="text-sm text-crease-mid">No image</span>
@@ -139,7 +138,7 @@ export default async function CollectionDetailPage({
                   {/* Price + change */}
                   <div className="flex items-center justify-between">
                     {currentPrice !== null ? (
-                      <span className="font-medium text-ink-black">
+                      <span className="font-serif font-medium text-ink-black">
                         ${(currentPrice / 100).toLocaleString()}
                       </span>
                     ) : (

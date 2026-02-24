@@ -37,7 +37,7 @@ export function StepFarmLife({ data, setField }: StepProps) {
             id="location_state"
             value={(data.location_state as string) || ""}
             onChange={(e) => setField("location_state", e.target.value)}
-            className="mt-1.5 w-full rounded-md border border-border bg-paper-white px-3 py-2 text-sm text-ink-black"
+            className="mt-1.5 w-full rounded-md border-0 bg-paper-white px-3 py-2 text-sm text-ink-black shadow-flat"
           >
             <option value="">Select...</option>
             {US_STATES.map((s) => (

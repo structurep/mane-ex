@@ -58,7 +58,7 @@ export default async function DashboardReviewsPage() {
       </div>
 
       {totalReviews === 0 ? (
-        <Card className="flex flex-col items-center gap-3 border-dashed p-12 text-center">
+        <Card className="flex flex-col items-center gap-3 border-0 p-12 text-center shadow-flat">
           <Star className="h-10 w-10 text-ink-faint" />
           <div>
             <p className="font-medium text-ink-black">No reviews yet</p>
@@ -71,8 +71,8 @@ export default async function DashboardReviewsPage() {
         <>
           {/* Stats */}
           <div className="grid gap-4 sm:grid-cols-3">
-            <Card className="p-4 text-center">
-              <p className="text-3xl font-bold text-ink-black">
+            <Card className="border-0 p-4 text-center shadow-flat">
+              <p className="font-serif text-3xl font-bold text-ink-black">
                 {avgRating.toFixed(1)}
               </p>
               <div className="mt-1 flex justify-center">
@@ -80,12 +80,12 @@ export default async function DashboardReviewsPage() {
               </div>
               <p className="mt-1 text-xs text-ink-light">Average Rating</p>
             </Card>
-            <Card className="p-4 text-center">
-              <p className="text-3xl font-bold text-ink-black">{totalReviews}</p>
+            <Card className="border-0 p-4 text-center shadow-flat">
+              <p className="font-serif text-3xl font-bold text-ink-black">{totalReviews}</p>
               <p className="mt-1 text-xs text-ink-light">Total Reviews</p>
             </Card>
-            <Card className="p-4 text-center">
-              <p className="text-3xl font-bold text-ink-black">
+            <Card className="border-0 p-4 text-center shadow-flat">
+              <p className="font-serif text-3xl font-bold text-ink-black">
                 {unanswered.length}
               </p>
               <p className="mt-1 text-xs text-ink-light">Awaiting Response</p>
@@ -93,7 +93,7 @@ export default async function DashboardReviewsPage() {
           </div>
 
           {/* Distribution */}
-          <Card className="p-4">
+          <Card className="border-0 p-4 shadow-flat">
             <p className="overline mb-3 text-ink-light">RATING DISTRIBUTION</p>
             <div className="space-y-2">
               {distribution.map((d) => (

@@ -122,7 +122,7 @@ export default function LeasesPage() {
     <div>
       {/* Page header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-ink-black">Lease Management</h1>
+        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">Lease Management</h1>
         <p className="mt-1 text-sm text-ink-mid">
           Manage your horse leases and trial agreements.
         </p>
@@ -130,42 +130,42 @@ export default function LeasesPage() {
 
       {/* Stat cards */}
       <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
-        <div className="rounded-lg border border-border bg-paper-cream p-4">
+        <div className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat">
           <div className="flex items-center gap-2 text-sm text-ink-mid">
             <FileText className="h-4 w-4" />
             Active Leases
           </div>
-          <p className="mt-1 text-2xl font-bold text-ink-black">
+          <p className="mt-1 font-serif text-2xl font-bold text-ink-black">
             {activeCount}
           </p>
         </div>
 
-        <div className="rounded-lg border border-border bg-paper-cream p-4">
+        <div className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat">
           <div className="flex items-center gap-2 text-sm text-ink-mid">
             <Calendar className="h-4 w-4" />
             Upcoming
           </div>
-          <p className="mt-1 text-2xl font-bold text-ink-black">
+          <p className="mt-1 font-serif text-2xl font-bold text-ink-black">
             {upcomingCount}
           </p>
         </div>
 
-        <div className="rounded-lg border border-border bg-paper-cream p-4">
+        <div className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat">
           <div className="flex items-center gap-2 text-sm text-ink-mid">
             <DollarSign className="h-4 w-4" />
             Pending Payments
           </div>
-          <p className="mt-1 text-2xl font-bold text-ink-black">
+          <p className="mt-1 font-serif text-2xl font-bold text-ink-black">
             ${pendingPayments.toLocaleString()}
           </p>
         </div>
 
-        <div className="rounded-lg border border-border bg-paper-cream p-4">
+        <div className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat">
           <div className="flex items-center gap-2 text-sm text-ink-mid">
             <DollarSign className="h-4 w-4" />
             Monthly Income
           </div>
-          <p className="mt-1 text-2xl font-bold text-ink-black">
+          <p className="mt-1 font-serif text-2xl font-bold text-ink-black">
             ${monthlyIncome.toLocaleString()}
           </p>
         </div>
@@ -192,7 +192,7 @@ export default function LeasesPage() {
       {activeTab === "Leases" && (
         <>
           {leases.length === 0 ? (
-            <div className="flex flex-col items-center justify-center rounded-lg border border-border bg-paper-white py-16 text-center">
+            <div className="flex flex-col items-center justify-center rounded-lg border-0 bg-paper-white py-16 text-center shadow-flat">
               <AlertCircle className="mb-3 h-10 w-10 text-ink-light" />
               <h3 className="text-lg font-medium text-ink-black">
                 No leases yet
@@ -209,7 +209,7 @@ export default function LeasesPage() {
               {leases.map((lease) => (
                 <div
                   key={lease.id}
-                  className="rounded-lg border border-border bg-paper-white p-5 shadow-flat"
+                  className="rounded-lg border-0 bg-paper-white p-5 shadow-flat"
                 >
                   <div className="flex items-start justify-between">
                     <div>
@@ -273,7 +273,7 @@ export default function LeasesPage() {
       )}
 
       {activeTab === "Trials" && (
-        <div className="flex flex-col items-center justify-center rounded-lg border border-border bg-paper-white py-16 text-center">
+        <div className="flex flex-col items-center justify-center rounded-lg border-0 bg-paper-white py-16 text-center shadow-flat">
           <Calendar className="mb-3 h-10 w-10 text-ink-light" />
           <h3 className="text-lg font-medium text-ink-black">
             Trial Management

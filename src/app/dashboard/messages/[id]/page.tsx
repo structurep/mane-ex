@@ -67,7 +67,7 @@ export default async function ConversationPage({ params }: Props) {
   return (
     <div className="flex h-[calc(100vh-10rem)] flex-col">
       {/* Thread header */}
-      <div className="flex items-center gap-3 border-b border-border pb-4">
+      <div className="flex items-center gap-3 border-b border-crease-light pb-4">
         <Link
           href="/dashboard/messages"
           className="text-ink-light hover:text-ink-black md:hidden"

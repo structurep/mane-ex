@@ -89,7 +89,7 @@ export default async function TrialsPage() {
         {/* Upcoming Trials */}
         <TabsContent value="upcoming" className="space-y-4">
           {upcomingTrials.length === 0 ? (
-            <Card className="flex flex-col items-center gap-3 border-dashed p-12 text-center">
+            <Card className="flex flex-col items-center gap-3 border-0 p-12 text-center shadow-flat">
               <Calendar className="h-10 w-10 text-ink-faint" />
               <div>
                 <p className="font-medium text-ink-black">No upcoming trials</p>
@@ -111,7 +111,7 @@ export default async function TrialsPage() {
         {/* Tours */}
         <TabsContent value="tours" className="space-y-4">
           {tours.length === 0 ? (
-            <Card className="flex flex-col items-center gap-3 border-dashed p-12 text-center">
+            <Card className="flex flex-col items-center gap-3 border-0 p-12 text-center shadow-flat">
               <Route className="h-10 w-10 text-ink-faint" />
               <div>
                 <p className="font-medium text-ink-black">No tours planned</p>
@@ -130,7 +130,7 @@ export default async function TrialsPage() {
         {/* Past Trials */}
         <TabsContent value="past" className="space-y-4">
           {pastTrials.length === 0 ? (
-            <Card className="flex flex-col items-center gap-3 border-dashed p-12 text-center">
+            <Card className="flex flex-col items-center gap-3 border-0 p-12 text-center shadow-flat">
               <Clock className="h-10 w-10 text-ink-faint" />
               <p className="text-sm text-ink-mid">No past trials yet.</p>
             </Card>
@@ -162,7 +162,7 @@ function TrialCard({
     (trial.confirmed_date as string) || (trial.preferred_date as string);
 
   return (
-    <Card className="overflow-hidden">
+    <Card className="overflow-hidden border-0 shadow-flat">
       <div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-start sm:justify-between">
         {/* Left: listing + date info */}
         <div className="flex-1 space-y-3">
@@ -197,7 +197,7 @@ function TrialCard({
               <span>{String(listing.breed)}</span>
             ) : null}
             {typeof listing?.price === "number" ? (
-              <span className="font-medium text-ink-black">
+              <span className="font-serif font-medium text-ink-black">
                 ${(listing.price / 100).toLocaleString()}
               </span>
             ) : null}

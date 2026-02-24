@@ -219,7 +219,7 @@ export default async function DashboardPage() {
     <div>
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-ink-black">Dashboard</h1>
+          <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">Dashboard</h1>
           <p className="mt-1 text-sm text-ink-mid">
             Welcome back. Here&apos;s your activity overview.
           </p>
@@ -244,14 +244,14 @@ export default async function DashboardPage() {
                   <ArrowRight className="h-3 w-3 text-ink-faint" />
                 )}
               </div>
-              <p className="mt-3 text-2xl font-bold text-ink-black">
+              <p className="mt-3 font-serif text-2xl font-bold text-ink-black">
                 {stat.value}
               </p>
               <p className="mt-0.5 text-xs text-ink-mid">{stat.label}</p>
             </>
           );
           const className =
-            "rounded-lg border border-border bg-paper-cream p-4 shadow-flat transition-elevation hover-lift hover:shadow-folded";
+            "rounded-lg border-0 bg-paper-cream p-4 shadow-flat transition-elevation hover-lift hover:shadow-lifted";
           return stat.href ? (
             <Link key={stat.label} href={stat.href} className={className}>
               {content}
@@ -266,27 +266,27 @@ export default async function DashboardPage() {
 
       {/* Additional Stats (B11) */}
       <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
-        <div className="rounded-lg border border-border bg-paper-cream p-4">
+        <div className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat">
           <p className="text-xs text-ink-light">Pending Offers</p>
-          <p className="mt-1 text-2xl font-bold text-ink-black">
+          <p className="mt-1 font-serif text-2xl font-bold text-ink-black">
             {(pendingOfferCount || 0).toLocaleString()}
           </p>
         </div>
-        <div className="rounded-lg border border-border bg-paper-cream p-4">
+        <div className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat">
           <p className="text-xs text-ink-light">Avg. Rating</p>
-          <p className="mt-1 text-2xl font-bold text-ink-black">
+          <p className="mt-1 font-serif text-2xl font-bold text-ink-black">
             {avgRating ? `${avgRating} \u2605` : "\u2014"}
           </p>
         </div>
-        <div className="rounded-lg border border-border bg-paper-cream p-4">
+        <div className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat">
           <p className="text-xs text-ink-light">Response Rate</p>
-          <p className="mt-1 text-2xl font-bold text-forest">
+          <p className="mt-1 font-serif text-2xl font-bold text-forest">
             {convoIds.length > 0 ? "94%" : "\u2014"}
           </p>
         </div>
-        <div className="rounded-lg border border-border bg-paper-cream p-4">
+        <div className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat">
           <p className="text-xs text-ink-light">Profile Views</p>
-          <p className="mt-1 text-2xl font-bold text-ink-black">
+          <p className="mt-1 font-serif text-2xl font-bold text-ink-black">
             {totalViews.toLocaleString()}
           </p>
         </div>
@@ -298,7 +298,7 @@ export default async function DashboardPage() {
           {/* Score widget */}
           <Link
             href="/dashboard/analytics"
-            className="rounded-lg border border-border bg-paper-cream p-4 shadow-flat transition-elevation hover-lift hover:shadow-folded"
+            className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat transition-elevation hover-lift hover:shadow-lifted"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -309,7 +309,7 @@ export default async function DashboardPage() {
               </div>
               <ArrowRight className="h-3 w-3 text-ink-faint" />
             </div>
-            <p className="mt-2 text-3xl font-bold text-ink-black">
+            <p className="mt-2 font-serif text-3xl font-bold text-ink-black">
               {maneScore.mane_score.toLocaleString()}
               <span className="text-lg font-normal text-ink-light">/1,000</span>
             </p>
@@ -325,7 +325,7 @@ export default async function DashboardPage() {
 
           {/* Boost suggestions */}
           {suggestions.length > 0 && (
-            <div className="rounded-lg border border-border bg-paper-cream p-4 shadow-flat">
+            <div className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat">
               <div className="mb-3 flex items-center gap-2">
                 <Lightbulb className="h-4 w-4 text-gold" />
                 <span className="text-sm font-medium text-ink-dark">
@@ -337,7 +337,7 @@ export default async function DashboardPage() {
                   <Link
                     key={i}
                     href={s.link}
-                    className="flex items-center justify-between rounded-md border border-border bg-paper-white px-3 py-2 text-xs transition-colors hover:bg-paper-warm"
+                    className="flex items-center justify-between rounded-md border-0 bg-paper-white px-3 py-2 text-xs shadow-flat transition-colors hover:bg-paper-warm"
                   >
                     <span className="text-ink-mid">{s.action}</span>
                     <span className="ml-2 whitespace-nowrap font-semibold text-forest">
@@ -363,7 +363,7 @@ export default async function DashboardPage() {
                 key={item.stage}
                 className={`flex-1 rounded-lg ${item.color} p-3 text-center`}
               >
-                <p className={`text-xl font-bold ${item.textColor}`}>
+                <p className={`font-serif text-xl font-bold ${item.textColor}`}>
                   {item.count}
                 </p>
                 <p className="text-xs text-ink-mid mt-0.5">{item.stage}</p>
@@ -375,8 +375,8 @@ export default async function DashboardPage() {
 
       {/* Recent listings or empty state */}
       {hasListings ? (
-        <div className="rounded-lg border border-border bg-paper-cream shadow-flat">
-          <div className="flex items-center justify-between border-b border-border px-6 py-4">
+        <div className="rounded-lg border-0 bg-paper-cream shadow-flat">
+          <div className="flex items-center justify-between border-b border-crease-light px-6 py-4">
             <h2 className="font-medium text-ink-dark">Recent Listings</h2>
             <Link
               href="/dashboard/listings"
@@ -386,7 +386,7 @@ export default async function DashboardPage() {
               <ArrowRight className="ml-1 inline h-3 w-3" />
             </Link>
           </div>
-          <div className="divide-y divide-border">
+          <div className="divide-y divide-crease-light">
             {recentListings.map((listing) => {
               const config = statusConfig[listing.status as ListingStatus];
               return (
@@ -425,7 +425,7 @@ export default async function DashboardPage() {
           </div>
         </div>
       ) : (
-        <div className="rounded-lg border border-dashed border-crease-mid bg-paper-cream p-12 text-center">
+        <div className="rounded-lg border-0 bg-paper-cream p-12 text-center shadow-flat">
           <ClipboardList className="mx-auto h-10 w-10 text-ink-faint" />
           <h3 className="mt-4 font-medium text-ink-dark">No listings yet</h3>
           <p className="mt-1 text-sm text-ink-mid">
@@ -466,7 +466,7 @@ export default async function DashboardPage() {
                 <Link
                   key={msg.id}
                   href={`/dashboard/messages/${msg.conversation_id}`}
-                  className="flex items-start gap-3 rounded-lg border border-border bg-paper-white p-3 transition-colors hover:bg-paper-warm"
+                  className="flex items-start gap-3 rounded-lg border-0 bg-paper-white p-3 shadow-flat transition-colors hover:bg-paper-warm"
                 >
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-paper-cream text-sm font-medium text-ink-mid">
                     {senderName.charAt(0).toUpperCase()}
@@ -508,7 +508,7 @@ export default async function DashboardPage() {
             (name) => (
               <div
                 key={name}
-                className="rounded-lg border border-border bg-paper-cream p-3"
+                className="rounded-lg border-0 bg-paper-cream p-3 shadow-flat"
               >
                 <div className="aspect-[4/3] rounded-md bg-paper-warm mb-2" />
                 <p className="text-sm font-medium text-ink-black">{name}</p>

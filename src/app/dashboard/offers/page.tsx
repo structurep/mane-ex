@@ -94,14 +94,14 @@ export default async function OffersPage() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-ink-black">Offers</h1>
+        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">Offers</h1>
         <p className="mt-1 text-sm text-ink-mid">
           Manage offers you&apos;ve received and sent.
         </p>
       </div>
 
       {isEmpty ? (
-        <div className="rounded-lg border border-dashed border-crease-mid bg-paper-cream p-12 text-center">
+        <div className="rounded-lg border-0 bg-paper-cream p-12 text-center shadow-flat">
           <HandCoins className="mx-auto h-10 w-10 text-ink-faint" />
           <h3 className="mt-4 font-medium text-ink-dark">No offers yet</h3>
           <p className="mt-1 text-sm text-ink-mid">
@@ -174,7 +174,7 @@ function OfferCard({
   return (
     <Link
       href={`/dashboard/offers/${offer.id}`}
-      className="block rounded-lg border border-border bg-paper-cream p-4 shadow-flat transition-all hover:shadow-folded hover:-translate-y-0.5"
+      className="block rounded-lg border-0 bg-paper-cream p-4 shadow-flat transition-elevation hover-lift hover:shadow-lifted"
     >
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0 flex-1">
@@ -200,7 +200,7 @@ function OfferCard({
           )}
         </div>
         <div className="shrink-0 text-right">
-          <p className="text-lg font-bold text-ink-black">
+          <p className="font-serif text-lg font-bold text-ink-black">
             {formatCentsToDollars(offer.amount_cents)}
           </p>
           <p className="text-xs text-ink-light">

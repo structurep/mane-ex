@@ -75,7 +75,7 @@ export function StepPricing({ data, setField }: StepProps) {
                 onChange={() => setField("price_display", opt.value)}
                 className="peer sr-only"
               />
-              <span className="block rounded-md border border-border px-3 py-2 text-xs font-medium text-ink-mid transition-colors peer-checked:border-ink-black peer-checked:bg-ink-black peer-checked:text-paper-white">
+              <span className="block rounded-md border border-crease-light px-3 py-2 text-xs font-medium text-ink-mid transition-colors peer-checked:border-ink-black peer-checked:bg-ink-black peer-checked:text-paper-white">
                 {opt.label}
               </span>
             </label>
@@ -89,7 +89,7 @@ export function StepPricing({ data, setField }: StepProps) {
           type="checkbox"
           checked={data.price_negotiable !== false}
           onChange={(e) => setField("price_negotiable", e.target.checked)}
-          className="h-4 w-4 rounded border-border"
+          className="h-4 w-4 rounded border-crease-light"
         />
         <span className="text-sm text-ink-dark">Price is negotiable</span>
       </label>
@@ -107,7 +107,7 @@ export function StepPricing({ data, setField }: StepProps) {
           {warrantyOptions.map((opt) => (
             <label
               key={opt.value}
-              className="block cursor-pointer rounded-lg border border-border p-4 transition-colors has-[:checked]:border-ink-black has-[:checked]:bg-paper-warm"
+              className="block cursor-pointer rounded-lg border border-crease-light p-4 transition-colors has-[:checked]:border-ink-black has-[:checked]:bg-paper-warm"
             >
               <input
                 type="radio"
@@ -157,7 +157,7 @@ export function StepPricing({ data, setField }: StepProps) {
             type="checkbox"
             checked={data.lease_available === true}
             onChange={(e) => setField("lease_available", e.target.checked)}
-            className="h-4 w-4 rounded border-border"
+            className="h-4 w-4 rounded border-crease-light"
           />
           <span className="text-sm text-ink-dark">Lease available</span>
         </label>
@@ -216,7 +216,7 @@ export function StepPricing({ data, setField }: StepProps) {
                 onChange={(e) =>
                   setField("commission_disclosed", e.target.checked)
                 }
-                className="h-4 w-4 rounded border-border"
+                className="h-4 w-4 rounded border-crease-light"
               />
               <span className="text-sm text-ink-dark">
                 Commission amount is disclosed to all parties
@@ -238,7 +238,7 @@ export function StepPricing({ data, setField }: StepProps) {
                 onChange={(e) =>
                   setField("dual_agency_disclosed", e.target.checked)
                 }
-                className="h-4 w-4 rounded border-border"
+                className="h-4 w-4 rounded border-crease-light"
               />
               <span className="text-sm text-ink-dark">
                 Dual agency (if applicable) disclosed with written consent
