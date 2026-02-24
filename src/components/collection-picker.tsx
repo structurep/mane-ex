@@ -16,6 +16,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Heart, Plus, Check, FolderHeart } from "lucide-react";
+import { toast } from "sonner";
 
 interface CollectionPickerProps {
   listingId: string;
@@ -52,8 +53,11 @@ export function CollectionPicker({ listingId, trigger }: CollectionPickerProps) 
   async function handleAdd(collectionId: string) {
     setAdding(collectionId);
     const result = await addToCollection(collectionId, listingId);
-    if (!result.error) {
+    if (result.error) {
+      toast.error(result.error);
+    } else {
       setAdded((prev) => new Set(prev).add(collectionId));
+      toast.success("Saved to collection");
     }
     setAdding(null);
   }
@@ -65,7 +69,9 @@ export function CollectionPicker({ listingId, trigger }: CollectionPickerProps) 
     formData.set("name", newName.trim());
     formData.set("visibility", "private");
     const result = await createCollection(formData);
-    if (!result.error && result.data) {
+    if (result.error) {
+      toast.error(result.error);
+    } else if (result.data) {
       const created = result.data as { id: string; slug: string };
       // Add listing to new collection
       await addToCollection(created.id, listingId);
@@ -75,6 +81,7 @@ export function CollectionPicker({ listingId, trigger }: CollectionPickerProps) 
       setCollections((refreshed.data ?? []) as SimpleCollection[]);
       setNewName("");
       setShowCreate(false);
+      toast.success("Collection created and horse saved");
     }
     setCreating(false);
   }

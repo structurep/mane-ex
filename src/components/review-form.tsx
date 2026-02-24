@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { StarRating } from "@/components/star-rating";
+import { toast } from "sonner";
 
 interface ReviewFormProps {
   sellerId: string;
@@ -58,8 +59,10 @@ export function ReviewForm({
 
     if (result.error) {
       setError(result.error);
+      toast.error(result.error);
     } else {
       setSuccess(true);
+      toast.success("Review submitted — thank you!");
       onSuccess?.();
     }
     setLoading(false);
