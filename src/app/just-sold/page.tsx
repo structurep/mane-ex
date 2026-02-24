@@ -1,8 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { MapPin, Calendar, TrendingUp } from "lucide-react";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -46,105 +47,128 @@ export default async function JustSoldPage() {
   const listings = soldListings ?? [];
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8 md:px-8">
-      {/* Header */}
-      <div className="mb-8">
-        <div className="flex items-center gap-2">
-          <TrendingUp className="h-5 w-5 text-red" />
-          <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">
-            Just Sold
-          </h1>
-        </div>
-        <p className="mt-1 text-ink-mid">
-          Recent sales on ManeExchange. Real transactions, real trust.
-        </p>
-      </div>
+    <div className="min-h-screen">
+      <Header />
+      <main>
+        {/* ── Hero ── */}
+        <section className="with-grain bg-gradient-hero px-4 pt-24 pb-12 md:px-8 md:pt-36 md:pb-16">
+          <div className="mx-auto max-w-4xl">
+            <p className="overline mb-4 text-red">SOCIAL PROOF</p>
+            <h1 className="mb-4 text-3xl tracking-tight text-ink-black md:text-5xl">
+              Just Sold
+            </h1>
+            <p className="text-lead max-w-xl text-ink-mid">
+              Recent sales on ManeExchange. Real transactions, real trust.
+            </p>
+          </div>
+        </section>
 
-      {listings.length === 0 ? (
-        <Card className="p-12 text-center">
-          <p className="text-ink-mid">No completed sales yet. Stay tuned!</p>
-        </Card>
-      ) : (
-        <div className="space-y-4">
-          {listings.map((listing) => {
-            const seller = listing.seller as unknown as Record<string, unknown> | null;
-            const disciplines = (listing.disciplines as { name: string }[]) ?? [];
+        {/* ── Sold Feed ── */}
+        <section className="bg-paper-cream section-premium">
+          <div className="mx-auto max-w-4xl">
+            {listings.length === 0 ? (
+              <div className="rounded-lg bg-paper-white p-12 text-center shadow-flat">
+                <TrendingUp className="mx-auto mb-4 h-10 w-10 text-ink-faint" />
+                <p className="font-heading text-lg font-medium text-ink-black">
+                  No completed sales yet
+                </p>
+                <p className="mt-1 text-sm text-ink-mid">Stay tuned!</p>
+              </div>
+            ) : (
+              <div className="stagger-children space-y-4">
+                {listings.map((listing) => {
+                  const seller = listing.seller as unknown as Record<string, unknown> | null;
+                  const disciplines = (listing.disciplines as { name: string }[]) ?? [];
 
-            return (
-              <Card key={listing.id} className="overflow-hidden transition-shadow hover:shadow-folded">
-                <div className="flex items-center gap-4 p-4">
-                  {/* Sold badge */}
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red/10">
-                    <span className="text-lg font-bold text-red">SOLD</span>
-                  </div>
+                  return (
+                    <div
+                      key={listing.id}
+                      className="animate-fade-up rounded-lg bg-paper-white shadow-flat transition-elevation hover-lift hover:shadow-lifted"
+                    >
+                      <div className="flex items-center gap-4 p-5">
+                        {/* Sold badge */}
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-light">
+                          <span className="font-serif text-sm font-bold text-red">
+                            SOLD
+                          </span>
+                        </div>
 
-                  {/* Details */}
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2">
-                      <Link
-                        href={`/horses/${listing.slug}`}
-                        className="truncate font-heading text-lg font-medium text-ink-black hover:text-accent-blue"
-                      >
-                        {listing.name}
-                      </Link>
-                      {disciplines.length > 0 && (
-                        <Badge variant="secondary" className="shrink-0">
-                          {disciplines[0].name}
-                        </Badge>
-                      )}
+                        {/* Details */}
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-2">
+                            <Link
+                              href={`/horses/${listing.slug}`}
+                              className="truncate font-heading text-lg font-medium text-ink-black hover:text-blue"
+                            >
+                              {listing.name}
+                            </Link>
+                            {disciplines.length > 0 && (
+                              <Badge
+                                variant="secondary"
+                                className="shrink-0 bg-paper-warm text-xs text-ink-dark"
+                              >
+                                {disciplines[0].name}
+                              </Badge>
+                            )}
+                          </div>
+
+                          <div className="mt-1 flex flex-wrap items-center gap-3 text-sm text-ink-mid">
+                            {typeof listing.breed === "string" ? (
+                              <span>{listing.breed}</span>
+                            ) : null}
+                            {typeof listing.age_years === "number" ? (
+                              <span>{listing.age_years}yo</span>
+                            ) : null}
+                            {typeof listing.height_hands === "number" ? (
+                              <span>{listing.height_hands}hh</span>
+                            ) : null}
+                            {typeof listing.gender === "string" ? (
+                              <span className="capitalize">{listing.gender}</span>
+                            ) : null}
+                            {typeof listing.location_state === "string" ? (
+                              <span className="flex items-center gap-1">
+                                <MapPin className="h-3 w-3" />
+                                {typeof listing.location_city === "string"
+                                  ? `${listing.location_city}, `
+                                  : ""}
+                                {listing.location_state}
+                              </span>
+                            ) : null}
+                          </div>
+
+                          {seller && typeof seller.display_name === "string" ? (
+                            <p className="mt-1 text-xs text-ink-light">
+                              Sold by {String(seller.display_name)}
+                            </p>
+                          ) : null}
+                        </div>
+
+                        {/* Time */}
+                        <div className="shrink-0 text-right">
+                          <p className="flex items-center gap-1 text-xs text-ink-light">
+                            <Calendar className="h-3 w-3" />
+                            {timeAgo(listing.updated_at)}
+                          </p>
+                        </div>
+                      </div>
                     </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </section>
 
-                    <div className="mt-1 flex flex-wrap items-center gap-3 text-sm text-ink-mid">
-                      {typeof listing.breed === "string" ? (
-                        <span>{listing.breed}</span>
-                      ) : null}
-                      {typeof listing.age_years === "number" ? (
-                        <span>{listing.age_years}yo</span>
-                      ) : null}
-                      {typeof listing.height_hands === "number" ? (
-                        <span>{listing.height_hands}hh</span>
-                      ) : null}
-                      {typeof listing.gender === "string" ? (
-                        <span className="capitalize">{listing.gender}</span>
-                      ) : null}
-                      {typeof listing.location_state === "string" ? (
-                        <span className="flex items-center gap-1">
-                          <MapPin className="h-3 w-3" />
-                          {typeof listing.location_city === "string"
-                            ? `${listing.location_city}, `
-                            : ""}
-                          {listing.location_state}
-                        </span>
-                      ) : null}
-                    </div>
-
-                    {seller && typeof seller.display_name === "string" ? (
-                      <p className="mt-1 text-xs text-ink-light">
-                        Sold by {String(seller.display_name)}
-                      </p>
-                    ) : null}
-                  </div>
-
-                  {/* Time + optional price */}
-                  <div className="shrink-0 text-right">
-                    <p className="flex items-center gap-1 text-xs text-ink-light">
-                      <Calendar className="h-3 w-3" />
-                      {timeAgo(listing.updated_at)}
-                    </p>
-                  </div>
-                </div>
-              </Card>
-            );
-          })}
-        </div>
-      )}
-
-      {/* Disclaimer */}
-      <p className="mt-8 text-xs text-ink-light">
-        Sale prices are not displayed to protect buyer and seller privacy.
-        All representations are made by the seller. ManeExchange is a marketplace
-        that connects buyers and sellers and is not a party to any transaction.
-      </p>
+        {/* Disclaimer */}
+        <section className="bg-paper-white px-4 py-8 md:px-8">
+          <p className="mx-auto max-w-4xl text-xs text-ink-light">
+            Sale prices are not displayed to protect buyer and seller privacy.
+            All representations are made by the seller. ManeExchange is a marketplace
+            that connects buyers and sellers and is not a party to any transaction.
+          </p>
+        </section>
+      </main>
+      <Footer />
     </div>
   );
 }

@@ -183,19 +183,19 @@ export default function MarketIntelligencePage() {
       <Header />
       <main>
         {/* Hero */}
-        <section className="bg-paper-white px-4 pt-20 pb-16 md:px-8 md:pt-24">
+        <section className="with-grain bg-gradient-hero px-4 pt-24 pb-12 md:px-8 md:pt-36 md:pb-16">
           <div className="mx-auto max-w-[1200px] text-center">
             <p className="overline mb-3 text-red">MARKET INTELLIGENCE</p>
-            <h1 className="mb-4 text-4xl font-bold text-ink-black md:text-5xl">
+            <h1 className="mb-4 text-4xl tracking-tight text-ink-black md:text-5xl">
               Know the market.
             </h1>
-            <p className="mx-auto max-w-2xl text-lg text-ink-mid">
+            <p className="text-lead mx-auto max-w-2xl text-ink-mid">
               Real-time pricing data, demand trends, and market insights from
               the ManeExchange marketplace.
             </p>
 
             {/* Time Period Selector */}
-            <div className="mx-auto mt-10 mb-8 flex gap-1 rounded-lg bg-paper-cream p-1 max-w-xs">
+            <div className="mx-auto mt-10 mb-8 flex gap-1 rounded-lg bg-paper-warm p-1 max-w-xs">
               {(["7d", "30d", "90d", "1yr"] as TimePeriod[]).map((period) => (
                 <button
                   key={period}
@@ -214,15 +214,15 @@ export default function MarketIntelligencePage() {
         </section>
 
         {/* Stat Cards */}
-        <section className="bg-paper-cream px-4 py-20 md:px-8 md:py-24">
+        <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-[1200px]">
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-              <div className="rounded-lg border border-border bg-paper-white p-5">
+              <div className="rounded-lg border-0 bg-paper-white p-5 shadow-flat">
                 <div className="flex items-center gap-2 text-sm text-ink-mid">
                   <DollarSign className="h-4 w-4" />
                   Avg. Price
                 </div>
-                <p className="mt-2 text-2xl font-bold text-ink-black">
+                <p className="mt-2 font-serif text-2xl font-bold text-ink-black">
                   {stats.avgPrice}
                 </p>
                 <p className="mt-1">
@@ -230,12 +230,12 @@ export default function MarketIntelligencePage() {
                 </p>
               </div>
 
-              <div className="rounded-lg border border-border bg-paper-white p-5">
+              <div className="rounded-lg border-0 bg-paper-white p-5 shadow-flat">
                 <div className="flex items-center gap-2 text-sm text-ink-mid">
                   <DollarSign className="h-4 w-4" />
                   Median Price
                 </div>
-                <p className="mt-2 text-2xl font-bold text-ink-black">
+                <p className="mt-2 font-serif text-2xl font-bold text-ink-black">
                   {stats.medianPrice}
                 </p>
                 <p className="mt-1">
@@ -243,12 +243,12 @@ export default function MarketIntelligencePage() {
                 </p>
               </div>
 
-              <div className="rounded-lg border border-border bg-paper-white p-5">
+              <div className="rounded-lg border-0 bg-paper-white p-5 shadow-flat">
                 <div className="flex items-center gap-2 text-sm text-ink-mid">
                   <Clock className="h-4 w-4" />
                   Avg. Days on Market
                 </div>
-                <p className="mt-2 text-2xl font-bold text-ink-black">
+                <p className="mt-2 font-serif text-2xl font-bold text-ink-black">
                   {stats.avgDays}
                 </p>
                 <p className="mt-1">
@@ -259,12 +259,12 @@ export default function MarketIntelligencePage() {
                 </p>
               </div>
 
-              <div className="rounded-lg border border-border bg-paper-white p-5">
+              <div className="rounded-lg border-0 bg-paper-white p-5 shadow-flat">
                 <div className="flex items-center gap-2 text-sm text-ink-mid">
                   <Activity className="h-4 w-4" />
                   Active Listings
                 </div>
-                <p className="mt-2 text-2xl font-bold text-ink-black">
+                <p className="mt-2 font-serif text-2xl font-bold text-ink-black">
                   {stats.activeListings}
                 </p>
                 <p className="mt-1">
@@ -276,15 +276,15 @@ export default function MarketIntelligencePage() {
         </section>
 
         {/* Price by Discipline Table */}
-        <section className="bg-paper-white px-4 py-20 md:px-8 md:py-24">
+        <section className="bg-paper-white section-premium">
           <div className="mx-auto max-w-[1200px]">
-            <h2 className="mb-6 text-2xl font-bold text-ink-black">
+            <h2 className="mb-6 font-heading text-2xl font-semibold tracking-tight text-ink-black">
               Average Price by Discipline
             </h2>
-            <div className="rounded-lg border border-border overflow-hidden">
+            <div className="rounded-lg border-0 overflow-hidden shadow-flat">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-border bg-paper-cream">
+                  <tr className="border-b border-crease-light bg-paper-cream">
                     <th className="px-4 py-3 text-left text-xs font-medium text-ink-mid">
                       Discipline
                     </th>
@@ -306,7 +306,7 @@ export default function MarketIntelligencePage() {
                   {disciplineData.map((row) => (
                     <tr
                       key={row.discipline}
-                      className="border-b border-border last:border-0"
+                      className="border-b border-crease-light last:border-0"
                     >
                       <td className="px-4 py-3 text-sm font-medium text-ink-black">
                         {row.discipline}
@@ -344,16 +344,16 @@ export default function MarketIntelligencePage() {
         </section>
 
         {/* Trend Callout Cards */}
-        <section className="bg-paper-cream px-4 py-20 md:px-8 md:py-24">
+        <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-[1200px]">
-            <h2 className="mb-6 text-2xl font-bold text-ink-black">
+            <h2 className="mb-6 font-heading text-2xl font-semibold tracking-tight text-ink-black">
               Market Trends
             </h2>
             <div className="grid gap-6 md:grid-cols-3">
               {trendCards.map((card) => (
                 <div
                   key={card.title}
-                  className={`rounded-lg border border-border ${card.color} border-l-4 bg-paper-white p-5`}
+                  className={`rounded-lg border-0 ${card.color} border-l-4 bg-paper-white p-5 shadow-flat`}
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <card.icon className={`h-5 w-5 ${card.iconColor}`} />
@@ -367,12 +367,12 @@ export default function MarketIntelligencePage() {
         </section>
 
         {/* Regional Demand Map Placeholder */}
-        <section className="bg-paper-white px-4 py-20 md:px-8 md:py-24">
+        <section className="bg-paper-white section-premium">
           <div className="mx-auto max-w-[1200px]">
-            <h2 className="mb-6 text-2xl font-bold text-ink-black">
+            <h2 className="mb-6 font-heading text-2xl font-semibold tracking-tight text-ink-black">
               Demand by Region
             </h2>
-            <div className="rounded-lg border border-border bg-paper-cream p-12 text-center">
+            <div className="rounded-lg border-0 bg-paper-cream p-12 text-center shadow-flat">
               <MapPin className="mx-auto mb-3 h-8 w-8 text-ink-light" />
               <h3 className="font-medium text-ink-black">
                 Regional Demand Map
@@ -385,12 +385,12 @@ export default function MarketIntelligencePage() {
         </section>
 
         {/* Bottom CTA */}
-        <section className="bg-paper-cream px-4 py-20 md:px-8 md:py-24">
+        <section className="bg-ink-black section-premium">
           <div className="mx-auto max-w-[1200px] text-center">
-            <h2 className="mb-4 text-3xl font-bold text-ink-black">
+            <h2 className="mb-4 text-3xl tracking-tight text-paper-white">
               Ready to buy or sell?
             </h2>
-            <p className="mx-auto mb-8 max-w-lg text-ink-mid">
+            <p className="text-lead mx-auto mb-8 max-w-lg text-ink-light">
               Use market intelligence to make smarter decisions. Browse active
               listings or list your horse at the right price.
             </p>

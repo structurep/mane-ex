@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import type { HorseListing } from "@/types/listings";
 import { SaveSearchButton } from "./save-search-button";
+import { ScrollReveal } from "@/components/scroll-reveal";
 
 type Props = {
   params: {
@@ -128,8 +129,8 @@ export async function BrowseResults({ params }: Props) {
         <SaveSearchButton params={params} />
       </div>
 
-      {/* Card grid */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Card grid with scroll-reveal */}
+      <ScrollReveal className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {listings.map((listing) => {
           const l = listing as unknown as HorseListing & {
             media: { url: string; is_primary: boolean }[];
@@ -144,24 +145,24 @@ export async function BrowseResults({ params }: Props) {
             : 999;
           const fomoBadge =
             daysListed < 3
-              ? { label: "New", icon: Sparkles, className: "bg-blue text-white" }
+              ? { label: "New", icon: Sparkles, className: "bg-blue text-paper-white" }
               : (l.favorite_count ?? 0) > 5
-                ? { label: "Popular", icon: Flame, className: "bg-red text-white" }
+                ? { label: "Popular", icon: Flame, className: "bg-red text-paper-white" }
                 : (l.completeness_score ?? 0) > 800
-                  ? { label: "Top Rated", icon: Star, className: "bg-gold text-white" }
+                  ? { label: "Top Rated", icon: Star, className: "bg-gold text-paper-white" }
                   : null;
 
           return (
             <Link
               key={l.id}
               href={`/horses/${l.slug}`}
-              className="group relative overflow-hidden rounded-lg border border-border bg-paper-cream shadow-flat transition-elevation hover-lift hover:shadow-lifted"
+              className="animate-fade-up group overflow-hidden rounded-lg bg-paper-white shadow-flat transition-all duration-300 hover:shadow-lifted"
             >
-              {/* Image */}
+              {/* Image with gradient overlay price */}
               <div className="relative aspect-[4/3] overflow-hidden bg-paper-warm">
                 {/* FOMO Badge */}
                 {fomoBadge && (
-                  <div className={`absolute top-2 left-2 z-10 flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold ${fomoBadge.className}`}>
+                  <div className={`absolute top-2.5 left-2.5 z-10 flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${fomoBadge.className}`}>
                     <fomoBadge.icon className="h-3 w-3" />
                     {fomoBadge.label}
                   </div>
@@ -169,33 +170,34 @@ export async function BrowseResults({ params }: Props) {
                 {(() => {
                   const primary = l.media?.find((m) => m.is_primary) || l.media?.[0];
                   return primary ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
                     <img
                       src={primary.url}
                       alt={l.name}
-                      className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                      loading="lazy"
                     />
                   ) : null;
                 })()}
-                {/* Fold corner accent */}
-                <div className="absolute right-0 top-0 z-10 h-8 w-8 bg-gradient-to-bl from-paper-warm to-transparent" />
+                {/* Price overlay on gradient */}
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink-black/70 via-ink-black/30 to-transparent px-3 pb-3 pt-8">
+                  <p className="font-serif text-lg font-bold text-paper-white drop-shadow-sm">
+                    {priceStr}
+                  </p>
+                </div>
               </div>
 
               {/* Content */}
-              <div className="p-4">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h3 className="font-medium text-ink-black group-hover:text-red">
-                      {l.name}
-                    </h3>
-                    <p className="mt-0.5 text-sm text-ink-mid">
-                      {[l.breed, l.color].filter(Boolean).join(" · ")}
-                    </p>
-                  </div>
-                  <p className="text-lg font-bold text-ink-black">{priceStr}</p>
-                </div>
+              <div className="p-3.5">
+                <h3 className="font-medium text-ink-black group-hover:text-red">
+                  {l.name}
+                </h3>
+                <p className="mt-0.5 text-sm text-ink-mid">
+                  {[l.breed, l.color].filter(Boolean).join(" · ")}
+                </p>
 
                 {/* Quick stats */}
-                <div className="mt-3 flex flex-wrap gap-3 text-xs text-ink-light">
+                <div className="mt-2.5 flex flex-wrap gap-3 text-xs text-ink-light">
                   {l.age_years != null && (
                     <span className="flex items-center gap-1">
                       <Calendar className="h-3 w-3" />
@@ -217,7 +219,7 @@ export async function BrowseResults({ params }: Props) {
                 </div>
 
                 {/* Score + Saves */}
-                <div className="mt-3 flex items-center justify-between text-xs">
+                <div className="mt-2.5 flex items-center justify-between text-xs">
                   <span
                     className={`flex items-center gap-1 font-medium ${
                       l.completeness_grade === "excellent"
@@ -239,7 +241,7 @@ export async function BrowseResults({ params }: Props) {
             </Link>
           );
         })}
-      </div>
+      </ScrollReveal>
 
       {/* Pagination */}
       {totalPages > 1 && (

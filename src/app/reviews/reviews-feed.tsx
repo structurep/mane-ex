@@ -38,7 +38,6 @@ export function ReviewsFeed({ reviews }: { reviews: ReviewData[] }) {
   const filteredReviews = useMemo(() => {
     let result = [...reviews];
 
-    // Text search
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       result = result.filter(
@@ -48,21 +47,17 @@ export function ReviewsFeed({ reviews }: { reviews: ReviewData[] }) {
       );
     }
 
-    // Filter pills
     if (activeFilter === "Verified Only") {
       result = result.filter((r) => r.is_verified_purchase === true);
     } else if (activeFilter === "With Response") {
       result = result.filter((r) => typeof r.seller_response === "string");
     }
 
-    // Sort
     if (sortBy === "highest") {
       result.sort((a, b) => b.rating - a.rating);
     } else if (sortBy === "lowest") {
       result.sort((a, b) => a.rating - b.rating);
     } else {
-      // recent (default) — already ordered by created_at desc from the server,
-      // but re-sort to be safe after filtering
       result.sort(
         (a, b) =>
           new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
@@ -73,24 +68,24 @@ export function ReviewsFeed({ reviews }: { reviews: ReviewData[] }) {
   }, [reviews, searchQuery, sortBy, activeFilter]);
 
   return (
-    <section className="bg-paper-cream px-4 py-12 md:px-8">
+    <section className="bg-paper-cream section-premium">
       <div className="mx-auto max-w-3xl">
         {/* Search + Sort row */}
         <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="relative flex-1 sm:max-w-xs">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-light" />
+            <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-light" />
             <input
               type="text"
               placeholder="Search reviews..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-lg border border-border bg-paper-white py-2.5 pl-10 pr-4 text-sm text-ink-black placeholder:text-ink-light focus:border-blue focus:outline-none focus:ring-1 focus:ring-blue"
+              className="w-full rounded-lg bg-paper-white py-3 pl-11 pr-4 text-sm text-ink-black shadow-flat placeholder:text-ink-light focus:shadow-folded focus:outline-none"
             />
           </div>
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="rounded-lg border border-border bg-paper-white px-3 py-2.5 text-sm text-ink-black"
+            className="rounded-lg bg-paper-white px-3 py-3 text-sm text-ink-black shadow-flat"
           >
             <option value="recent">Most Recent</option>
             <option value="highest">Highest Rated</option>
@@ -99,15 +94,15 @@ export function ReviewsFeed({ reviews }: { reviews: ReviewData[] }) {
         </div>
 
         {/* Filter pills */}
-        <div className="mb-6 flex gap-2">
+        <div className="mb-8 flex gap-2">
           {FILTERS.map((filter) => (
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
+              className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all ${
                 activeFilter === filter
-                  ? "bg-ink-black text-white"
-                  : "bg-paper-white text-ink-mid hover:bg-paper-warm"
+                  ? "bg-ink-black text-white shadow-flat"
+                  : "bg-paper-white text-ink-mid shadow-flat hover:shadow-folded"
               }`}
             >
               {filter}
@@ -123,7 +118,7 @@ export function ReviewsFeed({ reviews }: { reviews: ReviewData[] }) {
         </div>
 
         {filteredReviews.length === 0 && (
-          <div className="rounded-lg border border-border bg-paper-white py-12 text-center">
+          <div className="rounded-lg bg-paper-white py-12 text-center shadow-flat">
             <p className="text-ink-mid">No reviews match your filters.</p>
           </div>
         )}

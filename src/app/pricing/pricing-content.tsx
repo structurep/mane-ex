@@ -86,11 +86,12 @@ export function PricingContent() {
   return (
     <div className="min-h-screen">
       <Header />
-      <main className="px-4 py-20 md:px-8 md:py-24">
-        <div className="mx-auto max-w-[1200px]">
-          <div className="mb-16 text-center">
-            <p className="overline mb-3 text-red">PRICING</p>
-            <h1 className="mb-4 text-4xl font-bold text-ink-black md:text-5xl">
+      <main>
+        {/* ── Hero ── */}
+        <section className="with-grain bg-gradient-hero px-4 pt-24 pb-20 md:px-8 md:pt-36 md:pb-28">
+          <div className="mx-auto max-w-[1200px] text-center">
+            <p className="overline mb-4 text-red">PRICING</p>
+            <h1 className="mb-6 text-4xl tracking-tight text-ink-black md:text-6xl">
               Free to start. Free to grow.
             </h1>
             <p className="text-lead mx-auto max-w-2xl text-ink-mid">
@@ -98,9 +99,11 @@ export function PricingContent() {
               and track record before any fees kick in.
             </p>
           </div>
+        </section>
 
-          {/* B9: Monthly/Annual Toggle */}
-          <div className="mb-12 flex items-center justify-center gap-3">
+        {/* ── Toggle ── */}
+        <section className="bg-paper-cream px-4 pt-16 pb-0 md:px-8 md:pt-20">
+          <div className="flex items-center justify-center gap-3">
             <span
               className={`text-sm font-medium ${!annual ? "text-ink-black" : "text-ink-light"}`}
             >
@@ -122,109 +125,124 @@ export function PricingContent() {
             {annual && (
               <Badge
                 variant="secondary"
-                className="bg-forest/10 text-forest text-xs"
+                className="bg-forest-light text-xs text-forest"
               >
                 2 months free
               </Badge>
             )}
           </div>
+        </section>
 
-          {/* Seller Tiers */}
-          <div className="mb-8 text-center">
-            <p className="overline mb-3 text-red">SELLER PLANS</p>
-            <h2 className="text-2xl font-semibold text-ink-black">
-              Plans for sellers
-            </h2>
-          </div>
+        {/* ── Seller Plans ── */}
+        <section className="bg-paper-cream section-premium">
+          <div className="mx-auto max-w-[1200px]">
+            <div className="mb-12 text-center">
+              <p className="overline mb-3 text-red">SELLER PLANS</p>
+              <h2 className="text-3xl text-ink-black md:text-4xl">
+                Plans for sellers
+              </h2>
+            </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
-            {sellerTiers.map((tier) => {
-              const price = formatPrice(tier, annual);
-              return (
-                <div
-                  key={tier.name}
-                  className={`relative rounded-lg border p-8 ${
-                    tier.highlighted
-                      ? "border-red bg-paper-white shadow-folded"
-                      : "border-border bg-paper-cream shadow-flat"
-                  }`}
-                >
-                  {tier.highlighted && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                      <span className="rounded-full bg-red px-3 py-1 text-xs font-semibold text-white">
-                        MOST POPULAR
-                      </span>
-                    </div>
-                  )}
-                  <h3 className="mb-1 text-lg font-semibold text-ink-black">
-                    {tier.name}
-                  </h3>
-                  <div className="mb-1">
-                    <span className="text-3xl font-bold text-ink-black">
-                      {price.display}
-                    </span>
-                    {price.perMonth && (
-                      <span className="text-sm text-ink-mid">
-                        {price.perMonth}
-                      </span>
-                    )}
-                  </div>
-                  {tier.monthlyPrice === 0 ? (
-                    <p className="mb-3 text-xs text-ink-light">Free forever</p>
-                  ) : (
-                    <p className="mb-3 text-xs text-ink-light">
-                      {price.note
-                        ? price.note
-                        : `During launch — $${tier.monthlyPrice}/mo after`}
-                    </p>
-                  )}
-                  <p className="mb-6 text-sm text-ink-mid">
-                    {tier.description}
-                  </p>
-                  <ul className="mb-8 space-y-3">
-                    {tier.features.map((feature) => (
-                      <li
-                        key={feature}
-                        className="flex items-start gap-2 text-sm text-ink-dark"
-                      >
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-forest" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                  <Button
-                    className="w-full"
-                    variant={tier.highlighted ? "default" : "outline"}
-                    asChild
+            <div className="stagger-children grid gap-6 md:grid-cols-3">
+              {sellerTiers.map((tier) => {
+                const price = formatPrice(tier, annual);
+                return (
+                  <div
+                    key={tier.name}
+                    className={`animate-fade-up relative rounded-lg p-8 transition-elevation hover-lift ${
+                      tier.highlighted
+                        ? "bg-paper-white shadow-lifted hover:shadow-hovering"
+                        : "bg-paper-white shadow-flat hover:shadow-lifted"
+                    }`}
                   >
-                    <Link href="/signup">
-                      {tier.cta}
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
-              );
-            })}
+                    {tier.highlighted && (
+                      <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                        <span className="rounded-full bg-red px-3 py-1 text-xs font-semibold text-white">
+                          MOST POPULAR
+                        </span>
+                      </div>
+                    )}
+                    <h3 className="mb-1 font-heading text-lg font-semibold text-ink-black">
+                      {tier.name}
+                    </h3>
+                    <div className="mb-1">
+                      <span className="font-serif text-4xl font-bold text-ink-black">
+                        {price.display}
+                      </span>
+                      {price.perMonth && (
+                        <span className="text-sm text-ink-mid">
+                          {price.perMonth}
+                        </span>
+                      )}
+                    </div>
+                    {tier.monthlyPrice === 0 ? (
+                      <p className="mb-4 text-xs text-ink-light">
+                        Free forever
+                      </p>
+                    ) : (
+                      <p className="mb-4 text-xs text-ink-light">
+                        {price.note
+                          ? price.note
+                          : `During launch — $${tier.monthlyPrice}/mo after`}
+                      </p>
+                    )}
+                    <p className="mb-6 text-sm text-ink-mid">
+                      {tier.description}
+                    </p>
+                    <div className="crease-divider mb-6" />
+                    <ul className="mb-8 space-y-3">
+                      {tier.features.map((feature) => (
+                        <li
+                          key={feature}
+                          className="flex items-start gap-2 text-sm text-ink-dark"
+                        >
+                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-forest" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                    <Button
+                      className="w-full"
+                      variant={tier.highlighted ? "default" : "outline"}
+                      asChild
+                    >
+                      <Link href="/signup">
+                        {tier.cta}
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
+                    </Button>
+                  </div>
+                );
+              })}
+            </div>
           </div>
+        </section>
 
-          {/* B8: Buyer Plans */}
-          <div className="mt-16">
-            <div className="mb-8 text-center">
+        {/* ── Buyer Plans ── */}
+        <section className="with-grain bg-paper-white section-premium">
+          <div className="mx-auto max-w-[1200px]">
+            <div className="mb-12 text-center">
               <p className="overline mb-3 text-blue">BUYER PLANS</p>
-              <h2 className="text-2xl font-semibold text-ink-black">
+              <h2 className="text-3xl text-ink-black md:text-4xl">
                 Tools for serious buyers
               </h2>
             </div>
-            <div className="mx-auto grid max-w-2xl gap-6 md:grid-cols-2">
+
+            <div className="stagger-children mx-auto grid max-w-2xl gap-6 md:grid-cols-2">
               {/* Free Buyer */}
-              <div className="rounded-lg border border-border bg-paper-cream p-8 shadow-flat">
-                <h3 className="text-lg font-semibold text-ink-black">Free</h3>
-                <p className="mt-1 text-3xl font-bold text-ink-black">$0</p>
+              <div className="animate-fade-up rounded-lg bg-paper-cream p-8 shadow-flat transition-elevation hover-lift hover:shadow-lifted">
+                <h3 className="font-heading text-lg font-semibold text-ink-black">
+                  Free
+                </h3>
+                <p className="mt-1 font-serif text-4xl font-bold text-ink-black">
+                  $0
+                </p>
                 <p className="text-xs text-ink-light">Free forever</p>
                 <p className="mt-3 text-sm text-ink-mid">
                   Browse, save, and message sellers.
                 </p>
-                <ul className="mt-6 space-y-3">
+                <div className="crease-divider my-6" />
+                <ul className="space-y-3">
                   {[
                     "Browse all listings",
                     "Save to Dream Barn (10 max)",
@@ -245,18 +263,19 @@ export function PricingContent() {
                   <Link href="/signup">Get Started</Link>
                 </Button>
               </div>
+
               {/* Buyer Pro */}
-              <div className="relative rounded-lg border border-blue bg-paper-white p-8 shadow-folded">
+              <div className="animate-fade-up relative rounded-lg bg-paper-white p-8 shadow-lifted transition-elevation hover-lift hover:shadow-hovering">
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                   <span className="rounded-full bg-blue px-3 py-1 text-xs font-semibold text-white">
                     FOR BUYERS
                   </span>
                 </div>
-                <h3 className="text-lg font-semibold text-ink-black">
+                <h3 className="font-heading text-lg font-semibold text-ink-black">
                   Buyer Pro
                 </h3>
                 <div className="mt-1">
-                  <span className="text-3xl font-bold text-ink-black">
+                  <span className="font-serif text-4xl font-bold text-ink-black">
                     Free
                   </span>
                 </div>
@@ -266,7 +285,8 @@ export function PricingContent() {
                 <p className="mt-3 text-sm text-ink-mid">
                   AI matching, unlimited access, and priority support.
                 </p>
-                <ul className="mt-6 space-y-3">
+                <div className="crease-divider my-6" />
+                <ul className="space-y-3">
                   {[
                     "Everything in Free",
                     "AI-powered ManeMatch recommendations",
@@ -295,91 +315,112 @@ export function PricingContent() {
             </div>
 
             {/* Elite math callout */}
-            <div className="mx-auto mt-8 max-w-2xl rounded-lg bg-ink-black p-6 text-center">
-              <p className="text-sm text-ink-light">Do the math</p>
-              <p className="mt-2 text-lg font-semibold text-paper-white">
+            <div className="mx-auto mt-12 max-w-2xl rounded-lg bg-ink-black p-8 text-center">
+              <p className="overline text-ink-light">DO THE MATH</p>
+              <p className="mt-3 text-lg font-semibold text-paper-white">
                 Pro Seller ($49) + Buyer Pro ($39) ={" "}
                 <span className="text-ink-light line-through">$88/mo</span>
               </p>
-              <p className="mt-1 text-2xl font-bold text-gold">
+              <p className="mt-1 font-serif text-3xl font-bold text-gold">
                 Elite gives you everything for $149/mo
               </p>
-              <p className="mt-2 text-sm text-ink-light">
+              <p className="mt-3 text-sm text-ink-light">
                 Save with Elite if you&apos;re both buying and selling.
               </p>
             </div>
           </div>
+        </section>
 
-          {/* B10: ManeVault Escrow Milestones */}
-          <div className="mt-16 rounded-lg border border-border bg-paper-white p-8">
-            <h2 className="mb-2 text-xl font-semibold text-ink-black">
-              ManeVault Escrow
-            </h2>
-            <p className="mb-6 text-ink-mid">
-              Funds are released in milestones, not all at once.
-            </p>
-            <div className="grid gap-4 md:grid-cols-3">
-              <div className="rounded-md bg-paper-cream p-5 text-center">
-                <p className="text-3xl font-bold text-ink-black">25%</p>
-                <p className="mt-1 text-sm font-medium text-ink-dark">
-                  PPE Approval
-                </p>
-                <p className="mt-1 text-xs text-ink-mid">
-                  Released when buyer approves the pre-purchase exam results.
-                </p>
-              </div>
-              <div className="rounded-md bg-paper-cream p-5 text-center">
-                <p className="text-3xl font-bold text-ink-black">25%</p>
-                <p className="mt-1 text-sm font-medium text-ink-dark">
-                  Trial Completion
-                </p>
-                <p className="mt-1 text-xs text-ink-mid">
-                  Released after the trial period is completed successfully.
-                </p>
-              </div>
-              <div className="rounded-md bg-paper-cream p-5 text-center">
-                <p className="text-3xl font-bold text-ink-black">50%</p>
-                <p className="mt-1 text-sm font-medium text-ink-dark">
-                  Delivery Confirmation
-                </p>
-                <p className="mt-1 text-xs text-ink-mid">
-                  Final release when buyer confirms safe delivery and
-                  inspection.
-                </p>
-              </div>
+        {/* ── ManeVault Escrow Milestones ── */}
+        <section className="bg-paper-cream section-premium">
+          <div className="mx-auto max-w-[1200px]">
+            <div className="mb-12 text-center">
+              <p className="overline mb-3 text-gold">MANEVAULT ESCROW</p>
+              <h2 className="text-3xl text-ink-black md:text-4xl">
+                Funds released in milestones
+              </h2>
+              <p className="text-lead mx-auto mt-4 max-w-xl text-ink-mid">
+                Not all at once. Each milestone protects both buyer and seller.
+              </p>
+            </div>
+
+            <div className="stagger-children grid gap-6 md:grid-cols-3">
+              {[
+                {
+                  pct: "25%",
+                  label: "PPE Approval",
+                  description:
+                    "Released when buyer approves the pre-purchase exam results.",
+                },
+                {
+                  pct: "25%",
+                  label: "Trial Completion",
+                  description:
+                    "Released after the trial period is completed successfully.",
+                },
+                {
+                  pct: "50%",
+                  label: "Delivery Confirmation",
+                  description:
+                    "Final release when buyer confirms safe delivery and inspection.",
+                },
+              ].map((m) => (
+                <div
+                  key={m.label}
+                  className="animate-fade-up rounded-lg bg-paper-white p-8 text-center shadow-flat transition-elevation hover-lift hover:shadow-lifted"
+                >
+                  <p className="font-serif text-5xl font-bold text-ink-black">
+                    {m.pct}
+                  </p>
+                  <p className="mt-2 font-heading text-sm font-semibold text-ink-dark">
+                    {m.label}
+                  </p>
+                  <p className="mt-2 text-sm text-ink-mid">{m.description}</p>
+                </div>
+              ))}
             </div>
           </div>
+        </section>
 
-          {/* Transaction fees */}
-          <div className="mt-16 rounded-lg border border-border bg-paper-cream p-8">
-            <h2 className="mb-4 text-xl font-semibold text-ink-black">
-              Transaction Fees
-            </h2>
-            <p className="mb-4 text-ink-mid">
-              Zero transaction fees during launch. When fees begin (month
-              12-18):
-            </p>
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="rounded-md bg-paper-warm p-4">
-                <p className="overline mb-1 text-ink-light">
-                  TRANSACTIONS &gt; $50K
-                </p>
-                <p className="text-2xl font-bold text-ink-black">3-5%</p>
+        {/* ── Transaction Fees ── */}
+        <section className="bg-paper-white section-compact">
+          <div className="mx-auto max-w-[1200px]">
+            <div className="rounded-lg bg-paper-cream p-8 shadow-flat md:p-12">
+              <p className="overline mb-3 text-ink-light">
+                TRANSACTION FEES
+              </p>
+              <h2 className="mb-4 text-2xl text-ink-black md:text-3xl">
+                Zero fees during launch
+              </h2>
+              <p className="mb-8 max-w-xl text-ink-mid">
+                When fees begin (month 12-18):
+              </p>
+              <div className="grid gap-6 md:grid-cols-2">
+                <div className="rounded-lg bg-paper-warm p-6">
+                  <p className="overline mb-2 text-ink-light">
+                    TRANSACTIONS &gt; $50K
+                  </p>
+                  <p className="font-serif text-4xl font-bold text-ink-black">
+                    3-5%
+                  </p>
+                </div>
+                <div className="rounded-lg bg-paper-warm p-6">
+                  <p className="overline mb-2 text-ink-light">
+                    TRANSACTIONS $10K-$50K
+                  </p>
+                  <p className="font-serif text-4xl font-bold text-ink-black">
+                    5-8%
+                  </p>
+                </div>
               </div>
-              <div className="rounded-md bg-paper-warm p-4">
-                <p className="overline mb-1 text-ink-light">
-                  TRANSACTIONS $10K-$50K
-                </p>
-                <p className="text-2xl font-bold text-ink-black">5-8%</p>
-              </div>
+              <p className="mt-6 text-xs text-ink-light">
+                ACH transfers (default for transactions &gt;$5K) cap Stripe
+                processing at $5 per transaction. Card payments incur standard
+                processing fees (2.9% + $0.30).
+              </p>
             </div>
-            <p className="mt-4 text-xs text-ink-light">
-              ACH transfers (default for transactions &gt;$5K) cap Stripe
-              processing at $5 per transaction. Card payments incur standard
-              processing fees (2.9% + $0.30).
-            </p>
           </div>
-        </div>
+        </section>
       </main>
       <Footer />
     </div>

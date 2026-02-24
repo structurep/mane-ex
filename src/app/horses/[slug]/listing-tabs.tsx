@@ -91,7 +91,7 @@ export function ListingTabs({ listing }: { listing: ListingTabsData }) {
         <div className="mb-6">
           <div className="flex items-start justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-ink-black">{l.name}</h1>
+              <h1 className="text-4xl font-bold tracking-tight text-ink-black md:text-5xl">{l.name}</h1>
               <p className="mt-1 text-ink-mid">
                 {[l.breed, l.color, l.gender].filter(Boolean).join(" · ")}
               </p>
@@ -625,7 +625,7 @@ export function ListingTabs({ listing }: { listing: ListingTabsData }) {
               />
 
               {/* ManeVault teaser */}
-              <div className="rounded-lg border border-border bg-paper-warm p-4">
+              <div className="rounded-lg border border-forest/20 bg-forest-light p-4">
                 <div className="flex items-center gap-2">
                   <Shield className="h-4 w-4 text-forest" />
                   <span className="text-sm font-medium text-ink-dark">
@@ -658,7 +658,7 @@ export function ListingTabs({ listing }: { listing: ListingTabsData }) {
         <div className="sticky top-20 space-y-4">
           {/* Price card */}
           <div className="rounded-lg border border-border bg-paper-cream p-6 shadow-folded">
-            <p className="text-3xl font-bold text-ink-black">{priceStr}</p>
+            <p className="font-serif text-4xl font-bold tracking-tight text-ink-black">{priceStr}</p>
             {l.price_negotiable && (
               <p className="mt-1 text-xs text-ink-light">
                 Price negotiable
@@ -747,7 +747,7 @@ export function ListingTabs({ listing }: { listing: ListingTabsData }) {
           </div>
 
           {/* ManeVault teaser */}
-          <div className="rounded-lg border border-border bg-paper-warm p-4">
+          <div className="rounded-lg border border-forest/20 bg-forest-light p-4">
             <div className="flex items-center gap-2">
               <Shield className="h-4 w-4 text-forest" />
               <span className="text-sm font-medium text-ink-dark">
@@ -851,7 +851,7 @@ function PricingCard({
 
   return (
     <div className="rounded-lg border border-border bg-paper-cream p-6 shadow-folded">
-      <p className="text-3xl font-bold text-ink-black">{priceStr}</p>
+      <p className="font-serif text-4xl font-bold tracking-tight text-ink-black">{priceStr}</p>
       {l.price_negotiable && (
         <p className="mt-1 text-xs text-ink-light">Price negotiable</p>
       )}

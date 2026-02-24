@@ -13,7 +13,7 @@ export default function QuizPage() {
   return (
     <div className="min-h-screen">
       <Header />
-      <main className="px-4 py-20 md:px-8 md:py-24">
+      <main className="with-grain bg-gradient-hero section-premium">
         <div className="mx-auto max-w-2xl">
           <QuizFlow />
         </div>

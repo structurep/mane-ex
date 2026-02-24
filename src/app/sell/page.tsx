@@ -130,10 +130,10 @@ export default function SellPage() {
       <Header />
       <main>
         {/* Hero */}
-        <section className="bg-paper-white px-4 py-20 md:px-8 md:py-24">
+        <section className="with-grain bg-gradient-hero px-4 pt-24 pb-12 md:px-8 md:pt-36 md:pb-16">
           <div className="mx-auto max-w-[1200px] text-center">
             <p className="overline mb-3 text-red">SELL ON MANEEXCHANGE</p>
-            <h1 className="mb-6 text-4xl font-bold text-ink-black md:text-5xl">
+            <h1 className="mb-6 text-4xl tracking-tight text-ink-black md:text-5xl">
               Sell smarter. Not harder.
             </h1>
             <p className="text-lead mx-auto mb-8 max-w-2xl text-ink-mid">
@@ -161,7 +161,7 @@ export default function SellPage() {
             <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
               {stats.map((stat) => (
                 <div key={stat.label} className="text-center">
-                  <p className="text-3xl font-bold text-paper-white">
+                  <p className="font-serif text-3xl font-bold text-paper-white">
                     {stat.value}
                   </p>
                   <p className="text-sm text-ink-light">{stat.label}</p>
@@ -172,17 +172,17 @@ export default function SellPage() {
         </section>
 
         {/* How It Works */}
-        <section className="bg-paper-cream px-4 py-20 md:px-8 md:py-24">
+        <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-[1200px]">
             <p className="overline mb-3 text-red">HOW IT WORKS</p>
-            <h2 className="mb-10 text-3xl font-bold text-ink-black md:text-4xl">
+            <h2 className="mb-10 text-3xl tracking-tight text-ink-black md:text-4xl">
               Six steps to a secure sale.
             </h2>
             <div className="grid gap-6 md:grid-cols-3">
               {steps.map((step) => (
                 <div
                   key={step.number}
-                  className="rounded-lg border border-border bg-paper-white p-6 shadow-flat"
+                  className="rounded-lg border-0 bg-paper-white p-6 shadow-flat transition-elevation hover-lift hover:shadow-lifted"
                 >
                   <span className="mb-3 flex h-8 w-8 items-center justify-center rounded-full bg-red text-sm font-bold text-white">
                     {step.number}
@@ -198,10 +198,10 @@ export default function SellPage() {
         </section>
 
         {/* Value Props */}
-        <section className="bg-paper-white px-4 py-20 md:px-8 md:py-24">
+        <section className="bg-paper-white section-premium">
           <div className="mx-auto max-w-[1200px]">
             <p className="overline mb-3 text-red">WHY MANEEXCHANGE</p>
-            <h2 className="mb-10 text-3xl font-bold text-ink-black md:text-4xl">
+            <h2 className="mb-10 text-3xl tracking-tight text-ink-black md:text-4xl">
               Built for how horses are actually sold.
             </h2>
             <div className="grid gap-8 md:grid-cols-2">
@@ -229,16 +229,16 @@ export default function SellPage() {
         </section>
 
         {/* FAQ */}
-        <section className="bg-paper-cream px-4 py-20 md:px-8 md:py-24">
+        <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-3xl">
-            <h2 className="mb-8 text-3xl font-bold text-ink-black md:text-4xl">
+            <h2 className="mb-8 text-3xl tracking-tight text-ink-black md:text-4xl">
               Common questions from sellers
             </h2>
             <div>
               {faqs.map((faq) => (
                 <details
                   key={faq.question}
-                  className="group border-b border-border"
+                  className="group border-b border-crease-light"
                 >
                   <summary className="flex cursor-pointer items-center justify-between py-4 font-medium text-ink-black">
                     {faq.question}

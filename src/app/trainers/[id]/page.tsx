@@ -5,7 +5,6 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import {
   MapPin,
   Calendar,
@@ -176,7 +175,7 @@ export default async function TrainerProfilePage({ params }: Props) {
 
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <h1 className="font-heading text-3xl font-bold text-ink-black">
+                  <h1 className="font-heading text-3xl font-bold tracking-tight text-ink-black">
                     {trainer.name}
                   </h1>
                   {trainer.verified && (
@@ -225,22 +224,22 @@ export default async function TrainerProfilePage({ params }: Props) {
 
           {/* Stats row */}
           <div className="mb-8 grid grid-cols-3 gap-4">
-            <div className="rounded-lg border border-border bg-paper-cream p-4 text-center shadow-flat">
-              <p className="text-2xl font-bold text-ink-black">
+            <div className="rounded-lg border-0 bg-paper-cream p-4 text-center shadow-flat">
+              <p className="font-serif text-2xl font-bold text-ink-black">
                 {trainer.horseCount}
               </p>
               <p className="mt-1 text-xs text-ink-mid">Horses</p>
             </div>
-            <div className="rounded-lg border border-border bg-paper-cream p-4 text-center shadow-flat">
-              <p className="text-2xl font-bold text-ink-black">
+            <div className="rounded-lg border-0 bg-paper-cream p-4 text-center shadow-flat">
+              <p className="font-serif text-2xl font-bold text-ink-black">
                 {trainer.reviewCount}
               </p>
               <p className="mt-1 text-xs text-ink-mid">Reviews</p>
             </div>
-            <div className="rounded-lg border border-border bg-paper-cream p-4 text-center shadow-flat">
+            <div className="rounded-lg border-0 bg-paper-cream p-4 text-center shadow-flat">
               <div className="flex items-center justify-center gap-1">
                 <Star className="h-5 w-5 fill-gold text-gold" />
-                <p className="text-2xl font-bold text-ink-black">
+                <p className="font-serif text-2xl font-bold text-ink-black">
                   {trainer.rating}
                 </p>
               </div>
@@ -248,7 +247,7 @@ export default async function TrainerProfilePage({ params }: Props) {
             </div>
           </div>
 
-          <Separator className="my-6" />
+          <div className="crease-divider my-6" />
 
           {/* About */}
           <section className="mb-8">
@@ -272,7 +271,7 @@ export default async function TrainerProfilePage({ params }: Props) {
             </div>
           </section>
 
-          <Separator className="my-6" />
+          <div className="crease-divider my-6" />
 
           {/* Current Horses */}
           <section className="mb-8">
@@ -295,7 +294,7 @@ export default async function TrainerProfilePage({ params }: Props) {
                 return (
                   <div
                     key={horse.id}
-                    className="rounded-lg border border-border bg-paper-cream shadow-flat"
+                    className="rounded-lg border-0 bg-paper-cream shadow-flat transition-elevation hover-lift hover:shadow-lifted"
                   >
                     {/* Image placeholder */}
                     <div className="aspect-[4/3] rounded-t-lg bg-paper-warm" />
@@ -309,7 +308,7 @@ export default async function TrainerProfilePage({ params }: Props) {
                       </p>
 
                       <div className="mt-3 flex items-center justify-between">
-                        <p className="text-base font-bold text-ink-black">
+                        <p className="font-serif text-base font-bold text-ink-black">
                           {priceStr}
                         </p>
                         {horse.state && (
@@ -326,14 +325,14 @@ export default async function TrainerProfilePage({ params }: Props) {
             </div>
           </section>
 
-          <Separator className="my-6" />
+          <div className="crease-divider my-6" />
 
           {/* Contact */}
           <section className="mb-8">
             <h2 className="mb-3 font-heading text-lg font-semibold text-ink-black">
               Contact
             </h2>
-            <div className="rounded-lg border border-border bg-paper-cream p-5 shadow-flat">
+            <div className="rounded-lg border-0 bg-paper-cream p-5 shadow-flat">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="overline mb-2 text-ink-light">

@@ -1,9 +1,10 @@
 import { Metadata } from "next";
-import { Star } from "lucide-react";
+import { Star, ArrowRight } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { BottomCTA } from "@/components/bottom-cta";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { ReviewsFeed } from "./reviews-feed";
 
 export const metadata: Metadata = {
@@ -27,7 +28,6 @@ async function getReviews() {
     .eq("status", "published")
     .order("created_at", { ascending: false })
     .limit(50);
-  // Supabase returns joined relations as arrays — normalize to single objects
   return (reviews || []).map((r) => ({
     ...r,
     reviewer: Array.isArray(r.reviewer) ? r.reviewer[0] ?? null : r.reviewer,
@@ -38,7 +38,6 @@ async function getReviews() {
 export default async function ReviewsPage() {
   const reviews = await getReviews();
 
-  // Compute stats
   const totalReviews = reviews.length;
   const averageRating =
     totalReviews > 0
@@ -56,11 +55,11 @@ export default async function ReviewsPage() {
     <div className="min-h-screen">
       <Header />
       <main>
-        {/* Hero */}
-        <section className="bg-paper-white px-4 pt-20 pb-12 md:px-8 md:pt-24 md:pb-16">
+        {/* ── Hero ── */}
+        <section className="with-grain bg-gradient-hero px-4 pt-24 pb-20 md:px-8 md:pt-36 md:pb-28">
           <div className="mx-auto max-w-3xl text-center">
-            <p className="overline mb-3 text-red">COMMUNITY REVIEWS</p>
-            <h1 className="mb-4 text-4xl font-bold text-ink-black md:text-5xl">
+            <p className="overline mb-4 text-red">COMMUNITY REVIEWS</p>
+            <h1 className="mb-6 text-4xl tracking-tight text-ink-black md:text-6xl">
               Real experiences. Real people.
             </h1>
             <p className="text-lead text-ink-mid">
@@ -69,27 +68,27 @@ export default async function ReviewsPage() {
             </p>
 
             {/* Stats */}
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-8">
-              <div className="text-center">
+            <div className="stagger-children mt-10 flex flex-wrap items-center justify-center gap-10">
+              <div className="animate-fade-up text-center">
                 <div className="flex items-center justify-center gap-1">
-                  <p className="text-2xl font-bold text-ink-black">
+                  <p className="font-serif text-4xl font-bold text-ink-black">
                     {averageRating}
                   </p>
-                  <Star className="h-5 w-5 fill-gold text-gold" />
+                  <Star className="h-6 w-6 fill-gold text-gold" />
                 </div>
-                <p className="text-xs text-ink-mid">Average Rating</p>
+                <p className="mt-1 text-sm text-ink-mid">Average Rating</p>
               </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold text-ink-black">
+              <div className="animate-fade-up text-center">
+                <p className="font-serif text-4xl font-bold text-ink-black">
                   {totalReviews}
                 </p>
-                <p className="text-xs text-ink-mid">Total Reviews</p>
+                <p className="mt-1 text-sm text-ink-mid">Total Reviews</p>
               </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold text-ink-black">
+              <div className="animate-fade-up text-center">
+                <p className="font-serif text-4xl font-bold text-forest">
                   {verifiedPercent}%
                 </p>
-                <p className="text-xs text-ink-mid">Verified Purchases</p>
+                <p className="mt-1 text-sm text-ink-mid">Verified Purchases</p>
               </div>
             </div>
           </div>
@@ -99,7 +98,38 @@ export default async function ReviewsPage() {
         {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
         <ReviewsFeed reviews={reviews as any} />
 
-        <BottomCTA />
+        {/* ── CTA ── */}
+        <section className="bg-ink-black section-premium">
+          <div className="mx-auto max-w-[1200px] text-center">
+            <h2 className="mb-4 text-3xl text-paper-white md:text-4xl">
+              Join a community that values trust.
+            </h2>
+            <p className="text-lead mx-auto mb-8 max-w-xl text-ink-light">
+              Every transaction on ManeExchange is built on transparency,
+              verification, and real accountability.
+            </p>
+            <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+              <Button
+                size="lg"
+                className="bg-red hover:bg-red/90"
+                asChild
+              >
+                <Link href="/signup">
+                  Get Started — Free
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="!bg-transparent border-crease-dark text-paper-cream hover:!bg-ink-dark"
+                asChild
+              >
+                <Link href="/browse">Browse Horses</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </div>

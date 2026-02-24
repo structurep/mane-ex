@@ -60,13 +60,13 @@ export default async function Home() {
 
       <main>
         {/* ── Hero ── */}
-        <section className="bg-paper-white px-4 pt-20 pb-24 md:px-8 md:pt-32 md:pb-32">
+        <section className="with-grain bg-gradient-hero px-4 pt-24 pb-28 md:px-8 md:pt-36 md:pb-36">
           <div className="mx-auto max-w-[1200px]">
             <div className="max-w-2xl">
               <p className="overline mb-4 text-red">
                 THE EQUESTRIAN MARKETPLACE
               </p>
-              <h1 className="mb-6 text-4xl font-bold tracking-tight text-ink-black md:text-6xl">
+              <h1 className="mb-6 text-5xl tracking-tight text-ink-black md:text-7xl">
                 Buy and sell horses
                 <br />
                 <span className="text-ink-mid">with confidence.</span>
@@ -95,7 +95,7 @@ export default async function Home() {
         </section>
 
         {/* ── How It Works ── */}
-        <section className="bg-paper-cream px-4 py-20 md:px-8 md:py-24">
+        <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-[1200px]">
             <p className="overline mb-3 text-center text-ink-light">
               HOW IT WORKS
@@ -143,7 +143,7 @@ export default async function Home() {
         </section>
 
         {/* ── Trust Pillars ── */}
-        <section className="bg-paper-white px-4 py-20 md:px-8 md:py-24">
+        <section className="with-grain bg-paper-white section-premium">
           <div className="mx-auto max-w-[1200px]">
             <p className="overline mb-3 text-center text-ink-light">
               TRUST & SECURITY
@@ -160,8 +160,8 @@ export default async function Home() {
               {/* ManeVault */}
               <div className="group relative overflow-hidden rounded-lg border border-border bg-paper-cream p-8 shadow-flat transition-elevation hover-lift hover:shadow-lifted">
                 <div className="fold-corner" />
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-paper-warm">
-                  <Lock className="h-6 w-6 text-ink-dark" />
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gold-light">
+                  <Lock className="h-6 w-6 text-gold" />
                 </div>
                 <h3 className="mb-3 text-lg font-medium text-ink-black">
                   ManeVault Escrow
@@ -190,8 +190,8 @@ export default async function Home() {
               {/* ManeGuard */}
               <div className="group relative overflow-hidden rounded-lg border border-border bg-paper-cream p-8 shadow-flat transition-elevation hover-lift hover:shadow-lifted">
                 <div className="fold-corner" />
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-paper-warm">
-                  <Shield className="h-6 w-6 text-ink-dark" />
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-forest-light">
+                  <Shield className="h-6 w-6 text-forest" />
                 </div>
                 <h3 className="mb-3 text-lg font-medium text-ink-black">
                   ManeGuard Protection
@@ -220,8 +220,8 @@ export default async function Home() {
               {/* Mane Score */}
               <div className="group relative overflow-hidden rounded-lg border border-border bg-paper-cream p-8 shadow-flat transition-elevation hover-lift hover:shadow-lifted">
                 <div className="fold-corner" />
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-paper-warm">
-                  <BarChart3 className="h-6 w-6 text-ink-dark" />
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-blue-light">
+                  <BarChart3 className="h-6 w-6 text-blue" />
                 </div>
                 <h3 className="mb-3 text-lg font-medium text-ink-black">
                   Mane Score
@@ -258,12 +258,12 @@ export default async function Home() {
 
         {/* ── Featured Horses ── */}
         {featuredListings.length > 0 && (
-          <section className="bg-paper-cream px-4 py-20 md:px-8 md:py-24">
+          <section className="bg-paper-cream section-premium">
             <div className="mx-auto max-w-[1200px]">
-              <div className="mb-8 flex items-center justify-between">
+              <div className="mb-12 flex items-center justify-between">
                 <div>
                   <p className="overline mb-2 text-ink-light">FEATURED HORSES</p>
-                  <h2 className="text-3xl font-semibold text-ink-black">
+                  <h2 className="text-3xl text-ink-black">
                     Top-rated listings
                   </h2>
                 </div>
@@ -274,10 +274,10 @@ export default async function Home() {
                   </Link>
                 </Button>
               </div>
-              <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+              <div className="stagger-children grid gap-6 sm:grid-cols-2 md:grid-cols-3">
                 {featuredListings.map((l) => (
-                  <Link key={String(l.id)} href={`/horses/${String(l.slug)}`}>
-                    <Card className="group overflow-hidden transition-shadow hover:shadow-folded">
+                  <Link key={String(l.id)} href={`/horses/${String(l.slug)}`} className="animate-fade-up">
+                    <Card className="group overflow-hidden border-0 shadow-flat transition-elevation hover-lift hover:shadow-lifted">
                       <div className="aspect-[4/3] bg-paper-warm">
                         {typeof l.primary_image_url === "string" ? (
                           <img
@@ -334,31 +334,31 @@ export default async function Home() {
         )}
 
         {/* ── Platform Stats ── */}
-        <section className="bg-paper-white px-4 py-12 md:px-8">
-          <div className="mx-auto grid max-w-[1200px] gap-6 sm:grid-cols-3">
+        <section className="bg-ink-black section-premium">
+          <div className="mx-auto grid max-w-[1200px] gap-8 sm:grid-cols-3">
             <div className="text-center">
-              <p className="text-3xl font-bold text-ink-black">
+              <p className="font-serif text-5xl font-bold text-gold md:text-6xl">
                 {(totalListings ?? 0).toLocaleString()}
               </p>
-              <p className="mt-1 text-sm text-ink-mid">Active Listings</p>
+              <p className="mt-2 text-sm text-ink-faint">Active Listings</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-ink-black">
+              <p className="font-serif text-5xl font-bold text-gold md:text-6xl">
                 {(totalSellers ?? 0).toLocaleString()}
               </p>
-              <p className="mt-1 text-sm text-ink-mid">Verified Sellers</p>
+              <p className="mt-2 text-sm text-ink-faint">Verified Sellers</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-ink-black">
+              <p className="font-serif text-5xl font-bold text-gold md:text-6xl">
                 {(totalSold ?? 0).toLocaleString()}
               </p>
-              <p className="mt-1 text-sm text-ink-mid">Successful Sales</p>
+              <p className="mt-2 text-sm text-ink-faint">Successful Sales</p>
             </div>
           </div>
         </section>
 
         {/* ── Quiz CTA ── */}
-        <section className="bg-paper-cream px-4 py-16 md:px-8">
+        <section className="bg-paper-cream section-compact">
           <div className="mx-auto flex max-w-[700px] flex-col items-center text-center">
             <Sparkles className="mb-4 h-8 w-8 text-gold" />
             <h2 className="mb-2 text-2xl font-semibold text-ink-black">
@@ -377,7 +377,7 @@ export default async function Home() {
         </section>
 
         {/* ── For Sellers ── */}
-        <section className="bg-paper-cream px-4 py-20 md:px-8 md:py-24">
+        <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-[1200px]">
             <div className="grid items-center gap-12 md:grid-cols-2">
               <div>
@@ -434,7 +434,7 @@ export default async function Home() {
         </section>
 
         {/* ── For Trainers ── */}
-        <section className="bg-paper-white px-4 py-20 md:px-8 md:py-24">
+        <section className="with-grain bg-paper-white section-premium">
           <div className="mx-auto max-w-[1200px] text-center">
             <p className="overline mb-3 text-gold">FOR TRAINERS</p>
             <h2 className="mb-4 text-3xl font-semibold text-ink-black">
@@ -455,7 +455,7 @@ export default async function Home() {
         </section>
 
         {/* ── Bottom CTA ── */}
-        <section className="bg-ink-black px-4 py-20 md:px-8 md:py-24">
+        <section className="bg-ink-black section-premium">
           <div className="mx-auto max-w-[1200px] text-center">
             <h2 className="mb-4 text-3xl font-semibold text-paper-white md:text-4xl">
               The equestrian market
@@ -480,7 +480,7 @@ export default async function Home() {
               <Button
                 variant="outline"
                 size="lg"
-                className="border-crease-dark text-paper-cream hover:bg-ink-dark"
+                className="!bg-transparent border-crease-dark text-paper-cream hover:!bg-ink-dark"
                 asChild
               >
                 <Link href="/how-it-works">Learn More</Link>

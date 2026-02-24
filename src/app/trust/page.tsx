@@ -78,13 +78,13 @@ export default function TrustPage() {
       <Header />
       <main>
         {/* Hero */}
-        <section className="bg-paper-white px-4 py-20 md:px-8 md:py-24">
+        <section className="with-grain bg-gradient-hero px-4 pt-24 pb-16 md:px-8 md:pt-36 md:pb-20">
           <div className="mx-auto max-w-[1200px] text-center">
             <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-forest/10">
               <Shield className="h-8 w-8 text-forest" />
             </div>
             <p className="overline mb-3 text-forest">TRUST & SAFETY</p>
-            <h1 className="mb-4 text-4xl font-bold text-ink-black md:text-5xl">
+            <h1 className="mb-4 text-4xl tracking-tight text-ink-black md:text-5xl">
               Your safety is our foundation.
             </h1>
             <p className="text-lead mx-auto max-w-2xl text-ink-mid">
@@ -95,13 +95,13 @@ export default function TrustPage() {
         </section>
 
         {/* Four Safety Pillars */}
-        <section className="bg-paper-cream px-4 py-20 md:px-8 md:py-24">
+        <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-[1200px]">
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="stagger-children grid gap-6 md:grid-cols-2">
               {pillars.map((pillar) => (
                 <div
                   key={pillar.title}
-                  className="rounded-lg border border-border bg-paper-white p-6 shadow-flat"
+                  className="animate-fade-up rounded-lg border-0 bg-paper-white p-6 shadow-flat transition-elevation hover-lift hover:shadow-lifted"
                 >
                   <div
                     className={`mb-4 flex h-10 w-10 items-center justify-center rounded-lg ${pillar.iconBg}`}
@@ -121,10 +121,10 @@ export default function TrustPage() {
         </section>
 
         {/* For Buyers */}
-        <section className="bg-paper-white px-4 py-20 md:px-8 md:py-24">
+        <section className="bg-paper-white section-premium">
           <div className="mx-auto max-w-[1200px]">
             <p className="overline mb-3 text-blue">FOR BUYERS</p>
-            <h2 className="mb-8 text-3xl font-semibold text-ink-black">
+            <h2 className="mb-8 text-3xl tracking-tight text-ink-black">
               Buy with confidence.
             </h2>
             <div className="space-y-4">
@@ -139,10 +139,10 @@ export default function TrustPage() {
         </section>
 
         {/* For Sellers */}
-        <section className="bg-paper-cream px-4 py-20 md:px-8 md:py-24">
+        <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-[1200px]">
             <p className="overline mb-3 text-red">FOR SELLERS</p>
-            <h2 className="mb-8 text-3xl font-semibold text-ink-black">
+            <h2 className="mb-8 text-3xl tracking-tight text-ink-black">
               Sell with protection.
             </h2>
             <div className="space-y-4">
@@ -157,9 +157,9 @@ export default function TrustPage() {
         </section>
 
         {/* Report a Problem */}
-        <section className="bg-ink-black px-4 py-20 md:px-8 md:py-24">
+        <section className="bg-ink-black section-premium">
           <div className="mx-auto max-w-[1200px] text-center">
-            <h2 className="mb-4 text-3xl font-semibold text-paper-white">
+            <h2 className="mb-4 text-3xl tracking-tight text-paper-white">
               See something wrong?
             </h2>
             <p className="text-lead mx-auto mb-8 max-w-2xl text-ink-light">

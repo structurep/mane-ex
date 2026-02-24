@@ -94,13 +94,13 @@ export default function TrainerDirectoryPage() {
       <Header />
 
       {/* Hero */}
-      <section className="bg-paper-white px-4 py-16 md:px-8 md:py-20">
+      <section className="with-grain bg-gradient-hero px-4 pt-24 pb-12 md:px-8 md:pt-36 md:pb-16">
         <div className="mx-auto max-w-[1200px]">
           <p className="overline mb-3 text-red">TRAINER DIRECTORY</p>
-          <h1 className="font-heading text-4xl font-bold tracking-tight text-ink-black md:text-5xl">
+          <h1 className="mb-4 text-4xl tracking-tight text-ink-black md:text-5xl">
             Find the right trainer.
           </h1>
-          <p className="mt-4 max-w-xl text-lg text-ink-mid">
+          <p className="text-lead max-w-xl text-ink-mid">
             Browse verified trainers and dealers by discipline, location, and
             track record.
           </p>
@@ -108,7 +108,7 @@ export default function TrainerDirectoryPage() {
       </section>
 
       {/* Main content */}
-      <section className="bg-paper-cream px-4 py-20 md:px-8 md:py-24">
+      <section className="bg-paper-cream section-premium">
         <div className="mx-auto max-w-[1200px]">
           <p className="mb-6 text-sm text-ink-mid">
             {trainers.length} trainers
@@ -120,7 +120,7 @@ export default function TrainerDirectoryPage() {
               <Link
                 key={trainer.id}
                 href={`/trainers/${trainer.id}`}
-                className="group rounded-lg border border-border bg-paper-white p-6 shadow-flat transition-elevation hover-lift hover:shadow-folded"
+                className="group rounded-lg border-0 bg-paper-white p-6 shadow-flat transition-elevation hover-lift hover:shadow-lifted"
               >
                 <div className="flex items-start gap-4">
                   <div className="h-14 w-14 shrink-0 rounded-full bg-paper-warm" />

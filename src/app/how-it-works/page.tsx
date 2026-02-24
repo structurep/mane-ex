@@ -1,8 +1,10 @@
 import { Metadata } from "next";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { BottomCTA } from "@/components/bottom-cta";
 import { FlowToggle } from "./flow-toggle";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "How It Works",
@@ -15,11 +17,11 @@ export default function HowItWorksPage() {
     <div className="min-h-screen">
       <Header />
       <main>
-        {/* Hero */}
-        <section className="bg-paper-white px-4 pt-20 pb-16 md:px-8 md:pt-24">
+        {/* ── Hero ── */}
+        <section className="with-grain bg-gradient-hero px-4 pt-24 pb-20 md:px-8 md:pt-36 md:pb-28">
           <div className="mx-auto max-w-[1200px] text-center">
-            <p className="overline mb-3 text-red">HOW IT WORKS</p>
-            <h1 className="mb-4 text-4xl font-bold text-ink-black md:text-5xl">
+            <p className="overline mb-4 text-red">HOW IT WORKS</p>
+            <h1 className="mb-6 text-4xl tracking-tight text-ink-black md:text-6xl">
               Structured transactions.
               <br />
               <span className="text-ink-mid">Zero ambiguity.</span>
@@ -31,20 +33,20 @@ export default function HowItWorksPage() {
           </div>
         </section>
 
-        {/* Buyer / Seller Flow */}
-        <section className="bg-paper-white px-4 py-20 md:px-8 md:py-24">
+        {/* ── Buyer / Seller Flow ── */}
+        <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-[1200px]">
             <FlowToggle />
           </div>
         </section>
 
-        {/* Escrow Detail */}
-        <section className="bg-ink-black px-4 py-20 md:px-8 md:py-24">
+        {/* ── Escrow Detail ── */}
+        <section className="bg-ink-black section-premium">
           <div className="mx-auto max-w-[1200px]">
             <div className="grid items-center gap-12 md:grid-cols-2">
               <div>
-                <p className="overline mb-3 text-gold">MANEVAULT ESCROW</p>
-                <h2 className="mb-4 text-3xl font-semibold text-paper-white">
+                <p className="overline mb-4 text-gold">MANEVAULT ESCROW</p>
+                <h2 className="mb-6 text-3xl text-paper-white md:text-4xl">
                   Your money is protected
                   <br />
                   at every step.
@@ -54,7 +56,7 @@ export default function HowItWorksPage() {
                   satisfied. No more wiring $50,000 to a stranger.
                 </p>
               </div>
-              <div className="space-y-4">
+              <div className="stagger-children space-y-4">
                 {[
                   { step: "1", label: "Buyer pays into ManeVault escrow" },
                   { step: "2", label: "Funds held until horse ships" },
@@ -65,9 +67,9 @@ export default function HowItWorksPage() {
                 ].map((item) => (
                   <div
                     key={item.step}
-                    className="flex items-center gap-4 rounded-md border border-crease-dark/30 p-4"
+                    className="animate-fade-up flex items-center gap-4 rounded-lg bg-ink-dark/60 p-4"
                   >
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gold/20 text-sm font-bold text-gold">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gold/20 font-serif text-sm font-bold text-gold">
                       {item.step}
                     </span>
                     <span className="text-sm text-paper-cream">
@@ -80,7 +82,29 @@ export default function HowItWorksPage() {
           </div>
         </section>
 
-        <BottomCTA />
+        {/* ── CTA ── */}
+        <section className="with-grain bg-paper-white section-premium">
+          <div className="mx-auto max-w-[1200px] text-center">
+            <h2 className="mb-4 text-3xl text-ink-black md:text-4xl">
+              Ready to get started?
+            </h2>
+            <p className="text-lead mx-auto mb-8 max-w-xl text-ink-mid">
+              Join the marketplace built for equestrians who take transactions
+              seriously.
+            </p>
+            <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+              <Button size="lg" asChild>
+                <Link href="/signup">
+                  Create Your Account
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button variant="outline" size="lg" asChild>
+                <Link href="/browse">Browse Horses</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </div>

@@ -48,7 +48,7 @@ export function LoginForm() {
           <div className="crease-divider w-full" />
         </div>
         <div className="relative flex justify-center">
-          <span className="bg-paper-white px-3 text-xs text-ink-light">
+          <span className="bg-paper-cream px-3 text-xs text-ink-light">
             or
           </span>
         </div>

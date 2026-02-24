@@ -4,7 +4,6 @@ import { useState } from "react";
 import { submitQuiz } from "@/actions/quiz";
 import { QUIZ_QUESTIONS } from "@/types/quiz";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
@@ -30,7 +29,6 @@ export function QuizFlow() {
   function selectAnswer(questionId: string, value: string) {
     setAnswers((prev) => ({ ...prev, [questionId]: value }));
 
-    // Auto-advance after short delay
     if (!isLastQuestion) {
       setTimeout(() => setStep((s) => s + 1), 300);
     }
@@ -57,37 +55,39 @@ export function QuizFlow() {
     premium: "$149/mo",
   };
 
+  // ── Result Screen ──
   if (result) {
     return (
       <div className="text-center">
         <div className="mb-6">
           <span className="text-6xl">{result.emoji}</span>
         </div>
-        <h1 className="mb-2 font-heading text-3xl font-bold text-ink-black">
+        <h1 className="mb-3 text-3xl tracking-tight text-ink-black md:text-4xl">
           {result.title}
         </h1>
-        <p className="mx-auto mb-8 max-w-lg text-lg text-ink-mid">
+        <p className="text-lead mx-auto mb-10 max-w-lg text-ink-mid">
           {result.description}
         </p>
 
-        <Card className="mx-auto max-w-sm border-red/20 bg-paper-white p-6">
-          <p className="overline mb-1 text-ink-light">RECOMMENDED PLAN</p>
-          <p className="text-2xl font-bold text-ink-black capitalize">
+        <div className="mx-auto max-w-sm rounded-lg bg-paper-white p-8 shadow-lifted">
+          <p className="overline mb-2 text-ink-light">RECOMMENDED PLAN</p>
+          <p className="font-serif text-3xl font-bold capitalize text-ink-black">
             {result.recommended_tier}
           </p>
-          <p className="mb-4 text-sm text-ink-mid">
-            {tierPriceMap[result.recommended_tier] ?? "Free"} — free during launch
+          <p className="mt-1 font-serif text-lg text-ink-mid">
+            {tierPriceMap[result.recommended_tier] ?? "Free"}
           </p>
-          <Button className="w-full gap-2" asChild>
+          <p className="mb-6 text-xs text-ink-light">Free during launch</p>
+          <Button className="w-full gap-2" size="lg" asChild>
             <Link href={`/pricing?tier=${result.recommended_tier}`}>
               <Sparkles className="h-4 w-4" />
               Get Started
             </Link>
           </Button>
-        </Card>
+        </div>
 
-        <p className="mt-6 text-sm text-ink-light">
-          <Link href="/pricing" className="hover:text-ink-black underline">
+        <p className="mt-8 text-sm text-ink-light">
+          <Link href="/pricing" className="underline hover:text-ink-black">
             Compare all plans
           </Link>
         </p>
@@ -97,39 +97,40 @@ export function QuizFlow() {
 
   if (!currentQuestion) return null;
 
+  // ── Quiz Flow ──
   return (
     <div>
       <div className="mb-8 text-center">
-        <p className="overline mb-2 text-red">60-SECOND QUIZ</p>
-        <h1 className="mb-1 font-heading text-2xl font-bold text-ink-black">
+        <p className="overline mb-3 text-red">60-SECOND QUIZ</p>
+        <h1 className="mb-2 text-3xl tracking-tight text-ink-black md:text-4xl">
           Find Your Perfect Plan
         </h1>
         <p className="text-ink-mid">
-          Answer {totalQuestions} quick questions. We&apos;ll match you to the right
-          tier.
+          Answer {totalQuestions} quick questions. We&apos;ll match you to the
+          right tier.
         </p>
       </div>
 
       <Progress value={progress} className="mb-8" />
 
-      <Card className="p-6">
-        <p className="mb-1 text-xs text-ink-light">
-          Question {step + 1} of {totalQuestions}
+      <div className="rounded-lg bg-paper-white p-6 shadow-folded md:p-8">
+        <p className="overline mb-1 text-ink-light">
+          QUESTION {step + 1} OF {totalQuestions}
         </p>
-        <h2 className="mb-6 font-heading text-xl font-semibold text-ink-black">
+        <h2 className="mb-6 text-xl text-ink-black md:text-2xl">
           {currentQuestion.question}
         </h2>
 
-        <div className="space-y-3">
+        <div className="stagger-children space-y-3">
           {currentQuestion.options.map((option) => (
             <button
               key={option.value}
               type="button"
               onClick={() => selectAnswer(currentQuestion.id, option.value)}
-              className={`w-full rounded-lg border px-4 py-3 text-left text-sm font-medium transition-all ${
+              className={`animate-fade-up w-full rounded-lg px-4 py-3 text-left text-sm font-medium transition-all ${
                 answers[currentQuestion.id] === option.value
-                  ? "border-ink-black bg-ink-black text-paper-white shadow-folded"
-                  : "border-crease-light text-ink-mid hover:border-ink-black hover:shadow-flat"
+                  ? "bg-ink-black text-paper-white shadow-folded"
+                  : "bg-paper-cream text-ink-mid shadow-flat hover:shadow-folded"
               }`}
             >
               {option.label}
@@ -171,7 +172,7 @@ export function QuizFlow() {
             </Button>
           )}
         </div>
-      </Card>
+      </div>
     </div>
   );
 }

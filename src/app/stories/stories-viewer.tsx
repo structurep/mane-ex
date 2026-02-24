@@ -140,7 +140,7 @@ export function StoriesViewer() {
 
       {/* Content overlay */}
       <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-        <h2 className="font-heading text-2xl font-bold drop-shadow-lg">
+        <h2 className="font-serif text-3xl font-bold drop-shadow-lg md:text-4xl">
           {listing.name}
         </h2>
 
@@ -161,7 +161,7 @@ export function StoriesViewer() {
         </div>
 
         {typeof listing.price === "number" && (
-          <p className="mt-2 text-xl font-bold">
+          <p className="mt-2 font-serif text-2xl font-bold tracking-tight">
             ${(listing.price / 100).toLocaleString()}
           </p>
         )}

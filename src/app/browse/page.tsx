@@ -45,21 +45,30 @@ export default async function BrowsePage({ searchParams }: Props) {
           </div>
 
           <div className="grid gap-8 lg:grid-cols-4">
-            {/* Filters sidebar */}
+            {/* Filters sidebar — sticky on desktop */}
             <aside className="lg:col-span-1">
-              <BrowseFilters params={params} />
+              <div className="lg:sticky lg:top-20">
+                <BrowseFilters params={params} />
+              </div>
             </aside>
 
             {/* Results */}
             <div className="lg:col-span-3">
               <Suspense
                 fallback={
-                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                     {Array.from({ length: 6 }).map((_, i) => (
                       <div
                         key={i}
-                        className="aspect-[4/5] animate-pulse rounded-lg bg-paper-warm"
-                      />
+                        className="overflow-hidden rounded-lg bg-paper-white shadow-flat"
+                      >
+                        <div className="aspect-[4/3] animate-shimmer" />
+                        <div className="space-y-2 p-3.5">
+                          <div className="h-4 w-3/4 animate-shimmer rounded" />
+                          <div className="h-3 w-1/2 animate-shimmer rounded" />
+                          <div className="h-3 w-2/3 animate-shimmer rounded" />
+                        </div>
+                      </div>
                     ))}
                   </div>
                 }

@@ -11,17 +11,18 @@ export default function PrivacyPage() {
   return (
     <div className="min-h-screen">
       <Header />
-      <main className="px-4 py-20 md:px-8 md:py-24">
+      <main className="section-premium">
         <article className="mx-auto max-w-3xl">
           <p className="overline mb-3 text-ink-light">LEGAL</p>
-          <h1 className="mb-2 text-3xl font-bold text-ink-black">
+          <h1 className="mb-2 text-3xl tracking-tight text-ink-black md:text-4xl">
             Privacy Policy
           </h1>
           <p className="mb-8 text-sm text-ink-light">
             Last updated: February 22, 2026
           </p>
 
-          <div className="space-y-8 text-ink-mid [&_h2]:mb-3 [&_h2]:mt-8 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:text-ink-black [&_h3]:mb-2 [&_h3]:mt-6 [&_h3]:text-base [&_h3]:font-medium [&_h3]:text-ink-dark [&_p]:mb-3 [&_p]:leading-relaxed [&_ul]:mb-3 [&_ul]:ml-4 [&_ul]:list-disc [&_ul]:space-y-1 [&_table]:w-full [&_table]:text-sm [&_td]:border [&_td]:border-border [&_td]:px-3 [&_td]:py-2 [&_th]:border [&_th]:border-border [&_th]:bg-paper-warm [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-medium [&_th]:text-ink-dark">
+          <div className="rounded-lg bg-paper-cream p-6 shadow-flat md:p-8">
+          <div className="space-y-8 text-ink-mid [&_h2]:mb-3 [&_h2]:mt-8 [&_h2]:font-heading [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:text-ink-black [&_h3]:mb-2 [&_h3]:mt-6 [&_h3]:text-base [&_h3]:font-medium [&_h3]:text-ink-dark [&_p]:mb-3 [&_p]:leading-relaxed [&_ul]:mb-3 [&_ul]:ml-4 [&_ul]:list-disc [&_ul]:space-y-1 [&_table]:w-full [&_table]:text-sm [&_td]:border [&_td]:border-crease-light [&_td]:px-3 [&_td]:py-2 [&_th]:border [&_th]:border-crease-light [&_th]:bg-paper-warm [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-medium [&_th]:text-ink-dark">
             <section>
               <h2>1. Information We Collect</h2>
               <h3>1.1 Information You Provide</h3>
@@ -239,6 +240,7 @@ export default function PrivacyPage() {
                 privacy@maneexchange.com.
               </p>
             </section>
+          </div>
           </div>
         </article>
       </main>

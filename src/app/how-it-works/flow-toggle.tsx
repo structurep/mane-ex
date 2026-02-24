@@ -92,7 +92,7 @@ export function FlowToggle() {
   return (
     <div>
       {/* Toggle */}
-      <div className="mx-auto mb-12 flex gap-1 rounded-lg bg-paper-cream p-1 max-w-xs">
+      <div className="mx-auto mb-12 flex max-w-xs gap-1 rounded-lg bg-paper-warm p-1">
         <button
           onClick={() => setRole("buyer")}
           className={`flex-1 rounded-md px-4 py-2.5 text-sm font-medium transition-colors ${
@@ -116,22 +116,24 @@ export function FlowToggle() {
       </div>
 
       {/* Section heading */}
-      <p className={`overline mb-3 ${role === "buyer" ? "text-blue" : "text-red"}`}>{overlineText}</p>
-      <h2 className="mb-12 text-3xl font-semibold text-ink-black">{heading}</h2>
+      <p
+        className={`overline mb-3 ${role === "buyer" ? "text-blue" : "text-red"}`}
+      >
+        {overlineText}
+      </p>
+      <h2 className="mb-12 text-3xl text-ink-black md:text-4xl">{heading}</h2>
 
       {/* Steps */}
-      <div className="space-y-8">
+      <div className="stagger-children space-y-6">
         {steps.map((step, i) => (
           <div
             key={step.title}
-            className={`flex gap-6 rounded-lg border border-border p-6 shadow-flat ${
-              role === "buyer" ? "bg-paper-cream" : "bg-paper-white"
-            }`}
+            className="animate-fade-up flex gap-6 rounded-lg bg-paper-white p-6 shadow-flat transition-elevation hover:shadow-folded"
           >
             <div className="flex shrink-0 flex-col items-center">
               <div
                 className={`flex h-10 w-10 items-center justify-center rounded-lg ${
-                  role === "buyer" ? "bg-blue/10" : "bg-red-light"
+                  role === "buyer" ? "bg-blue-light" : "bg-red-light"
                 }`}
               >
                 <step.icon
@@ -145,8 +147,15 @@ export function FlowToggle() {
               )}
             </div>
             <div>
-              <h3 className="mb-1 font-medium text-ink-black">{step.title}</h3>
-              <p className="text-sm text-ink-mid">{step.description}</p>
+              <p className="overline mb-1 text-ink-light">
+                {String(i + 1).padStart(2, "0")}
+              </p>
+              <h3 className="mb-1 text-lg font-medium text-ink-black">
+                {step.title}
+              </h3>
+              <p className="text-sm leading-relaxed text-ink-mid">
+                {step.description}
+              </p>
             </div>
           </div>
         ))}

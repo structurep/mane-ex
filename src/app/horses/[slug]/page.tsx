@@ -1,14 +1,18 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
+import { MessageCircle } from "lucide-react";
 import {
-  ChevronRight,
-  MessageCircle,
-} from "lucide-react";
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  BreadcrumbPage,
+} from "@/components/ui/breadcrumb";
 import type { HorseListing } from "@/types/listings";
 import type { SellerScore } from "@/types/scoring";
 import { OfferModal } from "@/components/offer-modal";
@@ -143,13 +147,27 @@ export default async function ListingDetailPage({ params }: Props) {
       <main className="px-4 py-8 md:px-8">
         <div className="mx-auto max-w-[1200px]">
           {/* Breadcrumb */}
-          <nav className="mb-4 flex items-center gap-1 text-sm text-ink-light">
-            <Link href="/browse" className="hover:text-ink-black">
-              Browse
-            </Link>
-            <ChevronRight className="h-3 w-3" />
-            <span className="text-ink-mid">{l.name}</span>
-          </nav>
+          <Breadcrumb className="mb-4">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/browse">Browse</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              {l.breed && (
+                <>
+                  <BreadcrumbItem>
+                    <BreadcrumbLink href={`/browse?breed=${encodeURIComponent(l.breed)}`}>
+                      {l.breed}
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                </>
+              )}
+              <BreadcrumbItem>
+                <BreadcrumbPage>{l.name}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
 
           {/* Gallery — always visible above tabs */}
           <div className="mb-2 lg:grid lg:grid-cols-3 lg:gap-8">
@@ -169,7 +187,7 @@ export default async function ListingDetailPage({ params }: Props) {
       <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-border bg-paper-white p-3 md:hidden">
         <div className="flex items-center gap-3">
           <div className="flex-1">
-            <p className="text-lg font-bold text-ink-black">{priceStr}</p>
+            <p className="font-serif text-lg font-bold text-ink-black">{priceStr}</p>
           </div>
           <Button size="sm">
             <MessageCircle className="mr-1 h-4 w-4" />

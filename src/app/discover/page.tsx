@@ -1,7 +1,6 @@
 import { getDiscoveryFeed } from "@/actions/discovery";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import {
@@ -32,31 +31,52 @@ const SECTION_ICONS: Record<string, React.ReactNode> = {
   just_sold: <Award className="h-5 w-5 text-forest" />,
 };
 
+const SECTION_ACCENTS: Record<string, string> = {
+  for_you: "bg-gold-light text-gold",
+  new_this_week: "bg-blue-light text-blue",
+  trending: "bg-red-light text-red",
+  just_sold: "bg-forest-light text-forest",
+};
+
 export default async function DiscoverPage() {
   const { sections } = await getDiscoveryFeed();
 
   return (
     <div className="min-h-screen">
       <Header />
-      <main className="px-4 py-8 md:px-8">
-        <div className="mx-auto max-w-[1200px]">
-          <div className="mb-8">
-            <h1 className="font-heading text-3xl font-bold text-ink-black">
-              Discover
+      <main>
+        {/* ── Hero ── */}
+        <section className="with-grain bg-gradient-hero px-4 pt-24 pb-12 md:px-8 md:pt-36 md:pb-16">
+          <div className="mx-auto max-w-[1200px]">
+            <p className="overline mb-4 text-gold">DISCOVER</p>
+            <h1 className="mb-4 text-3xl tracking-tight text-ink-black md:text-5xl">
+              Personalized picks.
+              <br />
+              <span className="text-ink-mid">Trending horses.</span>
             </h1>
-            <p className="mt-1 text-ink-mid">
-              Personalized picks, trending horses, and the latest listings.
+            <p className="text-lead max-w-xl text-ink-mid">
+              Curated sections based on your preferences, marketplace trends,
+              and the latest listings.
             </p>
           </div>
+        </section>
 
-          {sections.map((section) => (
-            <div key={section.type} className="mb-12">
-              <div className="mb-4 flex items-center gap-2">
+        {/* ── Sections ── */}
+        {sections.map((section, sIdx) => (
+          <section
+            key={section.type}
+            className={`${sIdx % 2 === 0 ? "bg-paper-cream" : "bg-paper-white"} section-compact`}
+          >
+            <div className="mx-auto max-w-[1200px]">
+              <div className="mb-8 flex items-center gap-3">
                 {SECTION_ICONS[section.type]}
-                <h2 className="font-heading text-xl font-semibold text-ink-black">
+                <h2 className="text-2xl text-ink-black md:text-3xl">
                   {section.title}
                 </h2>
-                <Badge variant="secondary" className="ml-1 text-xs">
+                <Badge
+                  variant="secondary"
+                  className={`ml-1 text-xs ${SECTION_ACCENTS[section.type] ?? ""}`}
+                >
                   {section.listings.length}
                 </Badge>
               </div>
@@ -66,17 +86,17 @@ export default async function DiscoverPage() {
                   No listings in this section yet.
                 </p>
               ) : (
-                <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                <div className="stagger-children grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                   {section.listings.map((listing) => {
                     const l = listing as Record<string, unknown>;
                     return (
                       <Link
                         key={String(l.id)}
                         href={`/horses/${String(l.slug)}`}
+                        className="animate-fade-up"
                       >
-                        <Card className="group overflow-hidden transition-shadow hover:shadow-folded">
-                          {/* Image */}
-                          <div className="aspect-[4/3] bg-paper-cream">
+                        <div className="group overflow-hidden rounded-lg bg-paper-white shadow-flat transition-elevation hover-lift hover:shadow-lifted">
+                          <div className="aspect-[4/3] bg-paper-warm">
                             {typeof l.primary_image_url === "string" ? (
                               <img
                                 src={l.primary_image_url}
@@ -103,7 +123,7 @@ export default async function DiscoverPage() {
                               )}
                             </div>
                             <div className="mt-2 flex items-center justify-between">
-                              <span className="text-sm font-semibold text-ink-black">
+                              <span className="font-serif text-sm font-semibold text-ink-black">
                                 {formatPrice(
                                   typeof l.price === "number"
                                     ? (l.price as number)
@@ -128,15 +148,15 @@ export default async function DiscoverPage() {
                               </div>
                             </div>
                           </div>
-                        </Card>
+                        </div>
                       </Link>
                     );
                   })}
                 </div>
               )}
             </div>
-          ))}
-        </div>
+          </section>
+        ))}
       </main>
       <Footer />
     </div>
