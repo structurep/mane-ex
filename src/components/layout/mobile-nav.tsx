@@ -31,7 +31,7 @@ export function MobileNav() {
             <Link
               key={tab.href}
               href={tab.href}
-              className={`flex min-w-[48px] flex-col items-center gap-0.5 px-2 py-1.5 ${
+              className={`flex min-w-[48px] flex-col items-center gap-0.5 rounded-md px-2 py-1.5 transition-transform active:scale-95 focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none ${
                 isActive ? "text-red" : "text-ink-light"
               }`}
             >

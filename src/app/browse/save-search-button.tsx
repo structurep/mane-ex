@@ -30,7 +30,7 @@ export function SaveSearchButton({ params }: { params: Record<string, string | u
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Name this search..."
-          className="rounded-lg border border-border bg-paper-white px-3 py-1.5 text-sm text-ink-black placeholder:text-ink-light focus:border-blue focus:outline-none focus:ring-1 focus:ring-blue"
+          className="rounded-lg border border-border bg-paper-white px-3 py-1.5 text-sm text-ink-black placeholder:text-ink-light focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
         />
         <Button size="sm" onClick={() => { setSaved(true); setShowForm(false); }}>
           <Bell className="mr-1.5 h-3.5 w-3.5" />Save

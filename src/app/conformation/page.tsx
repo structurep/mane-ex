@@ -222,7 +222,7 @@ export default function ConformationPage() {
               <input
                 type="email"
                 placeholder="you@example.com"
-                className="flex-1 rounded-md border border-crease-dark/30 bg-ink-dark px-4 py-3 text-sm text-paper-white placeholder:text-ink-light focus:border-blue focus:outline-none focus:ring-2 focus:ring-blue/20"
+                className="flex-1 rounded-md border border-crease-dark/30 bg-ink-dark px-4 py-3 text-sm text-paper-white placeholder:text-ink-light focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
                 aria-label="Email address for early access"
               />
               <button className="inline-flex items-center justify-center gap-2 rounded-md bg-blue px-6 py-3 text-sm font-medium text-paper-white transition-colors hover:bg-blue/90">

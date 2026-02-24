@@ -1,9 +1,8 @@
 import { getMyCollections } from "@/actions/collections";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Heart, Plus, Lock, Globe, Link2 } from "lucide-react";
+import { Heart, Lock, Globe, Link2 } from "lucide-react";
 import { CreateCollectionForm } from "./create-form";
 
 const VISIBILITY_CONFIG: Record<string, { label: string; icon: React.ElementType }> = {
@@ -32,7 +31,7 @@ export default async function DreamBarnPage() {
 
       {/* Collections grid */}
       {!collections || collections.length === 0 ? (
-        <Card className="flex flex-col items-center gap-3 border-dashed p-12 text-center">
+        <Card className="flex flex-col items-center gap-3 border-0 p-12 text-center shadow-flat">
           <Heart className="h-10 w-10 text-ink-faint" />
           <div>
             <p className="font-medium text-ink-black">No collections yet</p>
@@ -52,13 +51,13 @@ export default async function DreamBarnPage() {
                 key={collection.id}
                 href={`/dashboard/dream-barn/${collection.slug}`}
               >
-                <Card className="group h-full cursor-pointer transition-shadow hover:shadow-folded">
+                <Card className="group h-full cursor-pointer border-0 shadow-flat transition-elevation hover-lift hover:shadow-lifted">
                   {/* Cover area */}
                   <div className="flex h-32 items-center justify-center bg-paper-cream">
                     <Heart className="h-8 w-8 text-crease-mid" />
                   </div>
 
-                  <div className="space-y-2 p-4">
+                  <div className="space-y-2 p-5">
                     <div className="flex items-center justify-between">
                       <h3 className="font-heading font-medium text-ink-black group-hover:text-accent-blue">
                         {collection.name}

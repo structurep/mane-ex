@@ -13,7 +13,6 @@ import {
   MapPin,
   Clock,
   DollarSign,
-  Phone,
   MessageCircle,
   Search,
   ChevronRight,
@@ -120,10 +119,10 @@ export default function ShippingPage() {
 
       <main>
         {/* Hero */}
-        <section className="bg-paper-white px-4 py-16 md:px-8 md:py-20">
+        <section className="with-grain bg-gradient-hero px-4 pt-24 pb-12 md:px-8 md:pt-36 md:pb-16">
           <div className="mx-auto max-w-[1200px] text-center">
             <p className="overline mb-3 text-red">SHIPPING</p>
-            <h1 className="font-heading text-4xl font-bold tracking-tight text-ink-black md:text-5xl">
+            <h1 className="text-4xl tracking-tight text-ink-black md:text-5xl">
               Ship your horse safely.
             </h1>
             <p className="text-lead mx-auto mt-4 max-w-2xl text-ink-mid">
@@ -137,7 +136,7 @@ export default function ShippingPage() {
         <section className="bg-paper-cream px-4 py-12 md:px-8 md:py-16">
           {/* Tab Toggle */}
           <div className="mx-auto max-w-[1200px] mb-8">
-            <div className="flex gap-1 rounded-lg bg-paper-cream p-1 max-w-md mx-auto border border-border">
+            <div className="flex gap-1 rounded-lg bg-paper-warm p-1 max-w-md mx-auto">
               {tabs.map((tab) => (
                 <button
                   key={tab}
@@ -165,7 +164,7 @@ export default function ShippingPage() {
                   placeholder="Search by name, route, or region..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="input-swiss w-full rounded-lg border border-border bg-paper-white py-2.5 pl-10 pr-4 text-sm text-ink-black placeholder:text-ink-light focus:border-blue focus:outline-none focus:ring-1 focus:ring-blue"
+                  className="input-swiss w-full rounded-lg border border-border bg-paper-white py-2.5 pl-10 pr-4 text-sm text-ink-black placeholder:text-ink-light focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
                 />
               </div>
 
@@ -180,7 +179,7 @@ export default function ShippingPage() {
                 {filteredTransporters.map((t) => (
                   <div
                     key={t.id}
-                    className="rounded-lg border border-border bg-paper-white p-6 shadow-flat"
+                    className="rounded-lg border-0 bg-paper-white p-6 shadow-flat"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex items-start gap-4">
@@ -244,7 +243,7 @@ export default function ShippingPage() {
                 ))}
 
                 {filteredTransporters.length === 0 && (
-                  <div className="rounded-lg border border-border bg-paper-white py-16 text-center">
+                  <div className="rounded-lg border-0 bg-paper-white py-16 text-center shadow-flat">
                     <Search className="mx-auto mb-4 h-12 w-12 text-ink-light" />
                     <h3 className="font-medium text-ink-black">
                       No transporters found
@@ -260,7 +259,7 @@ export default function ShippingPage() {
 
           {/* My Shipments */}
           {activeTab === "My Shipments" && (
-            <div className="mx-auto max-w-3xl rounded-lg border border-border bg-paper-white py-16 text-center">
+            <div className="mx-auto max-w-3xl rounded-lg border-0 bg-paper-white py-16 text-center shadow-flat">
               <Truck className="mx-auto mb-4 h-12 w-12 text-ink-light" />
               <h3 className="font-medium text-ink-black">
                 No active shipments
@@ -274,7 +273,7 @@ export default function ShippingPage() {
 
           {/* Quote Requests */}
           {activeTab === "Quote Requests" && (
-            <div className="mx-auto max-w-3xl rounded-lg border border-border bg-paper-white py-16 text-center">
+            <div className="mx-auto max-w-3xl rounded-lg border-0 bg-paper-white py-16 text-center shadow-flat">
               <DollarSign className="mx-auto mb-4 h-12 w-12 text-ink-light" />
               <h3 className="font-medium text-ink-black">
                 No quote requests
@@ -289,7 +288,7 @@ export default function ShippingPage() {
         {/* Bottom CTA */}
         <section className="bg-paper-white px-4 py-16 md:px-8 md:py-20">
           <div className="mx-auto max-w-[1200px] text-center">
-            <h2 className="font-heading text-2xl font-bold text-ink-black md:text-3xl">
+            <h2 className="text-2xl tracking-tight text-ink-black md:text-3xl">
               Your next horse is waiting.
             </h2>
             <p className="mx-auto mt-3 max-w-md text-ink-mid">

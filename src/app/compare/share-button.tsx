@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Share2, Check, Link2 } from "lucide-react";
+import { Check, Link2 } from "lucide-react";
 
 export function CompareShareButton({ ids }: { ids: string[] }) {
   const [copied, setCopied] = useState(false);

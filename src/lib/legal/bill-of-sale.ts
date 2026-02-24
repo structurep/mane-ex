@@ -1,7 +1,6 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { formatCentsToDollars } from "@/lib/stripe/config";
 import type { BillOfSaleData } from "@/types/offers";
 import { getStateDisclosureRules } from "./disclosures";
 

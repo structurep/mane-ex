@@ -67,7 +67,7 @@ const primaryDisciplines = [
 ];
 
 const inputClassName =
-  "w-full rounded-lg border border-border bg-paper-white px-4 py-3 text-sm text-ink-black placeholder:text-ink-light focus:border-blue focus:outline-none focus:ring-1 focus:ring-blue";
+  "w-full rounded-lg border border-border bg-paper-white px-4 py-3 text-sm text-ink-black placeholder:text-ink-light focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none";
 
 const labelClassName = "mb-1.5 block text-sm font-medium text-ink-black";
 
@@ -320,7 +320,7 @@ export function SignupWizard() {
                 <div className="crease-divider w-full" />
               </div>
               <div className="relative flex justify-center">
-                <span className="bg-paper-white px-3 text-xs text-ink-light">
+                <span className="bg-paper-cream px-3 text-xs text-ink-light">
                   Or continue with
                 </span>
               </div>

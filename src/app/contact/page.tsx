@@ -18,10 +18,10 @@ export default function ContactPage() {
       <Header />
       <main>
         {/* Hero */}
-        <section className="bg-paper-white px-4 pt-20 pb-16 md:px-8 md:pt-24">
+        <section className="with-grain bg-gradient-hero px-4 pt-24 pb-12 md:px-8 md:pt-36 md:pb-16">
           <div className="mx-auto max-w-[1200px] text-center">
             <p className="overline mb-3 text-red">CONTACT US</p>
-            <h1 className="mb-4 text-4xl font-bold text-ink-black md:text-5xl">
+            <h1 className="mb-4 text-4xl tracking-tight text-ink-black md:text-5xl">
               Get in touch.
             </h1>
             <p className="text-lead mx-auto max-w-2xl text-ink-mid">
@@ -31,7 +31,7 @@ export default function ContactPage() {
         </section>
 
         {/* Main Content */}
-        <section className="bg-paper-cream px-4 py-20 md:px-8 md:py-24">
+        <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-[1200px] grid gap-12 md:grid-cols-[320px_1fr]">
             {/* Left Sidebar */}
             <div>
@@ -44,7 +44,7 @@ export default function ContactPage() {
                   <h3 className="text-sm font-medium text-ink-black">Email</h3>
                   <a
                     href="mailto:support@maneexchange.com"
-                    className="text-sm text-ink-mid hover:text-blue"
+                    className="rounded-sm text-sm text-ink-mid hover:text-blue focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
                   >
                     support@maneexchange.com
                   </a>
@@ -59,7 +59,7 @@ export default function ContactPage() {
                   <h3 className="text-sm font-medium text-ink-black">Phone</h3>
                   <a
                     href="tel:+15615550123"
-                    className="text-sm text-ink-mid hover:text-blue"
+                    className="rounded-sm text-sm text-ink-mid hover:text-blue focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
                   >
                     (561) 555-0123
                   </a>
@@ -79,26 +79,26 @@ export default function ContactPage() {
               </div>
 
               {/* Quick Links */}
-              <div className="mt-10 border-t border-border pt-8">
+              <div className="mt-10 border-t border-crease-light pt-8">
                 <h3 className="mb-4 text-sm font-medium text-ink-black">
                   Quick Links
                 </h3>
                 <div className="space-y-2">
                   <Link
                     href="/faq"
-                    className="block text-sm text-blue hover:underline"
+                    className="block rounded-sm text-sm text-blue hover:underline focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
                   >
                     Visit our FAQ
                   </Link>
                   <Link
                     href="/trust"
-                    className="block text-sm text-blue hover:underline"
+                    className="block rounded-sm text-sm text-blue hover:underline focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
                   >
                     Trust &amp; Safety
                   </Link>
                   <Link
                     href="/trust"
-                    className="block text-sm text-blue hover:underline"
+                    className="block rounded-sm text-sm text-blue hover:underline focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
                   >
                     Report a Problem
                   </Link>
@@ -107,8 +107,8 @@ export default function ContactPage() {
             </div>
 
             {/* Right Side - Contact Form */}
-            <div className="rounded-lg border border-border bg-paper-white p-6 md:p-8 shadow-flat">
-              <h2 className="mb-6 text-xl font-semibold text-ink-black">
+            <div className="rounded-lg border-0 bg-paper-white p-6 shadow-folded md:p-8">
+              <h2 className="mb-6 font-heading text-xl font-semibold text-ink-black">
                 Send us a message
               </h2>
               <form className="space-y-5">
@@ -121,7 +121,7 @@ export default function ContactPage() {
                     name="name"
                     placeholder="Your name"
                     required
-                    className="w-full rounded-lg border border-border bg-paper-white px-4 py-3 text-sm text-ink-black placeholder:text-ink-light focus:border-blue focus:outline-none focus:ring-1 focus:ring-blue"
+                    className="w-full rounded-lg border-0 bg-paper-cream px-4 py-3 text-sm text-ink-black shadow-flat placeholder:text-ink-light focus:shadow-folded focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
                   />
                 </div>
 
@@ -134,7 +134,7 @@ export default function ContactPage() {
                     name="email"
                     placeholder="you@example.com"
                     required
-                    className="w-full rounded-lg border border-border bg-paper-white px-4 py-3 text-sm text-ink-black placeholder:text-ink-light focus:border-blue focus:outline-none focus:ring-1 focus:ring-blue"
+                    className="w-full rounded-lg border-0 bg-paper-cream px-4 py-3 text-sm text-ink-black shadow-flat placeholder:text-ink-light focus:shadow-folded focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
                   />
                 </div>
 
@@ -145,7 +145,7 @@ export default function ContactPage() {
                   <select
                     name="subject"
                     required
-                    className="w-full rounded-lg border border-border bg-paper-white px-4 py-3 text-sm text-ink-black focus:border-blue focus:outline-none focus:ring-1 focus:ring-blue"
+                    className="w-full rounded-lg border border-border bg-paper-white px-4 py-3 text-sm text-ink-black focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
                   >
                     <option value="">Select a topic</option>
                     <option value="general">General Inquiry</option>
@@ -166,7 +166,7 @@ export default function ContactPage() {
                     rows={5}
                     placeholder="How can we help?"
                     required
-                    className="w-full rounded-lg border border-border bg-paper-white px-4 py-3 text-sm text-ink-black placeholder:text-ink-light focus:border-blue focus:outline-none focus:ring-1 focus:ring-blue resize-none"
+                    className="w-full rounded-lg border-0 bg-paper-cream px-4 py-3 text-sm text-ink-black shadow-flat placeholder:text-ink-light focus:shadow-folded focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none resize-none"
                   />
                 </div>
 

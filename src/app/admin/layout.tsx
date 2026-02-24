@@ -7,7 +7,6 @@ import {
   ListChecks,
   Flag,
   DollarSign,
-  Star,
   ArrowLeft,
 } from "lucide-react";
 
@@ -30,7 +29,7 @@ export default async function AdminLayout({
   return (
     <div className="min-h-screen bg-paper-white">
       {/* Top bar */}
-      <header className="sticky top-0 z-40 border-b border-border bg-ink-black text-white">
+      <header className="sticky top-0 z-40 border-b border-crease-light bg-ink-black text-white">
         <div className="flex h-14 items-center justify-between px-4 md:px-6">
           <div className="flex items-center gap-3">
             <Image src="/icon.svg" alt="ManeExchange" width={28} height={28} />
@@ -50,7 +49,7 @@ export default async function AdminLayout({
 
       <div className="flex">
         {/* Sidebar */}
-        <aside className="hidden w-56 shrink-0 border-r border-border bg-paper-cream md:block">
+        <aside className="hidden w-56 shrink-0 border-r border-crease-light bg-paper-cream md:block">
           <nav className="flex flex-col gap-0.5 p-3">
             {adminNav.map((item) => (
               <Link
@@ -66,7 +65,7 @@ export default async function AdminLayout({
         </aside>
 
         {/* Mobile nav */}
-        <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-border bg-paper-white md:hidden">
+        <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-crease-light bg-paper-white md:hidden">
           <nav className="flex justify-around py-2">
             {adminNav.map((item) => (
               <Link

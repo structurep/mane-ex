@@ -5,6 +5,7 @@ import { Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
 import { sendMessage } from "@/actions/messages";
+import { toast } from "sonner";
 
 type Message = {
   id: string;
@@ -119,6 +120,7 @@ export function MessageThread({
     if (result.error) {
       // Remove optimistic message on error
       setMessages((prev) => prev.filter((m) => m.id !== optimisticId));
+      toast.error("Message failed to send");
     } else if (result.messageId) {
       // Replace optimistic ID with real ID
       setMessages((prev) =>
@@ -187,7 +189,7 @@ export function MessageThread({
       </div>
 
       {/* Input area */}
-      <div className="border-t border-border pt-3">
+      <div className="border-t border-crease-light pt-3">
         <div className="flex items-end gap-2">
           <textarea
             ref={textareaRef}
@@ -196,7 +198,7 @@ export function MessageThread({
             onKeyDown={handleKeyDown}
             placeholder="Type a message..."
             rows={1}
-            className="flex-1 resize-none rounded-lg border border-border bg-paper-white px-3 py-2 text-sm text-ink-black placeholder:text-ink-light focus:border-blue focus:outline-none focus:ring-1 focus:ring-blue"
+            className="flex-1 resize-none rounded-lg border-0 bg-paper-white px-3 py-2 text-sm text-ink-black shadow-flat placeholder:text-ink-light focus:shadow-folded focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
           />
           <Button
             size="sm"

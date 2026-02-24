@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Lock, Crown, MessageCircle, BarChart3, Sparkles, ArrowRight } from "lucide-react";
+import { Lock, Crown, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface UpgradePromptProps {

@@ -98,6 +98,13 @@ const FILTER_OPTIONS: ("All" | Category)[] = [
   "Trust & Safety",
 ];
 
+const categoryAccent: Record<Category, string> = {
+  Buying: "bg-blue-light text-blue",
+  Selling: "bg-red-light text-red",
+  Payments: "bg-gold-light text-gold",
+  "Trust & Safety": "bg-forest-light text-forest",
+};
+
 export default function FaqPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState<"All" | Category>("All");
@@ -131,11 +138,13 @@ export default function FaqPage() {
     <div className="min-h-screen">
       <Header />
       <main>
-        {/* Hero */}
-        <section className="bg-paper-white px-4 pt-20 pb-16 md:px-8 md:pt-24">
+        {/* ── Hero ── */}
+        <section className="with-grain bg-gradient-hero px-4 pt-24 pb-20 md:px-8 md:pt-36 md:pb-28">
           <div className="mx-auto max-w-3xl">
-            <p className="overline mb-3 text-red">FREQUENTLY ASKED QUESTIONS</p>
-            <h1 className="mb-4 text-4xl font-bold text-ink-black md:text-5xl">
+            <p className="overline mb-4 text-red">
+              FREQUENTLY ASKED QUESTIONS
+            </p>
+            <h1 className="mb-6 text-4xl tracking-tight text-ink-black md:text-6xl">
               We&apos;ve got answers.
             </h1>
             <p className="text-lead text-ink-mid">
@@ -149,8 +158,8 @@ export default function FaqPage() {
           </div>
         </section>
 
-        {/* Search + Filters + Accordion */}
-        <section className="bg-paper-cream px-4 py-20 md:px-8 md:py-24">
+        {/* ── Search + Filters + Accordion ── */}
+        <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-3xl">
             {/* Search */}
             <div className="relative mb-6">
@@ -160,7 +169,7 @@ export default function FaqPage() {
                 placeholder="Search questions..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-lg border border-border bg-paper-white py-3 pr-4 pl-11 text-sm text-ink-black placeholder:text-ink-light focus:ring-2 focus:ring-red/20 focus:outline-none"
+                className="w-full rounded-lg bg-paper-white py-3 pr-4 pl-11 text-sm text-ink-black shadow-flat placeholder:text-ink-light focus:shadow-folded focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
               />
             </div>
 
@@ -170,10 +179,10 @@ export default function FaqPage() {
                 <button
                   key={filter}
                   onClick={() => setActiveFilter(filter)}
-                  className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+                  className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none ${
                     activeFilter === filter
-                      ? "bg-ink-black text-white"
-                      : "bg-paper-cream text-ink-mid hover:bg-paper-warm"
+                      ? "bg-ink-black text-white shadow-flat"
+                      : "bg-paper-white text-ink-mid shadow-flat hover:shadow-folded"
                   }`}
                 >
                   {filter}
@@ -182,9 +191,9 @@ export default function FaqPage() {
             </div>
 
             {/* Accordion */}
-            <div className="divide-y divide-border rounded-lg border border-border bg-paper-white">
+            <div className="space-y-3">
               {filteredItems.length === 0 && (
-                <div className="px-6 py-12 text-center text-sm text-ink-light">
+                <div className="rounded-lg bg-paper-white px-6 py-12 text-center text-sm text-ink-light shadow-flat">
                   No questions match your search. Try a different term or{" "}
                   <Link href="/contact" className="text-red underline">
                     contact us
@@ -197,13 +206,20 @@ export default function FaqPage() {
                 const isOpen = openItems.has(originalIndex);
 
                 return (
-                  <div key={originalIndex}>
+                  <div
+                    key={originalIndex}
+                    className={`rounded-lg bg-paper-white transition-elevation ${
+                      isOpen ? "shadow-folded" : "shadow-flat hover:shadow-folded"
+                    }`}
+                  >
                     <button
                       onClick={() => toggleItem(originalIndex)}
-                      className="flex w-full items-center justify-between px-6 py-4 text-left"
+                      className="flex w-full items-center justify-between rounded-lg px-6 py-5 text-left focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
                     >
                       <div className="flex items-center gap-3">
-                        <span className="shrink-0 rounded-full bg-paper-warm px-2.5 py-0.5 text-xs font-medium text-ink-mid">
+                        <span
+                          className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-semibold ${categoryAccent[item.category]}`}
+                        >
                           {item.category}
                         </span>
                         <span className="font-medium text-ink-black">
@@ -217,8 +233,9 @@ export default function FaqPage() {
                       />
                     </button>
                     {isOpen && (
-                      <div className="px-6 pb-4">
-                        <p className="pl-[calc(theme(spacing.3)+70px)] text-sm leading-relaxed text-ink-mid md:pl-[calc(theme(spacing.3)+90px)]">
+                      <div className="px-6 pb-5">
+                        <div className="crease-divider mb-4" />
+                        <p className="text-sm leading-relaxed text-ink-mid">
                           {item.answer}
                         </p>
                       </div>
@@ -230,17 +247,17 @@ export default function FaqPage() {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="bg-paper-white px-4 py-20 md:px-8 md:py-24">
+        {/* ── CTA ── */}
+        <section className="with-grain bg-paper-white section-premium">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="mb-4 text-2xl font-semibold text-ink-black">
+            <h2 className="mb-4 text-3xl text-ink-black md:text-4xl">
               Still have questions?
             </h2>
-            <p className="mb-6 text-ink-mid">
+            <p className="text-lead mx-auto mb-8 max-w-xl text-ink-mid">
               Our team is here to help. Reach out and we&apos;ll get back to you
               within 24 hours.
             </p>
-            <Button asChild>
+            <Button size="lg" asChild>
               <Link href="/contact">
                 Contact Us
                 <ArrowRight className="ml-2 h-4 w-4" />

@@ -1,7 +1,7 @@
 import { getAdminUsers } from "@/actions/admin";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, Shield, AlertTriangle } from "lucide-react";
+import { Shield, AlertTriangle } from "lucide-react";
 import { SuspendUserButton } from "./suspend-button";
 
 export default async function AdminUsersPage({
@@ -15,7 +15,7 @@ export default async function AdminUsersPage({
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-ink-black">
+        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">
           User Management
         </h1>
         <p className="mt-1 text-sm text-ink-mid">

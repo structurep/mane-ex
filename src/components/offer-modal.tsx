@@ -25,11 +25,10 @@ import {
   Shield,
   Info,
 } from "lucide-react";
+import { toast } from "sonner";
 import {
   shouldDefaultToACH,
   formatCentsToDollars,
-  calculatePlatformFee,
-  calculateSellerNet,
 } from "@/lib/stripe/config";
 
 type OfferModalProps = {
@@ -70,9 +69,12 @@ export function OfferModal({
     }
   }, [useACH]);
 
-  // Redirect on success
+  // Toast + redirect on success
   useEffect(() => {
     if (state.offerId) {
+      toast.success("Offer submitted", {
+        description: "The seller has been notified.",
+      });
       const timer = setTimeout(() => {
         setOpen(false);
         window.location.href = `/dashboard/offers/${state.offerId}`;
@@ -80,6 +82,13 @@ export function OfferModal({
       return () => clearTimeout(timer);
     }
   }, [state.offerId]);
+
+  // Toast on error
+  useEffect(() => {
+    if (state.error) {
+      toast.error(state.error);
+    }
+  }, [state.error]);
 
   function handleOpenChange(nextOpen: boolean) {
     if (nextOpen) {

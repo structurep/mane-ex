@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { BottomCTA } from "@/components/bottom-cta";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +10,6 @@ import {
   TrendingUp,
   Heart,
   ArrowRight,
-  Star,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -132,7 +130,7 @@ export default function RecommendationsPage() {
       <Header />
       <main>
         {/* Hero */}
-        <section className="bg-paper-white px-4 pt-20 pb-16 md:px-8 md:pt-24">
+        <section className="with-grain bg-gradient-hero px-4 pt-24 pb-12 md:px-8 md:pt-36 md:pb-16">
           <div className="mx-auto max-w-[1200px] text-center">
             <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full bg-gold/10 px-4 py-2">
               <Sparkles className="h-4 w-4 text-gold" />
@@ -140,10 +138,10 @@ export default function RecommendationsPage() {
                 Smart Matching Enabled
               </span>
             </div>
-            <h1 className="font-heading text-4xl font-bold text-ink-black md:text-5xl">
+            <h1 className="text-4xl tracking-tight text-ink-black md:text-5xl">
               Horses picked for you.
             </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-ink-mid">
+            <p className="text-lead mx-auto mt-4 max-w-2xl text-ink-mid">
               ManeMatch analyzes your preferences, browsing history, and saved
               horses to find your best matches.
             </p>
@@ -151,10 +149,10 @@ export default function RecommendationsPage() {
         </section>
 
         {/* Top Matches */}
-        <section className="bg-paper-cream px-4 py-16 md:px-8">
+        <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-[1200px]">
             <p className="overline mb-3 text-gold">TOP MATCHES</p>
-            <h2 className="mb-8 font-heading text-2xl font-bold text-ink-black md:text-3xl">
+            <h2 className="mb-8 font-heading text-2xl font-semibold tracking-tight text-ink-black md:text-3xl">
               Your best matches right now
             </h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -162,7 +160,7 @@ export default function RecommendationsPage() {
                 <Link
                   key={horse.id}
                   href={`/horses/${horse.slug}`}
-                  className="group relative overflow-hidden rounded-lg border border-border bg-paper-white shadow-flat transition-elevation hover-lift hover:shadow-folded"
+                  className="group relative overflow-hidden rounded-lg border-0 bg-paper-white shadow-flat transition-elevation hover-lift hover:shadow-lifted"
                 >
                   {/* Match badge */}
                   <div className="absolute top-3 left-3 z-10 rounded-full bg-gold px-2.5 py-1 text-xs font-bold text-white">
@@ -188,7 +186,7 @@ export default function RecommendationsPage() {
                         </Badge>
                       ))}
                     </div>
-                    <p className="mt-2 text-lg font-bold text-ink-black">
+                    <p className="mt-2 font-serif text-lg font-bold text-ink-black">
                       ${horse.price.toLocaleString()}
                     </p>
                   </div>
@@ -199,9 +197,9 @@ export default function RecommendationsPage() {
         </section>
 
         {/* More Recommendations */}
-        <section className="bg-paper-white px-4 py-16 md:px-8">
+        <section className="bg-paper-white section-premium">
           <div className="mx-auto max-w-[1200px]">
-            <h2 className="mb-8 font-heading text-2xl font-bold text-ink-black md:text-3xl">
+            <h2 className="mb-8 font-heading text-2xl font-semibold tracking-tight text-ink-black md:text-3xl">
               More recommendations
             </h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -209,7 +207,7 @@ export default function RecommendationsPage() {
                 <Link
                   key={horse.id}
                   href={`/horses/${horse.slug}`}
-                  className="group overflow-hidden rounded-lg border border-border bg-paper-white shadow-flat transition-elevation hover-lift hover:shadow-folded"
+                  className="group overflow-hidden rounded-lg border-0 bg-paper-white shadow-flat transition-elevation hover-lift hover:shadow-lifted"
                 >
                   {/* Image placeholder */}
                   <div className="aspect-[4/3] bg-paper-warm" />
@@ -232,7 +230,7 @@ export default function RecommendationsPage() {
                       ))}
                     </div>
                     <div className="mt-2 flex items-center justify-between">
-                      <p className="text-lg font-bold text-ink-black">
+                      <p className="font-serif text-lg font-bold text-ink-black">
                         ${horse.price.toLocaleString()}
                       </p>
                       <span className="text-sm font-medium text-gold">
@@ -247,9 +245,9 @@ export default function RecommendationsPage() {
         </section>
 
         {/* How It Works */}
-        <section className="bg-paper-cream px-4 py-16 md:px-8">
+        <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-[1200px]">
-            <h2 className="mb-12 text-center font-heading text-2xl font-bold text-ink-black md:text-3xl">
+            <h2 className="mb-12 text-center font-heading text-2xl font-semibold tracking-tight text-ink-black md:text-3xl">
               How ManeMatch works
             </h2>
             <div className="grid gap-8 md:grid-cols-3">
@@ -293,7 +291,29 @@ export default function RecommendationsPage() {
           </div>
         </section>
 
-        <BottomCTA />
+        {/* Bottom CTA */}
+        <section className="bg-ink-black section-premium">
+          <div className="mx-auto max-w-[1200px] text-center">
+            <h2 className="mb-4 text-3xl tracking-tight text-paper-white">
+              Your next horse is waiting.
+            </h2>
+            <p className="text-lead mx-auto mb-8 max-w-lg text-ink-light">
+              Browse verified listings or list your horse on the marketplace
+              built for the equestrian community.
+            </p>
+            <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+              <Button asChild size="lg">
+                <Link href="/browse">
+                  Browse Horses
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <Link href="/dashboard/listings/new">List Your Horse</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </div>
