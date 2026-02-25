@@ -93,7 +93,7 @@ export default function FinancingPage() {
         {/* Hero */}
         <section className="bg-paper-white px-4 pt-20 pb-16 md:px-8 md:pt-24">
           <div className="mx-auto max-w-[1200px] text-center">
-            <p className="overline mb-3 text-red">FINANCING</p>
+            <p className="overline mb-3 text-gold">FINANCING</p>
             <h1 className="mb-4 text-4xl font-bold text-ink-black md:text-5xl">
               Make your dream horse
               <br />
@@ -123,8 +123,8 @@ export default function FinancingPage() {
                   key={option.title}
                   className="rounded-lg border border-crease-light bg-paper-white p-6 shadow-flat transition-elevation hover-lift"
                 >
-                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-red-light">
-                    <option.icon className="h-5 w-5 text-red" />
+                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                    <option.icon className="h-5 w-5 text-primary" />
                   </div>
                   <h3 className="mb-2 text-lg font-medium text-ink-black">
                     {option.title}
@@ -250,7 +250,7 @@ export default function FinancingPage() {
                   <p className="mb-1 text-xs font-medium uppercase tracking-wider text-ink-light">
                     Est. Monthly
                   </p>
-                  <p className="text-2xl font-bold text-red">$1,782</p>
+                  <p className="text-2xl font-bold text-primary">$1,782</p>
                 </div>
               </div>
               <div className="crease-divider mt-6 mb-4" />

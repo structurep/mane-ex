@@ -48,7 +48,7 @@ export function StepShowInfo({ data, setField }: StepProps) {
                 onChange={() => toggleDiscipline(d)}
                 className="peer sr-only"
               />
-              <span className="block rounded-full border border-crease-light px-3 py-1.5 text-xs font-medium text-ink-mid transition-colors peer-checked:border-ink-black peer-checked:bg-ink-black peer-checked:text-paper-white">
+              <span className="block rounded-full border border-crease-light px-3 py-1.5 text-xs font-medium text-ink-mid transition-colors peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground">
                 {d}
               </span>
             </label>

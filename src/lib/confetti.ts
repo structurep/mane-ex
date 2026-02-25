@@ -1,12 +1,12 @@
 import confetti from 'canvas-confetti';
 
-/** Offer accepted — gold/forest/red celebration */
+/** Offer accepted — gold/forest/green celebration */
 export function celebrateSuccess() {
   confetti({
     particleCount: 80,
     spread: 60,
     origin: { y: 0.7 },
-    colors: ['#C9A84C', '#3B8C5A', '#E10600'],
+    colors: ['#C4A265', '#2D6A4F', '#1B4332'],
     disableForReducedMotion: true,
     decay: 0.92,
     ticks: 60,
@@ -19,7 +19,7 @@ export function celebrateGold() {
     particleCount: 50,
     spread: 45,
     origin: { y: 0.7 },
-    colors: ['#C9A84C', '#DFC068', '#B89A3F'],
+    colors: ['#C4A265', '#D4B37A', '#B39355'],
     disableForReducedMotion: true,
     decay: 0.92,
     ticks: 50,

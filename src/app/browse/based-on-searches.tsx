@@ -56,10 +56,6 @@ async function fetchRecommendations(
                 .filter((b): b is string => b !== null)
             ),
           ];
-          const allDisciplines = favListings.flatMap(
-            (l) => l.discipline_ids || []
-          );
-          const disciplines = [...new Set(allDisciplines)];
           const prices = favListings
             .map((l) => l.price)
             .filter((p): p is number => p !== null);
@@ -232,7 +228,7 @@ export async function BasedOnSearches({
           {isPersonalized ? (
             <Sparkles className="h-5 w-5 text-gold" />
           ) : (
-            <TrendingUp className="h-5 w-5 text-red" />
+            <TrendingUp className="h-5 w-5 text-primary" />
           )}
           <div>
             <h2 className="text-xl font-bold text-ink-black">{sectionTitle}</h2>
@@ -258,7 +254,7 @@ export async function BasedOnSearches({
                 className="group flex-none w-[220px] overflow-hidden rounded-lg border border-border bg-paper-cream shadow-flat transition-elevation hover-lift hover:shadow-lifted md:w-[240px]"
               >
                 {/* Image */}
-                <div className="relative aspect-[4/3] overflow-hidden bg-paper-warm">
+                <div className="relative aspect-[3/2] overflow-hidden bg-paper-warm">
                   {primary ? (
                     <img
                       src={primary.url}
@@ -288,7 +284,7 @@ export async function BasedOnSearches({
 
                 {/* Content */}
                 <div className="p-3">
-                  <h3 className="truncate font-medium text-ink-black group-hover:text-red">
+                  <h3 className="truncate font-medium text-ink-black group-hover:text-primary">
                     {l.name}
                   </h3>
                   <p className="mt-0.5 truncate text-xs text-ink-mid">

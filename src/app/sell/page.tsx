@@ -9,7 +9,7 @@ import { ArrowRight, BarChart3, Users, FileCheck, Lock } from "lucide-react";
 export const metadata: Metadata = {
   title: "Sell Your Horse",
   description:
-    "Sell your horse on ManeExchange — the equestrian marketplace with verified buyers, secure escrow payments, and compliance built into every listing.",
+    "Sell your horse on ManeExchange. Structured listing process, qualified inquiries, secured payments from acceptance through delivery.",
 };
 
 const steps = [
@@ -132,14 +132,13 @@ export default function SellPage() {
         {/* Hero */}
         <section className="with-grain bg-gradient-hero px-4 pt-24 pb-12 md:px-8 md:pt-36 md:pb-16">
           <div className="mx-auto max-w-[1200px] text-center">
-            <p className="overline mb-3 text-red">SELL ON MANEEXCHANGE</p>
-            <h1 className="mb-6 text-4xl tracking-tight text-ink-black md:text-5xl">
-              Sell smarter. Not harder.
+            <p className="overline mb-3 text-gold">THE SELLER EXPERIENCE</p>
+            <h1 className="font-serif mb-6 text-4xl tracking-tight text-ink-black md:text-5xl">
+              The seller experience.
             </h1>
             <p className="text-lead mx-auto mb-8 max-w-2xl text-ink-mid">
-              The equestrian marketplace built for serious sellers. Verified
-              buyers, secure payments, and a listing process that does the
-              compliance work for you.
+              Structured listing process. Qualified inquiries. Secured payments
+              from acceptance through delivery.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <Button asChild>
@@ -156,7 +155,7 @@ export default function SellPage() {
         </section>
 
         {/* Social Proof Stats */}
-        <section className="bg-ink-black px-4 py-20 md:px-8 md:py-24">
+        <section className="bg-paddock px-4 py-20 md:px-8 md:py-24">
           <div className="mx-auto max-w-[1200px]">
             <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
               {stats.map((stat) => (
@@ -174,8 +173,8 @@ export default function SellPage() {
         {/* How It Works */}
         <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-[1200px]">
-            <p className="overline mb-3 text-red">HOW IT WORKS</p>
-            <h2 className="mb-10 text-3xl tracking-tight text-ink-black md:text-4xl">
+            <p className="overline mb-3 text-gold">HOW IT WORKS</p>
+            <h2 className="font-serif mb-10 text-3xl tracking-tight text-ink-black md:text-4xl">
               Six steps to a secure sale.
             </h2>
             <div className="grid gap-6 md:grid-cols-3">
@@ -184,7 +183,7 @@ export default function SellPage() {
                   key={step.number}
                   className="rounded-lg border-0 bg-paper-white p-6 shadow-flat transition-elevation hover-lift hover:shadow-lifted"
                 >
-                  <span className="mb-3 flex h-8 w-8 items-center justify-center rounded-full bg-red text-sm font-bold text-white">
+                  <span className="mb-3 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
                     {step.number}
                   </span>
                   <h3 className="mb-2 font-medium text-ink-black">
@@ -200,8 +199,8 @@ export default function SellPage() {
         {/* Value Props */}
         <section className="bg-paper-white section-premium">
           <div className="mx-auto max-w-[1200px]">
-            <p className="overline mb-3 text-red">WHY MANEEXCHANGE</p>
-            <h2 className="mb-10 text-3xl tracking-tight text-ink-black md:text-4xl">
+            <p className="overline mb-3 text-gold">WHY MANEEXCHANGE</p>
+            <h2 className="font-serif mb-10 text-3xl tracking-tight text-ink-black md:text-4xl">
               Built for how horses are actually sold.
             </h2>
             <div className="grid gap-8 md:grid-cols-2">

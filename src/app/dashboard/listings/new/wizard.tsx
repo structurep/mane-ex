@@ -80,7 +80,7 @@ export function ListingWizard() {
               onClick={() => dispatch({ type: "SET_STEP", step: i })}
               className={`whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium transition-colors ${
                 i === state.step
-                  ? "bg-ink-black text-paper-white"
+                  ? "bg-primary text-primary-foreground"
                   : i < state.step
                     ? "bg-forest/10 text-forest"
                     : "bg-paper-warm text-ink-light"

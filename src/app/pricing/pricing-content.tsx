@@ -13,7 +13,7 @@ const sellerTiers = [
     name: "Starter",
     monthlyPrice: 0,
     annualPrice: 0,
-    description: "Perfect for individual sellers with a few horses.",
+    description: "Individual sellers with a small number of horses.",
     features: [
       "Up to 3 active listings",
       "Basic seller profile",
@@ -21,14 +21,14 @@ const sellerTiers = [
       "ManeVault escrow access",
       "Listing completeness score",
     ],
-    cta: "Get Started",
+    cta: "Create Account",
     highlighted: false,
   },
   {
     name: "Pro",
     monthlyPrice: 49,
     annualPrice: 490,
-    description: "For active sellers and small barns.",
+    description: "Active sellers and small training operations.",
     features: [
       "Up to 10 active listings",
       "Farm storefront page",
@@ -38,14 +38,14 @@ const sellerTiers = [
       "Analytics dashboard",
       "Seller verification badge",
     ],
-    cta: "Start Free",
+    cta: "Select Pro",
     highlighted: true,
   },
   {
     name: "Elite",
     monthlyPrice: 149,
     annualPrice: 1490,
-    description: "For consignment barns and high-volume sellers.",
+    description: "Consignment operations and high-volume programs.",
     features: [
       "Unlimited listings",
       "Custom farm branding",
@@ -56,14 +56,14 @@ const sellerTiers = [
       "ManeExchange Verified badge",
       "Dedicated support",
     ],
-    cta: "Start Free",
+    cta: "Select Elite",
     highlighted: false,
   },
 ];
 
 function formatPrice(tier: (typeof sellerTiers)[number], annual: boolean) {
   if (tier.monthlyPrice === 0) {
-    return { display: "Free", note: "Free forever", perMonth: null };
+    return { display: "Free", note: "Complimentary", perMonth: null };
   }
   if (annual) {
     const perMonth = (tier.annualPrice / 12).toFixed(2);
@@ -90,13 +90,13 @@ export function PricingContent() {
         {/* ── Hero ── */}
         <section className="with-grain bg-gradient-hero px-4 pt-24 pb-20 md:px-8 md:pt-36 md:pb-28">
           <div className="mx-auto max-w-[1200px] text-center">
-            <p className="overline mb-4 text-red">PRICING</p>
-            <h1 className="mb-6 text-4xl tracking-tight text-ink-black md:text-6xl">
-              Free to start. Free to grow.
+            <p className="overline mb-4 text-gold">MEMBERSHIP</p>
+            <h1 className="font-serif mb-6 text-4xl tracking-tight text-ink-black md:text-6xl">
+              Plans designed for how you operate.
             </h1>
             <p className="text-lead mx-auto max-w-2xl text-ink-mid">
-              Every tier is free during our launch period. Build your presence
-              and track record before any fees kick in.
+              Structured tiers for individual sellers, active barns, and
+              high-volume consignment operations. All plans include ManeVault escrow.
             </p>
           </div>
         </section>
@@ -137,9 +137,9 @@ export function PricingContent() {
         <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-[1200px]">
             <div className="mb-12 text-center">
-              <p className="overline mb-3 text-red">SELLER PLANS</p>
-              <h2 className="text-3xl text-ink-black md:text-4xl">
-                Plans for sellers
+              <p className="overline mb-3 text-gold">SELLER PLANS</p>
+              <h2 className="font-serif text-3xl text-ink-black md:text-4xl">
+                For sellers
               </h2>
             </div>
 
@@ -157,7 +157,7 @@ export function PricingContent() {
                   >
                     {tier.highlighted && (
                       <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                        <span className="rounded-full bg-red px-3 py-1 text-xs font-semibold text-white">
+                        <span className="rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
                           MOST POPULAR
                         </span>
                       </div>
@@ -183,7 +183,7 @@ export function PricingContent() {
                       <p className="mb-4 text-xs text-ink-light">
                         {price.note
                           ? price.note
-                          : `During launch — $${tier.monthlyPrice}/mo after`}
+                          : `Currently waived — $${tier.monthlyPrice}/mo after launch`}
                       </p>
                     )}
                     <p className="mb-6 text-sm text-ink-mid">
@@ -223,8 +223,8 @@ export function PricingContent() {
           <div className="mx-auto max-w-[1200px]">
             <div className="mb-12 text-center">
               <p className="overline mb-3 text-blue">BUYER PLANS</p>
-              <h2 className="text-3xl text-ink-black md:text-4xl">
-                Tools for serious buyers
+              <h2 className="font-serif text-3xl text-ink-black md:text-4xl">
+                For buyers
               </h2>
             </div>
 
@@ -237,9 +237,9 @@ export function PricingContent() {
                 <p className="mt-1 font-serif text-4xl font-bold text-ink-black">
                   $0
                 </p>
-                <p className="text-xs text-ink-light">Free forever</p>
+                <p className="text-xs text-ink-light">Complimentary</p>
                 <p className="mt-3 text-sm text-ink-mid">
-                  Browse, save, and message sellers.
+                  Browse, save, and contact sellers.
                 </p>
                 <div className="crease-divider my-6" />
                 <ul className="space-y-3">
@@ -260,7 +260,7 @@ export function PricingContent() {
                   ))}
                 </ul>
                 <Button variant="outline" className="mt-8 w-full" asChild>
-                  <Link href="/signup">Get Started</Link>
+                  <Link href="/signup">Create Account</Link>
                 </Button>
               </div>
 
@@ -280,10 +280,10 @@ export function PricingContent() {
                   </span>
                 </div>
                 <p className="text-xs text-ink-light">
-                  During launch — $39/mo after
+                  Currently waived — $39/mo after launch
                 </p>
                 <p className="mt-3 text-sm text-ink-mid">
-                  AI matching, unlimited access, and priority support.
+                  AI-powered matching, unlimited access, and priority support.
                 </p>
                 <div className="crease-divider my-6" />
                 <ul className="space-y-3">
@@ -307,7 +307,7 @@ export function PricingContent() {
                 </ul>
                 <Button className="mt-8 w-full" asChild>
                   <Link href="/signup">
-                    Start Free
+                    Select Buyer Pro
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
@@ -315,8 +315,8 @@ export function PricingContent() {
             </div>
 
             {/* Elite math callout */}
-            <div className="mx-auto mt-12 max-w-2xl rounded-lg bg-ink-black p-8 text-center">
-              <p className="overline text-ink-light">DO THE MATH</p>
+            <div className="mx-auto mt-12 max-w-2xl rounded-lg bg-paddock p-8 text-center">
+              <p className="overline text-ink-light">COMBINED VALUE</p>
               <p className="mt-3 text-lg font-semibold text-paper-white">
                 Pro Seller ($49) + Buyer Pro ($39) ={" "}
                 <span className="text-ink-light line-through">$88/mo</span>
@@ -336,7 +336,7 @@ export function PricingContent() {
           <div className="mx-auto max-w-[1200px]">
             <div className="mb-12 text-center">
               <p className="overline mb-3 text-gold">MANEVAULT ESCROW</p>
-              <h2 className="text-3xl text-ink-black md:text-4xl">
+              <h2 className="font-serif text-3xl text-ink-black md:text-4xl">
                 Funds released in milestones
               </h2>
               <p className="text-lead mx-auto mt-4 max-w-xl text-ink-mid">
@@ -389,11 +389,11 @@ export function PricingContent() {
               <p className="overline mb-3 text-ink-light">
                 TRANSACTION FEES
               </p>
-              <h2 className="mb-4 text-2xl text-ink-black md:text-3xl">
-                Zero fees during launch
+              <h2 className="font-serif mb-4 text-2xl text-ink-black md:text-3xl">
+                Transaction fees
               </h2>
               <p className="mb-8 max-w-xl text-ink-mid">
-                When fees begin (month 12-18):
+                Currently waived during launch. Standard rates upon general availability:
               </p>
               <div className="grid gap-6 md:grid-cols-2">
                 <div className="rounded-lg bg-paper-warm p-6">

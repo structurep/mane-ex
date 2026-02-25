@@ -7,7 +7,7 @@ import { ModerationButtons } from "./moderation-buttons";
 const statusColors: Record<string, string> = {
   active: "bg-green-100 text-green-700",
   draft: "bg-yellow-100 text-yellow-700",
-  sold: "bg-blue-100 text-blue-700",
+  sold: "bg-paper-warm text-ink-mid",
   archived: "bg-gray-100 text-gray-600",
 };
 
@@ -23,7 +23,7 @@ export default async function AdminListingsPage({
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">
+        <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">
           Listing Moderation
         </h1>
         <p className="mt-1 text-sm text-ink-mid">
@@ -37,7 +37,7 @@ export default async function AdminListingsPage({
           href="/admin/listings"
           className={`rounded-md px-3 py-1.5 text-sm ${
             activeFilter === "all"
-              ? "bg-ink-black text-white"
+              ? "bg-paddock text-white"
               : "bg-paper-warm text-ink-mid hover:text-ink-black"
           }`}
         >
@@ -47,7 +47,7 @@ export default async function AdminListingsPage({
           href="/admin/listings?filter=reported"
           className={`rounded-md px-3 py-1.5 text-sm ${
             activeFilter === "reported"
-              ? "bg-ink-black text-white"
+              ? "bg-paddock text-white"
               : "bg-paper-warm text-ink-mid hover:text-ink-black"
           }`}
         >

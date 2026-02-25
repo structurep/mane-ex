@@ -64,7 +64,7 @@ export function ConversationList({
 
             {/* Unread badge */}
             {c.unreadCount > 0 && (
-              <Badge className="shrink-0 bg-red text-white">
+              <Badge className="shrink-0 bg-primary text-primary-foreground">
                 {c.unreadCount}
               </Badge>
             )}

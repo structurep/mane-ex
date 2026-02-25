@@ -12,9 +12,6 @@ import {
   Star,
   MessageCircle,
   ChevronRight,
-  Users,
-  Award,
-  ArrowRight,
 } from "lucide-react";
 
 // Static sample data until trainer-specific DB columns exist
@@ -175,7 +172,7 @@ export default async function TrainerProfilePage({ params }: Props) {
 
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <h1 className="font-heading text-3xl font-bold tracking-tight text-ink-black">
+                  <h1 className="font-serif text-3xl font-bold tracking-tight text-ink-black">
                     {trainer.name}
                   </h1>
                   {trainer.verified && (

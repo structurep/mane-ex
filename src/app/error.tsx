@@ -20,7 +20,7 @@ export default function Error({
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="text-center">
         <p className="text-5xl font-bold text-paper-warm">Oops</p>
-        <h1 className="mt-4 font-heading text-2xl font-bold tracking-tight text-ink-black">
+        <h1 className="mt-4 font-serif text-2xl font-bold tracking-tight text-ink-black">
           Something went wrong
         </h1>
         <p className="mt-2 text-sm text-ink-mid">

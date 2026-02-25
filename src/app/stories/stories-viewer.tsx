@@ -81,7 +81,7 @@ export function StoriesViewer() {
 
   if (loading && listings.length === 0) {
     return (
-      <div className="flex h-screen items-center justify-center bg-ink-black text-paper-white">
+      <div className="flex h-screen items-center justify-center bg-paddock text-paper-white">
         <p className="text-lg">Loading...</p>
       </div>
     );
@@ -89,7 +89,7 @@ export function StoriesViewer() {
 
   if (listings.length === 0) {
     return (
-      <div className="flex h-screen flex-col items-center justify-center bg-ink-black text-paper-white">
+      <div className="flex h-screen flex-col items-center justify-center bg-paddock text-paper-white">
         <p className="mb-4 text-lg">No listings to show</p>
         <Button variant="outline" asChild>
           <Link href="/browse">Browse instead</Link>
@@ -101,7 +101,7 @@ export function StoriesViewer() {
   const listing = listings[currentIndex];
 
   return (
-    <div className="relative h-screen w-full overflow-hidden bg-ink-black">
+    <div className="relative h-screen w-full overflow-hidden bg-paddock">
       {/* Background image */}
       {typeof listing.primary_image_url === "string" ? (
         <img

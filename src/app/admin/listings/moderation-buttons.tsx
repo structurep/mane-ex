@@ -40,7 +40,7 @@ export function ModerationButtons({
         size="sm"
         onClick={handleReject}
         disabled={loading}
-        className="text-red-600 hover:bg-red-50"
+        className="text-destructive hover:bg-red-light"
       >
         <X className="mr-1 h-3 w-3" />
         {loading ? "..." : "Reject"}
@@ -65,7 +65,7 @@ export function ModerationButtons({
         size="sm"
         onClick={handleReject}
         disabled={loading}
-        className="text-red-600 hover:bg-red-50"
+        className="text-destructive hover:bg-red-light"
       >
         <X className="mr-1 h-3 w-3" />
         {loading ? "..." : "Reject"}

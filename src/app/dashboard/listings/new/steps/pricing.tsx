@@ -75,7 +75,7 @@ export function StepPricing({ data, setField }: StepProps) {
                 onChange={() => setField("price_display", opt.value)}
                 className="peer sr-only"
               />
-              <span className="block rounded-md border border-crease-light px-3 py-2 text-xs font-medium text-ink-mid transition-colors peer-checked:border-ink-black peer-checked:bg-ink-black peer-checked:text-paper-white">
+              <span className="block rounded-md border border-crease-light px-3 py-2 text-xs font-medium text-ink-mid transition-colors peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground">
                 {opt.label}
               </span>
             </label>
@@ -118,7 +118,7 @@ export function StepPricing({ data, setField }: StepProps) {
                 className="peer sr-only"
               />
               <div className="flex items-start gap-3">
-                <div className="mt-0.5 h-4 w-4 shrink-0 rounded-full border-2 border-crease-mid peer-checked:border-ink-black peer-checked:bg-ink-black" />
+                <div className="mt-0.5 h-4 w-4 shrink-0 rounded-full border-2 border-crease-mid peer-checked:border-primary peer-checked:bg-primary" />
                 <div>
                   {/* CONSPICUOUS display per UCC 2-316 */}
                   <p className="text-sm font-bold uppercase tracking-wide text-ink-black">

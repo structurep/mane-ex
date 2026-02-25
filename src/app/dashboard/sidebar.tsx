@@ -22,8 +22,11 @@ import {
   Shield,
   CalendarDays,
   GraduationCap,
+  Users,
+  Newspaper,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { signOut } from "@/actions/auth";
 
 type NavItem = {
   href: string;
@@ -53,6 +56,8 @@ const navGroups: NavGroup[] = [
       { href: "/dashboard/reviews", label: "Reviews", icon: Star },
       { href: "/dashboard/analytics", label: "Analytics", icon: BarChart3 },
       { href: "/dashboard/farm", label: "Farm Page", icon: Store },
+      { href: "/dashboard/farm/members", label: "Members", icon: Users },
+      { href: "/dashboard/farm/feed", label: "Barn Feed", icon: Newspaper },
     ],
   },
   {
@@ -112,7 +117,7 @@ export function DashboardSidebar() {
                       href={item.href}
                       className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                         isActive
-                          ? "border-l-2 border-red bg-paper-white text-ink-black"
+                          ? "border-l-2 border-primary bg-paper-white text-ink-black"
                           : "border-l-2 border-transparent text-ink-mid hover:bg-paper-warm hover:text-ink-black"
                       }`}
                     >
@@ -127,7 +132,7 @@ export function DashboardSidebar() {
         </nav>
 
         {/* Sign out */}
-        <form action="/auth/signout" method="post">
+        <form action={signOut}>
           <button
             type="submit"
             className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-ink-light transition-colors hover:bg-paper-warm hover:text-ink-black"

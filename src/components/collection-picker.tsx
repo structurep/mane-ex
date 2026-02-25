@@ -15,7 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Heart, Plus, Check, FolderHeart } from "lucide-react";
+import { Plus, Check, FolderHeart } from "lucide-react";
 import { toast } from "sonner";
 
 interface CollectionPickerProps {

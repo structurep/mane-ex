@@ -24,11 +24,11 @@ export default function LoginPage() {
               className="mx-auto mb-4"
             />
           </Link>
-          <h1 className="text-3xl tracking-tight text-ink-black md:text-4xl">
+          <h1 className="font-serif text-3xl tracking-tight text-ink-black md:text-4xl">
             Welcome back
           </h1>
           <p className="mt-2 text-sm text-ink-mid">
-            Log in to your ManeExchange account
+            Sign in to your ManeExchange account
           </p>
         </div>
 
@@ -42,7 +42,7 @@ export default function LoginPage() {
           Don&apos;t have an account?{" "}
           <Link
             href="/signup"
-            className="font-medium text-red hover:underline"
+            className="font-medium text-primary hover:underline"
           >
             Sign up
           </Link>

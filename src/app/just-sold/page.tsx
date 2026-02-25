@@ -53,7 +53,7 @@ export default async function JustSoldPage() {
         {/* ── Hero ── */}
         <section className="with-grain bg-gradient-hero px-4 pt-24 pb-12 md:px-8 md:pt-36 md:pb-16">
           <div className="mx-auto max-w-4xl">
-            <p className="overline mb-4 text-red">SOCIAL PROOF</p>
+            <p className="overline mb-4 text-gold">SOCIAL PROOF</p>
             <h1 className="mb-4 text-3xl tracking-tight text-ink-black md:text-5xl">
               Just Sold
             </h1>

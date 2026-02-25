@@ -7,7 +7,7 @@ import { BrowseResults } from "./results";
 import { BasedOnSearches } from "./based-on-searches";
 
 export const metadata: Metadata = {
-  title: "Browse Horses",
+  title: "Current Offerings",
   description:
     "Browse verified horse listings on ManeExchange. Filter by discipline, price, location, and more.",
 };
@@ -36,8 +36,8 @@ export default async function BrowsePage({ searchParams }: Props) {
       <main className="px-4 py-8 md:px-8">
         <div className="mx-auto max-w-[1200px]">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-ink-black">
-              Browse Horses
+            <h1 className="font-serif text-3xl font-bold tracking-tight text-ink-black">
+              Current Offerings
             </h1>
             <p className="mt-1 text-ink-mid">
               Verified listings with documentation you can trust.
@@ -62,7 +62,7 @@ export default async function BrowsePage({ searchParams }: Props) {
                         key={i}
                         className="overflow-hidden rounded-lg bg-paper-white shadow-flat"
                       >
-                        <div className="aspect-[4/3] animate-shimmer" />
+                        <div className="aspect-[3/2] animate-shimmer" />
                         <div className="space-y-2 p-3.5">
                           <div className="h-4 w-3/4 animate-shimmer rounded" />
                           <div className="h-3 w-1/2 animate-shimmer rounded" />

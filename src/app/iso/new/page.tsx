@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Search } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 
@@ -62,7 +62,7 @@ export default function NewIsoPage() {
               <ArrowLeft className="h-4 w-4" />
               Back to ISOs
             </Link>
-            <p className="overline mb-3 text-red">NEW REQUEST</p>
+            <p className="overline mb-3 text-gold">NEW REQUEST</p>
             <h1 className="mb-2 text-3xl tracking-tight text-ink-black md:text-4xl">
               Post an ISO
             </h1>

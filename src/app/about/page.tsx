@@ -78,8 +78,8 @@ export default function AboutPage() {
         {/* ── Hero ── */}
         <section className="with-grain bg-gradient-hero px-4 pt-24 pb-20 md:px-8 md:pt-36 md:pb-28">
           <div className="mx-auto max-w-3xl">
-            <p className="overline mb-4 text-red">ABOUT</p>
-            <h1 className="mb-8 text-4xl tracking-tight text-ink-black md:text-6xl">
+            <p className="overline mb-4 text-gold">ABOUT</p>
+            <h1 className="font-serif mb-8 text-4xl tracking-tight text-ink-black md:text-6xl">
               The horse industry
               <br />
               <span className="text-ink-mid">deserves real infrastructure.</span>
@@ -121,7 +121,6 @@ export default function AboutPage() {
                   key={item.title}
                   className="animate-fade-up group relative overflow-hidden rounded-lg bg-paper-white p-8 shadow-flat transition-elevation hover-lift hover:shadow-lifted"
                 >
-                  <div className="fold-corner" />
                   <div
                     className={`mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg ${accentBg[item.accent]}`}
                   >
@@ -179,23 +178,21 @@ export default function AboutPage() {
         </section>
 
         {/* ── CTA ── */}
-        <section className="bg-ink-black section-premium">
+        <section className="bg-paddock section-premium">
           <div className="mx-auto max-w-[1200px] text-center">
-            <h2 className="mb-4 text-3xl text-paper-white md:text-4xl">
-              Ready to see the difference?
+            <h2 className="font-serif mb-4 text-3xl text-paper-white md:text-4xl">
+              The standard for equine transactions.
             </h2>
             <p className="text-lead mx-auto mb-8 max-w-xl text-ink-light">
-              Join the marketplace that treats equestrian transactions with the
-              seriousness they deserve.
+              Purpose-built for the way serious horses are bought and sold.
             </p>
             <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <Button
                 size="lg"
-                className="bg-red hover:bg-red/90"
                 asChild
               >
                 <Link href="/signup">
-                  Get Started — Free
+                  Create an Account
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
@@ -205,7 +202,7 @@ export default function AboutPage() {
                 className="!bg-transparent border-crease-dark text-paper-cream hover:!bg-ink-dark"
                 asChild
               >
-                <Link href="/browse">Browse Horses</Link>
+                <Link href="/browse">View Current Offerings</Link>
               </Button>
             </div>
           </div>

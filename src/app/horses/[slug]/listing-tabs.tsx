@@ -274,18 +274,18 @@ export function ListingTabs({ listing }: { listing: ListingTabsData }) {
                   href={`/horses/${l.slug}/passport`}
                   className="group flex items-center gap-3 rounded-lg border border-crease-light bg-paper-cream px-5 py-4 transition-elevation hover-lift shadow-flat hover:shadow-folded"
                 >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-paper-warm text-ink-mid group-hover:text-blue">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-paper-warm text-ink-mid group-hover:text-primary">
                     <FileText className="h-5 w-5" />
                   </span>
                   <div className="flex-1">
-                    <p className="text-sm font-semibold text-ink-dark group-hover:text-blue">
+                    <p className="text-sm font-semibold text-ink-dark group-hover:text-primary">
                       View Digital Passport
                     </p>
                     <p className="text-xs text-ink-light">
                       Identity, pedigree, health timeline, and show history
                     </p>
                   </div>
-                  <ChevronRight className="h-4 w-4 text-ink-light group-hover:text-blue" />
+                  <ChevronRight className="h-4 w-4 text-ink-light group-hover:text-primary" />
                 </Link>
               </section>
 

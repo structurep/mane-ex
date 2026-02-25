@@ -5,7 +5,6 @@ import { createClient } from "@/lib/supabase/server";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
   MapPin,
@@ -19,6 +18,9 @@ import {
   Instagram,
   Shield,
   ExternalLink,
+  Newspaper,
+  Lock,
+  User,
 } from "lucide-react";
 
 type Props = {
@@ -61,7 +63,40 @@ async function getFarmData(slug: string) {
         .single(),
     ]);
 
-  return { farm, listings: listings || [], staff: staff || [], owner };
+  // Check if current user is a member (for feed preview)
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  let isMember = false;
+  let recentPosts: Record<string, unknown>[] = [];
+
+  if (user) {
+    isMember =
+      farm.owner_id === user.id ||
+      (staff || []).some((s: { user_id: string }) => s.user_id === user.id);
+
+    if (isMember) {
+      const { data: posts } = await supabase
+        .from("barn_posts")
+        .select(
+          "id, body, type, created_at, author:profiles!barn_posts_author_id_fkey(display_name, avatar_url)"
+        )
+        .eq("farm_id", farm.id)
+        .order("created_at", { ascending: false })
+        .limit(3);
+      recentPosts = posts ?? [];
+    }
+  }
+
+  return {
+    farm,
+    listings: listings || [],
+    staff: staff || [],
+    owner,
+    isMember,
+    recentPosts,
+  };
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -104,7 +139,7 @@ export default async function FarmPage({ params }: Props) {
     notFound();
   }
 
-  const { farm, listings, staff, owner } = result;
+  const { farm, listings, staff, owner, isMember, recentPosts } = result;
 
   const location = [farm.city, farm.state].filter(Boolean).join(", ");
   const hasContact =
@@ -133,16 +168,32 @@ export default async function FarmPage({ params }: Props) {
             <span className="text-ink-mid">{farm.name}</span>
           </nav>
 
-          {/* Cover image placeholder */}
-          <div className="mb-6 aspect-[3/1] rounded-lg bg-paper-warm" />
+          {/* Cover image */}
+          <div className="mb-6 aspect-[3/1] overflow-hidden rounded-lg bg-paper-warm">
+            {farm.cover_url && (
+              <img
+                src={farm.cover_url}
+                alt={`${farm.name} cover`}
+                className="h-full w-full object-cover"
+              />
+            )}
+          </div>
 
           {/* Farm header */}
           <div className="-mt-14 mb-8 px-4 md:px-6">
             <div className="flex items-end gap-4">
-              {/* Logo placeholder */}
-              <div className="h-16 w-16 shrink-0 rounded-lg border-2 border-paper-white bg-paper-warm shadow-flat" />
+              {/* Logo */}
+              {farm.logo_url ? (
+                <img
+                  src={farm.logo_url}
+                  alt={`${farm.name} logo`}
+                  className="h-16 w-16 shrink-0 rounded-lg border-2 border-paper-white object-cover shadow-flat"
+                />
+              ) : (
+                <div className="h-16 w-16 shrink-0 rounded-lg border-2 border-paper-white bg-paper-warm shadow-flat" />
+              )}
               <div className="pb-1">
-                <h1 className="font-heading text-3xl font-bold text-ink-black">
+                <h1 className="font-serif text-3xl font-bold text-ink-black">
                   {farm.name}
                 </h1>
               </div>
@@ -201,7 +252,7 @@ export default async function FarmPage({ params }: Props) {
             <div className="mb-8 grid gap-6 md:grid-cols-2">
               {/* Contact info */}
               {hasContact && (
-                <div className="rounded-lg border border-border bg-paper-cream p-6 shadow-flat">
+                <div className="rounded-lg border-0 bg-paper-cream p-6 shadow-flat">
                   <p className="overline mb-4 text-ink-light">CONTACT</p>
                   <div className="space-y-3">
                     {farm.phone && (
@@ -254,7 +305,7 @@ export default async function FarmPage({ params }: Props) {
 
               {/* Details */}
               {hasDetails && (
-                <div className="rounded-lg border border-border bg-paper-cream p-6 shadow-flat">
+                <div className="rounded-lg border-0 bg-paper-cream p-6 shadow-flat">
                   <p className="overline mb-4 text-ink-light">DETAILS</p>
                   <div className="space-y-3">
                     {farm.disciplines && farm.disciplines.length > 0 && (
@@ -301,9 +352,17 @@ export default async function FarmPage({ params }: Props) {
               <p className="overline mb-4 text-ink-light">FARM OWNER</p>
               <Link
                 href={`/sellers/${owner.id}`}
-                className="inline-flex items-center gap-4 rounded-lg border border-border bg-paper-cream p-4 shadow-flat transition-shadow hover:shadow-folded"
+                className="inline-flex items-center gap-4 rounded-lg border-0 bg-paper-cream p-4 shadow-flat transition-shadow hover:shadow-folded"
               >
-                <div className="h-12 w-12 shrink-0 rounded-full bg-paper-warm" />
+                {owner.avatar_url ? (
+                  <img
+                    src={owner.avatar_url}
+                    alt={owner.display_name || "Owner"}
+                    className="h-12 w-12 shrink-0 rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="h-12 w-12 shrink-0 rounded-full bg-paper-warm" />
+                )}
                 <div>
                   <p className="text-sm font-medium text-ink-black">
                     {owner.display_name || owner.full_name || "Farm Owner"}
@@ -346,9 +405,17 @@ export default async function FarmPage({ params }: Props) {
                     return (
                     <div
                       key={member.id}
-                      className="flex items-center gap-3 rounded-lg border border-border bg-paper-cream p-4 shadow-flat"
+                      className="flex items-center gap-3 rounded-lg border-0 bg-paper-cream p-4 shadow-flat"
                     >
-                      <div className="h-10 w-10 shrink-0 rounded-full bg-paper-warm" />
+                      {profile?.avatar_url ? (
+                        <img
+                          src={profile.avatar_url}
+                          alt={profile.display_name || "Member"}
+                          className="h-10 w-10 shrink-0 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="h-10 w-10 shrink-0 rounded-full bg-paper-warm" />
+                      )}
                       <div>
                         <p className="text-sm font-medium text-ink-black">
                           {profile?.display_name || "Team Member"}
@@ -364,6 +431,71 @@ export default async function FarmPage({ params }: Props) {
               </div>
             </section>
           )}
+
+          {/* Barn Feed Preview */}
+          <section className="mb-8">
+            <div className="mb-4 flex items-center gap-2">
+              <Newspaper className="h-5 w-5 text-ink-light" />
+              <h2 className="font-heading text-lg font-semibold text-ink-black">
+                Barn Feed
+              </h2>
+            </div>
+
+            {isMember && recentPosts.length > 0 ? (
+              <div className="space-y-3">
+                {recentPosts.map((post) => {
+                  const postAuthor = post.author as {
+                    display_name: string | null;
+                    avatar_url: string | null;
+                  } | null;
+                  return (
+                    <div
+                      key={post.id as string}
+                      className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        {postAuthor?.avatar_url ? (
+                          <img
+                            src={postAuthor.avatar_url}
+                            alt=""
+                            className="h-7 w-7 rounded-full object-cover"
+                          />
+                        ) : (
+                          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-paper-warm">
+                            <User className="h-3.5 w-3.5 text-ink-light" />
+                          </div>
+                        )}
+                        <span className="text-xs font-medium text-ink-black">
+                          {postAuthor?.display_name ?? "Member"}
+                        </span>
+                        <span className="text-xs text-ink-light">
+                          {new Date(
+                            post.created_at as string
+                          ).toLocaleDateString()}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-sm text-ink-mid line-clamp-2">
+                        {post.body as string}
+                      </p>
+                    </div>
+                  );
+                })}
+                <Link
+                  href="/dashboard/farm/feed"
+                  className="block text-center text-sm font-medium text-primary hover:underline"
+                >
+                  View all posts
+                </Link>
+              </div>
+            ) : (
+              <div className="rounded-lg border-0 bg-paper-cream p-6 text-center shadow-flat">
+                <Lock className="mx-auto mb-2 h-5 w-5 text-ink-light" />
+                <p className="text-sm text-ink-mid">
+                  The barn feed is available to team members.
+                </p>
+              </div>
+            )}
+          </section>
 
           <Separator className="my-6" />
 
@@ -403,13 +535,13 @@ export default async function FarmPage({ params }: Props) {
                       <Link
                         key={listing.id}
                         href={`/horses/${listing.slug}`}
-                        className="group rounded-lg border border-border bg-paper-cream shadow-flat transition-shadow hover:shadow-folded"
+                        className="group rounded-lg border-0 bg-paper-cream shadow-flat transition-shadow hover:shadow-folded"
                       >
                         {/* Image placeholder */}
-                        <div className="aspect-[4/3] rounded-t-lg bg-paper-warm" />
+                        <div className="aspect-[3/2] rounded-t-lg bg-paper-warm" />
 
                         <div className="p-4">
-                          <h3 className="font-heading text-base font-semibold text-ink-black group-hover:text-blue">
+                          <h3 className="font-heading text-base font-semibold text-ink-black group-hover:text-primary">
                             {listing.name}
                           </h3>
                           <p className="mt-0.5 text-sm text-ink-mid">
@@ -442,7 +574,7 @@ export default async function FarmPage({ params }: Props) {
                 )}
               </div>
             ) : (
-              <div className="rounded-lg border border-border bg-paper-warm p-12 text-center">
+              <div className="rounded-lg border-0 bg-paper-warm p-12 text-center">
                 <Store className="mx-auto mb-3 h-8 w-8 text-ink-light" />
                 <p className="text-sm font-medium text-ink-mid">
                   No horses currently listed

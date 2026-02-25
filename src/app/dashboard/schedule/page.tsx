@@ -214,7 +214,7 @@ export default function SchedulePage() {
       {/* Page header */}
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">Schedule</h1>
+          <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">Schedule</h1>
           <p className="mt-1 text-sm text-ink-mid">
             Manage viewings, trials, PPEs, and video calls.
           </p>
@@ -275,9 +275,9 @@ export default function SchedulePage() {
                     !day.date
                       ? ""
                       : isSelected
-                        ? "bg-ink-black text-white"
+                        ? "bg-primary text-primary-foreground"
                         : isToday
-                          ? "bg-red text-white"
+                          ? "bg-primary/20 text-primary font-semibold"
                           : day.isCurrentMonth
                             ? "text-ink-black hover:bg-paper-cream"
                             : "text-ink-light"
@@ -285,7 +285,7 @@ export default function SchedulePage() {
                 >
                   {day.dayNumber}
                   {hasEvents && !isSelected && (
-                    <span className="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-red" />
+                    <span className="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-primary" />
                   )}
                 </button>
               );

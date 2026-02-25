@@ -16,7 +16,11 @@ export type NotificationType =
   | "ppe_report_ready"
   | "transport_quote_ready"
   | "verification_complete"
-  | "market_alert";
+  | "market_alert"
+  | "barn_invite"
+  | "barn_post"
+  | "barn_comment"
+  | "barn_join";
 
 export interface Notification {
   id: string;

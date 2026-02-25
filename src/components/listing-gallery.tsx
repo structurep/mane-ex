@@ -116,7 +116,7 @@ export function ListingGallery({ media }: { media: MediaItem[] }) {
                 onClick={() => openLightbox(i)}
                 className={`relative h-14 w-[4.5rem] flex-shrink-0 overflow-hidden rounded-md border-2 transition-all ${
                   i === 0
-                    ? "border-red ring-1 ring-red/30"
+                    ? "border-primary ring-1 ring-primary/30"
                     : "border-transparent opacity-70 hover:opacity-100"
                 } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crease-light`}
               >
@@ -125,7 +125,7 @@ export function ListingGallery({ media }: { media: MediaItem[] }) {
                     <Play className="h-4 w-4 text-paper-white" />
                   </div>
                 ) : (
-                  /* eslint-disable-next-line @next/next/no-img-element */
+                   
                   <img
                     src={item.url}
                     alt={item.alt_text || ""}
@@ -178,7 +178,7 @@ function GalleryMedia({
   }
 
   return (
-    /* eslint-disable-next-line @next/next/no-img-element */
+     
     <img
       src={item.url}
       alt={item.alt_text || "Listing photo"}

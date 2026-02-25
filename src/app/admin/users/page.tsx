@@ -15,7 +15,7 @@ export default async function AdminUsersPage({
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">
+        <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">
           User Management
         </h1>
         <p className="mt-1 text-sm text-ink-mid">
@@ -34,7 +34,7 @@ export default async function AdminUsersPage({
         />
         <button
           type="submit"
-          className="rounded-md bg-ink-black px-4 py-2 text-sm font-medium text-white hover:bg-ink-dark"
+          className="rounded-md bg-paddock px-4 py-2 text-sm font-medium text-white hover:bg-ink-dark"
         >
           Search
         </button>
@@ -67,7 +67,7 @@ export default async function AdminUsersPage({
                         {user.display_name || "No name"}
                       </span>
                       {user.is_admin && (
-                        <Badge className="bg-blue-100 text-blue-700">
+                        <Badge className="bg-gold-light text-gold">
                           <Shield className="mr-1 h-3 w-3" />
                           Admin
                         </Badge>
@@ -88,7 +88,7 @@ export default async function AdminUsersPage({
                         )}
                     </p>
                     {user.suspended_at && user.suspension_reason && (
-                      <p className="mt-1 text-xs text-red-600">
+                      <p className="mt-1 text-xs text-destructive">
                         Reason: {user.suspension_reason}
                       </p>
                     )}

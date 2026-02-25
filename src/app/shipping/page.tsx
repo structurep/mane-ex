@@ -121,7 +121,7 @@ export default function ShippingPage() {
         {/* Hero */}
         <section className="with-grain bg-gradient-hero px-4 pt-24 pb-12 md:px-8 md:pt-36 md:pb-16">
           <div className="mx-auto max-w-[1200px] text-center">
-            <p className="overline mb-3 text-red">SHIPPING</p>
+            <p className="overline mb-3 text-gold">SHIPPING</p>
             <h1 className="text-4xl tracking-tight text-ink-black md:text-5xl">
               Ship your horse safely.
             </h1>
@@ -298,7 +298,7 @@ export default function ShippingPage() {
             <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
               <Button size="lg" asChild>
                 <Link href="/browse">
-                  Browse Horses
+                  View Current Offerings
                   <ChevronRight className="ml-1 h-4 w-4" />
                 </Link>
               </Button>

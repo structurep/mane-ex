@@ -10,19 +10,38 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { useState } from "react";
+import { signOut } from "@/actions/auth";
+import type { User } from "@supabase/supabase-js";
 
-const navLinks = [
-  { href: "/browse", label: "Browse Horses" },
-  { href: "/sell", label: "Sell Your Horse" },
-  { href: "/trainers", label: "Trainers" },
-  { href: "/how-it-works", label: "How It Works" },
-  { href: "/pricing", label: "Pricing" },
+const publicLinks = [
+  { href: "/browse", label: "Current Offerings" },
+  { href: "/just-sold", label: "Just Sold" },
+  { href: "/learn", label: "Learn" },
+  { href: "/sell", label: "For Sellers" },
   { href: "/reviews", label: "Reviews" },
   { href: "/faq", label: "FAQ" },
 ];
 
-export function MobileMenu() {
+const authedLinks = [
+  { href: "/dashboard", label: "Dashboard" },
+  { href: "/browse", label: "Current Offerings" },
+  { href: "/dashboard/dream-barn", label: "Dream Barn" },
+  { href: "/iso", label: "ISOs" },
+  { href: "/dashboard/messages", label: "Messages" },
+  { href: "/dashboard/offers", label: "Offers" },
+  { href: "/dashboard/listings/new", label: "New Listing" },
+  { href: "/dashboard/settings", label: "Settings" },
+];
+
+export function MobileMenu({
+  user,
+  loading,
+}: {
+  user: User | null;
+  loading: boolean;
+}) {
   const [open, setOpen] = useState(false);
+  const links = user ? authedLinks : publicLinks;
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -39,7 +58,7 @@ export function MobileMenu() {
       <SheetContent side="right" className="w-72 bg-paper-white">
         <SheetTitle className="sr-only">Navigation</SheetTitle>
         <nav className="stagger-children mt-8 flex flex-col gap-1">
-          {navLinks.map((link) => (
+          {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -50,20 +69,38 @@ export function MobileMenu() {
             </Link>
           ))}
           <div className="crease-divider my-4 animate-fade-up" />
-          <Link
-            href="/login"
-            onClick={() => setOpen(false)}
-            className="animate-fade-up rounded-md px-4 py-3 text-base font-medium text-ink-mid transition-colors hover:bg-paper-warm focus-visible:bg-paper-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crease-light"
-          >
-            Log In
-          </Link>
-          <div className="animate-fade-up px-4 pt-2">
-            <Button className="w-full" asChild>
-              <Link href="/signup" onClick={() => setOpen(false)}>
-                List a Horse
+          {loading ? (
+            <div className="animate-fade-up px-4">
+              <div className="h-10 animate-shimmer rounded-md" />
+            </div>
+          ) : user ? (
+            <form action={signOut} className="animate-fade-up px-4">
+              <button
+                type="submit"
+                onClick={() => setOpen(false)}
+                className="w-full rounded-md border border-crease-light px-4 py-2.5 text-sm font-medium text-ink-mid transition-colors hover:bg-paper-warm"
+              >
+                Sign Out
+              </button>
+            </form>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                onClick={() => setOpen(false)}
+                className="animate-fade-up rounded-md px-4 py-3 text-base font-medium text-ink-mid transition-colors hover:bg-paper-warm focus-visible:bg-paper-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crease-light"
+              >
+                Log In
               </Link>
-            </Button>
-          </div>
+              <div className="animate-fade-up px-4 pt-2">
+                <Button className="w-full" asChild>
+                  <Link href="/signup" onClick={() => setOpen(false)}>
+                    Create Account
+                  </Link>
+                </Button>
+              </div>
+            </>
+          )}
         </nav>
       </SheetContent>
     </Sheet>

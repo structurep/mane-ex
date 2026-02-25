@@ -176,7 +176,7 @@ export function SignupWizard() {
                 s < step
                   ? "bg-forest text-white"
                   : s === step
-                    ? "bg-ink-black text-white"
+                    ? "bg-paddock text-white"
                     : "bg-paper-cream text-ink-light"
               }`}
             >
@@ -201,7 +201,7 @@ export function SignupWizard() {
       {/* Step 1: Account Type */}
       {step === 1 && (
         <div>
-          <h2 className="mb-1 text-center font-heading text-xl font-semibold text-ink-black">
+          <h2 className="mb-1 text-center font-serif text-xl font-semibold text-ink-black">
             How will you use ManeExchange?
           </h2>
           <p className="mb-6 text-center text-sm text-ink-mid">
@@ -219,14 +219,14 @@ export function SignupWizard() {
                   onClick={() => setAccountType(type.key)}
                   className={`flex w-full items-start gap-4 rounded-lg border p-4 text-left transition-all ${
                     isSelected
-                      ? "border-red shadow-folded"
+                      ? "border-primary shadow-folded"
                       : "border-border shadow-flat hover:shadow-folded"
                   }`}
                 >
                   <div
                     className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${
                       isSelected
-                        ? "bg-red/10 text-red"
+                        ? "bg-primary/10 text-primary"
                         : "bg-paper-warm text-ink-mid"
                     }`}
                   >
@@ -240,7 +240,7 @@ export function SignupWizard() {
                   </div>
                   {isSelected && (
                     <div className="ml-auto shrink-0">
-                      <div className="flex h-5 w-5 items-center justify-center rounded-full bg-red text-white">
+                      <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-primary-foreground">
                         <Check className="h-3 w-3" />
                       </div>
                     </div>
@@ -255,7 +255,7 @@ export function SignupWizard() {
       {/* Step 2: Login Details */}
       {step === 2 && (
         <div>
-          <h2 className="mb-1 text-center font-heading text-xl font-semibold text-ink-black">
+          <h2 className="mb-1 text-center font-serif text-xl font-semibold text-ink-black">
             Create your account
           </h2>
           <p className="mb-6 text-center text-sm text-ink-mid">
@@ -339,7 +339,7 @@ export function SignupWizard() {
       {/* Step 3: Profile */}
       {step === 3 && (
         <div>
-          <h2 className="mb-1 text-center font-heading text-xl font-semibold text-ink-black">
+          <h2 className="mb-1 text-center font-serif text-xl font-semibold text-ink-black">
             Tell us about yourself
           </h2>
           <p className="mb-6 text-center text-sm text-ink-mid">
@@ -409,7 +409,7 @@ export function SignupWizard() {
       {/* Step 4: Preferences */}
       {step === 4 && (
         <div>
-          <h2 className="mb-1 text-center font-heading text-xl font-semibold text-ink-black">
+          <h2 className="mb-1 text-center font-serif text-xl font-semibold text-ink-black">
             Set your preferences
           </h2>
           <p className="mb-6 text-center text-sm text-ink-mid">
@@ -432,7 +432,7 @@ export function SignupWizard() {
                         onClick={() => toggleDiscipline(d)}
                         className={`rounded-full border px-3 py-1.5 text-sm font-medium transition-all ${
                           isSelected
-                            ? "border-red bg-red/10 text-red"
+                            ? "border-primary bg-primary/10 text-primary"
                             : "border-border bg-paper-white text-ink-mid hover:border-ink-light"
                         }`}
                       >
@@ -542,7 +542,7 @@ export function SignupWizard() {
                       onClick={() => updateField("horseCount", count)}
                       className={`flex-1 rounded-lg border px-3 py-2.5 text-sm font-medium transition-all ${
                         formData.horseCount === count
-                          ? "border-red bg-red/10 text-red"
+                          ? "border-primary bg-primary/10 text-primary"
                           : "border-border bg-paper-white text-ink-mid hover:border-ink-light"
                       }`}
                     >

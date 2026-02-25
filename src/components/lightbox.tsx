@@ -133,7 +133,7 @@ export function Lightbox({ items, initialIndex, onClose }: LightboxProps) {
             className="max-h-[90vh] max-w-[90vw] rounded-lg"
           />
         ) : (
-          /* eslint-disable-next-line @next/next/no-img-element */
+           
           <img
             key={current.url}
             src={current.url}

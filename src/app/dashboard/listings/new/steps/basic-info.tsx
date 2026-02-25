@@ -71,7 +71,7 @@ export function StepBasicInfo({ data, setField }: StepProps) {
                 onChange={() => setField("gender", opt.value)}
                 className="peer sr-only"
               />
-              <span className="block rounded-md border border-crease-light px-4 py-2 text-sm font-medium text-ink-mid transition-colors peer-checked:border-ink-black peer-checked:bg-ink-black peer-checked:text-paper-white">
+              <span className="block rounded-md border border-crease-light px-4 py-2 text-sm font-medium text-ink-mid transition-colors peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground">
                 {opt.label}
               </span>
             </label>

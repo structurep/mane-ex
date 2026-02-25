@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ─────────────────────────────────────────────
-   ManeExchange Design System: Origami × Swiss
-   Swiss clarity meets Origami warmth.
+   ManeExchange Design System: Institutional Equestrian
+   Keeneland precision. Tattersalls authority.
    ───────────────────────────────────────────── */
 
 @theme inline {
@@ -61,120 +61,120 @@
   --font-heading: var(--font-space-grotesk);
   --font-serif: var(--font-playfair-display);
 
-  /* ── Origami Palette (custom tokens) ── */
+  /* ── Institutional Equestrian Palette ── */
 
-  /* Papers */
-  --color-paper-white: #FAFAF8;
-  --color-paper-cream: #F5F2EC;
-  --color-paper-warm: #EDE9E0;
-  --color-washi: #F0EBE1;
+  /* Surfaces (Keeneland sale catalog paper) */
+  --color-paper-white: #F8F6F1;
+  --color-paper-cream: #FFFFFF;
+  --color-paper-warm: #F2EFE8;
+  --color-washi: #EBE7DE;
 
-  /* Inks */
-  --color-ink-black: #1C1B18;
-  --color-ink-dark: #2E2D28;
-  --color-ink-mid: #5A5750;
-  --color-ink-light: #8A8680;
-  --color-ink-faint: #B8B4AE;
+  /* Inks (forest-tinted) */
+  --color-ink-black: #0F1A12;
+  --color-ink-dark: #1C2B1F;
+  --color-ink-mid: #4A5D4E;
+  --color-ink-light: #728574;
+  --color-ink-faint: #8E9B91;
 
-  /* Creases */
-  --color-crease-light: #D8D3C8;
-  --color-crease-mid: #B8B0A0;
-  --color-crease-dark: #8A8070;
+  /* Creases (parchment borders) */
+  --color-crease-light: #DDD8CE;
+  --color-crease-mid: #C2BAA9;
+  --color-crease-dark: #9A9285;
 
   /* Accents */
-  --color-red: #E10600;
-  --color-red-light: rgba(225, 6, 0, 0.06);
-  --color-forest: #3B8C5A;
-  --color-gold: #C9A84C;
+  --color-red: #6B1D29;
+  --color-red-light: rgba(107, 29, 41, 0.06);
+  --color-forest: #2D6A4F;
+  --color-gold: #C4A265;
   --color-blue: #3B6FC2;
 
   /* Accent tints (premium backgrounds) */
-  --color-gold-light: rgba(201, 168, 76, 0.08);
-  --color-forest-light: rgba(59, 140, 90, 0.08);
+  --color-gold-light: rgba(196, 162, 101, 0.08);
+  --color-forest-light: rgba(45, 106, 79, 0.08);
   --color-blue-light: rgba(59, 111, 194, 0.08);
 
-  /* Shadows (Origami 4-tier paper depth) */
-  --shadow-flat: 0 1px 2px rgba(60, 50, 35, 0.06);
-  --shadow-folded: 0 2px 4px rgba(60, 50, 35, 0.08), 0 4px 12px rgba(60, 50, 35, 0.06);
-  --shadow-lifted: 0 4px 8px rgba(60, 50, 35, 0.10), 0 8px 24px rgba(60, 50, 35, 0.08);
-  --shadow-hovering: 0 8px 16px rgba(60, 50, 35, 0.12), 0 16px 48px rgba(60, 50, 35, 0.10);
+  /* Shadows (forest-tinted, restrained) */
+  --shadow-flat: 0 1px 2px rgba(15, 26, 18, 0.03);
+  --shadow-folded: 0 2px 6px rgba(15, 26, 18, 0.05), 0 1px 2px rgba(15, 26, 18, 0.02);
+  --shadow-lifted: 0 4px 12px rgba(15, 26, 18, 0.07), 0 2px 4px rgba(15, 26, 18, 0.03);
+  --shadow-hovering: 0 12px 24px rgba(15, 26, 18, 0.09), 0 4px 8px rgba(15, 26, 18, 0.04);
 }
 
 :root {
   --radius: 0.5rem;
 
-  /* ── shadcn semantic → Origami × Swiss mapping ── */
-  --background: #FAFAF8;          /* Paper White */
-  --foreground: #1C1B18;          /* Ink Black */
-  --card: #F5F2EC;                /* Paper Cream */
-  --card-foreground: #1C1B18;     /* Ink Black */
-  --popover: #FAFAF8;             /* Paper White */
-  --popover-foreground: #1C1B18;  /* Ink Black */
-  --primary: #E10600;             /* Red — CTAs, primary buttons */
-  --primary-foreground: #FFFFFF;  /* White on Red */
-  --secondary: #EDE9E0;           /* Paper Warm */
-  --secondary-foreground: #2E2D28;/* Ink Dark */
-  --muted: #F0EBE1;               /* Washi */
-  --muted-foreground: #8A8680;    /* Ink Light */
-  --accent: #F0EBE1;              /* Washi */
-  --accent-foreground: #2E2D28;   /* Ink Dark */
-  --destructive: #E10600;         /* Red */
-  --border: #D8D3C8;              /* Crease Light */
-  --input: #D8D3C8;               /* Crease Light */
-  --ring: #3B6FC2;                /* Blue — focus rings */
+  /* ── shadcn semantic → Institutional Equestrian mapping ── */
+  --background: #F8F6F1;
+  --foreground: #0F1A12;
+  --card: #FFFFFF;
+  --card-foreground: #0F1A12;
+  --popover: #FFFFFF;
+  --popover-foreground: #0F1A12;
+  --primary: #1B4332;             /* Keeneland green — CTAs, primary buttons */
+  --primary-foreground: #FFFFFF;
+  --secondary: #F2EFE8;
+  --secondary-foreground: #1C2B1F;
+  --muted: #EBE7DE;
+  --muted-foreground: #728574;
+  --accent: #EBE7DE;
+  --accent-foreground: #1C2B1F;
+  --destructive: #6B1D29;         /* Deep wine — destructive actions */
+  --border: #DDD8CE;
+  --input: #DDD8CE;
+  --ring: #1B4332;                /* Keeneland green — focus rings */
 
   /* Charts */
-  --chart-1: #E10600;
-  --chart-2: #3B8C5A;
-  --chart-3: #C9A84C;
+  --chart-1: #1B4332;
+  --chart-2: #2D6A4F;
+  --chart-3: #C4A265;
   --chart-4: #3B6FC2;
-  --chart-5: #5A5750;
+  --chart-5: #4A5D4E;
 
-  /* Sidebar (Washi-toned) */
-  --sidebar: #F0EBE1;
-  --sidebar-foreground: #1C1B18;
-  --sidebar-primary: #E10600;
+  /* Sidebar */
+  --sidebar: #EBE7DE;
+  --sidebar-foreground: #0F1A12;
+  --sidebar-primary: #1B4332;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #EDE9E0;
-  --sidebar-accent-foreground: #2E2D28;
-  --sidebar-border: #D8D3C8;
-  --sidebar-ring: #3B6FC2;
+  --sidebar-accent: #F2EFE8;
+  --sidebar-accent-foreground: #1C2B1F;
+  --sidebar-border: #DDD8CE;
+  --sidebar-ring: #1B4332;
 }
 
 .dark {
-  --background: #1C1B18;
-  --foreground: #FAFAF8;
-  --card: #2E2D28;
-  --card-foreground: #F5F2EC;
-  --popover: #2E2D28;
-  --popover-foreground: #FAFAF8;
-  --primary: #E10600;
+  --background: #0F1A12;
+  --foreground: #F8F6F1;
+  --card: #1C2B1F;
+  --card-foreground: #FFFFFF;
+  --popover: #1C2B1F;
+  --popover-foreground: #F8F6F1;
+  --primary: #3D7A5C;
   --primary-foreground: #FFFFFF;
-  --secondary: #3A3830;
-  --secondary-foreground: #F5F2EC;
-  --muted: #3A3830;
-  --muted-foreground: #8A8680;
-  --accent: #3A3830;
-  --accent-foreground: #F5F2EC;
-  --destructive: #E10600;
+  --secondary: #1C2B1F;
+  --secondary-foreground: #F8F6F1;
+  --muted: #1C2B1F;
+  --muted-foreground: #8E9B91;
+  --accent: #1C2B1F;
+  --accent-foreground: #F8F6F1;
+  --destructive: #8A2E3C;
   --border: rgba(255, 255, 255, 0.1);
   --input: rgba(255, 255, 255, 0.15);
-  --ring: #3B6FC2;
+  --ring: #3D7A5C;
 
-  --chart-1: #E10600;
+  --chart-1: #3D7A5C;
   --chart-2: #4DA872;
   --chart-3: #D4B65E;
   --chart-4: #5B8FD4;
-  --chart-5: #8A8680;
+  --chart-5: #8E9B91;
 
-  --sidebar: #2E2D28;
-  --sidebar-foreground: #FAFAF8;
-  --sidebar-primary: #E10600;
+  --sidebar: #1C2B1F;
+  --sidebar-foreground: #F8F6F1;
+  --sidebar-primary: #3D7A5C;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #3A3830;
-  --sidebar-accent-foreground: #F5F2EC;
+  --sidebar-accent: #1C2B1F;
+  --sidebar-accent-foreground: #F8F6F1;
   --sidebar-border: rgba(255, 255, 255, 0.1);
-  --sidebar-ring: #3B6FC2;
+  --sidebar-ring: #3D7A5C;
 }
 
 @layer base {
@@ -189,14 +189,14 @@
   h1 {
     font-family: var(--font-serif), Georgia, serif;
     font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.0;
+    letter-spacing: -0.025em;
+    line-height: 0.95;
   }
   h2 {
     font-family: var(--font-serif), Georgia, serif;
     font-weight: 600;
-    letter-spacing: -0.01em;
-    line-height: 1.15;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
   }
   h3 {
     font-family: var(--font-space-grotesk), var(--font-inter), system-ui, sans-serif;
@@ -210,8 +210,8 @@
   .overline {
     font-family: var(--font-inter), system-ui, sans-serif;
     font-weight: 600;
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
     line-height: 1;
     text-transform: uppercase;
   }
@@ -219,7 +219,7 @@
   /* Lead text */
   .text-lead {
     font-size: 1.25rem;
-    line-height: 1.6;
+    line-height: 1.55;
   }
 
   /* Origami fold-corner card accent */
@@ -230,14 +230,14 @@
     right: 0;
     width: 2rem;
     height: 2rem;
-    background: linear-gradient(135deg, transparent 50%, #EDE9E0 50%);
+    background: linear-gradient(135deg, transparent 50%, var(--color-paper-warm) 50%);
     pointer-events: none;
   }
 
   /* Origami gradient crease divider */
   .crease-divider {
     height: 1px;
-    background: linear-gradient(to right, #D8D3C8, transparent);
+    background: linear-gradient(to right, var(--color-crease-light), transparent);
   }
 
   /* Paper grain texture — opt-in per section */
@@ -258,23 +258,24 @@
   /* Section spacing utilities */
   .section-premium { @apply px-4 py-24 md:px-8 md:py-32 lg:px-12; }
   .section-compact { @apply px-4 py-16 md:px-8 md:py-20; }
+  .section-editorial { @apply px-4 py-28 md:px-8 md:py-36 lg:px-12; }
 
   /* Swiss bottom-border input style */
   .input-swiss {
     border: none;
-    border-bottom: 2px solid #D8D3C8;
+    border-bottom: 2px solid var(--color-crease-light);
     border-radius: 0;
     background: transparent;
     padding: 0.75rem 0;
     transition: border-color 0.2s ease;
   }
   .input-swiss:hover {
-    border-bottom-color: #1C1B18;
+    border-bottom-color: var(--color-ink-black);
   }
   .input-swiss:focus {
-    border-bottom-color: #3B6FC2;
+    border-bottom-color: var(--color-blue);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(59, 111, 194, 0.08);
+    box-shadow: 0 0 0 3px var(--color-blue-light);
   }
 }
 
@@ -356,10 +357,20 @@
   /* ── Gradient utilities ── */
 
   .bg-gradient-hero {
-    background: linear-gradient(180deg, var(--color-paper-white), var(--color-paper-cream));
+    background: linear-gradient(180deg, #F8F6F1, #FFFFFF);
   }
   .bg-gradient-card-hover {
-    background: linear-gradient(180deg, transparent 60%, rgba(28, 27, 24, 0.03) 100%);
+    background: linear-gradient(180deg, transparent 60%, rgba(15, 26, 18, 0.03) 100%);
+  }
+
+  /* Dark hero — Keeneland paddock at dusk */
+  .bg-hero-dark {
+    background: linear-gradient(180deg, #0F1A12, #1B4332);
+  }
+
+  /* Deep forest-black for dark sections */
+  .bg-paddock {
+    background: #0F1A12;
   }
 
   /* ── Scroll-reveal gate: pause animations until parent removes this class ── */

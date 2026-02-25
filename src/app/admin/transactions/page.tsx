@@ -4,11 +4,11 @@ import { Badge } from "@/components/ui/badge";
 
 const statusColors: Record<string, string> = {
   pending: "bg-gray-100 text-gray-600",
-  funded: "bg-blue-100 text-blue-700",
+  funded: "bg-paper-warm text-ink-mid",
   shipping: "bg-yellow-100 text-yellow-700",
   delivered: "bg-purple-100 text-purple-700",
   completed: "bg-green-100 text-green-700",
-  disputed: "bg-red-100 text-red-700",
+  disputed: "bg-red-light text-red",
   refunded: "bg-orange-100 text-orange-700",
   cancelled: "bg-gray-100 text-gray-600",
 };
@@ -19,7 +19,7 @@ export default async function AdminTransactionsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">
+        <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">
           Transactions
         </h1>
         <p className="mt-1 text-sm text-ink-mid">

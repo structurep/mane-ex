@@ -3,6 +3,8 @@
 import { useActionState, useState } from "react";
 import { updateProfile } from "@/actions/profiles";
 import type { ProfileActionState } from "@/actions/profiles";
+import { updateAvatarUrl, updateCoverUrl } from "@/actions/storage";
+import { AvatarUpload } from "@/components/avatar-upload";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -36,6 +38,8 @@ type Profile = {
   id: string;
   email: string;
   display_name: string | null;
+  avatar_url: string | null;
+  cover_url: string | null;
   bio: string | null;
   phone: string | null;
   city: string | null;
@@ -70,6 +74,21 @@ export function ProfileForm({
 
   return (
     <form action={formAction} className="space-y-6">
+      {/* Avatar + Cover Photo */}
+      <section className="rounded-lg border-0 bg-paper-cream p-6 shadow-flat">
+        <AvatarUpload
+          currentAvatarUrl={profile?.avatar_url ?? null}
+          currentCoverUrl={profile?.cover_url ?? null}
+          userId={profile?.id ?? ""}
+          onAvatarChange={async (url) => {
+            await updateAvatarUrl(url);
+          }}
+          onCoverChange={async (url) => {
+            await updateCoverUrl(url);
+          }}
+        />
+      </section>
+
       {/* Success message */}
       {state.success === true && (
         <div className="flex items-center gap-2 rounded-lg border border-forest/30 bg-forest/10 p-4 text-sm text-forest">
@@ -303,7 +322,7 @@ export function ProfileForm({
                   return (
                     <label
                       key={discipline}
-                      className="flex cursor-pointer items-center gap-2 rounded-md border border-crease-light bg-paper-white px-3 py-2 text-sm text-ink-mid transition-colors has-[:checked]:border-ink-black has-[:checked]:bg-ink-black has-[:checked]:text-paper-white"
+                      className="flex cursor-pointer items-center gap-2 rounded-md border border-crease-light bg-paper-white px-3 py-2 text-sm text-ink-mid transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-primary-foreground"
                     >
                       <input
                         type="checkbox"

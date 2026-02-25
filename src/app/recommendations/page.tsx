@@ -152,7 +152,7 @@ export default function RecommendationsPage() {
         <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-[1200px]">
             <p className="overline mb-3 text-gold">TOP MATCHES</p>
-            <h2 className="mb-8 font-heading text-2xl font-semibold tracking-tight text-ink-black md:text-3xl">
+            <h2 className="mb-8 font-serif text-2xl font-semibold tracking-tight text-ink-black md:text-3xl">
               Your best matches right now
             </h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -169,7 +169,7 @@ export default function RecommendationsPage() {
                   {/* Image placeholder */}
                   <div className="aspect-[4/3] bg-paper-warm" />
                   <div className="p-4">
-                    <h3 className="font-medium text-ink-black group-hover:text-blue">
+                    <h3 className="font-medium text-ink-black group-hover:text-primary">
                       {horse.name}
                     </h3>
                     <p className="mt-0.5 text-sm text-ink-mid">
@@ -199,7 +199,7 @@ export default function RecommendationsPage() {
         {/* More Recommendations */}
         <section className="bg-paper-white section-premium">
           <div className="mx-auto max-w-[1200px]">
-            <h2 className="mb-8 font-heading text-2xl font-semibold tracking-tight text-ink-black md:text-3xl">
+            <h2 className="mb-8 font-serif text-2xl font-semibold tracking-tight text-ink-black md:text-3xl">
               More recommendations
             </h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -212,7 +212,7 @@ export default function RecommendationsPage() {
                   {/* Image placeholder */}
                   <div className="aspect-[4/3] bg-paper-warm" />
                   <div className="p-4">
-                    <h3 className="font-medium text-ink-black group-hover:text-blue">
+                    <h3 className="font-medium text-ink-black group-hover:text-primary">
                       {horse.name}
                     </h3>
                     <p className="mt-0.5 text-sm text-ink-mid">
@@ -247,7 +247,7 @@ export default function RecommendationsPage() {
         {/* How It Works */}
         <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-[1200px]">
-            <h2 className="mb-12 text-center font-heading text-2xl font-semibold tracking-tight text-ink-black md:text-3xl">
+            <h2 className="mb-12 text-center font-serif text-2xl font-semibold tracking-tight text-ink-black md:text-3xl">
               How ManeMatch works
             </h2>
             <div className="grid gap-8 md:grid-cols-3">
@@ -292,7 +292,7 @@ export default function RecommendationsPage() {
         </section>
 
         {/* Bottom CTA */}
-        <section className="bg-ink-black section-premium">
+        <section className="bg-paddock section-premium">
           <div className="mx-auto max-w-[1200px] text-center">
             <h2 className="mb-4 text-3xl tracking-tight text-paper-white">
               Your next horse is waiting.
@@ -304,7 +304,7 @@ export default function RecommendationsPage() {
             <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Button asChild size="lg">
                 <Link href="/browse">
-                  Browse Horses
+                  View Current Offerings
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>

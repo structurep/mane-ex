@@ -37,7 +37,7 @@ type CategoryColor = {
 
 const categoryColors: Record<string, CategoryColor> = {
   "Buying Guide": { bg: "bg-blue/10", text: "text-blue" },
-  "Selling Tips": { bg: "bg-red/10", text: "text-red" },
+  "Selling Tips": { bg: "bg-primary/10", text: "text-primary" },
   "Market Insights": { bg: "bg-gold/10", text: "text-gold" },
   "Horse Care": { bg: "bg-forest/10", text: "text-forest" },
   "Legal & Compliance": { bg: "bg-ink-dark/10", text: "text-ink-dark" },
@@ -124,7 +124,7 @@ export default function LearnPage() {
         {/* Hero */}
         <section className="bg-paper-white px-4 pt-20 pb-16 md:px-8 md:pt-24">
           <div className="mx-auto max-w-[1200px] text-center">
-            <p className="overline mb-3 text-red">LEARN</p>
+            <p className="overline mb-3 text-gold">LEARN</p>
             <h1 className="mb-4 text-4xl font-bold text-ink-black md:text-5xl">
               Knowledge is power.
             </h1>
@@ -168,7 +168,7 @@ export default function LearnPage() {
                   >
                     Buying Guide
                   </Badge>
-                  <h2 className="mb-3 text-2xl font-semibold text-ink-black group-hover:text-red transition-colors md:text-3xl">
+                  <h2 className="mb-3 text-2xl font-semibold text-ink-black group-hover:text-primary transition-colors md:text-3xl">
                     The Complete Guide to Buying a Horse in 2026
                   </h2>
                   <p className="mb-4 text-ink-mid leading-relaxed">
@@ -185,7 +185,7 @@ export default function LearnPage() {
                       12 min read
                     </span>
                   </div>
-                  <span className="inline-flex items-center gap-1.5 text-sm font-medium text-red group-hover:gap-2.5 transition-all">
+                  <span className="inline-flex items-center gap-1.5 text-sm font-medium text-primary group-hover:gap-2.5 transition-all">
                     Read Article
                     <ArrowRight className="h-4 w-4" />
                   </span>
@@ -219,7 +219,7 @@ export default function LearnPage() {
                         >
                           {article.category}
                         </Badge>
-                        <h3 className="mb-2 text-lg font-medium text-ink-black group-hover:text-red transition-colors leading-snug">
+                        <h3 className="mb-2 text-lg font-medium text-ink-black group-hover:text-primary transition-colors leading-snug">
                           {article.title}
                         </h3>
                         <p className="mb-4 text-sm text-ink-mid line-clamp-2 leading-relaxed">
@@ -259,16 +259,16 @@ export default function LearnPage() {
                     href="#"
                     className="group block rounded-lg border border-crease-light/60 bg-paper-white p-6 shadow-flat transition-elevation hover-lift md:p-8"
                   >
-                    <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-red/10">
-                      <Icon className="h-5 w-5 text-red" />
+                    <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                      <Icon className="h-5 w-5 text-primary" />
                     </div>
-                    <h3 className="mb-2 text-lg font-medium text-ink-black group-hover:text-red transition-colors">
+                    <h3 className="mb-2 text-lg font-medium text-ink-black group-hover:text-primary transition-colors">
                       {guide.title}
                     </h3>
                     <p className="mb-5 text-sm text-ink-mid leading-relaxed">
                       {guide.description}
                     </p>
-                    <span className="inline-flex items-center gap-1.5 text-sm font-medium text-red group-hover:gap-2.5 transition-all">
+                    <span className="inline-flex items-center gap-1.5 text-sm font-medium text-primary group-hover:gap-2.5 transition-all">
                       Read Guide
                       <ArrowRight className="h-4 w-4" />
                     </span>
@@ -280,7 +280,7 @@ export default function LearnPage() {
         </section>
 
         {/* Newsletter CTA */}
-        <section className="bg-ink-black px-4 py-16 md:px-8 md:py-20">
+        <section className="bg-paddock px-4 py-16 md:px-8 md:py-20">
           <div className="mx-auto max-w-xl text-center">
             <h2 className="mb-4 text-3xl font-semibold text-paper-white">
               Stay in the loop.
@@ -293,7 +293,7 @@ export default function LearnPage() {
               <input
                 type="email"
                 placeholder="you@example.com"
-                className="flex-1 rounded-md border border-crease-dark/30 bg-ink-dark px-4 py-2.5 text-sm text-paper-white placeholder:text-ink-light focus:border-red focus:outline-none focus:ring-2 focus:ring-red/20"
+                className="flex-1 rounded-md border border-crease-dark/30 bg-ink-dark px-4 py-2.5 text-sm text-paper-white placeholder:text-ink-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                 aria-label="Email address"
               />
               <Button size="lg" className="shrink-0">

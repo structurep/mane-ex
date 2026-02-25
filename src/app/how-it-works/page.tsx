@@ -20,9 +20,9 @@ export default function HowItWorksPage() {
         {/* ── Hero ── */}
         <section className="with-grain bg-gradient-hero px-4 pt-24 pb-20 md:px-8 md:pt-36 md:pb-28">
           <div className="mx-auto max-w-[1200px] text-center">
-            <p className="overline mb-4 text-red">HOW IT WORKS</p>
-            <h1 className="mb-6 text-4xl tracking-tight text-ink-black md:text-6xl">
-              Structured transactions.
+            <p className="overline mb-4 text-gold">HOW IT WORKS</p>
+            <h1 className="font-serif mb-6 text-4xl tracking-tight text-ink-black md:text-6xl">
+              How a transaction proceeds.
               <br />
               <span className="text-ink-mid">Zero ambiguity.</span>
             </h1>
@@ -41,7 +41,7 @@ export default function HowItWorksPage() {
         </section>
 
         {/* ── Escrow Detail ── */}
-        <section className="bg-ink-black section-premium">
+        <section className="bg-paddock section-premium">
           <div className="mx-auto max-w-[1200px]">
             <div className="grid items-center gap-12 md:grid-cols-2">
               <div>
@@ -85,12 +85,11 @@ export default function HowItWorksPage() {
         {/* ── CTA ── */}
         <section className="with-grain bg-paper-white section-premium">
           <div className="mx-auto max-w-[1200px] text-center">
-            <h2 className="mb-4 text-3xl text-ink-black md:text-4xl">
-              Ready to get started?
+            <h2 className="font-serif mb-4 text-3xl text-ink-black md:text-4xl">
+              Begin a transaction.
             </h2>
             <p className="text-lead mx-auto mb-8 max-w-xl text-ink-mid">
-              Join the marketplace built for equestrians who take transactions
-              seriously.
+              Purpose-built for the way serious horses are bought and sold.
             </p>
             <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <Button size="lg" asChild>
@@ -100,7 +99,7 @@ export default function HowItWorksPage() {
                 </Link>
               </Button>
               <Button variant="outline" size="lg" asChild>
-                <Link href="/browse">Browse Horses</Link>
+                <Link href="/browse">View Current Offerings</Link>
               </Button>
             </div>
           </div>

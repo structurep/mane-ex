@@ -7,7 +7,6 @@ import {
   FileText,
   Clock,
   AlertTriangle,
-  CheckCircle2,
   Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -130,7 +129,7 @@ export default function DisputesPage() {
     <div>
       {/* Page header */}
       <div className="mb-6">
-        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">
+        <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">
           Dispute Resolution
         </h1>
         <p className="mt-1 text-sm text-ink-mid">

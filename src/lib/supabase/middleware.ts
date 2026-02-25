@@ -42,6 +42,25 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  // Onboarding gate — redirect to /onboarding if not complete (soft: only /dashboard/*)
+  if (
+    user &&
+    request.nextUrl.pathname.startsWith("/dashboard") &&
+    !request.nextUrl.pathname.startsWith("/onboarding")
+  ) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("onboarding_complete")
+      .eq("id", user.id)
+      .single();
+
+    if (profile && !profile.onboarding_complete) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/onboarding";
+      return NextResponse.redirect(url);
+    }
+  }
+
   // Protect admin routes — redirect non-admins to dashboard
   if (user && request.nextUrl.pathname.startsWith("/admin")) {
     const { data: profile } = await supabase

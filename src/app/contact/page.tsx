@@ -20,7 +20,7 @@ export default function ContactPage() {
         {/* Hero */}
         <section className="with-grain bg-gradient-hero px-4 pt-24 pb-12 md:px-8 md:pt-36 md:pb-16">
           <div className="mx-auto max-w-[1200px] text-center">
-            <p className="overline mb-3 text-red">CONTACT US</p>
+            <p className="overline mb-3 text-gold">CONTACT US</p>
             <h1 className="mb-4 text-4xl tracking-tight text-ink-black md:text-5xl">
               Get in touch.
             </h1>
@@ -37,8 +37,8 @@ export default function ContactPage() {
             <div>
               {/* Contact Info Cards */}
               <div className="flex items-start gap-3 mb-6">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-red-light">
-                  <Mail className="h-5 w-5 text-red" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                  <Mail className="h-5 w-5 text-primary" />
                 </div>
                 <div>
                   <h3 className="text-sm font-medium text-ink-black">Email</h3>
@@ -52,8 +52,8 @@ export default function ContactPage() {
               </div>
 
               <div className="flex items-start gap-3 mb-6">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-red-light">
-                  <Phone className="h-5 w-5 text-red" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                  <Phone className="h-5 w-5 text-primary" />
                 </div>
                 <div>
                   <h3 className="text-sm font-medium text-ink-black">Phone</h3>
@@ -67,8 +67,8 @@ export default function ContactPage() {
               </div>
 
               <div className="flex items-start gap-3 mb-6">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-red-light">
-                  <MapPin className="h-5 w-5 text-red" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                  <MapPin className="h-5 w-5 text-primary" />
                 </div>
                 <div>
                   <h3 className="text-sm font-medium text-ink-black">
@@ -108,9 +108,7 @@ export default function ContactPage() {
 
             {/* Right Side - Contact Form */}
             <div className="rounded-lg border-0 bg-paper-white p-6 shadow-folded md:p-8">
-              <h2 className="mb-6 font-heading text-xl font-semibold text-ink-black">
-                Send us a message
-              </h2>
+              <h2 className="mb-6 font-heading text-xl font-semibold text-ink-black">Send us a message</h2>
               <form className="space-y-5">
                 <div>
                   <label className="mb-1.5 block text-sm font-medium text-ink-black">

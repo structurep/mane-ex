@@ -2,7 +2,6 @@ import { getMyTrials, getMyTours } from "@/actions/trials";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
 import {
@@ -23,10 +22,10 @@ const STATUS_CONFIG: Record<
 > = {
   requested: { label: "Requested", color: "bg-amber-100 text-amber-800", icon: Clock },
   confirmed: { label: "Confirmed", color: "bg-forest/10 text-forest", icon: CheckCircle2 },
-  rescheduled: { label: "Rescheduled", color: "bg-blue-100 text-blue-800", icon: AlertCircle },
+  rescheduled: { label: "Rescheduled", color: "bg-paper-warm text-ink-mid", icon: AlertCircle },
   completed: { label: "Completed", color: "bg-ink-light/10 text-ink-mid", icon: CheckCircle2 },
-  cancelled: { label: "Cancelled", color: "bg-red-100 text-red-800", icon: XCircle },
-  no_show: { label: "No Show", color: "bg-red-100 text-red-800", icon: XCircle },
+  cancelled: { label: "Cancelled", color: "bg-red-light text-red", icon: XCircle },
+  no_show: { label: "No Show", color: "bg-red-light text-red", icon: XCircle },
 };
 
 function formatDate(dateStr: string) {
@@ -65,7 +64,7 @@ export default async function TrialsPage() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">
+        <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">
           Trials & Tours
         </h1>
         <p className="mt-1 text-ink-mid">
@@ -174,7 +173,7 @@ function TrialCard({
             {listing && (
               <Link
                 href={`/horses/${listing.slug}`}
-                className="font-heading text-lg font-medium text-ink-black hover:text-accent-blue"
+                className="font-heading text-lg font-medium text-ink-black hover:text-primary"
               >
                 {listing.name as string}
               </Link>

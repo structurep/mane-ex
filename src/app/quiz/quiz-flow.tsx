@@ -101,7 +101,7 @@ export function QuizFlow() {
   return (
     <div>
       <div className="mb-8 text-center">
-        <p className="overline mb-3 text-red">60-SECOND QUIZ</p>
+        <p className="overline mb-3 text-gold">60-SECOND QUIZ</p>
         <h1 className="mb-2 text-3xl tracking-tight text-ink-black md:text-4xl">
           Find Your Perfect Plan
         </h1>
@@ -117,7 +117,7 @@ export function QuizFlow() {
         <p className="overline mb-1 text-ink-light">
           QUESTION {step + 1} OF {totalQuestions}
         </p>
-        <h2 className="mb-6 text-xl text-ink-black md:text-2xl">
+        <h2 className="mb-6 font-serif text-xl text-ink-black md:text-2xl">
           {currentQuestion.question}
         </h2>
 

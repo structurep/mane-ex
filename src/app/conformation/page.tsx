@@ -152,7 +152,7 @@ export default function ConformationPage() {
                   {/* Overall Score */}
                   <div className="rounded-lg border border-blue/30 bg-paper-white p-6 text-center shadow-lifted">
                     <p className="overline mb-2 text-blue">OVERALL SCORE</p>
-                    <p className="font-heading text-4xl font-bold text-ink-black">
+                    <p className="font-serif text-4xl font-bold text-ink-black">
                       {overallScore.toFixed(1)}
                       <span className="text-xl font-normal text-ink-light">
                         /10
@@ -208,7 +208,7 @@ export default function ConformationPage() {
         </section>
 
         {/* ── Coming Soon Banner ── */}
-        <section className="bg-ink-black px-4 py-20 md:px-8 md:py-24">
+        <section className="bg-paddock px-4 py-20 md:px-8 md:py-24">
           <div className="mx-auto max-w-[1200px] text-center">
             <p className="overline mb-3 text-blue">COMING SOON</p>
             <h2 className="mb-4 text-3xl font-semibold text-paper-white">
@@ -225,7 +225,7 @@ export default function ConformationPage() {
                 className="flex-1 rounded-md border border-crease-dark/30 bg-ink-dark px-4 py-3 text-sm text-paper-white placeholder:text-ink-light focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
                 aria-label="Email address for early access"
               />
-              <button className="inline-flex items-center justify-center gap-2 rounded-md bg-blue px-6 py-3 text-sm font-medium text-paper-white transition-colors hover:bg-blue/90">
+              <button className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">
                 Get Early Access
                 <ArrowRight className="h-4 w-4" />
               </button>

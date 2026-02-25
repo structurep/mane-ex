@@ -3,11 +3,9 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { formatCentsToDollars, calculatePlatformFee, calculateSellerNet, DISPUTE_WINDOW_DAYS } from "@/lib/stripe/config";
 import {
   ChevronLeft,
-  Clock,
   CheckCircle,
   XCircle,
   ArrowLeftRight,
@@ -74,19 +72,6 @@ export default async function OfferDetailPage({ params }: Props) {
     .select("*")
     .eq("parent_offer_id", id)
     .order("created_at", { ascending: true });
-
-  // Primary image for listing
-  let primaryImageUrl: string | null = null;
-  if (offer.listing) {
-    const { data: media } = await supabase
-      .from("listing_media")
-      .select("url")
-      .eq("listing_id", offer.listing.id)
-      .eq("is_primary", true)
-      .limit(1)
-      .maybeSingle();
-    primaryImageUrl = media?.url ?? null;
-  }
 
   const isInterstate =
     offer.buyer?.location_state &&
@@ -223,7 +208,6 @@ export default async function OfferDetailPage({ params }: Props) {
               escrowId={escrow.id}
               billOfSaleData={escrow.bill_of_sale_data}
               isBuyer={isBuyer}
-              isSeller={isSeller}
             />
           )}
 
@@ -365,7 +349,7 @@ function EscrowTimeline({ escrow }: { escrow: { status: string; auto_release_at?
 
   return (
     <div className="space-y-3">
-      {steps.map((step, i) => {
+      {steps.map((step) => {
         const stepIndex = statusOrder.indexOf(step.key);
         const isComplete = currentIndex > stepIndex;
         const isActive = currentIndex === stepIndex;

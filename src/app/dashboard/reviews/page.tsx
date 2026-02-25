@@ -2,7 +2,7 @@ import { getMyReviews } from "@/actions/reviews";
 import { Card } from "@/components/ui/card";
 import { ReviewCard } from "@/components/review-card";
 import { StarRating } from "@/components/star-rating";
-import { Star, MessageSquare } from "lucide-react";
+import { Star } from "lucide-react";
 import { RespondForm } from "./respond-form";
 
 export default async function DashboardReviewsPage() {
@@ -49,7 +49,7 @@ export default async function DashboardReviewsPage() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">
+        <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">
           Reviews
         </h1>
         <p className="mt-1 text-ink-mid">

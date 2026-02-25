@@ -146,7 +146,7 @@ export default function ValuationPage() {
               {/* Estimated Range */}
               <div className="rounded-lg border border-gold/30 bg-paper-white p-8 text-center shadow-lifted">
                 <p className="overline mb-3 text-gold">ESTIMATED VALUE</p>
-                <p className="mb-2 font-heading text-4xl font-bold tracking-tight text-ink-black md:text-5xl">
+                <p className="mb-2 font-serif text-4xl font-bold tracking-tight text-ink-black md:text-5xl">
                   $45,000 &mdash; $65,000
                 </p>
                 <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-forest/10 px-4 py-1.5">
@@ -220,7 +220,7 @@ export default function ValuationPage() {
         </section>
 
         {/* ── Coming Soon Banner ── */}
-        <section className="bg-ink-black px-4 py-20 md:px-8 md:py-24">
+        <section className="bg-paddock px-4 py-20 md:px-8 md:py-24">
           <div className="mx-auto max-w-[1200px] text-center">
             <p className="overline mb-3 text-gold">COMING SOON</p>
             <h2 className="mb-4 text-3xl font-semibold text-paper-white">

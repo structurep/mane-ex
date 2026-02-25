@@ -8,7 +8,7 @@ type StepProps = {
   setField: (field: string, value: unknown) => void;
 };
 
-export function StepMedia({ data, setField }: StepProps) {
+export function StepMedia({ setField }: StepProps) {
   return (
     <div className="space-y-6">
       <div className="rounded-md bg-gold/5 p-4 text-sm text-ink-dark">
@@ -43,7 +43,7 @@ export function StepMedia({ data, setField }: StepProps) {
             }}
           />
           <div className="relative mt-4">
-            <label className="cursor-pointer rounded-md bg-ink-black px-4 py-2 text-sm font-medium text-paper-white transition-colors hover:bg-ink-dark">
+            <label className="cursor-pointer rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">
               <Upload className="mr-2 inline h-4 w-4" />
               Choose Photos
               <input

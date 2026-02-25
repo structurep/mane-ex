@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { deleteCollection } from "@/actions/collections";
 import { Button } from "@/components/ui/button";
-import { Trash2, Share2, Check, Link2 } from "lucide-react";
+import { Trash2, Check, Link2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export function CollectionActions({

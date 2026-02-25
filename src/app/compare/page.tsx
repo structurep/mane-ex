@@ -100,7 +100,7 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
               Select 2-3 horses to compare side by side.
             </p>
             <Button asChild className="mt-8" size="lg">
-              <Link href="/browse">Browse Horses</Link>
+              <Link href="/browse">View Current Offerings</Link>
             </Button>
           </div>
         </main>
@@ -135,7 +135,7 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
               Some of the selected listings are no longer available.
             </p>
             <Button asChild variant="outline" className="mt-8" size="lg">
-              <Link href="/browse">Browse Horses</Link>
+              <Link href="/browse">View Current Offerings</Link>
             </Button>
           </div>
         </main>

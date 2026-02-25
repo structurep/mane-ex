@@ -4,8 +4,6 @@ import { createClient } from "@/lib/supabase/server";
 import {
   createCollectionSchema,
   updateCollectionSchema,
-  addToCollectionSchema,
-  removeFromCollectionSchema,
 } from "@/lib/validators/collections";
 
 export type CollectionActionState = {

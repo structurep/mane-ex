@@ -32,7 +32,7 @@ export default async function AnalyticsPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">Analytics</h1>
+        <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">Analytics</h1>
         <p className="mt-1 text-sm text-ink-mid">
           Your Mane Score and seller performance metrics.
         </p>
@@ -238,7 +238,7 @@ export default async function AnalyticsPage() {
                 { source: "Direct", percent: 42, color: "bg-blue" },
                 { source: "Search", percent: 28, color: "bg-forest" },
                 { source: "External Links", percent: 18, color: "bg-gold" },
-                { source: "Recommendations", percent: 12, color: "bg-red" },
+                { source: "Recommendations", percent: 12, color: "bg-primary" },
               ].map((item) => (
                 <div key={item.source}>
                   <div className="flex items-center justify-between text-sm mb-1">

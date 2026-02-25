@@ -100,7 +100,7 @@ const FILTER_OPTIONS: ("All" | Category)[] = [
 
 const categoryAccent: Record<Category, string> = {
   Buying: "bg-blue-light text-blue",
-  Selling: "bg-red-light text-red",
+  Selling: "bg-primary/10 text-primary",
   Payments: "bg-gold-light text-gold",
   "Trust & Safety": "bg-forest-light text-forest",
 };
@@ -141,7 +141,7 @@ export default function FaqPage() {
         {/* ── Hero ── */}
         <section className="with-grain bg-gradient-hero px-4 pt-24 pb-20 md:px-8 md:pt-36 md:pb-28">
           <div className="mx-auto max-w-3xl">
-            <p className="overline mb-4 text-red">
+            <p className="overline mb-4 text-gold">
               FREQUENTLY ASKED QUESTIONS
             </p>
             <h1 className="mb-6 text-4xl tracking-tight text-ink-black md:text-6xl">
@@ -150,7 +150,7 @@ export default function FaqPage() {
             <p className="text-lead text-ink-mid">
               Everything you need to know about buying, selling, and transacting
               on ManeExchange. Can&apos;t find what you&apos;re looking for?{" "}
-              <Link href="/contact" className="text-red underline">
+              <Link href="/contact" className="text-primary underline">
                 Reach out directly
               </Link>
               .
@@ -195,7 +195,7 @@ export default function FaqPage() {
               {filteredItems.length === 0 && (
                 <div className="rounded-lg bg-paper-white px-6 py-12 text-center text-sm text-ink-light shadow-flat">
                   No questions match your search. Try a different term or{" "}
-                  <Link href="/contact" className="text-red underline">
+                  <Link href="/contact" className="text-primary underline">
                     contact us
                   </Link>
                   .

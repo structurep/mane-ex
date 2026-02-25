@@ -38,7 +38,7 @@ export default async function AdminOverviewPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">
+        <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">
           Admin Overview
         </h1>
         <p className="mt-1 text-sm text-ink-mid">
@@ -50,8 +50,8 @@ export default async function AdminOverviewPage() {
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         <Card>
           <CardContent className="flex items-center gap-3 p-4">
-            <div className="rounded-lg bg-blue-50 p-2.5">
-              <Users className="h-5 w-5 text-blue-600" />
+            <div className="rounded-lg bg-paper-warm p-2.5">
+              <Users className="h-5 w-5 text-ink-mid" />
             </div>
             <div>
               <p className="font-serif text-2xl font-bold text-ink-black">
@@ -78,8 +78,8 @@ export default async function AdminOverviewPage() {
 
         <Card>
           <CardContent className="flex items-center gap-3 p-4">
-            <div className="rounded-lg bg-red-50 p-2.5">
-              <Flag className="h-5 w-5 text-red-600" />
+            <div className="rounded-lg bg-red-light p-2.5">
+              <Flag className="h-5 w-5 text-red" />
             </div>
             <div>
               <p className="font-serif text-2xl font-bold text-ink-black">

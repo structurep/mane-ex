@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 const footerLinks = {
   marketplace: [
-    { href: "/browse", label: "Browse Horses" },
+    { href: "/browse", label: "Current Offerings" },
     { href: "/trainers", label: "Trainer Directory" },
     { href: "/reviews", label: "Community Reviews" },
     { href: "/market", label: "Market Intelligence" },
@@ -15,7 +15,7 @@ const footerLinks = {
   ],
   sellers: [
     { href: "/sell", label: "Sell Your Horse" },
-    { href: "/pricing", label: "Pricing" },
+    { href: "/pricing", label: "Membership" },
     { href: "/how-it-works", label: "How It Works" },
     { href: "/recommendations", label: "AI Matching" },
     { href: "/valuation", label: "ManeEstimate" },
@@ -45,19 +45,20 @@ export function Footer() {
   return (
     <footer>
       {/* Pre-footer CTA band */}
-      <div className="bg-ink-black px-4 py-16 text-center md:px-8 md:py-20">
-        <h2 className="text-2xl text-paper-white md:text-3xl">
-          Ready to find your next partner?
+      <div className="bg-paddock px-4 py-16 text-center md:px-8 md:py-20">
+        <p className="overline mb-3 text-gold">GET STARTED</p>
+        <h2 className="text-2xl text-white md:text-3xl">
+          Begin your search.
         </h2>
-        <p className="mx-auto mt-4 max-w-md text-sm text-ink-faint">
-          Verified sellers, escrowed payments, and a marketplace built for the
-          way horses are actually bought and sold.
+        <p className="mx-auto mt-4 max-w-md text-sm text-white/50">
+          Verified sellers, secured escrow, and a platform built for the
+          way serious horses are bought and sold.
         </p>
         <div className="mt-8 flex items-center justify-center gap-4">
           <Button size="sm" asChild>
-            <Link href="/browse">Browse Horses</Link>
+            <Link href="/browse">View Offerings</Link>
           </Button>
-          <Button variant="outline" size="sm" className="!bg-transparent border-ink-mid text-paper-white hover:!bg-ink-dark" asChild>
+          <Button variant="outline" size="sm" className="!bg-transparent border-white/30 text-white hover:!bg-white/10" asChild>
             <Link href="/sell">List a Horse</Link>
           </Button>
         </div>
@@ -155,7 +156,7 @@ export function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className="rounded-sm text-ink-light transition-colors hover:text-ink-black focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
+                    className="rounded-sm text-ink-light transition-colors hover:text-gold focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
                   >
                     <Icon className="h-[18px] w-[18px]" />
                   </a>

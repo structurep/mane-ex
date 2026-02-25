@@ -54,7 +54,7 @@ export default async function DashboardIsosPage() {
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">
+          <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">
             My ISOs
           </h1>
           <p className="mt-1 text-ink-mid">

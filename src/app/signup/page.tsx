@@ -9,7 +9,7 @@ import { Lock, Shield, CheckCircle2 } from "lucide-react";
 export const metadata: Metadata = {
   title: "Sign Up",
   description:
-    "Create your ManeExchange account. Buy or sell horses with confidence.",
+    "Create your ManeExchange account. Verified documentation, secured transactions, institutional-grade trust.",
 };
 
 export default function SignupPage() {
@@ -29,11 +29,11 @@ export default function SignupPage() {
                 className="mx-auto mb-4"
               />
             </Link>
-            <h1 className="text-3xl tracking-tight text-ink-black md:text-4xl">
-              Join ManeExchange
+            <h1 className="font-serif text-3xl tracking-tight text-ink-black md:text-4xl">
+              Create Your Account
             </h1>
             <p className="mt-2 text-sm text-ink-mid">
-              The trusted equestrian marketplace
+              The standard for equine transactions
             </p>
           </div>
 
@@ -47,7 +47,7 @@ export default function SignupPage() {
             Already have an account?{" "}
             <Link
               href="/login"
-              className="font-medium text-red hover:underline"
+              className="font-medium text-primary hover:underline"
             >
               Log in
             </Link>

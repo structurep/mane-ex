@@ -58,7 +58,7 @@ export default async function ReviewsPage() {
         {/* ── Hero ── */}
         <section className="with-grain bg-gradient-hero px-4 pt-24 pb-20 md:px-8 md:pt-36 md:pb-28">
           <div className="mx-auto max-w-3xl text-center">
-            <p className="overline mb-4 text-red">COMMUNITY REVIEWS</p>
+            <p className="overline mb-4 text-gold">COMMUNITY REVIEWS</p>
             <h1 className="mb-6 text-4xl tracking-tight text-ink-black md:text-6xl">
               Real experiences. Real people.
             </h1>
@@ -99,9 +99,9 @@ export default async function ReviewsPage() {
         <ReviewsFeed reviews={reviews as any} />
 
         {/* ── CTA ── */}
-        <section className="bg-ink-black section-premium">
+        <section className="bg-paddock section-premium">
           <div className="mx-auto max-w-[1200px] text-center">
-            <h2 className="mb-4 text-3xl text-paper-white md:text-4xl">
+            <h2 className="mb-4 font-serif text-3xl text-paper-white md:text-4xl">
               Join a community that values trust.
             </h2>
             <p className="text-lead mx-auto mb-8 max-w-xl text-ink-light">
@@ -111,7 +111,6 @@ export default async function ReviewsPage() {
             <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <Button
                 size="lg"
-                className="bg-red hover:bg-red/90"
                 asChild
               >
                 <Link href="/signup">
@@ -125,7 +124,7 @@ export default async function ReviewsPage() {
                 className="!bg-transparent border-crease-dark text-paper-cream hover:!bg-ink-dark"
                 asChild
               >
-                <Link href="/browse">Browse Horses</Link>
+                <Link href="/browse">View Current Offerings</Link>
               </Button>
             </div>
           </div>

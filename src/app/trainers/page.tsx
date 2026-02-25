@@ -96,7 +96,7 @@ export default function TrainerDirectoryPage() {
       {/* Hero */}
       <section className="with-grain bg-gradient-hero px-4 pt-24 pb-12 md:px-8 md:pt-36 md:pb-16">
         <div className="mx-auto max-w-[1200px]">
-          <p className="overline mb-3 text-red">TRAINER DIRECTORY</p>
+          <p className="overline mb-3 text-gold">TRAINER DIRECTORY</p>
           <h1 className="mb-4 text-4xl tracking-tight text-ink-black md:text-5xl">
             Find the right trainer.
           </h1>
@@ -126,7 +126,7 @@ export default function TrainerDirectoryPage() {
                   <div className="h-14 w-14 shrink-0 rounded-full bg-paper-warm" />
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <h3 className="font-medium text-ink-black group-hover:text-blue">
+                      <h3 className="font-medium text-ink-black group-hover:text-primary">
                         {trainer.name}
                       </h3>
                       {trainer.verified && (

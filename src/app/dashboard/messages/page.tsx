@@ -59,7 +59,7 @@ export default async function MessagesPage() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">Messages</h1>
+        <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">Messages</h1>
         <p className="mt-1 text-sm text-ink-mid">
           Your conversations with buyers and sellers.
         </p>

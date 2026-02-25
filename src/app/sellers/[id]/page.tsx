@@ -114,14 +114,33 @@ export default async function SellerProfilePage({ params }: Props) {
             <span className="text-ink-mid">{displayName}</span>
           </nav>
 
+          {/* Cover photo */}
+          {profile.cover_url && (
+            <div className="mb-6 h-48 overflow-hidden rounded-xl sm:h-56">
+              <img
+                src={profile.cover_url}
+                alt={`${displayName}'s cover`}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          )}
+
           {/* Profile header */}
-          <section className="mb-8">
+          <section className={profile.cover_url ? "mb-8 -mt-12 px-4" : "mb-8"}>
             <div className="flex items-start gap-5">
-              {/* Avatar placeholder */}
-              <div className="h-20 w-20 flex-shrink-0 rounded-full bg-paper-warm" />
+              {/* Avatar */}
+              {profile.avatar_url ? (
+                <img
+                  src={profile.avatar_url}
+                  alt={displayName}
+                  className="h-20 w-20 flex-shrink-0 rounded-full border-4 border-paper-white object-cover shadow-flat"
+                />
+              ) : (
+                <div className="h-20 w-20 flex-shrink-0 rounded-full bg-paper-warm" />
+              )}
 
               <div className="min-w-0 flex-1">
-                <h1 className="font-heading text-3xl font-bold text-ink-black">
+                <h1 className="font-serif text-3xl font-bold text-ink-black">
                   {displayName}
                 </h1>
 
@@ -199,9 +218,9 @@ export default async function SellerProfilePage({ params }: Props) {
                 className="group block rounded-lg border border-border bg-paper-cream p-5 shadow-flat transition-elevation hover-lift hover:shadow-folded"
               >
                 <div className="flex items-center gap-3">
-                  <Store className="h-5 w-5 text-ink-mid group-hover:text-blue" />
+                  <Store className="h-5 w-5 text-ink-mid group-hover:text-primary" />
                   <div className="min-w-0 flex-1">
-                    <h3 className="font-medium text-ink-black group-hover:text-blue">
+                    <h3 className="font-medium text-ink-black group-hover:text-primary">
                       {farm.name}
                     </h3>
                     {(farm.city || farm.state) && (
@@ -212,7 +231,7 @@ export default async function SellerProfilePage({ params }: Props) {
                       </p>
                     )}
                   </div>
-                  <ChevronRight className="h-4 w-4 text-ink-light group-hover:text-blue" />
+                  <ChevronRight className="h-4 w-4 text-ink-light group-hover:text-primary" />
                 </div>
                 {farm.disciplines && farm.disciplines.length > 0 && (
                   <div className="mt-3 flex flex-wrap gap-1.5">
@@ -275,9 +294,9 @@ export default async function SellerProfilePage({ params }: Props) {
                         className="group rounded-lg border border-border bg-paper-cream p-4 shadow-flat transition-elevation hover-lift hover:shadow-folded"
                       >
                         {/* Image placeholder */}
-                        <div className="mb-3 aspect-[4/3] rounded-md bg-paper-warm" />
+                        <div className="mb-3 aspect-[3/2] rounded-md bg-paper-warm" />
 
-                        <h3 className="font-medium text-ink-black group-hover:text-blue">
+                        <h3 className="font-medium text-ink-black group-hover:text-primary">
                           {listing.name}
                         </h3>
 

@@ -4,9 +4,6 @@ import { createClient } from "@/lib/supabase/server";
 import {
   createOfferSchema,
   counterOfferSchema,
-  acceptOfferSchema,
-  rejectOfferSchema,
-  withdrawOfferSchema,
 } from "@/lib/validators/offers";
 import { MIN_COMPLETENESS_FOR_OFFER } from "@/lib/stripe/config";
 import { formatCentsToDollars } from "@/lib/stripe/config";

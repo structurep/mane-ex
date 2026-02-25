@@ -48,8 +48,8 @@ const pillars = [
   },
   {
     icon: FileText,
-    iconColor: "text-red",
-    iconBg: "bg-red-light",
+    iconColor: "text-primary",
+    iconBg: "bg-primary/10",
     title: "Secure Contracts",
     description:
       "UCC-compliant Bill of Sale generated for every transaction. State-specific disclosures built into the listing process.",
@@ -141,7 +141,7 @@ export default function TrustPage() {
         {/* For Sellers */}
         <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-[1200px]">
-            <p className="overline mb-3 text-red">FOR SELLERS</p>
+            <p className="overline mb-3 text-gold">FOR SELLERS</p>
             <h2 className="mb-8 text-3xl tracking-tight text-ink-black">
               Sell with protection.
             </h2>
@@ -157,7 +157,7 @@ export default function TrustPage() {
         </section>
 
         {/* Report a Problem */}
-        <section className="bg-ink-black section-premium">
+        <section className="bg-paddock section-premium">
           <div className="mx-auto max-w-[1200px] text-center">
             <h2 className="mb-4 text-3xl tracking-tight text-paper-white">
               See something wrong?

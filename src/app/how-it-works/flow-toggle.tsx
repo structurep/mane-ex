@@ -87,7 +87,7 @@ export function FlowToggle() {
   const heading =
     role === "buyer"
       ? "Buy with full transparency."
-      : "Five steps to a secure sale.";
+      : "A structured sale process.";
 
   return (
     <div>
@@ -117,7 +117,7 @@ export function FlowToggle() {
 
       {/* Section heading */}
       <p
-        className={`overline mb-3 ${role === "buyer" ? "text-blue" : "text-red"}`}
+        className={`overline mb-3 ${role === "buyer" ? "text-blue" : "text-primary"}`}
       >
         {overlineText}
       </p>
@@ -133,12 +133,12 @@ export function FlowToggle() {
             <div className="flex shrink-0 flex-col items-center">
               <div
                 className={`flex h-10 w-10 items-center justify-center rounded-lg ${
-                  role === "buyer" ? "bg-blue-light" : "bg-red-light"
+                  role === "buyer" ? "bg-blue-light" : "bg-forest-light"
                 }`}
               >
                 <step.icon
                   className={`h-5 w-5 ${
-                    role === "buyer" ? "text-blue" : "text-red"
+                    role === "buyer" ? "text-blue" : "text-primary"
                   }`}
                 />
               </div>

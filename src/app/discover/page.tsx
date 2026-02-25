@@ -27,14 +27,14 @@ function formatPrice(cents: number | null): string {
 const SECTION_ICONS: Record<string, React.ReactNode> = {
   for_you: <Sparkles className="h-5 w-5 text-gold" />,
   new_this_week: <Clock className="h-5 w-5 text-blue" />,
-  trending: <TrendingUp className="h-5 w-5 text-red" />,
+  trending: <TrendingUp className="h-5 w-5 text-gold" />,
   just_sold: <Award className="h-5 w-5 text-forest" />,
 };
 
 const SECTION_ACCENTS: Record<string, string> = {
   for_you: "bg-gold-light text-gold",
   new_this_week: "bg-blue-light text-blue",
-  trending: "bg-red-light text-red",
+  trending: "bg-gold-light text-gold",
   just_sold: "bg-forest-light text-forest",
 };
 
@@ -70,7 +70,7 @@ export default async function DiscoverPage() {
             <div className="mx-auto max-w-[1200px]">
               <div className="mb-8 flex items-center gap-3">
                 {SECTION_ICONS[section.type]}
-                <h2 className="text-2xl text-ink-black md:text-3xl">
+                <h2 className="font-serif text-2xl text-ink-black md:text-3xl">
                   {section.title}
                 </h2>
                 <Badge

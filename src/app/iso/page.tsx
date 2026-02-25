@@ -54,7 +54,7 @@ export default async function IsoBrowsePage() {
           <div className="mx-auto max-w-4xl">
             <div className="flex items-start justify-between">
               <div>
-                <p className="overline mb-4 text-red">IN SEARCH OF</p>
+                <p className="overline mb-4 text-gold">IN SEARCH OF</p>
                 <h1 className="mb-4 text-3xl tracking-tight text-ink-black md:text-5xl">
                   Find your next horse
                   <br />

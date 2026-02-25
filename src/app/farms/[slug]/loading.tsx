@@ -15,7 +15,7 @@ export default function FarmLoading() {
         <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
           {Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="overflow-hidden rounded-lg shadow-flat">
-              <Skeleton className="aspect-[4/3] w-full rounded-none" />
+              <Skeleton className="aspect-[3/2] w-full rounded-none" />
               <div className="space-y-2 p-3.5">
                 <Skeleton className="h-4 w-3/4" />
                 <Skeleton className="h-3 w-1/2" />

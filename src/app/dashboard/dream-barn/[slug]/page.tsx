@@ -61,7 +61,7 @@ export default async function CollectionDetailPage({
       <div className="flex items-start justify-between">
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="font-heading text-2xl font-semibold text-ink-black">
+            <h1 className="font-serif text-2xl font-semibold text-ink-black">
               {collection.name}
             </h1>
             <Badge variant="secondary" className="gap-1">
@@ -115,7 +115,7 @@ export default async function CollectionDetailPage({
                 <div className="space-y-2 p-4">
                   <Link
                     href={`/horses/${listing.slug}`}
-                    className="font-heading font-medium text-ink-black group-hover:text-accent-blue"
+                    className="font-heading font-medium text-ink-black group-hover:text-primary"
                   >
                     {String(listing.name)}
                   </Link>

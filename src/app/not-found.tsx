@@ -11,7 +11,7 @@ export default function NotFound() {
       <main className="flex flex-1 items-center justify-center px-4 py-16">
         <div className="text-center">
           <p className="text-6xl font-bold text-paper-warm">404</p>
-          <h1 className="mt-4 font-heading text-2xl font-bold tracking-tight text-ink-black">
+          <h1 className="mt-4 font-serif text-2xl font-bold tracking-tight text-ink-black">
             Horse Not Found
           </h1>
           <p className="mt-2 text-ink-mid">

@@ -219,9 +219,9 @@ export default async function DashboardPage() {
     <div>
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">Dashboard</h1>
+          <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">Dashboard</h1>
           <p className="mt-1 text-sm text-ink-mid">
-            Welcome back. Here&apos;s your activity overview.
+            Your activity overview.
           </p>
         </div>
         <Button asChild>

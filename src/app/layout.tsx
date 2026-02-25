@@ -25,11 +25,11 @@ const playfairDisplay = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: "ManeExchange — The Equestrian Marketplace",
+    default: "ManeExchange — The Standard for Equine Transactions",
     template: "%s | ManeExchange",
   },
   description:
-    "The trusted marketplace for buying and selling show horses. Verified listings, escrowed payments, and transparent seller scoring.",
+    "The institutional standard for buying and selling horses. Verified documentation, secured escrow, and transparent seller scoring.",
   metadataBase: new URL("https://maneexchange.com"),
   openGraph: {
     type: "website",

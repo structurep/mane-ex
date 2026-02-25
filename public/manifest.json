@@ -1,11 +1,11 @@
 {
   "name": "ManeExchange",
   "short_name": "Mane",
-  "description": "The trusted equestrian marketplace. Buy and sell horses with confidence.",
+  "description": "The institutional standard for buying and selling horses. Verified documentation, secured escrow, and transparent seller scoring.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#FAFAF8",
-  "theme_color": "#1A1A1A",
+  "background_color": "#F8F6F1",
+  "theme_color": "#0F1A12",
   "orientation": "portrait-primary",
   "icons": [
     {

@@ -22,7 +22,7 @@ export default async function AdminReportsPage({
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">
+        <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">
           Reports
         </h1>
         <p className="mt-1 text-sm text-ink-mid">
@@ -38,7 +38,7 @@ export default async function AdminReportsPage({
             href={`/admin/reports${s !== "pending" ? `?status=${s}` : ""}`}
             className={`rounded-md px-3 py-1.5 text-sm capitalize ${
               filter === s
-                ? "bg-ink-black text-white"
+                ? "bg-paddock text-white"
                 : "bg-paper-warm text-ink-mid hover:text-ink-black"
             }`}
           >

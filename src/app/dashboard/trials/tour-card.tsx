@@ -18,9 +18,9 @@ import {
 const TOUR_STATUS_COLORS: Record<string, string> = {
   planning: "bg-amber-100 text-amber-800",
   confirmed: "bg-forest/10 text-forest",
-  in_progress: "bg-blue-100 text-blue-800",
+  in_progress: "bg-paper-warm text-ink-mid",
   completed: "bg-ink-light/10 text-ink-mid",
-  cancelled: "bg-red-100 text-red-800",
+  cancelled: "bg-red-light text-red",
 };
 
 export function TourCard({ tour }: { tour: Record<string, unknown> }) {
@@ -112,7 +112,7 @@ export function TourCard({ tour }: { tour: Record<string, unknown> }) {
                     key={stop.id as string}
                     className="flex items-center gap-3 rounded-md bg-paper-cream p-3"
                   >
-                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-ink-black text-xs font-medium text-paper-white">
+                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-medium text-primary-foreground">
                       {idx + 1}
                     </div>
                     <div className="flex-1">

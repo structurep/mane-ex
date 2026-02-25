@@ -33,7 +33,7 @@ export default async function NotificationsPage() {
     <div className="space-y-6">
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">
+          <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">
             Notifications
           </h1>
           <p className="mt-1 text-ink-mid">
@@ -61,7 +61,7 @@ export default async function NotificationsPage() {
             <Card
               key={n.id}
               className={`p-4 transition-shadow hover:shadow-flat ${
-                !n.read_at ? "border-l-2 border-l-red bg-paper-cream/30" : ""
+                !n.read_at ? "border-l-2 border-l-primary bg-paper-cream/30" : ""
               }`}
             >
               {n.link ? (

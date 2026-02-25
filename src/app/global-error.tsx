@@ -12,7 +12,7 @@ export default function GlobalError({
         style={{
           margin: 0,
           fontFamily: "Inter, system-ui, sans-serif",
-          backgroundColor: "#FAFAF8",
+          backgroundColor: "#F8F6F1",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -25,7 +25,7 @@ export default function GlobalError({
             style={{
               fontSize: "3rem",
               fontWeight: "bold",
-              color: "#EDE9E0",
+              color: "#DDD8CE",
               margin: 0,
             }}
           >
@@ -35,13 +35,13 @@ export default function GlobalError({
             style={{
               fontSize: "1.5rem",
               fontWeight: "bold",
-              color: "#1A1A1A",
+              color: "#0F1A12",
               marginTop: "1rem",
             }}
           >
             Something went wrong
           </h1>
-          <p style={{ color: "#6B7280", marginTop: "0.5rem" }}>
+          <p style={{ color: "#728574", marginTop: "0.5rem" }}>
             A critical error occurred. Please try refreshing the page.
           </p>
           <button
@@ -49,7 +49,7 @@ export default function GlobalError({
             style={{
               marginTop: "2rem",
               padding: "0.75rem 1.5rem",
-              backgroundColor: "#1A1A1A",
+              backgroundColor: "#1B4332",
               color: "white",
               border: "none",
               borderRadius: "0.375rem",

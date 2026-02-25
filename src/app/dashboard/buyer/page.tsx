@@ -151,7 +151,7 @@ export default async function BuyerPortalPage() {
     <div>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">Buyer Portal</h1>
+        <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">Buyer Portal</h1>
         <p className="mt-1 text-sm text-ink-mid">
           Your personalized horse-finding hub
         </p>

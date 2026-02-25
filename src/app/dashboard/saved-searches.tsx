@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Bookmark, Bell, BellOff, Trash2 } from "lucide-react";
+import { Bookmark, Bell, BellOff } from "lucide-react";
 
 // Sample saved searches (would come from DB in production)
 const sampleSearches = [

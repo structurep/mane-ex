@@ -12,14 +12,12 @@ type BillOfSaleSectionProps = {
   escrowId: string;
   billOfSaleData: BillOfSaleData | null;
   isBuyer: boolean;
-  isSeller: boolean;
 };
 
 export function BillOfSaleSection({
   escrowId,
   billOfSaleData,
   isBuyer,
-  isSeller,
 }: BillOfSaleSectionProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);

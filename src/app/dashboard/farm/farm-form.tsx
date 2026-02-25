@@ -340,7 +340,7 @@ export function FarmForm({ farm }: { farm: Farm | null }) {
                 return (
                   <label
                     key={discipline}
-                    className="flex cursor-pointer items-center gap-2 rounded-md border border-crease-light bg-paper-white px-3 py-2 text-sm text-ink-mid transition-colors has-[:checked]:border-ink-black has-[:checked]:bg-ink-black has-[:checked]:text-paper-white"
+                    className="flex cursor-pointer items-center gap-2 rounded-md border border-crease-light bg-paper-white px-3 py-2 text-sm text-ink-mid transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-primary-foreground"
                   >
                     <input
                       type="checkbox"

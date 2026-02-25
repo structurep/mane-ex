@@ -75,7 +75,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: l.name,
-    description: `${l.name} — ${description}. View details, vet records, and show history on ManeExchange.`,
+    description: `${l.name} — ${description}. Documentation, veterinary records, and show history on ManeExchange.`,
     openGraph: {
       title: `${l.name} — ${priceStr}`,
       description,

@@ -217,7 +217,7 @@ export default function TrainerPortalPage() {
     <div>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-black">Trainer Portal</h1>
+        <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">Trainer Portal</h1>
         <p className="mt-1 text-sm text-ink-mid">
           Manage clients, match ISOs, and grow your training business.
         </p>

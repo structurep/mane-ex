@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { Badge } from "@/components/ui/badge";
 import {
   MapPin,
   Heart,
@@ -163,7 +162,7 @@ export async function BrowseResults({ params }: Props) {
               className="animate-fade-up group overflow-hidden rounded-lg bg-paper-white shadow-flat transition-all duration-300 hover:shadow-lifted"
             >
               {/* Image with gradient overlay price */}
-              <div className="relative aspect-[4/3] overflow-hidden bg-paper-warm">
+              <div className="relative aspect-[3/2] overflow-hidden bg-paper-warm">
                 {/* FOMO Badge */}
                 {fomoBadge && (
                   <div className={`absolute top-2.5 left-2.5 z-10 flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${fomoBadge.className}`}>
@@ -174,7 +173,7 @@ export async function BrowseResults({ params }: Props) {
                 {(() => {
                   const primary = l.media?.find((m) => m.is_primary) || l.media?.[0];
                   return primary ? (
-                    /* eslint-disable-next-line @next/next/no-img-element */
+                     
                     <img
                       src={primary.url}
                       alt={l.name}
@@ -193,7 +192,7 @@ export async function BrowseResults({ params }: Props) {
 
               {/* Content */}
               <div className="p-3.5">
-                <h3 className="font-medium text-ink-black group-hover:text-red">
+                <h3 className="font-medium text-ink-black group-hover:text-primary">
                   {l.name}
                 </h3>
                 <p className="mt-0.5 text-sm text-ink-mid">
@@ -263,7 +262,7 @@ export async function BrowseResults({ params }: Props) {
               }).toString()}`}
               className={`rounded-md px-3 py-1.5 text-sm font-medium ${
                 p === page
-                  ? "bg-ink-black text-paper-white"
+                  ? "bg-primary text-primary-foreground"
                   : "bg-paper-warm text-ink-mid hover:bg-paper-white"
               }`}
             >

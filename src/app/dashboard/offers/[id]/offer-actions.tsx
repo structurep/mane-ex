@@ -10,7 +10,6 @@ import {
 } from "@/actions/offers";
 import { initiateEscrow, confirmDelivery, openDispute } from "@/actions/escrow";
 import type { OfferActionState } from "@/actions/offers";
-import type { EscrowActionState } from "@/actions/escrow";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

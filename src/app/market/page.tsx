@@ -185,7 +185,7 @@ export default function MarketIntelligencePage() {
         {/* Hero */}
         <section className="with-grain bg-gradient-hero px-4 pt-24 pb-12 md:px-8 md:pt-36 md:pb-16">
           <div className="mx-auto max-w-[1200px] text-center">
-            <p className="overline mb-3 text-red">MARKET INTELLIGENCE</p>
+            <p className="overline mb-3 text-gold">MARKET INTELLIGENCE</p>
             <h1 className="mb-4 text-4xl tracking-tight text-ink-black md:text-5xl">
               Know the market.
             </h1>
@@ -278,7 +278,7 @@ export default function MarketIntelligencePage() {
         {/* Price by Discipline Table */}
         <section className="bg-paper-white section-premium">
           <div className="mx-auto max-w-[1200px]">
-            <h2 className="mb-6 font-heading text-2xl font-semibold tracking-tight text-ink-black">
+            <h2 className="mb-6 font-serif text-2xl font-semibold tracking-tight text-ink-black">
               Average Price by Discipline
             </h2>
             <div className="rounded-lg border-0 overflow-hidden shadow-flat">
@@ -346,7 +346,7 @@ export default function MarketIntelligencePage() {
         {/* Trend Callout Cards */}
         <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-[1200px]">
-            <h2 className="mb-6 font-heading text-2xl font-semibold tracking-tight text-ink-black">
+            <h2 className="mb-6 font-serif text-2xl font-semibold tracking-tight text-ink-black">
               Market Trends
             </h2>
             <div className="grid gap-6 md:grid-cols-3">
@@ -369,7 +369,7 @@ export default function MarketIntelligencePage() {
         {/* Regional Demand Map Placeholder */}
         <section className="bg-paper-white section-premium">
           <div className="mx-auto max-w-[1200px]">
-            <h2 className="mb-6 font-heading text-2xl font-semibold tracking-tight text-ink-black">
+            <h2 className="mb-6 font-serif text-2xl font-semibold tracking-tight text-ink-black">
               Demand by Region
             </h2>
             <div className="rounded-lg border-0 bg-paper-cream p-12 text-center shadow-flat">
@@ -385,7 +385,7 @@ export default function MarketIntelligencePage() {
         </section>
 
         {/* Bottom CTA */}
-        <section className="bg-ink-black section-premium">
+        <section className="bg-paddock section-premium">
           <div className="mx-auto max-w-[1200px] text-center">
             <h2 className="mb-4 text-3xl tracking-tight text-paper-white">
               Ready to buy or sell?
@@ -397,7 +397,7 @@ export default function MarketIntelligencePage() {
             <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Button asChild size="lg">
                 <Link href="/browse">
-                  Browse Horses
+                  View Current Offerings
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>

@@ -30,8 +30,8 @@ const coverageTypes = [
   {
     title: "Major Medical",
     icon: Heart,
-    color: "text-red",
-    bgColor: "bg-red-light",
+    color: "text-primary",
+    bgColor: "bg-primary/10",
     description:
       "Covers surgical procedures, diagnostic imaging, colic surgery, and major veterinary expenses. Typical limits range from $5,000 to $15,000 per incident.",
   },
@@ -137,7 +137,7 @@ export default function InsurancePage() {
         {/* Hero */}
         <section className="bg-paper-white px-4 pt-20 pb-16 md:px-8 md:pt-24">
           <div className="mx-auto max-w-[1200px] text-center">
-            <p className="overline mb-3 text-red">INSURANCE</p>
+            <p className="overline mb-3 text-gold">INSURANCE</p>
             <h1 className="mb-4 text-4xl font-bold text-ink-black md:text-5xl">
               Protect your investment.
             </h1>
@@ -247,7 +247,7 @@ export default function InsurancePage() {
             <div className="grid gap-8 md:grid-cols-3">
               {steps.map((step, index) => (
                 <div key={step.number} className="relative text-center">
-                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red text-lg font-bold text-white">
+                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground">
                     {step.number}
                   </div>
                   <h3 className="mb-2 text-lg font-medium text-ink-black">
