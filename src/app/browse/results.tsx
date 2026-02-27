@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import {
   MapPin,
@@ -22,8 +23,14 @@ type Props = {
     maxPrice?: string;
     state?: string;
     gender?: string;
+    breed?: string;
     minHeight?: string;
     maxHeight?: string;
+    minAge?: string;
+    maxAge?: string;
+    henneke?: string;
+    soundness?: string;
+    region?: string;
     sort?: string;
     page?: string;
   };
@@ -77,6 +84,34 @@ export async function BrowseResults({ params }: Props) {
   if (params.maxHeight) {
     query = query.lte("height_hands", parseFloat(params.maxHeight));
   }
+  if (params.breed) {
+    query = query.eq("breed", params.breed);
+  }
+  if (params.minAge) {
+    query = query.gte("age_years", parseInt(params.minAge));
+  }
+  if (params.maxAge) {
+    query = query.lte("age_years", parseInt(params.maxAge));
+  }
+  if (params.henneke) {
+    query = query.eq("henneke_score", parseInt(params.henneke));
+  }
+  if (params.soundness) {
+    query = query.eq("soundness_level", params.soundness);
+  }
+  if (params.region) {
+    const regionStates: Record<string, string[]> = {
+      southeast: ["FL", "GA", "SC", "NC", "VA", "KY", "TN", "AL", "MS", "LA"],
+      northeast: ["NY", "NJ", "PA", "CT", "MA", "MD", "NH", "VT", "ME", "RI"],
+      midwest: ["OH", "IL", "MI", "IN", "WI", "MN", "MO", "IA", "KS", "NE"],
+      west: ["CA", "OR", "WA", "CO", "MT", "ID", "WY", "UT", "NV"],
+      southwest: ["TX", "AZ", "NM", "OK", "AR"],
+    };
+    const states = regionStates[params.region];
+    if (states) {
+      query = query.in("location_state", states);
+    }
+  }
 
   // Sort
   switch (params.sort) {
@@ -88,6 +123,9 @@ export async function BrowseResults({ params }: Props) {
       break;
     case "score":
       query = query.order("completeness_score", { ascending: false });
+      break;
+    case "popular":
+      query = query.order("favorite_count", { ascending: false, nullsFirst: false });
       break;
     default:
       query = query.order("published_at", {
@@ -174,11 +212,12 @@ export async function BrowseResults({ params }: Props) {
                   const primary = l.media?.find((m) => m.is_primary) || l.media?.[0];
                   return primary ? (
                      
-                    <img
+                    <Image
                       src={primary.url}
                       alt={l.name}
-                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-                      loading="lazy"
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                     />
                   ) : null;
                 })()}

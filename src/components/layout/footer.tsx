@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Instagram, Facebook, Youtube } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 const footerLinks = {
   marketplace: [
@@ -44,33 +43,12 @@ const socialLinks = [
 export function Footer() {
   return (
     <footer>
-      {/* Pre-footer CTA band */}
-      <div className="bg-paddock px-4 py-16 text-center md:px-8 md:py-20">
-        <p className="overline mb-3 text-gold">GET STARTED</p>
-        <h2 className="text-2xl text-white md:text-3xl">
-          Begin your search.
-        </h2>
-        <p className="mx-auto mt-4 max-w-md text-sm text-white/50">
-          Verified sellers, secured escrow, and a platform built for the
-          way serious horses are bought and sold.
-        </p>
-        <div className="mt-8 flex items-center justify-center gap-4">
-          <Button size="sm" asChild>
-            <Link href="/browse">View Offerings</Link>
-          </Button>
-          <Button variant="outline" size="sm" className="!bg-transparent border-white/30 text-white hover:!bg-white/10" asChild>
-            <Link href="/sell">List a Horse</Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main footer */}
       <div className="border-t border-border bg-washi">
         <div className="mx-auto max-w-[1200px] px-4 py-16 md:px-8">
           {/* Link grid */}
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
             <div>
-              <h4 className="mb-4 font-serif text-sm font-semibold text-ink-dark">Marketplace</h4>
+              <p className="mb-4 font-serif text-sm font-semibold text-ink-dark">Marketplace</p>
               <ul className="space-y-3">
                 {footerLinks.marketplace.map((link) => (
                   <li key={link.href}>
@@ -85,7 +63,7 @@ export function Footer() {
               </ul>
             </div>
             <div>
-              <h4 className="mb-4 font-serif text-sm font-semibold text-ink-dark">Sellers</h4>
+              <p className="mb-4 font-serif text-sm font-semibold text-ink-dark">Sellers</p>
               <ul className="space-y-3">
                 {footerLinks.sellers.map((link) => (
                   <li key={link.href}>
@@ -100,7 +78,7 @@ export function Footer() {
               </ul>
             </div>
             <div>
-              <h4 className="mb-4 font-serif text-sm font-semibold text-ink-dark">Resources</h4>
+              <p className="mb-4 font-serif text-sm font-semibold text-ink-dark">Resources</p>
               <ul className="space-y-3">
                 {footerLinks.resources.map((link) => (
                   <li key={link.href}>
@@ -115,7 +93,7 @@ export function Footer() {
               </ul>
             </div>
             <div>
-              <h4 className="mb-4 font-serif text-sm font-semibold text-ink-dark">Legal</h4>
+              <p className="mb-4 font-serif text-sm font-semibold text-ink-dark">Legal</p>
               <ul className="space-y-3">
                 {footerLinks.legal.map((link) => (
                   <li key={link.href}>

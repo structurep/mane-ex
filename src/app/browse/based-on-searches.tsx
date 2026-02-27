@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { TrendingUp, Sparkles, Heart } from "lucide-react";
 import type { HorseListing } from "@/types/listings";
@@ -256,10 +257,12 @@ export async function BasedOnSearches({
                 {/* Image */}
                 <div className="relative aspect-[3/2] overflow-hidden bg-paper-warm">
                   {primary ? (
-                    <img
+                    <Image
                       src={primary.url}
                       alt={l.name}
-                      className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                      fill
+                      sizes="240px"
+                      className="object-cover transition-transform group-hover:scale-105"
                     />
                   ) : (
                     <div className="flex h-full items-center justify-center text-ink-faint">
