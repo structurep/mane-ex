@@ -1,11 +1,12 @@
 "use client";
 
-import { useReducer, useActionState } from "react";
+import { useReducer, useActionState, useEffect } from "react";
 import { createListing, type ListingActionState } from "@/actions/listings";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { WIZARD_STEPS } from "@/types/listings";
 import { ChevronLeft, ChevronRight, Send } from "lucide-react";
+import { toast } from "sonner";
 import { StepBasicInfo } from "./steps/basic-info";
 import { StepFarmLife } from "./steps/farm-life";
 import { StepShowInfo } from "./steps/show-info";
@@ -47,6 +48,15 @@ export function ListingWizard() {
     createListing,
     {}
   );
+
+  // Toast on server action error (redirect handles success)
+  useEffect(() => {
+    if (actionState.error) {
+      toast.error("Listing creation failed", {
+        description: actionState.error,
+      });
+    }
+  }, [actionState.error]);
 
   const currentStep = WIZARD_STEPS[state.step];
   const progress = ((state.step + 1) / WIZARD_STEPS.length) * 100;

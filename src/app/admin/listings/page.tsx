@@ -106,9 +106,14 @@ export default async function AdminListingsPage({
         )}
 
         {listings.length === 0 && (
-          <p className="py-8 text-center text-sm text-ink-mid">
-            No listings found.
-          </p>
+          <div className="flex flex-col items-center gap-2 rounded-lg border border-dashed border-crease-mid bg-paper-cream p-12 text-center">
+            <p className="font-medium text-ink-black">No listings found</p>
+            <p className="text-sm text-ink-mid">
+              {activeFilter === "reported"
+                ? "No reported listings to review."
+                : "There are no listings in the system yet."}
+            </p>
+          </div>
         )}
       </div>
     </div>

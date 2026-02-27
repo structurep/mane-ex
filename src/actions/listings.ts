@@ -96,6 +96,31 @@ export async function publishListing(listingId: string): Promise<ListingActionSt
   return { listingId };
 }
 
+export async function archiveListing(
+  listingId: string
+): Promise<{ error?: string }> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { error: "You must be logged in." };
+  }
+
+  const { error } = await supabase
+    .from("horse_listings")
+    .update({ status: "removed" })
+    .eq("id", listingId)
+    .eq("seller_id", user.id);
+
+  if (error) {
+    return { error: error.message };
+  }
+
+  return {};
+}
+
 export async function toggleFavorite(
   listingId: string
 ): Promise<{ favorited: boolean; error?: string }> {

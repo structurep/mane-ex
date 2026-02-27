@@ -17,6 +17,7 @@ import type { ListingStatus } from "@/types/listings";
 import { getMyScore } from "@/actions/scoring";
 import { GRADE_LABELS, MANE_SCORE_DISCLAIMER } from "@/types/scoring";
 import { SavedSearchesWidget } from "./saved-searches";
+import { DeleteListingButton } from "@/components/delete-listing-button";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -419,6 +420,14 @@ export default async function DashboardPage() {
                       {config?.label || listing.status}
                     </Badge>
                   </div>
+                  {listing.status !== "sold" && listing.status !== "removed" && (
+                    <div onClick={(e) => e.preventDefault()}>
+                      <DeleteListingButton
+                        listingId={listing.id}
+                        listingName={listing.name}
+                      />
+                    </div>
+                  )}
                 </Link>
               );
             })}

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { MessageSquare } from "lucide-react";
 
 type ConversationItem = {
   id: string;
@@ -22,6 +23,26 @@ export function ConversationList({
 }: {
   conversations: ConversationItem[];
 }) {
+  if (conversations.length === 0) {
+    return (
+      <div className="flex flex-col items-center gap-3 rounded-lg border-0 bg-paper-cream p-12 text-center shadow-flat">
+        <MessageSquare className="h-10 w-10 text-ink-faint" />
+        <div>
+          <p className="font-medium text-ink-black">No messages yet</p>
+          <p className="mt-1 text-sm text-ink-mid">
+            When you contact a seller or receive an inquiry, conversations will appear here.
+          </p>
+        </div>
+        <Link
+          href="/browse"
+          className="mt-2 text-sm font-medium text-primary hover:underline"
+        >
+          Browse horses
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div className="divide-y divide-crease-light rounded-lg border-0 bg-paper-cream shadow-flat">
       {conversations.map((c) => {

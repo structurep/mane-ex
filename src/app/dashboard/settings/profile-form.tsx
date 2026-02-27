@@ -1,9 +1,10 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useState, useEffect } from "react";
 import { updateProfile } from "@/actions/profiles";
 import type { ProfileActionState } from "@/actions/profiles";
 import { updateAvatarUrl, updateCoverUrl } from "@/actions/storage";
+import { toast } from "sonner";
 import { AvatarUpload } from "@/components/avatar-upload";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -69,6 +70,14 @@ export function ProfileForm({
   const [bioLength, setBioLength] = useState(
     profile?.bio?.length ?? 0
   );
+
+  useEffect(() => {
+    if (state.success === true) {
+      toast.success("Profile updated");
+    } else if (state.error) {
+      toast.error(state.error);
+    }
+  }, [state.success, state.error]);
 
   const isBuyer = profile?.role === "buyer";
 
