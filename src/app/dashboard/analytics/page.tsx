@@ -6,6 +6,7 @@ import { ManeScoreBadge } from "@/components/mane-score-badge";
 import { BadgeShowcase } from "@/components/badge-showcase";
 import { Leaderboard } from "@/components/leaderboard";
 import { MANE_SCORE_DISCLAIMER } from "@/types/scoring";
+import { SellerIntelligenceDashboard } from "@/components/seller-intelligence";
 import {
   BarChart3,
   ArrowRight,
@@ -312,6 +313,16 @@ export default async function AnalyticsPage() {
             </tbody>
           </table>
         </div>
+      </section>
+
+      {/* Seller Intelligence */}
+      <section className="mt-8">
+        <div className="crease-divider mb-6" />
+        <h2 className="mb-2 font-serif text-2xl font-semibold tracking-tight text-ink-black">Seller Intelligence</h2>
+        <p className="mb-6 text-sm text-ink-mid">
+          Market insights and actionable recommendations for your listings.
+        </p>
+        <SellerIntelligenceDashboard />
       </section>
 
       {/* Legal disclaimer */}

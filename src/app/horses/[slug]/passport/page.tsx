@@ -15,8 +15,22 @@ import {
   Users,
   Calendar,
   MapPin,
+  FileText,
+  Scissors,
+  BarChart3,
 } from "lucide-react";
 import type { HorseListing } from "@/types/listings";
+import {
+  VerificationBadge,
+  DocumentVault,
+  PassportQRCode,
+  PassportShareControls,
+  HennekeBCSHistory,
+  FarrierLog,
+  type PassportDocument,
+  type VerificationLevel,
+} from "@/components/passport-enhancements";
+import { BloodlineExplorer } from "@/components/bloodline-explorer";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -106,10 +120,12 @@ function TimelineDot({ color = "bg-ink-faint" }: { color?: string }) {
 function PassportSection({
   icon,
   title,
+  verificationLevel,
   children,
 }: {
   icon: React.ReactNode;
   title: string;
+  verificationLevel?: VerificationLevel;
   children: React.ReactNode;
 }) {
   return (
@@ -119,6 +135,9 @@ function PassportSection({
           {icon}
         </span>
         <h2 className="text-lg font-semibold text-ink-black">{title}</h2>
+        {verificationLevel && (
+          <VerificationBadge level={verificationLevel} compact />
+        )}
       </div>
       <div className="ml-4 border-l-2 border-crease-light pl-6">
         {children}
@@ -126,6 +145,82 @@ function PassportSection({
     </section>
   );
 }
+
+/* ────────────────────────────────────────────
+   Sample enhancement data (static until DB)
+   ──────────────────────────────────────────── */
+
+const sampleDocuments: PassportDocument[] = [
+  {
+    id: "d1",
+    name: "Pre-Purchase Exam Report",
+    type: "ppe_report",
+    uploadedAt: "2026-01-15",
+    uploadedBy: "Dr. Sarah Miller, DVM",
+    fileSize: "2.4 MB",
+    verified: true,
+  },
+  {
+    id: "d2",
+    name: "Coggins Test - Negative",
+    type: "coggins",
+    uploadedAt: "2026-02-01",
+    uploadedBy: "Seller",
+    fileSize: "340 KB",
+    verified: true,
+  },
+  {
+    id: "d3",
+    name: "Front Limb X-Rays (4 views)",
+    type: "xray",
+    uploadedAt: "2026-01-15",
+    uploadedBy: "Dr. Sarah Miller, DVM",
+    fileSize: "8.1 MB",
+    verified: true,
+  },
+  {
+    id: "d4",
+    name: "AQHA Registration Certificate",
+    type: "registration",
+    uploadedAt: "2025-09-20",
+    uploadedBy: "Seller",
+    fileSize: "1.1 MB",
+    verified: false,
+  },
+];
+
+const sampleBCSHistory = [
+  { date: "2026-02-15", score: 5, assessedBy: "Dr. Miller, DVM" },
+  { date: "2025-11-10", score: 5, assessedBy: "Dr. Miller, DVM" },
+  { date: "2025-08-20", score: 6, assessedBy: "Dr. Torres, DVM" },
+  { date: "2025-05-01", score: 4, assessedBy: "Self-assessed" },
+];
+
+const sampleFarrierEntries = [
+  {
+    date: "2026-02-10",
+    type: "full_shoe" as const,
+    farrier: "Jake Henderson, CJF",
+    notes: "Reset fronts, new hinds. Good hoof growth.",
+  },
+  {
+    date: "2026-01-05",
+    type: "trim" as const,
+    farrier: "Jake Henderson, CJF",
+    notes: "Barefoot trim for turnout period.",
+  },
+  {
+    date: "2025-11-28",
+    type: "full_shoe" as const,
+    farrier: "Jake Henderson, CJF",
+  },
+  {
+    date: "2025-10-15",
+    type: "corrective" as const,
+    farrier: "Jake Henderson, CJF",
+    notes: "Slight medial deviation in LF — corrective shoe applied.",
+  },
+];
 
 /* ════════════════════════════════════════════
    Main Passport Page
@@ -269,6 +364,7 @@ export default async function HorsePassportPage({ params }: Props) {
               <PassportSection
                 icon={<Shield className="h-4 w-4" />}
                 title="Identity"
+                verificationLevel={l.registration_number ? "registry_verified" : "self_reported"}
               >
                 <div className="flex flex-col gap-6 sm:flex-row">
                   {/* Photo */}
@@ -339,6 +435,7 @@ export default async function HorsePassportPage({ params }: Props) {
                 <PassportSection
                   icon={<Users className="h-4 w-4" />}
                   title="Pedigree"
+                  verificationLevel={l.registration_number ? "registry_verified" : "self_reported"}
                 >
                   <div className="overflow-x-auto">
                     <div className="min-w-[500px] py-2">
@@ -422,10 +519,22 @@ export default async function HorsePassportPage({ params }: Props) {
                 </PassportSection>
               )}
 
+              {/* ─── SECTION 2B: Bloodline Explorer ─── */}
+              {(l.sire || l.dam) && (
+                <PassportSection
+                  icon={<Users className="h-4 w-4" />}
+                  title="Bloodline Explorer"
+                  verificationLevel={l.registration_number ? "registry_verified" : "self_reported"}
+                >
+                  <BloodlineExplorer horseName={l.name} />
+                </PassportSection>
+              )}
+
               {/* ─── SECTION 3: Ownership History ─── */}
               <PassportSection
                 icon={<BookOpen className="h-4 w-4" />}
                 title="Ownership History"
+                verificationLevel="self_reported"
               >
                 <div className="space-y-0">
                   {/* Current Owner */}
@@ -473,6 +582,7 @@ export default async function HorsePassportPage({ params }: Props) {
               <PassportSection
                 icon={<Activity className="h-4 w-4" />}
                 title="Health Timeline"
+                verificationLevel={l.coggins_date ? "vet_verified" : "self_reported"}
               >
                 {healthEvents.length > 0 ? (
                   <div className="space-y-0">
@@ -534,6 +644,7 @@ export default async function HorsePassportPage({ params }: Props) {
                 <PassportSection
                   icon={<Award className="h-4 w-4" />}
                   title="Show History"
+                  verificationLevel={l.usef_number ? "registry_verified" : "self_reported"}
                 >
                   {l.show_experience && (
                     <div className="mb-4">
@@ -598,6 +709,7 @@ export default async function HorsePassportPage({ params }: Props) {
                 <PassportSection
                   icon={<Calendar className="h-4 w-4" />}
                   title="Training Log"
+                  verificationLevel="self_reported"
                 >
                   <div className="rounded-md border border-crease-light bg-paper-cream p-4">
                     <p className="whitespace-pre-line text-sm text-ink-mid">
@@ -620,6 +732,63 @@ export default async function HorsePassportPage({ params }: Props) {
                   )}
                 </PassportSection>
               )}
+
+              {/* ─── SECTION 7: Body Condition History ─── */}
+              <PassportSection
+                icon={<BarChart3 className="h-4 w-4" />}
+                title="Body Condition History"
+                verificationLevel="vet_verified"
+              >
+                <HennekeBCSHistory
+                  entries={sampleBCSHistory}
+                  currentScore={5}
+                />
+              </PassportSection>
+
+              {/* ─── SECTION 8: Farrier & Hoof Care ─── */}
+              <PassportSection
+                icon={<Scissors className="h-4 w-4" />}
+                title="Farrier & Hoof Care"
+                verificationLevel="self_reported"
+              >
+                <FarrierLog
+                  entries={sampleFarrierEntries}
+                  nextDue="2026-03-15"
+                />
+              </PassportSection>
+
+              {/* ─── SECTION 9: Document Vault ─── */}
+              <PassportSection
+                icon={<FileText className="h-4 w-4" />}
+                title="Document Vault"
+                verificationLevel="document_verified"
+              >
+                <DocumentVault documents={sampleDocuments} isOwner={false} />
+              </PassportSection>
+
+              {/* ─── QR CODE + SHARE CONTROLS ─── */}
+              <div className="crease-divider" />
+              <div className="grid gap-6 sm:grid-cols-2">
+                <PassportQRCode
+                  passportId={passportId}
+                  horseName={l.name}
+                  passportUrl={`https://mane-ex.vercel.app/horses/${l.slug}/passport`}
+                />
+                <div className="flex flex-col justify-center">
+                  <h3 className="mb-2 font-heading text-base font-semibold text-ink-black">
+                    Share this Passport
+                  </h3>
+                  <p className="mb-4 text-sm text-ink-mid">
+                    Send to your trainer, vet, or potential buyers. Print the QR
+                    code for barn use or show documentation.
+                  </p>
+                  <PassportShareControls
+                    passportUrl={`https://mane-ex.vercel.app/horses/${l.slug}/passport`}
+                    horseName={l.name}
+                    passportId={passportId}
+                  />
+                </div>
+              </div>
 
               {/* ─── FOOTER DISCLAIMER ─── */}
               <div className="crease-divider" />

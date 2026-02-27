@@ -14,6 +14,7 @@ import {
   ArrowRight,
   Phone,
 } from "lucide-react";
+import { SmartEscrowDashboard } from "@/components/smart-escrow";
 
 export const metadata: Metadata = {
   title: "Trust & Safety",
@@ -153,6 +154,24 @@ export default function TrustPage() {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Smart Escrow Showcase */}
+        <section className="bg-paper-white section-premium">
+          <div className="mx-auto max-w-[1200px]">
+            <div className="mb-8 text-center">
+              <p className="overline mb-3 text-forest">SMART ESCROW</p>
+              <h2 className="text-3xl tracking-tight text-ink-black">
+                Milestone-based protection.
+              </h2>
+              <p className="text-lead mx-auto mt-3 max-w-2xl text-ink-mid">
+                Funds are released in stages as each milestone is completed —
+                PPE, trial period, and final transfer. Both parties are protected
+                at every step.
+              </p>
+            </div>
+            <SmartEscrowDashboard />
           </div>
         </section>
 

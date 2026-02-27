@@ -3,6 +3,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { RegistryLookup, type RegistryRecord } from "@/components/registry-lookup";
 
 type StepProps = {
   data: Record<string, unknown>;
@@ -25,6 +26,14 @@ export function StepHistory({ data, setField }: StepProps) {
 
   return (
     <div className="space-y-6">
+      {/* Registry Verification */}
+      <RegistryLookup
+        records={(data.registry_records as RegistryRecord[]) || []}
+        onChange={(records) => setField("registry_records", records)}
+      />
+
+      <div className="crease-divider" />
+
       {/* Ownership */}
       <div className="grid gap-4 sm:grid-cols-2">
         <div>

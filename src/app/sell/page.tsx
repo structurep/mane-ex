@@ -1,254 +1,382 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { BottomCTA } from "@/components/bottom-cta";
+import { FaqAccordion } from "@/components/faq-accordion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, BarChart3, Users, FileCheck, Lock } from "lucide-react";
+import {
+  ArrowRight,
+  BarChart3,
+  Users,
+  FileCheck,
+  Lock,
+  Timer,
+} from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Sell Your Horse",
   description:
-    "Sell your horse on ManeExchange. Structured listing process, qualified inquiries, secured payments from acceptance through delivery.",
+    "Sell your horse on ManeExchange. List in 5 minutes, reach serious buyers, skip the tire-kickers.",
 };
 
 const steps = [
   {
     number: 1,
-    title: "Create Your Profile",
+    time: "~30 seconds",
+    title: "Create Your Account",
     description:
-      "Set up your seller profile and verify your identity through Stripe. It takes less than 5 minutes.",
+      "Email, password, done. We\u2019ll ask about your role (seller, trainer, both) so we can tailor the experience.",
   },
   {
     number: 2,
-    title: "Build Your Listing",
+    time: "~3 minutes",
+    title: "Tell Your Horse\u2019s Story",
     description:
-      "Our 7-step wizard walks you through everything — details, vet records, media, pricing. State disclosures are built in.",
+      "Name, breed, height, age \u2014 the basics. Then the good stuff: training history, show experience, rideability. Paint the picture.",
   },
   {
     number: 3,
-    title: "Get Discovered",
+    time: "~2 minutes",
+    title: "Upload the Receipts",
     description:
-      "Your listing is searchable by discipline, price, location, and more. Your Mane Score helps you stand out.",
+      "PPE, x-rays, show records \u2014 the docs that build trust. We auto-link USEF/USHJA/FEI records. More docs = higher Mane Score.",
   },
   {
     number: 4,
-    title: "Connect with Buyers",
+    time: "~2 minutes",
+    title: "Set Your Price",
     description:
-      "Receive inquiries, schedule trials, and negotiate offers — all within the platform.",
+      "We\u2019ll show you market comps for similar horses. Price it right, or choose \u2018Price on Request\u2019 for flexibility.",
   },
   {
     number: 5,
-    title: "Accept & Escrow",
+    time: "~30 seconds",
+    title: "Hit Publish",
     description:
-      "Accept an offer and the buyer\u2019s payment is held in ManeVault. Ship knowing funds are secured.",
+      "Review your listing, click publish, and you\u2019re live. We handle search optimization and buyer matching.",
   },
   {
     number: 6,
-    title: "Get Paid",
+    time: "Ongoing",
+    title: "Field Inquiries",
     description:
-      "After buyer confirms delivery and the dispute window closes, funds transfer to your bank. Simple.",
+      "Buyers message you directly with their profile visible. Schedule trials, answer questions, close the deal.",
   },
 ];
 
 const stats = [
-  { value: "2,500+", label: "Active Members" },
-  { value: "40%", label: "Faster Sales" },
-  { value: "3x", label: "More Views" },
-  { value: "$0", label: "To Start" },
+  {
+    value: "2,400+",
+    label: "Active members",
+    sub: "buyers & sellers",
+  },
+  { value: "67%", label: "Faster sales", sub: "vs. traditional listings" },
+  { value: "3x", label: "More views", sub: "for verified listings" },
+  { value: "$0", label: "To get started", sub: "list your first horse free" },
 ];
 
 const valueProps = [
   {
     icon: BarChart3,
-    color: "gold",
     title: "Transparency Score",
     description:
-      "Your Mane Score measures listing completeness and responsiveness — not horse quality. More documentation builds more trust with buyers.",
+      "Buyers see exactly what you\u2019ve disclosed at a glance. High scores = high trust = faster sales.",
+    vs: "Facebook: buyers have no idea what\u2019s real",
   },
   {
     icon: Users,
-    color: "blue",
-    title: "Qualified Inquiries",
+    title: "Qualified Inquiries Only",
     description:
-      "No tire-kickers. Buyers browse verified listings with full documentation. When they reach out, they\u2019re serious.",
+      "Every buyer has a profile. You see their budget, experience level, and what they\u2019re looking for before you respond.",
+    vs: "Facebook: anonymous DMs from tire-kickers",
   },
   {
     icon: FileCheck,
-    color: "forest",
     title: "Verified Documents",
     description:
-      "Vet records, registration papers, Coggins, show history — all organized in one place. Buyers see everything upfront.",
+      "PPE, x-rays, show records \u2014 uploaded and verified. Serious buyers don\u2019t waste time on unverified listings.",
+    vs: 'Facebook: "I\'ll send it later" runaround',
   },
   {
     icon: Lock,
-    color: "red",
     title: "Secure Payments",
     description:
-      "ManeVault escrow protects both sides. ACH transfers keep fees at $5 instead of $1,450 on a $50K horse.",
+      "ManeVault escrow protects both sides. No more chasing deposits or worrying about bounced checks.",
+    vs: "Facebook: cash, Venmo, and hope for the best",
   },
 ];
 
 const faqs = [
   {
-    question: "How much does it cost to list?",
+    question: "How long does it take to list a horse?",
     answer:
-      "Free during launch. When pricing begins, Starter is free (3 listings), Pro is $49/mo (10 listings), and Elite is $149/mo (unlimited).",
+      "Most sellers complete their first listing in under 10 minutes. Our 7-step wizard walks you through everything with autosave, so you can come back anytime.",
   },
   {
-    question: "What are the transaction fees?",
+    question: "What documents should I upload?",
     answer:
-      "Zero during launch. When fees begin, transactions over $50K are 3-5% and $10K-$50K are 5-8%. ACH transfers cap Stripe processing at $5.",
+      "PPE reports, x-rays, and Coggins are the big ones. Show records, registration papers, and training logs boost your Mane Score. The more you document, the more trust you build.",
   },
   {
-    question: "How does ManeVault escrow work?",
+    question: "How do I boost my Mane Score?",
     answer:
-      "When a buyer accepts an offer, funds are held securely until the horse is delivered and inspected. You ship knowing the money is there.",
+      "Upload a recent PPE, link show records, add x-rays, include video, respond to inquiries quickly, and complete all listing fields. Each action improves your score.",
   },
   {
-    question: "What documents should I include?",
+    question: "Can I edit my listing after publishing?",
     answer:
-      "At minimum: registration papers, current Coggins, and recent photos. For higher scores: vet records, show history, training logs, and video.",
+      "Absolutely. Update photos, adjust pricing, add new documents, and modify details at any time from your dashboard.",
   },
   {
-    question: "How long does it take to sell?",
+    question: "What\u2019s the success fee?",
     answer:
-      "Depends on the horse, price, and documentation quality. Sellers with complete listings and fast response times sell 40% faster on average.",
+      "ManeVault escrow handles secure payments \u2014 5% standard fee, or 4% for Elite sellers. No sale, no fee.",
+  },
+  {
+    question: "How do inquiries work?",
+    answer:
+      "Buyers message you directly through the platform. You\u2019ll see their profile, experience level, and budget before responding. Schedule trials, answer questions, and negotiate \u2014 all in one place.",
   },
 ];
-
-const iconColorMap: Record<string, { bg: string; text: string }> = {
-  gold: { bg: "bg-gold/10", text: "text-gold" },
-  blue: { bg: "bg-blue/10", text: "text-blue" },
-  forest: { bg: "bg-forest/10", text: "text-forest" },
-  red: { bg: "bg-red-light", text: "text-red" },
-};
 
 export default function SellPage() {
   return (
     <div className="min-h-screen">
       <Header />
       <main>
-        {/* Hero */}
-        <section className="with-grain bg-gradient-hero px-4 pt-24 pb-12 md:px-8 md:pt-36 md:pb-16">
-          <div className="mx-auto max-w-[1200px] text-center">
-            <p className="overline mb-3 text-gold">THE SELLER EXPERIENCE</p>
-            <h1 className="font-serif mb-6 text-4xl tracking-tight text-ink-black md:text-5xl">
-              The seller experience.
-            </h1>
-            <p className="text-lead mx-auto mb-8 max-w-2xl text-ink-mid">
-              Structured listing process. Qualified inquiries. Secured payments
-              from acceptance through delivery.
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              <Button asChild>
-                <Link href="/dashboard/listings/new">
-                  List Your Horse
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button variant="outline" asChild>
-                <Link href="/pricing">See Pricing</Link>
-              </Button>
-            </div>
+        {/* ══════════════════════════════════════════════
+            SECTION 1 — HERO (2-col: text + glass card)
+            ══════════════════════════════════════════════ */}
+        <section className="relative overflow-hidden bg-paddock">
+          <div className="absolute inset-0">
+            <Image
+              src="https://images.unsplash.com/photo-1534307671554-9a6d81f4d629?w=1920&q=80&auto=format&fit=crop"
+              alt=""
+              fill
+              className="object-cover opacity-10"
+            />
           </div>
-        </section>
 
-        {/* Social Proof Stats */}
-        <section className="bg-paddock px-4 py-20 md:px-8 md:py-24">
-          <div className="mx-auto max-w-[1200px]">
-            <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-              {stats.map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <p className="font-serif text-3xl font-bold text-paper-white">
-                    {stat.value}
-                  </p>
-                  <p className="text-sm text-ink-light">{stat.label}</p>
+          <div className="relative px-4 py-16 md:px-8 md:py-24">
+            <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
+              {/* Left: Text */}
+              <div>
+                <h1 className="mb-6 font-serif text-4xl text-white sm:text-5xl md:text-6xl">
+                  Sell smarter.
+                  <br />
+                  <span className="text-primary">Not harder.</span>
+                </h1>
+                <p className="mb-8 max-w-lg text-lg text-white/70">
+                  Your horse deserves better than a Facebook post. List in 5
+                  minutes, reach serious buyers, skip the tire-kickers.
+                </p>
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <Button size="lg" asChild>
+                    <Link href="/dashboard/listings/new">
+                      Start Your Listing
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="!bg-transparent border-white/30 text-white hover:!bg-white/10"
+                    asChild
+                  >
+                    <Link href="/how-it-works">Watch How It Works</Link>
+                  </Button>
                 </div>
-              ))}
+                <p className="mt-4 text-sm text-white/40">
+                  Free to list. No credit card required.
+                </p>
+              </div>
+
+              {/* Right: Glass stats card */}
+              <div className="rounded-2xl border border-white/10 bg-white/10 p-8 backdrop-blur-sm">
+                <div className="mb-6 flex items-center gap-2 text-sm text-white/60">
+                  <Timer className="h-4 w-4" />
+                  60-Second Overview
+                </div>
+                <div className="space-y-6">
+                  <div>
+                    <p className="font-serif text-3xl font-bold text-white">
+                      67% faster sales
+                    </p>
+                    <p className="text-sm text-white/50">
+                      vs. traditional listings
+                    </p>
+                  </div>
+                  <div className="border-t border-white/10" />
+                  <div>
+                    <p className="font-serif text-3xl font-bold text-white">
+                      3x more views
+                    </p>
+                    <p className="text-sm text-white/50">
+                      for verified listings
+                    </p>
+                  </div>
+                  <div className="border-t border-white/10" />
+                  <div>
+                    <p className="font-serif text-3xl font-bold text-white">
+                      Qualified inquiries only
+                    </p>
+                    <p className="text-sm text-white/50">
+                      buyer profiles included
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* How It Works */}
-        <section className="bg-paper-cream section-premium">
-          <div className="mx-auto max-w-[1200px]">
-            <p className="overline mb-3 text-gold">HOW IT WORKS</p>
-            <h2 className="font-serif mb-10 text-3xl tracking-tight text-ink-black md:text-4xl">
-              Six steps to a secure sale.
-            </h2>
-            <div className="grid gap-6 md:grid-cols-3">
+        {/* ══════════════════════════════════════════════
+            SECTION 2 — HOW IT WORKS (6 step cards)
+            ══════════════════════════════════════════════ */}
+        <section className="bg-paper-white px-4 py-16 md:px-8 md:py-24">
+          <div className="mx-auto max-w-7xl">
+            <div className="mb-10">
+              <h2 className="font-serif text-3xl text-ink-black md:text-4xl">
+                How it works
+              </h2>
+              <p className="mt-3 text-ink-mid">
+                Six steps. Ten minutes. Buyers who actually read the listing.
+                <span className="ml-1 text-ink-light">
+                  Revolutionary, we know.
+                </span>
+              </p>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {steps.map((step) => (
                 <div
                   key={step.number}
-                  className="rounded-lg border-0 bg-paper-white p-6 shadow-flat transition-elevation hover-lift hover:shadow-lifted"
+                  className="relative overflow-hidden rounded-2xl border border-crease-light bg-paper-cream p-6"
                 >
-                  <span className="mb-3 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
+                  {/* Watermark step number */}
+                  <span className="absolute -right-2 -top-4 font-serif text-[6rem] font-bold leading-none text-ink-black/[0.03]">
                     {step.number}
                   </span>
-                  <h3 className="mb-2 font-medium text-ink-black">
-                    {step.title}
-                  </h3>
-                  <p className="text-sm text-ink-mid">{step.description}</p>
+                  <div className="relative">
+                    <span className="mb-3 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
+                      {step.number}
+                    </span>
+                    <h3 className="mb-1 font-heading text-base font-semibold text-ink-black">
+                      {step.title}
+                    </h3>
+                    <p className="mb-3 text-xs text-ink-light">{step.time}</p>
+                    <p className="text-sm leading-relaxed text-ink-mid">
+                      {step.description}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Value Props */}
-        <section className="bg-paper-white section-premium">
-          <div className="mx-auto max-w-[1200px]">
-            <p className="overline mb-3 text-gold">WHY MANEEXCHANGE</p>
-            <h2 className="font-serif mb-10 text-3xl tracking-tight text-ink-black md:text-4xl">
-              Built for how horses are actually sold.
-            </h2>
-            <div className="grid gap-8 md:grid-cols-2">
+        {/* ══════════════════════════════════════════════
+            SECTION 3 — STATS BAR (dark)
+            ══════════════════════════════════════════════ */}
+        <section className="bg-paddock px-4 py-16 md:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="mb-8 text-center">
+              <h2 className="font-serif text-3xl text-white md:text-4xl">
+                The ManeExchange difference
+              </h2>
+              <p className="mt-3 text-white/50">
+                Real results from real sellers
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
+              {stats.map((stat) => (
+                <div key={stat.label} className="text-center">
+                  <p className="font-serif text-4xl font-bold text-white">
+                    {stat.value}
+                  </p>
+                  <p className="mt-1 text-sm font-medium text-white/80">
+                    {stat.label}
+                  </p>
+                  <p className="text-xs text-white/40">{stat.sub}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ══════════════════════════════════════════════
+            SECTION 4 — WHY SELLERS CHOOSE (with vs Facebook)
+            ══════════════════════════════════════════════ */}
+        <section className="bg-paper-cream px-4 py-16 md:px-8 md:py-24">
+          <div className="mx-auto max-w-7xl">
+            <div className="mb-10">
+              <h2 className="font-serif text-3xl text-ink-black md:text-4xl">
+                Why sellers choose ManeExchange
+              </h2>
+              <p className="mt-3 max-w-2xl text-ink-mid">
+                We&apos;re not just another listing site. We built the tools
+                that actually get horses sold — faster, for fair prices, to
+                qualified buyers.
+              </p>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2">
               {valueProps.map((prop) => {
                 const Icon = prop.icon;
-                const colors = iconColorMap[prop.color];
                 return (
-                  <div key={prop.title} className="flex gap-4">
-                    <div
-                      className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${colors.bg}`}
-                    >
-                      <Icon className={`h-6 w-6 ${colors.text}`} />
+                  <div
+                    key={prop.title}
+                    className="rounded-2xl border border-crease-light bg-paper-white p-6 shadow-flat"
+                  >
+                    <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                      <Icon className="h-5 w-5 text-primary" />
                     </div>
-                    <div>
-                      <h3 className="mb-1 font-medium text-ink-black">
-                        {prop.title}
-                      </h3>
-                      <p className="text-sm text-ink-mid">{prop.description}</p>
+                    <h3 className="mb-2 font-heading text-base font-semibold text-ink-black">
+                      {prop.title}
+                    </h3>
+                    <p className="mb-4 text-sm text-ink-mid">
+                      {prop.description}
+                    </p>
+                    <div className="rounded-lg bg-paper-cream px-4 py-3">
+                      <p className="text-xs text-ink-light">
+                        <span className="font-medium">vs</span> {prop.vs}
+                      </p>
                     </div>
                   </div>
                 );
               })}
             </div>
-          </div>
-        </section>
 
-        {/* FAQ */}
-        <section className="bg-paper-cream section-premium">
-          <div className="mx-auto max-w-3xl">
-            <h2 className="mb-8 text-3xl tracking-tight text-ink-black md:text-4xl">
-              Common questions from sellers
-            </h2>
-            <div>
-              {faqs.map((faq) => (
-                <details
-                  key={faq.question}
-                  className="group border-b border-crease-light"
-                >
-                  <summary className="flex cursor-pointer items-center justify-between py-4 font-medium text-ink-black">
-                    {faq.question}
-                  </summary>
-                  <p className="pb-4 text-sm text-ink-mid">{faq.answer}</p>
-                </details>
-              ))}
+            {/* Inline CTA */}
+            <div className="mx-auto mt-12 max-w-lg rounded-2xl border border-crease-light bg-paper-white p-8 text-center shadow-flat">
+              <h3 className="mb-2 font-heading text-lg font-semibold text-ink-black">
+                Free to start. Upgrade when you&apos;re ready.
+              </h3>
+              <p className="mb-6 text-sm text-ink-mid">
+                List your first horse at no cost. See plans and pricing after
+                you sign up.
+              </p>
+              <Button asChild>
+                <Link href="/signup">
+                  Create Free Account
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <p className="mt-3 text-xs text-ink-light">
+                No credit card required
+              </p>
             </div>
           </div>
         </section>
 
+        {/* ══════════════════════════════════════════════
+            SECTION 5 — FAQ
+            ══════════════════════════════════════════════ */}
+        <FaqAccordion heading="Questions? Answers." items={faqs} />
+
+        {/* ══════════════════════════════════════════════
+            SECTION 6 — BOTTOM CTA
+            ══════════════════════════════════════════════ */}
         <BottomCTA />
       </main>
       <Footer />

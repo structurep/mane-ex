@@ -2,163 +2,163 @@
 
 import { useState } from "react";
 import {
-  UserCheck,
-  Camera,
+  BarChart3,
   Search,
-  MessageCircle,
-  FileCheck,
-  Lock,
-  CheckCircle2,
   Shield,
+  CreditCard,
+  Bookmark,
+  Calendar,
+  FileCheck,
+  MessageCircle,
+  TrendingUp,
+  Users,
 } from "lucide-react";
 
-const sellerSteps = [
+const buyerBenefits = [
   {
-    icon: UserCheck,
-    title: "Create Your Profile",
+    icon: BarChart3,
+    title: "Mane Score",
     description:
-      "Verify your identity and set up your farm page. Stripe handles KYC — we never store your sensitive documents.",
+      "See exactly how thoroughly a seller has documented their horse. Higher score = more transparency.",
   },
-  {
-    icon: Camera,
-    title: "List Your Horse",
-    description:
-      "Our 7-step wizard walks you through everything: details, vet records, show history, media, and pricing. State-specific disclosures are built in.",
-  },
-  {
-    icon: MessageCircle,
-    title: "Connect with Buyers",
-    description:
-      "Receive inquiries, schedule trials, and negotiate offers — all within the platform. Your response time contributes to your Mane Score.",
-  },
-  {
-    icon: Lock,
-    title: "Accept & Escrow",
-    description:
-      "When you accept an offer, the buyer's payment is held in ManeVault escrow. Ship the horse knowing the funds are secured.",
-  },
-  {
-    icon: CheckCircle2,
-    title: "Get Paid",
-    description:
-      "After the buyer confirms delivery and the dispute window closes, funds transfer to your bank account. Simple.",
-  },
-];
-
-const buyerSteps = [
   {
     icon: Search,
-    title: "Browse & Discover",
+    title: "ISO Posts",
     description:
-      "Search verified listings by discipline, price, location, and more. Save horses to your Dream Barn. Get alerts on price drops.",
-  },
-  {
-    icon: FileCheck,
-    title: "Review Documentation",
-    description:
-      "Every listing has a completeness score. Review vet records, show history, and ownership documentation — all in one place.",
-  },
-  {
-    icon: MessageCircle,
-    title: "Connect & Visit",
-    description:
-      "Message sellers directly. Book trial rides. Plan multi-barn tours. Share listings with your trainer.",
-  },
-  {
-    icon: Lock,
-    title: "Make an Offer",
-    description:
-      "When you're ready, make an offer. Your payment is held in ManeVault escrow until you receive and inspect the horse.",
+      "Describe your dream horse and let matching sellers come to you automatically.",
   },
   {
     icon: Shield,
-    title: "Buy with Confidence",
+    title: "ManeVault Protection",
     description:
-      "You have 5 days to inspect the horse after delivery. ManeGuard covers non-delivery, misrepresentation, and undisclosed health issues.",
+      "Your funds are held securely until the horse arrives and passes your inspection.",
+  },
+  {
+    icon: CreditCard,
+    title: "Real Prices",
+    description:
+      "Every listing has a clear asking price. See price history and get drop alerts.",
+  },
+  {
+    icon: Bookmark,
+    title: "Save & Compare",
+    description:
+      "Build your Dream Barn, compare horses side-by-side on real criteria.",
+  },
+  {
+    icon: Calendar,
+    title: "Easy Scheduling",
+    description:
+      "Book trial rides and farm visits directly through the platform.",
+  },
+];
+
+const sellerBenefits = [
+  {
+    icon: BarChart3,
+    title: "Mane Score",
+    description:
+      "Build trust with buyers by documenting your horse thoroughly. Higher scores sell faster.",
+  },
+  {
+    icon: FileCheck,
+    title: "Posts Dashboard",
+    description:
+      "Manage all your listings, track views, inquiries, and performance from one place.",
+  },
+  {
+    icon: Shield,
+    title: "ManeVault",
+    description:
+      "Secure escrow payments. Ship knowing the funds are there. No more bounced checks.",
+  },
+  {
+    icon: MessageCircle,
+    title: "ISO Matching",
+    description:
+      "Get matched to buyers actively looking for horses like yours.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Analytics",
+    description:
+      "See who's viewing your listings, where traffic comes from, and what converts.",
+  },
+  {
+    icon: Users,
+    title: "Qualified Leads",
+    description:
+      "Every inquiry includes the buyer's profile, experience level, and budget.",
   },
 ];
 
 export function FlowToggle() {
   const [role, setRole] = useState<"buyer" | "seller">("buyer");
 
-  const steps = role === "buyer" ? buyerSteps : sellerSteps;
-  const overlineText =
-    role === "buyer" ? "BUYING A HORSE" : "SELLING A HORSE";
+  const benefits = role === "buyer" ? buyerBenefits : sellerBenefits;
   const heading =
+    role === "buyer" ? "Benefits for Buyers" : "Benefits for Sellers";
+  const subtitle =
     role === "buyer"
-      ? "Buy with full transparency."
-      : "A structured sale process.";
+      ? "Find your perfect horse faster with tools designed for serious buyers."
+      : "Sell smarter with tools that attract qualified buyers and close deals faster.";
 
   return (
     <div>
-      {/* Toggle */}
-      <div className="mx-auto mb-12 flex max-w-xs gap-1 rounded-lg bg-paper-warm p-1">
-        <button
-          onClick={() => setRole("buyer")}
-          className={`flex-1 rounded-md px-4 py-2.5 text-sm font-medium transition-colors ${
-            role === "buyer"
-              ? "bg-paper-white text-ink-black shadow-flat"
-              : "text-ink-mid hover:text-ink-black"
-          }`}
-        >
-          I&apos;m Buying
-        </button>
-        <button
-          onClick={() => setRole("seller")}
-          className={`flex-1 rounded-md px-4 py-2.5 text-sm font-medium transition-colors ${
-            role === "seller"
-              ? "bg-paper-white text-ink-black shadow-flat"
-              : "text-ink-mid hover:text-ink-black"
-          }`}
-        >
-          I&apos;m Selling
-        </button>
+      {/* Sticky path toggle */}
+      <div className="mb-8 flex items-center justify-center gap-4">
+        <span className="text-sm text-ink-mid">Choose your path</span>
+        <div className="flex gap-1 rounded-full bg-paddock p-1">
+          <button
+            onClick={() => setRole("buyer")}
+            className={`rounded-full px-5 py-2 text-sm font-semibold transition-colors ${
+              role === "buyer"
+                ? "bg-white text-paddock"
+                : "text-white/70 hover:text-white"
+            }`}
+          >
+            I&apos;m a Buyer
+          </button>
+          <button
+            onClick={() => setRole("seller")}
+            className={`rounded-full px-5 py-2 text-sm font-semibold transition-colors ${
+              role === "seller"
+                ? "bg-white text-paddock"
+                : "text-white/70 hover:text-white"
+            }`}
+          >
+            I&apos;m a Seller
+          </button>
+        </div>
       </div>
 
       {/* Section heading */}
-      <p
-        className={`overline mb-3 ${role === "buyer" ? "text-blue" : "text-primary"}`}
-      >
-        {overlineText}
-      </p>
-      <h2 className="mb-12 text-3xl text-ink-black md:text-4xl">{heading}</h2>
+      <h2 className="mb-3 font-serif text-3xl text-ink-black md:text-4xl">
+        {heading}
+      </h2>
+      <p className="mb-10 max-w-xl text-ink-mid">{subtitle}</p>
 
-      {/* Steps */}
-      <div className="stagger-children space-y-6">
-        {steps.map((step, i) => (
-          <div
-            key={step.title}
-            className="animate-fade-up flex gap-6 rounded-lg bg-paper-white p-6 shadow-flat transition-elevation hover:shadow-folded"
-          >
-            <div className="flex shrink-0 flex-col items-center">
-              <div
-                className={`flex h-10 w-10 items-center justify-center rounded-lg ${
-                  role === "buyer" ? "bg-blue-light" : "bg-forest-light"
-                }`}
-              >
-                <step.icon
-                  className={`h-5 w-5 ${
-                    role === "buyer" ? "text-blue" : "text-primary"
-                  }`}
-                />
+      {/* Benefits Grid — 2x3 */}
+      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {benefits.map((benefit) => {
+          const Icon = benefit.icon;
+          return (
+            <div
+              key={benefit.title}
+              className="rounded-2xl border border-crease-light bg-paper-white p-6 transition-elevation hover:shadow-folded"
+            >
+              <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                <Icon className="h-5 w-5 text-primary" />
               </div>
-              {i < steps.length - 1 && (
-                <div className="mt-2 h-full w-px bg-crease-light" />
-              )}
-            </div>
-            <div>
-              <p className="overline mb-1 text-ink-light">
-                {String(i + 1).padStart(2, "0")}
-              </p>
-              <h3 className="mb-1 text-lg font-medium text-ink-black">
-                {step.title}
+              <h3 className="mb-1 font-heading text-base font-semibold text-ink-black">
+                {benefit.title}
               </h3>
               <p className="text-sm leading-relaxed text-ink-mid">
-                {step.description}
+                {benefit.description}
               </p>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

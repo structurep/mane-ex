@@ -6,17 +6,14 @@ import { Badge } from "@/components/ui/badge";
 import { formatCentsToDollars, calculatePlatformFee, calculateSellerNet, DISPUTE_WINDOW_DAYS } from "@/lib/stripe/config";
 import {
   ChevronLeft,
-  CheckCircle,
-  XCircle,
   ArrowLeftRight,
   Shield,
-  DollarSign,
-  Truck,
-  AlertTriangle,
 } from "lucide-react";
 import { OfferActions } from "./offer-actions";
 import { InterstateChecklist } from "@/components/interstate-checklist";
 import { BillOfSaleSection } from "./bill-of-sale-section";
+import { TransactionTimeline } from "@/components/transaction-timeline";
+import { EscrowMilestonePreview } from "@/components/smart-escrow";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -184,15 +181,20 @@ export default async function OfferDetailPage({ params }: Props) {
             </div>
           )}
 
-          {/* Escrow timeline */}
-          {escrow && (
-            <div>
-              <h2 className="mb-3 text-lg font-semibold text-ink-black">
-                Escrow Status
-              </h2>
-              <EscrowTimeline escrow={escrow} />
-            </div>
-          )}
+          {/* Full transaction timeline — always visible */}
+          <TransactionTimeline
+            offerStatus={offer.status}
+            escrowStatus={escrow?.status}
+            createdAt={offer.created_at}
+            respondedAt={offer.responded_at}
+            deliveryConfirmedAt={escrow?.delivery_confirmed_at}
+            autoReleaseAt={escrow?.auto_release_at}
+            disputeOpenedAt={escrow?.dispute_opened_at}
+            disputeReason={escrow?.dispute_reason}
+            shippingTracking={escrow?.shipping_tracking}
+            expectedDeliveryDate={escrow?.expected_delivery_date}
+            isBuyer={isBuyer}
+          />
 
           {/* Interstate transport checklist */}
           {isInterstate && escrow && (
@@ -288,6 +290,16 @@ export default async function OfferDetailPage({ params }: Props) {
                 Funds held in escrow. 5-day inspection period.{" "}
                 {DISPUTE_WINDOW_DAYS}-day dispute window after delivery.
               </p>
+
+              {/* Smart Escrow Milestones */}
+              {escrow && (
+                <div className="mt-3 border-t border-crease-light pt-3">
+                  <p className="mb-2 text-[10px] font-medium uppercase tracking-wider text-ink-light">
+                    Escrow Milestones
+                  </p>
+                  <EscrowMilestonePreview />
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -314,103 +326,3 @@ function OfferStatusBadge({ status }: { status: string }) {
   );
 }
 
-function EscrowTimeline({ escrow }: { escrow: { status: string; auto_release_at?: string | null; dispute_reason?: string | null } }) {
-  const steps = [
-    {
-      key: "awaiting_payment",
-      label: "Payment Initiated",
-      icon: DollarSign,
-    },
-    {
-      key: "funds_held",
-      label: "Funds in Escrow",
-      icon: Shield,
-    },
-    {
-      key: "delivery_confirmed",
-      label: "Delivery Confirmed",
-      icon: Truck,
-    },
-    {
-      key: "funds_released",
-      label: "Funds Released",
-      icon: CheckCircle,
-    },
-  ];
-
-  const statusOrder = [
-    "awaiting_payment",
-    "payment_processing",
-    "funds_held",
-    "delivery_confirmed",
-    "funds_released",
-  ];
-  const currentIndex = statusOrder.indexOf(escrow.status);
-
-  return (
-    <div className="space-y-3">
-      {steps.map((step) => {
-        const stepIndex = statusOrder.indexOf(step.key);
-        const isComplete = currentIndex > stepIndex;
-        const isActive = currentIndex === stepIndex;
-        const Icon = step.icon;
-
-        return (
-          <div key={step.key} className="flex items-center gap-3">
-            <div
-              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
-                isComplete
-                  ? "bg-forest text-white"
-                  : isActive
-                    ? "bg-blue text-white"
-                    : "bg-paper-warm text-ink-light"
-              }`}
-            >
-              <Icon className="h-4 w-4" />
-            </div>
-            <div>
-              <p
-                className={`text-sm font-medium ${
-                  isComplete || isActive ? "text-ink-black" : "text-ink-light"
-                }`}
-              >
-                {step.label}
-              </p>
-              {isActive && escrow.status === "delivery_confirmed" && escrow.auto_release_at && (
-                <p className="text-xs text-ink-light">
-                  Auto-release:{" "}
-                  {new Date(escrow.auto_release_at).toLocaleDateString()}
-                </p>
-              )}
-            </div>
-          </div>
-        );
-      })}
-
-      {/* Dispute/refund states */}
-      {escrow.status === "dispute_opened" && (
-        <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-red text-white">
-            <AlertTriangle className="h-4 w-4" />
-          </div>
-          <div>
-            <p className="text-sm font-medium text-red">Dispute Opened</p>
-            <p className="text-xs text-ink-light">
-              Funds held pending resolution.
-              {escrow.dispute_reason && ` Reason: ${escrow.dispute_reason.substring(0, 100)}`}
-            </p>
-          </div>
-        </div>
-      )}
-
-      {escrow.status === "funds_refunded" && (
-        <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ink-light text-white">
-            <XCircle className="h-4 w-4" />
-          </div>
-          <p className="text-sm font-medium text-ink-light">Funds Refunded</p>
-        </div>
-      )}
-    </div>
-  );
-}

@@ -1,19 +1,25 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Search, X } from "lucide-react";
+import { Search, X, ChevronDown, ChevronUp } from "lucide-react";
 
 type Props = {
   params: Record<string, string | undefined>;
 };
 
 const disciplines = [
-  "Hunter", "Jumper", "Equitation", "Hunter/Jumper", "Dressage",
-  "Eventing", "Show Jumping", "Western Pleasure", "Reining",
+  "Hunter/Jumper", "Dressage", "Eventing", "Western Pleasure", "Reining",
+  "Hunter", "Jumper", "Equitation", "Show Jumping", "Trail",
+];
+
+const breeds = [
+  "Thoroughbred", "Warmblood", "Quarter Horse", "Hanoverian", "Holsteiner",
+  "Dutch Warmblood", "Oldenburg", "Trakehner", "Irish Sport Horse", "Appendix",
+  "Paint", "Arabian", "Morgan", "Friesian", "Andalusian",
 ];
 
 const genders = [
@@ -22,21 +28,33 @@ const genders = [
   { value: "stallion", label: "Stallion" },
 ];
 
-const US_STATES = [
-  "FL", "CA", "KY", "NY", "VA", "SC", "TX", "NC", "GA", "PA",
-  "NJ", "MD", "CT", "MA", "CO", "AZ", "OR", "WA", "OH", "IL",
+const US_REGIONS: { label: string; states: string[] }[] = [
+  { label: "Southeast", states: ["FL", "GA", "SC", "NC", "VA", "KY", "TN", "AL", "MS", "LA"] },
+  { label: "Northeast", states: ["NY", "NJ", "PA", "CT", "MA", "MD", "NH", "VT", "ME", "RI"] },
+  { label: "Midwest", states: ["OH", "IL", "MI", "IN", "WI", "MN", "MO", "IA", "KS", "NE"] },
+  { label: "West", states: ["CA", "OR", "WA", "CO", "MT", "ID", "WY", "UT", "NV"] },
+  { label: "Southwest", states: ["TX", "AZ", "NM", "OK", "AR"] },
 ];
 
 const sortOptions = [
   { value: "newest", label: "Newest First" },
   { value: "price_asc", label: "Price: Low to High" },
   { value: "price_desc", label: "Price: High to Low" },
-  { value: "score", label: "Completeness Score" },
+  { value: "score", label: "Mane Score" },
+  { value: "popular", label: "Most Saved" },
+];
+
+const soundnessOptions = [
+  { value: "vet_confirmed_sound", label: "Vet-confirmed sound" },
+  { value: "minor_findings", label: "Minor findings" },
+  { value: "managed_condition", label: "Managed condition" },
+  { value: "not_assessed", label: "Not assessed" },
 ];
 
 export function BrowseFilters({ params }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [showMore, setShowMore] = useState(false);
 
   const updateFilter = useCallback(
     (key: string, value: string) => {
@@ -46,7 +64,7 @@ export function BrowseFilters({ params }: Props) {
       } else {
         sp.delete(key);
       }
-      sp.delete("page"); // reset pagination on filter change
+      sp.delete("page");
       router.push(`/browse?${sp.toString()}`);
     },
     [router, searchParams]
@@ -58,8 +76,17 @@ export function BrowseFilters({ params }: Props) {
 
   const hasFilters = Object.values(params).some(Boolean);
 
+  // Count active advanced filters
+  const advancedFilterCount = [
+    params.henneke,
+    params.soundness,
+    params.breed,
+    params.minAge,
+    params.maxAge,
+  ].filter(Boolean).length;
+
   return (
-    <div className="space-y-6 rounded-lg border border-border bg-paper-cream p-4 shadow-flat">
+    <div className="space-y-5 rounded-lg border border-border bg-paper-cream p-4 shadow-flat">
       {/* Search */}
       <div>
         <Label htmlFor="search" className="text-xs">
@@ -123,7 +150,7 @@ export function BrowseFilters({ params }: Props) {
         </div>
       </div>
 
-      {/* State */}
+      {/* Location — grouped by region */}
       <div>
         <Label className="text-xs">Location</Label>
         <select
@@ -132,12 +159,41 @@ export function BrowseFilters({ params }: Props) {
           className="mt-1.5 w-full rounded-md border border-border bg-paper-white px-3 py-2 text-sm"
         >
           <option value="">All States</option>
-          {US_STATES.map((s) => (
-            <option key={s} value={s}>
-              {s}
-            </option>
+          {US_REGIONS.map((region) => (
+            <optgroup key={region.label} label={region.label}>
+              {region.states.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </optgroup>
           ))}
         </select>
+        {/* Quick region pills */}
+        <div className="mt-2 flex flex-wrap gap-1">
+          {US_REGIONS.map((region) => (
+            <button
+              key={region.label}
+              type="button"
+              onClick={() => {
+                // Set first state in region as filter — user can refine
+                const sp = new URLSearchParams(searchParams.toString());
+                // Use a region param instead of individual state
+                sp.set("region", region.label.toLowerCase());
+                sp.delete("state");
+                sp.delete("page");
+                router.push(`/browse?${sp.toString()}`);
+              }}
+              className={`rounded-full px-2 py-0.5 text-[10px] font-medium transition-colors ${
+                params.region === region.label.toLowerCase()
+                  ? "bg-ink-black text-paper-white"
+                  : "bg-paper-warm text-ink-light hover:text-ink-mid"
+              }`}
+            >
+              {region.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Gender */}
@@ -182,6 +238,125 @@ export function BrowseFilters({ params }: Props) {
             onBlur={(e) => updateFilter("maxHeight", e.target.value)}
           />
         </div>
+      </div>
+
+      {/* ─── Advanced Filters (collapsible) ─── */}
+      <div>
+        <button
+          type="button"
+          onClick={() => setShowMore(!showMore)}
+          className="flex w-full items-center justify-between rounded-md px-1 py-1 text-xs font-medium text-ink-mid hover:text-ink-black"
+        >
+          <span>
+            More Filters
+            {advancedFilterCount > 0 && (
+              <span className="ml-1.5 rounded-full bg-primary px-1.5 py-0.5 text-[10px] font-semibold text-primary-foreground">
+                {advancedFilterCount}
+              </span>
+            )}
+          </span>
+          {showMore ? (
+            <ChevronUp className="h-3.5 w-3.5" />
+          ) : (
+            <ChevronDown className="h-3.5 w-3.5" />
+          )}
+        </button>
+
+        {showMore && (
+          <div className="mt-3 space-y-5 border-t border-crease-light pt-4">
+            {/* Breed */}
+            <div>
+              <Label className="text-xs">Breed</Label>
+              <select
+                value={params.breed || ""}
+                onChange={(e) => updateFilter("breed", e.target.value)}
+                className="mt-1.5 w-full rounded-md border border-border bg-paper-white px-3 py-2 text-sm"
+              >
+                <option value="">All Breeds</option>
+                {breeds.map((b) => (
+                  <option key={b} value={b}>
+                    {b}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Age Range */}
+            <div>
+              <Label className="text-xs">Age (years)</Label>
+              <div className="mt-1.5 grid grid-cols-2 gap-2">
+                <Input
+                  type="number"
+                  placeholder="Min"
+                  defaultValue={params.minAge || ""}
+                  onBlur={(e) => updateFilter("minAge", e.target.value)}
+                />
+                <Input
+                  type="number"
+                  placeholder="Max"
+                  defaultValue={params.maxAge || ""}
+                  onBlur={(e) => updateFilter("maxAge", e.target.value)}
+                />
+              </div>
+            </div>
+
+            {/* Body Condition (Henneke) */}
+            <div>
+              <Label className="text-xs">
+                Body Condition{" "}
+                <span className="font-normal text-ink-light">(Henneke 1-9)</span>
+              </Label>
+              <div className="mt-1.5 flex gap-1">
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((score) => {
+                  const isSelected = params.henneke === String(score);
+                  const isIdeal = score >= 4 && score <= 6;
+                  return (
+                    <button
+                      key={score}
+                      type="button"
+                      onClick={() =>
+                        updateFilter(
+                          "henneke",
+                          isSelected ? "" : String(score)
+                        )
+                      }
+                      className={`flex h-7 flex-1 items-center justify-center rounded text-xs font-medium transition-colors ${
+                        isSelected
+                          ? "bg-primary text-primary-foreground"
+                          : isIdeal
+                            ? "bg-forest/10 text-forest hover:bg-forest/20"
+                            : "bg-paper-warm text-ink-mid hover:bg-paper-white"
+                      }`}
+                      title={`BCS ${score}`}
+                    >
+                      {score}
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="mt-1 text-[10px] text-ink-light">
+                4-6 = ideal range (highlighted)
+              </p>
+            </div>
+
+            {/* Soundness Level */}
+            <div>
+              <Label className="text-xs">Soundness</Label>
+              <select
+                value={params.soundness || ""}
+                onChange={(e) => updateFilter("soundness", e.target.value)}
+                className="mt-1.5 w-full rounded-md border border-border bg-paper-white px-3 py-2 text-sm"
+              >
+                <option value="">Any soundness level</option>
+                {soundnessOptions.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Sort */}

@@ -1,212 +1,177 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import {
-  FileCheck,
-  Lock,
-  BarChart3,
-  Scale,
-  Users,
-  MapPin,
-  ArrowRight,
-} from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { BottomCTA } from "@/components/bottom-cta";
+import { ArrowRight, Eye, Shield, Users } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "ManeExchange is building the financial infrastructure for the $122B horse industry.",
+    "ManeExchange was born from the same frustration every equestrian knows — the horse market deserves better.",
 };
 
-const buildingItems = [
+const platformStats = [
+  { value: "500+", label: "Verified Sellers" },
+  { value: "10,000+", label: "Active Riders" },
+  { value: "2,500+", label: "Horses Matched" },
+  { value: "98%", label: "Happy Matches" },
+];
+
+const values = [
   {
-    icon: FileCheck,
-    title: "Verified listings",
+    icon: Eye,
+    title: "Transparency",
     description:
-      "Every listing goes through a completeness check. Vet records, show history, registration papers, and media — documented and organized, not buried in a text thread.",
-    accent: "forest",
+      "Every listing includes verified information, clear pricing, and honest representations. No hidden surprises, no guessing games.",
   },
   {
-    icon: Lock,
-    title: "Escrowed payments",
+    icon: Shield,
+    title: "Trust",
     description:
-      "ManeVault holds buyer funds until the horse arrives and passes inspection. ACH transfers keep fees at $5 instead of $1,450. No more wiring money to strangers.",
-    accent: "gold",
-  },
-  {
-    icon: BarChart3,
-    title: "Transparent scoring",
-    description:
-      "The Mane Score measures listing completeness and seller responsiveness — not horse quality. More documentation means more trust. Simple.",
-    accent: "blue",
-  },
-  {
-    icon: Scale,
-    title: "Compliance built in",
-    description:
-      "Florida Rule 5H, UCC Article 2, INFORM Act — the legal requirements for horse sales vary by state and are easy to miss. Our listing wizard handles the disclosures so sellers don't have to guess.",
-    accent: "red",
+      "Secure escrow payments, verified sellers, and real reviews. Because when you\u2019re investing in a partner, you deserve peace of mind.",
   },
   {
     icon: Users,
-    title: "Trainer protection",
+    title: "Community",
     description:
-      "Commissions are documented in writing with both-party consent. No more accusations of secret profit-taking. Transparency protects everyone.",
-    accent: "forest",
+      "We\u2019re more than a marketplace \u2014 we\u2019re a community of riders, trainers, and horse lovers building something better together.",
   },
 ];
-
-const accentBg: Record<string, string> = {
-  forest: "bg-forest-light",
-  gold: "bg-gold-light",
-  blue: "bg-blue-light",
-  red: "bg-red-light",
-};
-const accentText: Record<string, string> = {
-  forest: "text-forest",
-  gold: "text-gold",
-  blue: "text-blue",
-  red: "text-red",
-};
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen">
       <Header />
       <main>
-        {/* ── Hero ── */}
-        <section className="with-grain bg-gradient-hero px-4 pt-24 pb-20 md:px-8 md:pt-36 md:pb-28">
-          <div className="mx-auto max-w-3xl">
-            <p className="overline mb-4 text-gold">ABOUT</p>
-            <h1 className="font-serif mb-8 text-4xl tracking-tight text-ink-black md:text-6xl">
-              The horse industry
-              <br />
-              <span className="text-ink-mid">deserves real infrastructure.</span>
-            </h1>
-            <div className="space-y-6 text-ink-mid">
-              <p className="text-lead">
-                The equestrian industry moves $122 billion annually. Sales of
-                show horses — hunter/jumpers, dressage, eventers — routinely
-                exceed $50,000. Some cross $500,000.
-              </p>
-              <p>
-                Yet the market operates like it&apos;s 1995. Private sales over
-                Instagram DMs. Wiring $85,000 to a stranger with no escrow. Vet
-                records exchanged via text message. Trainer commissions
-                undisclosed. Listings that disappear overnight.
-              </p>
-              <p>
-                ManeExchange exists because horses aren&apos;t commodity goods —
-                they&apos;re living animals with complex histories, and the
-                people who buy and sell them deserve a platform that treats the
-                transaction with the seriousness it demands.
-              </p>
+        {/* ══════════════════════════════════════════════
+            SECTION 1 — HERO (photo + overlay)
+            ══════════════════════════════════════════════ */}
+        <section className="relative flex min-h-[60vh] items-center overflow-hidden bg-hero-dark">
+          <div className="absolute inset-0">
+            <Image
+              src="https://images.unsplash.com/photo-1534307671554-9a6d81f4d629?w=1920&q=80&auto=format&fit=crop"
+              alt=""
+              fill
+              className="object-cover opacity-20"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0F1A12]/90 via-[#0F1A12]/70 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0F1A12]/80 via-transparent to-transparent" />
+          </div>
+
+          <div className="relative px-4 py-24 md:px-8 md:py-32">
+            <div className="mx-auto max-w-7xl">
+              <div className="max-w-2xl">
+                <p className="overline mb-4 text-primary">OUR STORY</p>
+                <h1 className="mb-6 font-serif text-4xl text-white sm:text-5xl md:text-6xl">
+                  We&apos;re riders too.
+                </h1>
+                <p className="max-w-lg text-lg text-white/70">
+                  ManeExchange was born from the same frustration every
+                  equestrian knows — the horse market deserves better than
+                  Facebook groups and word of mouth.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* ── What We're Building ── */}
-        <section className="bg-paper-cream section-premium">
-          <div className="mx-auto max-w-[1200px]">
-            <p className="overline mb-3 text-center text-ink-light">
-              THE PLATFORM
-            </p>
-            <h2 className="mb-16 text-center text-3xl text-ink-black md:text-4xl">
-              What we&apos;re building
-            </h2>
-            <div className="stagger-children grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {buildingItems.map((item) => (
-                <div
-                  key={item.title}
-                  className="animate-fade-up group relative overflow-hidden rounded-lg bg-paper-white p-8 shadow-flat transition-elevation hover-lift hover:shadow-lifted"
-                >
-                  <div
-                    className={`mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg ${accentBg[item.accent]}`}
-                  >
-                    <item.icon
-                      className={`h-6 w-6 ${accentText[item.accent]}`}
-                    />
-                  </div>
-                  <h3 className="mb-3 text-lg font-medium text-ink-black">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-ink-mid">
-                    {item.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── Starting in Wellington ── */}
-        <section className="with-grain bg-paper-white section-premium">
-          <div className="mx-auto max-w-[1200px]">
+        {/* ══════════════════════════════════════════════
+            SECTION 2 — MISSION + STATS (2-col)
+            ══════════════════════════════════════════════ */}
+        <section className="bg-paper-white px-4 py-16 md:px-8">
+          <div className="mx-auto max-w-6xl">
             <div className="grid items-center gap-12 md:grid-cols-2">
               <div>
-                <p className="overline mb-3 text-gold">STARTING LOCAL</p>
-                <h2 className="mb-6 text-3xl text-ink-black md:text-4xl">
-                  Wellington first.
-                  <br />
-                  <span className="text-ink-mid">Then everywhere.</span>
+                <h2 className="mb-6 font-serif text-3xl text-ink-black md:text-4xl">
+                  Built for this community.
                 </h2>
-                <p className="text-lead mb-6 text-ink-mid">
-                  We&apos;re launching in Wellington, Florida — the epicenter of
-                  the hunter/jumper world during WEF season. From there,
-                  we&apos;ll expand to the Florida triangle (Ocala, Tampa), then
-                  the Eastern Seaboard, then nationally.
+                <p className="mb-4 text-ink-mid">
+                  We believe buying and selling horses should feel as good as
+                  riding them. Every feature on ManeExchange exists because we
+                  wished it existed when we were searching for our own horses.
                 </p>
                 <p className="text-ink-mid">
-                  We&apos;re building deep, not wide.
+                  From verified health records to transparent pricing, we&apos;re
+                  creating the marketplace the equestrian world has always
+                  deserved — where trust comes standard, not as an afterthought.
                 </p>
               </div>
-              <div className="flex items-center justify-center rounded-lg bg-paper-cream p-12 shadow-flat">
-                <div className="text-center">
-                  <MapPin className="mx-auto mb-4 h-8 w-8 text-gold" />
-                  <p className="overline mb-2 text-ink-light">LAUNCH MARKET</p>
-                  <p className="font-serif text-4xl font-bold text-ink-black">
-                    Wellington, FL
-                  </p>
-                  <p className="mt-2 text-sm text-ink-mid">
-                    WEF Season 2026
-                  </p>
-                </div>
+              <div className="grid grid-cols-2 gap-8">
+                {platformStats.map((stat) => (
+                  <div key={stat.label} className="text-center">
+                    <p className="font-serif text-4xl font-bold text-ink-black">
+                      {stat.value}
+                    </p>
+                    <p className="mt-1 text-sm text-ink-mid">{stat.label}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── CTA ── */}
-        <section className="bg-paddock section-premium">
-          <div className="mx-auto max-w-[1200px] text-center">
-            <h2 className="font-serif mb-4 text-3xl text-paper-white md:text-4xl">
-              The standard for equine transactions.
+        {/* ══════════════════════════════════════════════
+            SECTION 3 — VALUES (3-col)
+            ══════════════════════════════════════════════ */}
+        <section className="bg-paper-cream px-4 py-16 md:px-8">
+          <div className="mx-auto max-w-6xl">
+            <h2 className="mb-10 text-center font-serif text-3xl text-ink-black md:text-4xl">
+              What we stand for.
             </h2>
-            <p className="text-lead mx-auto mb-8 max-w-xl text-ink-light">
-              Purpose-built for the way serious horses are bought and sold.
+            <div className="grid gap-8 md:grid-cols-3">
+              {values.map((v) => {
+                const Icon = v.icon;
+                return (
+                  <div
+                    key={v.title}
+                    className="rounded-2xl border border-crease-light bg-paper-white p-8"
+                  >
+                    <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+                      <Icon className="h-6 w-6 text-primary" />
+                    </div>
+                    <h3 className="mb-3 font-heading text-lg font-semibold text-ink-black">
+                      {v.title}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-ink-mid">
+                      {v.description}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ══════════════════════════════════════════════
+            SECTION 4 — FINAL CTA
+            ══════════════════════════════════════════════ */}
+        <section className="bg-paper-white px-4 py-16 md:px-8">
+          <div className="mx-auto max-w-[1200px] text-center">
+            <h2 className="mb-4 font-serif text-3xl text-ink-black md:text-4xl">
+              Your next chapter starts here.
+            </h2>
+            <p className="mx-auto mb-8 max-w-xl text-ink-mid">
+              Join thousands of equestrians who&apos;ve found their perfect
+              match on ManeExchange.
             </p>
             <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-              <Button
-                size="lg"
-                asChild
-              >
-                <Link href="/signup">
-                  Create an Account
+              <Button size="lg" asChild>
+                <Link href="/browse">
+                  Browse Horses
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="!bg-transparent border-crease-dark text-paper-cream hover:!bg-ink-dark"
-                asChild
-              >
-                <Link href="/browse">View Current Offerings</Link>
+              <Button variant="outline" size="lg" asChild>
+                <Link href="/sell">List Your Horse</Link>
               </Button>
             </div>
           </div>
         </section>
+
+        <BottomCTA />
       </main>
       <Footer />
     </div>

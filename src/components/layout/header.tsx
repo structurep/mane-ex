@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { MobileMenu } from "./mobile-menu";
@@ -12,32 +12,40 @@ import {
   LayoutDashboard,
   LogOut,
   Settings,
-  User,
   ChevronDown,
+  Search,
+  MessageCircle,
+  Heart,
+  Bell,
 } from "lucide-react";
 
+/* ─── Nav link sets ─── */
+
 const publicNav = [
-  { href: "/browse", label: "Horses" },
-  { href: "/just-sold", label: "Just Sold" },
-  { href: "/learn", label: "Learn" },
-  { href: "/sell", label: "For Sellers" },
+  { href: "/browse", label: "Browse Horses" },
+  { href: "/disciplines", label: "Disciplines" },
+  { href: "/how-it-works", label: "How It Works" },
 ];
 
 const authedNav = [
-  { href: "/browse", label: "Horses" },
+  { href: "/browse", label: "Browse" },
   { href: "/dashboard/dream-barn", label: "Dream Barn" },
   { href: "/iso", label: "ISOs" },
-  { href: "/sell", label: "Sell" },
+  { href: "/just-sold", label: "Just Sold" },
 ];
 
 const SCROLL_THRESHOLD = 32;
 
 export function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const { user, loading } = useUser();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const menuRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD);
@@ -58,11 +66,29 @@ export function Header() {
     return () => document.removeEventListener("mousedown", handleClick);
   }, [menuOpen]);
 
-  // Close menu on route change (adjusting state during render — React recommended pattern)
+  // Focus search input when opened
+  useEffect(() => {
+    if (searchOpen && searchRef.current) {
+      searchRef.current.focus();
+    }
+  }, [searchOpen]);
+
+  // Close menu on route change
   const [prevPathname, setPrevPathname] = useState(pathname);
   if (prevPathname !== pathname) {
     setPrevPathname(pathname);
     setMenuOpen(false);
+    setSearchOpen(false);
+  }
+
+  function handleSearchSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const trimmed = searchQuery.trim();
+    if (trimmed) {
+      router.push(`/browse?q=${encodeURIComponent(trimmed)}`);
+      setSearchOpen(false);
+      setSearchQuery("");
+    }
   }
 
   const navLinks = user ? authedNav : publicNav;
@@ -82,14 +108,14 @@ export function Header() {
       }`}
     >
       <div
-        className={`mx-auto flex max-w-[1200px] items-center justify-between px-4 transition-[height] duration-300 ease-out md:px-8 ${
+        className={`mx-auto flex max-w-7xl items-center justify-between px-4 transition-[height] duration-300 ease-out md:px-8 ${
           scrolled ? "h-14" : "h-[4.5rem]"
         }`}
       >
-        {/* Logo */}
+        {/* ─── Logo ─── */}
         <Link
           href="/"
-          className="flex items-center gap-3 rounded-md focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
+          className="flex shrink-0 items-center gap-3 rounded-md focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
         >
           <Image
             src="/icon.svg"
@@ -105,45 +131,91 @@ export function Header() {
           </span>
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-8 lg:flex">
-          {navLinks.map((link) => {
-            const isActive =
-              pathname === link.href || pathname.startsWith(link.href + "/");
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`relative rounded-sm text-sm font-medium transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none ${
-                  isActive
-                    ? "text-ink-black"
-                    : "text-ink-mid hover:text-ink-black"
-                }`}
-              >
-                {link.label}
-                {isActive && (
-                  <span className="absolute -bottom-[1.1rem] left-0 right-0 h-0.5 bg-primary" />
-                )}
-              </Link>
-            );
-          })}
-        </nav>
+        {/* ─── Center: Search bar (desktop) ─── */}
+        <div className="mx-6 hidden max-w-md flex-1 lg:block">
+          <form onSubmit={handleSearchSubmit}>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-light" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search breed, discipline, location..."
+                className="w-full rounded-full border border-crease-light bg-paper-cream py-2 pl-9 pr-4 text-sm text-ink-black placeholder:text-ink-light focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              />
+            </div>
+          </form>
+        </div>
 
-        {/* Right side — auth-aware */}
-        <div className="hidden items-center gap-3 lg:flex">
+        {/* ─── Right zone: nav links + actions ─── */}
+        <div className="hidden items-center gap-1 lg:flex">
+          {/* Nav links */}
+          <nav className="flex items-center gap-1">
+            {navLinks.map((link) => {
+              const isActive =
+                pathname === link.href ||
+                pathname.startsWith(link.href + "/");
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`rounded-full px-3.5 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none ${
+                    isActive
+                      ? "bg-paper-cream text-ink-black"
+                      : "text-ink-mid hover:bg-paper-warm hover:text-ink-black"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+
+            {/* Sell CTA — always visible, distinct styling */}
+            <Link
+              href="/sell"
+              className={`rounded-full px-3.5 py-2 text-sm font-semibold transition-colors ${
+                pathname === "/sell"
+                  ? "bg-primary/10 text-primary"
+                  : "text-primary hover:bg-primary/5"
+              }`}
+            >
+              Sell Your Horse
+            </Link>
+          </nav>
+
+          {/* Divider */}
+          <div className="mx-2 h-5 w-px bg-crease-light" />
+
+          {/* Auth area */}
           {loading ? (
-            // Skeleton while checking auth
             <div className="h-8 w-24 animate-shimmer rounded-md" />
           ) : user ? (
-            // Logged in
             <>
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/dashboard" className="gap-1.5">
-                  <LayoutDashboard className="h-4 w-4" />
-                  Dashboard
-                </Link>
-              </Button>
-              <div className="relative" ref={menuRef}>
+              {/* Authed icons */}
+              <Link
+                href="/dashboard/messages"
+                className="rounded-full p-2 text-ink-mid transition-colors hover:bg-paper-warm hover:text-ink-black"
+                aria-label="Messages"
+              >
+                <MessageCircle className="h-[18px] w-[18px]" />
+              </Link>
+              <Link
+                href="/dashboard/dream-barn"
+                className="rounded-full p-2 text-ink-mid transition-colors hover:bg-paper-warm hover:text-ink-black"
+                aria-label="Saved"
+              >
+                <Heart className="h-[18px] w-[18px]" />
+              </Link>
+              <Link
+                href="/dashboard/notifications"
+                className="rounded-full p-2 text-ink-mid transition-colors hover:bg-paper-warm hover:text-ink-black"
+                aria-label="Notifications"
+              >
+                <Bell className="h-[18px] w-[18px]" />
+              </Link>
+
+              {/* Avatar dropdown */}
+              <div className="relative ml-1" ref={menuRef}>
                 <button
                   onClick={() => setMenuOpen(!menuOpen)}
                   className="flex items-center gap-1.5 rounded-full border border-crease-light py-1 pl-1 pr-2.5 text-sm font-medium text-ink-dark transition-colors hover:bg-paper-warm focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
@@ -174,13 +246,6 @@ export function Header() {
                       <Settings className="h-4 w-4 text-ink-light" />
                       Settings
                     </Link>
-                    <Link
-                      href="/dashboard/messages"
-                      className="flex items-center gap-2.5 rounded-md px-3 py-2 text-sm text-ink-dark transition-colors hover:bg-paper-warm"
-                    >
-                      <User className="h-4 w-4 text-ink-light" />
-                      Messages
-                    </Link>
                     <div className="my-1 h-px bg-border" />
                     <form action={signOut}>
                       <button
@@ -196,21 +261,49 @@ export function Header() {
               </div>
             </>
           ) : (
-            // Logged out
+            /* Logged out */
             <>
               <Button variant="ghost" size="sm" asChild>
                 <Link href="/login">Log In</Link>
               </Button>
               <Button size="sm" asChild>
-                <Link href="/signup">Create Account</Link>
+                <Link href="/signup">Sign Up</Link>
               </Button>
             </>
           )}
         </div>
 
-        {/* Mobile menu trigger */}
-        <MobileMenu user={user} loading={loading} />
+        {/* ─── Mobile: search icon + hamburger ─── */}
+        <div className="flex items-center gap-1 lg:hidden">
+          <button
+            onClick={() => setSearchOpen(!searchOpen)}
+            className="rounded-full p-2 text-ink-mid hover:bg-paper-warm"
+            aria-label="Search"
+          >
+            <Search className="h-5 w-5" />
+          </button>
+          <MobileMenu user={user} loading={loading} />
+        </div>
       </div>
+
+      {/* ─── Mobile search bar (expandable) ─── */}
+      {searchOpen && (
+        <div className="border-t border-crease-light bg-paper-white px-4 py-3 lg:hidden">
+          <form onSubmit={handleSearchSubmit}>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-light" />
+              <input
+                ref={searchRef}
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search breed, discipline, location..."
+                className="w-full rounded-full border border-crease-light bg-paper-cream py-2.5 pl-9 pr-4 text-sm text-ink-black placeholder:text-ink-light focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              />
+            </div>
+          </form>
+        </div>
+      )}
     </header>
   );
 }

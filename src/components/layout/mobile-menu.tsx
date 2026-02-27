@@ -14,22 +14,23 @@ import { signOut } from "@/actions/auth";
 import type { User } from "@supabase/supabase-js";
 
 const publicLinks = [
-  { href: "/browse", label: "Current Offerings" },
-  { href: "/just-sold", label: "Just Sold" },
-  { href: "/learn", label: "Learn" },
-  { href: "/sell", label: "For Sellers" },
-  { href: "/reviews", label: "Reviews" },
-  { href: "/faq", label: "FAQ" },
+  { href: "/browse", label: "Browse Horses" },
+  { href: "/disciplines", label: "Disciplines" },
+  { href: "/sell", label: "Sell Your Horse" },
+  { href: "/how-it-works", label: "How It Works" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/about", label: "About" },
 ];
 
 const authedLinks = [
   { href: "/dashboard", label: "Dashboard" },
-  { href: "/browse", label: "Current Offerings" },
+  { href: "/browse", label: "Browse Horses" },
   { href: "/dashboard/dream-barn", label: "Dream Barn" },
   { href: "/iso", label: "ISOs" },
   { href: "/dashboard/messages", label: "Messages" },
   { href: "/dashboard/offers", label: "Offers" },
-  { href: "/dashboard/listings/new", label: "New Listing" },
+  { href: "/dashboard/listings/new", label: "List a Horse" },
+  { href: "/just-sold", label: "Just Sold" },
   { href: "/dashboard/settings", label: "Settings" },
 ];
 
@@ -95,7 +96,7 @@ export function MobileMenu({
               <div className="animate-fade-up px-4 pt-2">
                 <Button className="w-full" asChild>
                   <Link href="/signup" onClick={() => setOpen(false)}>
-                    Create Account
+                    Sign Up
                   </Link>
                 </Button>
               </div>

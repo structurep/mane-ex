@@ -33,6 +33,7 @@ import { OfferModal } from "@/components/offer-modal";
 import { ManeScoreBadge } from "@/components/mane-score-badge";
 import { BadgeShowcase } from "@/components/badge-showcase";
 import { ListingGallery } from "@/components/listing-gallery";
+import { HennekeScoreDisplay } from "@/components/henneke-score";
 
 type MediaItem = {
   id: string;
@@ -518,6 +519,36 @@ export function ListingTabs({ listing }: { listing: ListingTabsData }) {
                   <h2 className="mb-4 text-lg font-semibold text-ink-black">
                     Veterinary Information
                   </h2>
+
+                  {/* Henneke BCS + Soundness badges */}
+                  {(() => {
+                    const ext = l as unknown as Record<string, unknown>;
+                    const henneke = ext.henneke_score as number | null;
+                    const soundness = ext.soundness_level as string | null;
+                    if (!henneke && !soundness) return null;
+                    return (
+                      <div className="mb-4 flex flex-wrap gap-3">
+                        {henneke != null && (
+                          <HennekeScoreDisplay score={henneke} />
+                        )}
+                        {soundness && (
+                          <div className="rounded-lg border border-crease-light bg-paper-cream p-3">
+                            <p className="text-xs text-ink-light">Soundness</p>
+                            <p className="text-sm font-medium text-ink-black">
+                              {soundness === "vet_confirmed_sound"
+                                ? "Vet-confirmed sound"
+                                : soundness === "minor_findings"
+                                  ? "Minor findings (described)"
+                                  : soundness === "managed_condition"
+                                    ? "Managed condition"
+                                    : "Not recently assessed"}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
+
                   <div className="space-y-3">
                     {l.vet_name && (
                       <DetailRow label="Veterinarian" value={l.vet_name} />

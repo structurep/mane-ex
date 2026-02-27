@@ -20,8 +20,14 @@ type Props = {
     maxPrice?: string;
     state?: string;
     gender?: string;
+    breed?: string;
     minHeight?: string;
     maxHeight?: string;
+    minAge?: string;
+    maxAge?: string;
+    henneke?: string;
+    soundness?: string;
+    region?: string;
     sort?: string;
     page?: string;
   }>;
