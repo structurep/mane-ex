@@ -776,6 +776,31 @@ export function ListingTabs({ listing }: { listing: ListingTabsData }) {
               Reflects documentation level, not horse quality.
             </p>
 
+            {l.basics_score != null && l.details_score != null && l.trust_score != null && l.media_score != null && (
+              <div className="mt-3 space-y-2">
+                {[
+                  { label: 'Basics', score: l.basics_score, max: 200, hint: 'Core listing info' },
+                  { label: 'Details', score: l.details_score, max: 250, hint: 'Performance & pedigree depth' },
+                  { label: 'Trust', score: l.trust_score, max: 250, hint: 'Health & transparency' },
+                  { label: 'Media', score: l.media_score, max: 300, hint: 'Photos & video completeness' },
+                ].map((b) => (
+                  <div key={b.label}>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-ink-mid">{b.label}</span>
+                      <span className="font-medium text-ink-dark">{b.score}/{b.max}</span>
+                    </div>
+                    <div className="mt-0.5 h-1.5 rounded-full bg-surface-wash">
+                      <div
+                        className="h-1.5 rounded-full bg-oxblood transition-all"
+                        style={{ width: `${Math.min(100, Math.max(0, b.max > 0 ? Math.round((b.score / b.max) * 100) : 0))}%` }}
+                      />
+                    </div>
+                    <p className="mt-0.5 text-[10px] text-ink-faint">{b.hint}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
             <Separator className="my-4" />
 
             {/* Seller info */}
@@ -961,6 +986,31 @@ function PricingCard({
       <p className="mt-1 text-xs text-ink-light">
         Reflects documentation level, not horse quality.
       </p>
+
+      {l.basics_score != null && l.details_score != null && l.trust_score != null && l.media_score != null && (
+        <div className="mt-3 space-y-2">
+          {[
+            { label: 'Basics', score: l.basics_score, max: 200, hint: 'Core listing info' },
+            { label: 'Details', score: l.details_score, max: 250, hint: 'Performance & pedigree depth' },
+            { label: 'Trust', score: l.trust_score, max: 250, hint: 'Health & transparency' },
+            { label: 'Media', score: l.media_score, max: 300, hint: 'Photos & video completeness' },
+          ].map((b) => (
+            <div key={b.label}>
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-ink-mid">{b.label}</span>
+                <span className="font-medium text-ink-dark">{b.score}/{b.max}</span>
+              </div>
+              <div className="mt-0.5 h-1.5 rounded-full bg-surface-wash">
+                <div
+                  className="h-1.5 rounded-full bg-oxblood transition-all"
+                  style={{ width: `${Math.min(100, Math.max(0, b.max > 0 ? Math.round((b.score / b.max) * 100) : 0))}%` }}
+                />
+              </div>
+              <p className="mt-0.5 text-[10px] text-ink-faint">{b.hint}</p>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* ManeVault teaser */}
       <div className="mt-4 rounded-md bg-paper-warm p-3">

@@ -121,6 +121,10 @@ export interface HorseListing {
   // Score
   completeness_score: number;
   completeness_grade: CompletenessGrade;
+  basics_score: number | null;
+  details_score: number | null;
+  trust_score: number | null;
+  media_score: number | null;
 
   // Counters
   view_count: number;
