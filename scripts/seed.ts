@@ -852,7 +852,7 @@ async function main() {
   const img = (id: string, w = 1200, h = 800) =>
     `https://images.unsplash.com/${id}?w=${w}&h=${h}&fit=crop`;
 
-  // 24 verified Unsplash photo IDs + 3 Mixkit horse video URLs
+  // Verified Unsplash photo IDs + Mixkit horse video URLs
   const listingMedia: { listing: number; type: 'photo' | 'video'; url: string; alt: string; primary?: boolean; w?: number; h?: number }[] = [
     // ── Bellissimo's Legacy (4 photos + 1 video) ──
     { listing: 0, type: 'photo', url: img('photo-1553284965-83fd3e82fa5a'), alt: 'Conformation shot — bay warmblood mare', primary: true },
@@ -894,74 +894,74 @@ async function main() {
     { listing: 5, type: 'photo', url: img('photo-1557438159-51eec7a6c9e8'), alt: 'Trot work in the ring' },
 
     // ── Royal Dorado (6 photos + 1 video) ──
-    { listing: 6, type: 'photo', url: img('photo-1460926616206-66b22abccd76'), alt: 'Conformation — black Andalusian stallion', primary: true },
+    { listing: 6, type: 'photo', url: img('photo-1550785330-003a9afa3bd9'), alt: 'Conformation — black Andalusian stallion', primary: true },
     { listing: 6, type: 'photo', url: img('photo-1450052590821-8bf91254a353'), alt: 'Extended trot on the diagonal' },
-    { listing: 6, type: 'photo', url: img('photo-1529064541268-a5a79d898cdf'), alt: 'Portrait — proud stallion head' },
-    { listing: 6, type: 'photo', url: img('photo-1558618666-fcd25c85f82e'), alt: 'Passage work in outdoor arena' },
+    { listing: 6, type: 'photo', url: img('photo-1559295928-6964f905e9c7'), alt: 'Portrait — proud stallion head' },
+    { listing: 6, type: 'photo', url: img('photo-1561361649-c86e8a408c95'), alt: 'Passage work in outdoor arena' },
     { listing: 6, type: 'photo', url: img('photo-1520580413066-ac45756bdc71'), alt: 'Turnout in California sunshine' },
-    { listing: 6, type: 'photo', url: img('photo-1590926938512-c0c2c59eaa7e'), alt: 'Under saddle — collected canter' },
+    { listing: 6, type: 'photo', url: img('photo-1563884039302-72cf7bae6cd8'), alt: 'Under saddle — collected canter' },
     { listing: 6, type: 'video', url: 'https://assets.mixkit.co/videos/4857/4857-720.mp4', alt: 'Dressage schooling session', w: 1280, h: 720 },
 
     // ── Galway Bay (6 photos + 1 video) ──
     { listing: 7, type: 'photo', url: img('photo-1560461396-ec0ef7bb29dd'), alt: 'Conformation — grey Irish Sport Horse', primary: true },
-    { listing: 7, type: 'photo', url: img('photo-1533137098665-8b93baea8f24'), alt: 'Cross-country water jump' },
-    { listing: 7, type: 'photo', url: img('photo-1518378188025-0cf0e2c29a03'), alt: 'Stadium jumping round' },
-    { listing: 7, type: 'photo', url: img('photo-1573586022-8e8aff1cbaf4'), alt: 'Dressage warm-up at HT' },
+    { listing: 7, type: 'photo', url: img('photo-1567367409966-1f1d990e087b'), alt: 'Cross-country water jump' },
+    { listing: 7, type: 'photo', url: img('photo-1568910866193-8240a89e9648'), alt: 'Stadium jumping round' },
+    { listing: 7, type: 'photo', url: img('photo-1576692192914-9abed71b3ef9'), alt: 'Dressage warm-up at HT' },
     { listing: 7, type: 'photo', url: img('photo-1469854523086-cc02fe5d8800'), alt: 'Relaxing in the paddock' },
     { listing: 7, type: 'photo', url: img('photo-1492534513006-37715f336a39'), alt: 'Portrait — kind eye' },
     { listing: 7, type: 'video', url: 'https://assets.mixkit.co/videos/4858/4858-720.mp4', alt: 'Cross-country schooling round', w: 1280, h: 720 },
 
     // ── Painted Sky (6 photos + 1 video) ──
-    { listing: 8, type: 'photo', url: img('photo-1528111290032-88aceb8a5243'), alt: 'Conformation — tobiano Paint mare', primary: true },
-    { listing: 8, type: 'photo', url: img('photo-1504714832850-63e0e4bd0c56'), alt: 'Western pleasure under saddle' },
+    { listing: 8, type: 'photo', url: img('photo-1580216501592-7493ce4d6b58'), alt: 'Conformation — tobiano Paint mare', primary: true },
+    { listing: 8, type: 'photo', url: img('photo-1581613388764-93221aa63faf'), alt: 'Western pleasure under saddle' },
     { listing: 8, type: 'photo', url: img('photo-1494976388531-d1058494cdd8'), alt: 'Mountain trail ride' },
-    { listing: 8, type: 'photo', url: img('photo-1535930891271-042bcc5b9213'), alt: 'Head portrait with halter' },
-    { listing: 8, type: 'photo', url: img('photo-1491614890966-d5efc93bc368'), alt: 'Grazing in Rocky Mountain pasture' },
-    { listing: 8, type: 'photo', url: img('photo-1517958925786-ea0d76102862'), alt: 'Trail crossing water' },
+    { listing: 8, type: 'photo', url: img('photo-1586424222752-5f87e73aaf5c'), alt: 'Head portrait with halter' },
+    { listing: 8, type: 'photo', url: img('photo-1589400867230-3491ceee2934'), alt: 'Grazing in Rocky Mountain pasture' },
+    { listing: 8, type: 'photo', url: img('photo-1592517662775-967dfc326893'), alt: 'Trail crossing water' },
     { listing: 8, type: 'video', url: 'https://assets.mixkit.co/videos/1485/1485-720.mp4', alt: 'Trail riding in the mountains', w: 1280, h: 720 },
 
     // ── Valkenswaard (6 photos + 1 video) ──
-    { listing: 9, type: 'photo', url: img('photo-1500924131192-fcfe071d30de'), alt: 'Conformation — bay Dutch Warmblood gelding', primary: true },
-    { listing: 9, type: 'photo', url: img('photo-1477496939245-a61e51c8d54a'), alt: 'Jumping 1.35m at Tryon' },
+    { listing: 9, type: 'photo', url: img('photo-1594768816441-1dd241ffaa67'), alt: 'Conformation — bay Dutch Warmblood gelding', primary: true },
+    { listing: 9, type: 'photo', url: img('photo-1595675759752-a743a9b71d93'), alt: 'Jumping 1.35m at Tryon' },
     { listing: 9, type: 'photo', url: img('photo-1509822929063-6b6cfc9b42f2'), alt: 'Head portrait — alert expression' },
-    { listing: 9, type: 'photo', url: img('photo-1536691089222-f1d4b714a90f'), alt: 'Flatwork — collected canter' },
-    { listing: 9, type: 'photo', url: img('photo-1527246969559-cf6d99b94293'), alt: 'Walking course at CSI' },
-    { listing: 9, type: 'photo', url: img('photo-1581450194557-d6ba7d85b65b'), alt: 'In the wash stall after show' },
+    { listing: 9, type: 'photo', url: img('photo-1600715187853-47512f8b0717'), alt: 'Flatwork — collected canter' },
+    { listing: 9, type: 'photo', url: img('photo-1600757490188-1eb2bab4cf4a'), alt: 'Walking course at CSI' },
+    { listing: 9, type: 'photo', url: img('photo-1604566076816-e65490d4c536'), alt: 'In the wash stall after show' },
     { listing: 9, type: 'video', url: 'https://assets.mixkit.co/videos/4859/4859-720.mp4', alt: '1.35m show jumping round', w: 1280, h: 720 },
 
     // ── Heritage Brass (6 photos + 1 video) ──
-    { listing: 10, type: 'photo', url: img('photo-1583949661964-7bf8e2b6d8a6'), alt: 'Conformation — chestnut Morgan gelding', primary: true },
-    { listing: 10, type: 'photo', url: img('photo-1517164850305-13b6e15e6d16'), alt: 'Sport horse in-hand' },
-    { listing: 10, type: 'photo', url: img('photo-1499803270242-467bfccc872a'), alt: 'Dressage test — medium trot' },
+    { listing: 10, type: 'photo', url: img('photo-1605264522799-1996bdbe5f72'), alt: 'Conformation — chestnut Morgan gelding', primary: true },
+    { listing: 10, type: 'photo', url: img('photo-1609128231746-356e747a53bc'), alt: 'Sport horse in-hand' },
+    { listing: 10, type: 'photo', url: img('photo-1611540253975-19c1f87a8555'), alt: 'Dressage test — medium trot' },
     { listing: 10, type: 'photo', url: img('photo-1503614472-8c93d56e92ce'), alt: 'Portrait — Morgan character' },
     { listing: 10, type: 'photo', url: img('photo-1485550409059-9afb054cada4'), alt: 'Grazing in California hills' },
-    { listing: 10, type: 'photo', url: img('photo-1514567402414-96dd35cf2891'), alt: 'Tacked up and ready' },
+    { listing: 10, type: 'photo', url: img('photo-1613533583658-62e7947373b2'), alt: 'Tacked up and ready' },
     { listing: 10, type: 'video', url: 'https://assets.mixkit.co/videos/1486/1486-720.mp4', alt: 'Dressage schooling at home', w: 1280, h: 720 },
 
     // ── Dark Raven (6 photos + 1 video) ──
-    { listing: 11, type: 'photo', url: img('photo-1581889470536-467bdab29166'), alt: 'Conformation — black Friesian gelding', primary: true },
-    { listing: 11, type: 'photo', url: img('photo-1527154943700-db7be03a7ea0'), alt: 'Extended trot — mane flowing' },
-    { listing: 11, type: 'photo', url: img('photo-1497031758898-5eb73c5e5f68'), alt: 'In the barn aisle — gentle giant' },
+    { listing: 11, type: 'photo', url: img('photo-1618061886903-bc662f09f340'), alt: 'Conformation — black Friesian gelding', primary: true },
+    { listing: 11, type: 'photo', url: img('photo-1622205656486-0b6263050c27'), alt: 'Extended trot — mane flowing' },
+    { listing: 11, type: 'photo', url: img('photo-1634436411978-4fa22337a302'), alt: 'In the barn aisle — gentle giant' },
     { listing: 11, type: 'photo', url: img('photo-1501432377862-3d0432b87a14'), alt: 'Liberty work in the arena' },
-    { listing: 11, type: 'photo', url: img('photo-1562770584-eaf0ab016df4'), alt: 'Head portrait — Friesian presence' },
-    { listing: 11, type: 'photo', url: img('photo-1565624779498-e1954f13fe59'), alt: 'Under saddle at dressage show' },
+    { listing: 11, type: 'photo', url: img('photo-1637037204221-7acf9d8c3188'), alt: 'Head portrait — Friesian presence' },
+    { listing: 11, type: 'photo', url: img('photo-1648632658054-3c670fd053d5'), alt: 'Under saddle at dressage show' },
     { listing: 11, type: 'video', url: 'https://assets.mixkit.co/videos/34480/34480-720.mp4', alt: 'Third Level dressage test', w: 1280, h: 720 },
 
     // ── Spotted Eagle (6 photos + 1 video) ──
-    { listing: 12, type: 'photo', url: img('photo-1550001392-5d8c6f735c0b'), alt: 'Conformation — leopard Appaloosa mare', primary: true },
+    { listing: 12, type: 'photo', url: img('photo-1649966836663-572ec8b093e8'), alt: 'Conformation — leopard Appaloosa mare', primary: true },
     { listing: 12, type: 'photo', url: img('photo-1543466835-00a7907e9de1'), alt: 'Western pleasure jog' },
-    { listing: 12, type: 'photo', url: img('photo-1517854335830-97e09d26c45a'), alt: 'Halter class at show' },
-    { listing: 12, type: 'photo', url: img('photo-1580764581792-05f22e56eb55'), alt: 'Head portrait — spotted beauty' },
-    { listing: 12, type: 'photo', url: img('photo-1542359649-6bfbeb0adfe9'), alt: 'In the round pen' },
-    { listing: 12, type: 'photo', url: img('photo-1591561582301-7ce5dde7a1f1'), alt: 'Trail riding in Texas hill country' },
+    { listing: 12, type: 'photo', url: img('photo-1656637279317-e8bca00ce1a7'), alt: 'Halter class at show' },
+    { listing: 12, type: 'photo', url: img('photo-1660058610896-699f36cd71f2'), alt: 'Head portrait — spotted beauty' },
+    { listing: 12, type: 'photo', url: img('photo-1664461247469-6890483f4531'), alt: 'In the round pen' },
+    { listing: 12, type: 'photo', url: img('photo-1665963992336-1a7c4d8d5ffa'), alt: 'Trail riding in Texas hill country' },
     { listing: 12, type: 'video', url: 'https://assets.mixkit.co/videos/4860/4860-720.mp4', alt: 'Arena work session', w: 1280, h: 720 },
 
     // ── Königsberg (6 photos + 1 video) ──
     { listing: 13, type: 'photo', url: img('photo-1576675784432-994941412b3d'), alt: 'Conformation — chestnut Trakehner mare', primary: true },
-    { listing: 13, type: 'photo', url: img('photo-1519948528883-0a68ddb2e4e8'), alt: 'Cross-country gallop' },
+    { listing: 13, type: 'photo', url: img('photo-1666280254768-bc0fa68eef1c'), alt: 'Cross-country gallop' },
     { listing: 13, type: 'photo', url: img('photo-1487730116645-74489c95b41b'), alt: 'Stadium jumping — scope for days' },
-    { listing: 13, type: 'photo', url: img('photo-1574168411700-4e22cabf9d7b'), alt: 'Dressage phase at HT' },
-    { listing: 13, type: 'photo', url: img('photo-1567599672391-17b31b92d965'), alt: 'Portrait — elegant Trakehner head' },
+    { listing: 13, type: 'photo', url: img('photo-1667842580940-dabf4bf3cc31'), alt: 'Dressage phase at HT' },
+    { listing: 13, type: 'photo', url: img('photo-1674759325222-51d433a4e8da'), alt: 'Portrait — elegant Trakehner head' },
     { listing: 13, type: 'photo', url: img('photo-1519409369806-8e923ea66184'), alt: 'Turnout — morning gallop' },
     { listing: 13, type: 'video', url: 'https://assets.mixkit.co/videos/1487/1487-720.mp4', alt: 'Eventing highlight reel', w: 1280, h: 720 },
   ];
