@@ -21,6 +21,7 @@ export type DocumentType =
   | "other";
 export type DocumentVisibility = "public" | "on_request" | "private" | "escrow_only";
 export type CompletenessGrade = "excellent" | "good" | "fair" | "incomplete";
+export type SoundnessLevel = "vet_confirmed_sound" | "minor_findings" | "managed_condition" | "not_assessed";
 
 export interface Discipline {
   id: string;
@@ -88,6 +89,8 @@ export interface HorseListing {
   lameness_history: string | null;
   surgical_history: string | null;
   allergies: string | null;
+  henneke_score: number | null;
+  soundness_level: SoundnessLevel | null;
 
   // History
   years_with_current_owner: number | null;

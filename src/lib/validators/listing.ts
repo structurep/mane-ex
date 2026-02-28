@@ -56,6 +56,8 @@ export const vetInfoSchema = z.object({
   lameness_history: z.string().optional(),
   surgical_history: z.string().optional(),
   allergies: z.string().optional(),
+  henneke_score: z.coerce.number().int().min(1).max(9).optional(),
+  soundness_level: z.enum(["vet_confirmed_sound", "minor_findings", "managed_condition", "not_assessed"]).optional(),
 });
 
 // Step 5: Media (validated separately — file uploads)
