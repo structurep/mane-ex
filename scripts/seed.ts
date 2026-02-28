@@ -200,6 +200,49 @@ async function main() {
   if (farmErr) die('Creating farm', farmErr);
   console.log(`     ${farm.name} (${farm.id})`);
 
+  // Additional farms for geographic diversity
+  const additionalFarms = [
+    {
+      name: 'Pacific Crest Dressage',
+      slug: 'pacific-crest-dressage',
+      description: 'Premier dressage facility in coastal Southern California.',
+      city: 'San Juan Capistrano', state: 'CA', zip: '92675',
+      disciplines: ['Dressage'], year_established: 2015, number_of_stalls: 24,
+    },
+    {
+      name: 'Hudson Valley Equestrian',
+      slug: 'hudson-valley-equestrian',
+      description: 'Full-service eventing facility on 60 rolling acres in the Hudson Valley.',
+      city: 'Millbrook', state: 'NY', zip: '12545',
+      disciplines: ['Eventing', 'Hunter', 'Jumper'], year_established: 2001, number_of_stalls: 36,
+    },
+    {
+      name: 'Tryon Ridge Stables',
+      slug: 'tryon-ridge-stables',
+      description: 'Sport horse facility minutes from TIEC with FEI-level footing.',
+      city: 'Tryon', state: 'NC', zip: '28782',
+      disciplines: ['Show Jumping', 'Dressage', 'Eventing'], year_established: 2012, number_of_stalls: 48,
+    },
+  ];
+
+  const farmIds: Record<string, string> = {};
+  for (const f of additionalFarms) {
+    const { data, error } = await supabase
+      .from('farms')
+      .insert({
+        owner_id: userIds.seller,
+        country: 'US',
+        phone: '(555) 555-0100',
+        email: `info@${f.slug.replace(/-/g, '')}.com`,
+        ...f,
+      })
+      .select()
+      .single();
+    if (error) die(`Creating farm ${f.name}`, error);
+    farmIds[f.slug] = data.id;
+    console.log(`     ${data.name} (${data.id})`);
+  }
+
   // ── Step 4: Fetch discipline IDs ───────────────────────────────────────────
 
   console.log('  4. Fetching discipline map...');
@@ -459,6 +502,327 @@ async function main() {
       reason_for_sale: 'Syndicate offering approved stallion to serious GP program.',
       published_at: daysAgo(1),
     },
+
+    // ── New listings for geographic + status diversity ──────────────────────
+
+    {
+      name: 'Royal Dorado',
+      slug: 'royal-dorado',
+      breed: 'Andalusian',
+      registered_name: 'Royal Dorado PSA',
+      registration_number: 'ANCCE-ES-20140388',
+      registry: 'ANCCE',
+      gender: 'stallion' as const,
+      color: 'Black',
+      date_of_birth: '2014-01-20',
+      age_years: 12,
+      height_hands: 15.3,
+      sire: 'Evento III',
+      dam: 'Faraona VII',
+      discipline_ids: disc(['Dressage']),
+      level: 'Fourth Level',
+      show_experience: 'Schooling PSG movements. Confirmed through Fourth Level with scores to 68%.',
+      show_record: 'USDF Region 7 Championships Fourth Level, multiple open show champion',
+      usef_number: 'USEF-6682104',
+      price: 7500000,
+      price_display: '$75,000',
+      warranty: 'sound_at_sale' as const,
+      vet_name: 'Dr. Maria Santos, San Juan Capistrano Equine',
+      vaccination_status: 'Current — full protocol',
+      coggins_date: '2025-11-01',
+      coggins_expiry: '2026-11-01',
+      location_city: 'San Juan Capistrano',
+      location_state: 'CA',
+      location_zip: '92675',
+      barn_name: 'Pacific Crest Dressage',
+      current_trainer: 'Carolina Vega',
+      temperament: 'Proud, willing, and rhythmic. Beautiful mover with natural collection.',
+      suitable_for: 'Serious dressage amateur, FEI aspirant',
+      henneke_score: 5,
+      soundness_level: 'vet_confirmed_sound' as const,
+      years_with_current_owner: 4,
+      reason_for_sale: 'Owner pursuing breeding program; focusing on mares.',
+      seller_state: 'CA',
+      farm_id: farmIds['pacific-crest-dressage'],
+      published_at: daysAgo(10),
+    },
+    {
+      name: 'Galway Bay',
+      slug: 'galway-bay',
+      breed: 'Irish Sport Horse',
+      registered_name: 'Donavans Galway Bay',
+      registration_number: 'HSI-2018-09843',
+      registry: 'Horse Sport Ireland',
+      gender: 'gelding' as const,
+      color: 'Grey',
+      date_of_birth: '2018-06-10',
+      age_years: 7,
+      height_hands: 16.1,
+      sire: 'Donavans Donn',
+      dam: 'Galway Girl',
+      discipline_ids: disc(['Eventing']),
+      level: 'Training',
+      show_experience: 'Consistent finisher at Training level. Bold cross-country horse with clean SJ rounds.',
+      show_record: 'Area II Training HT Champion 2025, multiple top-5 at recognized events',
+      price: 5500000,
+      price_display: '$55,000',
+      warranty: 'as_is' as const,
+      vet_name: 'Dr. Karen Bell, Hudson Valley Equine',
+      vaccination_status: 'Current — full protocol',
+      coggins_date: '2025-10-15',
+      coggins_expiry: '2026-10-15',
+      location_city: 'Millbrook',
+      location_state: 'NY',
+      location_zip: '12545',
+      barn_name: 'Hudson Valley Equestrian',
+      temperament: 'Honest, brave cross-country. Relaxed flatwork. Loves trail hacking.',
+      suitable_for: 'Adult amateur eventer, move-up horse',
+      henneke_score: 6,
+      soundness_level: 'minor_findings' as const,
+      years_with_current_owner: 2,
+      reason_for_sale: 'Owner bought a more experienced horse for Prelim.',
+      seller_state: 'NY',
+      farm_id: farmIds['hudson-valley-equestrian'],
+      published_at: daysAgo(8),
+    },
+    {
+      name: 'Painted Sky',
+      slug: 'painted-sky',
+      breed: 'Paint Horse',
+      registered_name: 'Skys Painted Dream',
+      registration_number: 'APHA-1084522',
+      registry: 'APHA',
+      gender: 'mare' as const,
+      color: 'Tobiano',
+      date_of_birth: '2012-04-15',
+      age_years: 13,
+      height_hands: 15.0,
+      sire: 'Skys Blue Boy',
+      dam: 'Painted Dream',
+      discipline_ids: disc(['Western Pleasure']),
+      level: 'Novice Amateur',
+      show_experience: 'All-around ranch horse. Trails, western pleasure, and ranch versatility.',
+      show_record: 'APHA Regional top-10 Western Pleasure, local all-around champion',
+      price: 1500000,
+      price_display: '$15,000',
+      warranty: 'as_is' as const,
+      vet_name: 'Dr. Tom Hansen, Fort Collins Equine',
+      vaccination_status: 'Current',
+      coggins_date: '2025-07-01',
+      coggins_expiry: '2026-07-01',
+      location_city: 'Fort Collins',
+      location_state: 'CO',
+      location_zip: '80525',
+      barn_name: 'Rocky Mountain Trail Horses',
+      temperament: 'Dead-quiet. Trail-safe. Good with beginners and kids.',
+      suitable_for: 'Beginner, trail rider, family horse',
+      good_with: 'Kids, dogs, ATVs, water crossings',
+      henneke_score: 7,
+      soundness_level: 'not_assessed' as const,
+      years_with_current_owner: 8,
+      reason_for_sale: 'Owner moving to apartment. Horse deserves acreage.',
+      seller_state: 'CO',
+      published_at: daysAgo(14),
+    },
+    {
+      name: 'Valkenswaard',
+      slug: 'valkenswaard',
+      breed: 'Dutch Warmblood',
+      registered_name: 'Valkenswaard',
+      registration_number: 'KWPN-2017-28841',
+      registry: 'KWPN',
+      gender: 'gelding' as const,
+      color: 'Bay',
+      date_of_birth: '2017-03-04',
+      age_years: 9,
+      height_hands: 17.0,
+      sire: 'Cornet Obolensky',
+      dam: 'Walküre',
+      discipline_ids: disc(['Show Jumping', 'Jumper']),
+      level: '1.35m-1.40m',
+      show_experience: 'Consistent at 1.35m, schooling 1.40m. Scope for Grand Prix development.',
+      show_record: '1.35m CSI2* clear rounds at Tryon, HITS Ocala top-8, USEF Zone 3 finalist',
+      fei_id: 'FEI-109128',
+      price: 18000000,
+      price_display: '$180,000',
+      warranty: 'sound_at_sale' as const,
+      vet_name: 'Dr. Steven Craig, Tryon Equine Hospital',
+      vet_phone: '(828) 555-0177',
+      vaccination_status: 'Current — full FEI protocol',
+      coggins_date: '2025-12-15',
+      coggins_expiry: '2026-12-15',
+      location_city: 'Tryon',
+      location_state: 'NC',
+      location_zip: '28782',
+      barn_name: 'Tryon Ridge Stables',
+      temperament: 'Scopey, careful, loves the ring. Competitive but rideable.',
+      suitable_for: 'Ambitious amateur, developing professional',
+      henneke_score: 5,
+      soundness_level: 'vet_confirmed_sound' as const,
+      years_with_current_owner: 3,
+      reason_for_sale: 'Rider stepping back from competition.',
+      seller_state: 'NC',
+      farm_id: farmIds['tryon-ridge-stables'],
+      published_at: daysAgo(9),
+    },
+    {
+      name: 'Heritage Brass',
+      slug: 'heritage-brass',
+      breed: 'Morgan',
+      registered_name: 'Heritage Brass Band',
+      registration_number: 'AMHA-0198442',
+      registry: 'AMHA',
+      gender: 'gelding' as const,
+      color: 'Chestnut',
+      date_of_birth: '2015-05-12',
+      age_years: 10,
+      height_hands: 15.0,
+      sire: 'Graycliff Dorado',
+      dam: 'Heritage Rose',
+      discipline_ids: disc(['Dressage', 'Equitation']),
+      level: 'Second Level',
+      show_experience: 'Versatile Morgan competing in dressage and sport horse in-hand. Beautiful mover.',
+      show_record: 'Grand National Morgan top-10 Sport Horse, USDF Second Level regional qualifier',
+      price: 2200000,
+      price_display: '$22,000',
+      warranty: 'sound_at_sale' as const,
+      vet_name: 'Dr. Maria Santos, San Juan Capistrano Equine',
+      vaccination_status: 'Current',
+      coggins_date: '2025-09-01',
+      coggins_expiry: '2026-09-01',
+      location_city: 'San Juan Capistrano',
+      location_state: 'CA',
+      location_zip: '92675',
+      barn_name: 'Pacific Crest Dressage',
+      temperament: 'Flashy, willing, people-oriented. Easy keeper with great ground manners.',
+      suitable_for: 'Adult amateur, youth dressage, versatile all-rounder',
+      henneke_score: 6,
+      soundness_level: 'managed_condition' as const,
+      years_with_current_owner: 5,
+      reason_for_sale: 'Owner transitioning to warmbloods for upper-level dressage.',
+      status: 'under_offer' as const,
+      seller_state: 'CA',
+      farm_id: farmIds['pacific-crest-dressage'],
+      published_at: daysAgo(12),
+    },
+    {
+      name: 'Dark Raven',
+      slug: 'dark-raven',
+      breed: 'Friesian',
+      registered_name: 'Dark Raven fan de Zandloper',
+      registration_number: 'FHANA-2016-881',
+      registry: 'FHANA',
+      gender: 'gelding' as const,
+      color: 'Black',
+      date_of_birth: '2016-02-14',
+      age_years: 10,
+      height_hands: 16.0,
+      sire: 'Mintse 384',
+      dam: 'Ravenna Star',
+      discipline_ids: disc(['Dressage']),
+      level: 'Third Level',
+      show_experience: 'Confirmed Third Level with extension work. Show-ring presence that stops traffic.',
+      show_record: 'USDF All-Breeds Friesian Award, multiple Third Level open champion',
+      usdf_number: 'USDF-51002',
+      price: 6500000,
+      price_display: '$65,000',
+      warranty: 'sound_at_sale' as const,
+      vet_name: 'Dr. Amanda Roberts, Wellington Equine',
+      vaccination_status: 'Current — full protocol',
+      coggins_date: '2025-08-01',
+      coggins_expiry: '2026-08-01',
+      location_city: 'Ocala',
+      location_state: 'FL',
+      location_zip: '34471',
+      barn_name: 'Whispering Willows Farm',
+      temperament: 'Gentle giant. Flashy in the ring, puppy dog in the barn.',
+      suitable_for: 'Adult amateur dressage, exhibition, breed shows',
+      henneke_score: 5,
+      soundness_level: 'vet_confirmed_sound' as const,
+      years_with_current_owner: 6,
+      reason_for_sale: 'Successfully sold through ManeExchange.',
+      status: 'sold' as const,
+      published_at: daysAgo(30),
+    },
+    {
+      name: 'Spotted Eagle',
+      slug: 'spotted-eagle',
+      breed: 'Appaloosa',
+      registered_name: 'Eagles Spotted Dream',
+      registration_number: 'ApHC-684215',
+      registry: 'ApHC',
+      gender: 'mare' as const,
+      color: 'Leopard Appaloosa',
+      date_of_birth: '2019-07-22',
+      age_years: 6,
+      height_hands: 15.2,
+      sire: 'The Hunter',
+      dam: 'Spotted Lily',
+      discipline_ids: disc(['Western Pleasure']),
+      level: 'Open',
+      show_experience: 'Fast and athletic. Also shown in halter and western pleasure.',
+      show_record: 'ApHC Nationals halter qualifier, regional western pleasure top-5',
+      price: 1800000,
+      price_display: '$18,000',
+      warranty: 'as_is' as const,
+      vet_name: 'Dr. Mike Patterson, North Texas Equine',
+      vaccination_status: 'Current',
+      coggins_date: '2025-10-01',
+      coggins_expiry: '2026-10-01',
+      location_city: 'Pilot Point',
+      location_state: 'TX',
+      location_zip: '76258',
+      barn_name: 'Lone Star Sporthorses',
+      temperament: 'Athletic, smart, wants to please. Quick learner.',
+      suitable_for: 'All-around western rider, youth',
+      henneke_score: 6,
+      soundness_level: 'not_assessed' as const,
+      years_with_current_owner: 2,
+      reason_for_sale: 'Owner focusing on cutting horses.',
+      seller_state: 'TX',
+      published_at: daysAgo(7),
+    },
+    {
+      name: 'Königsberg',
+      slug: 'konigsberg',
+      breed: 'Trakehner',
+      registered_name: 'Königsberg TSF',
+      registration_number: 'ATA-2020-4412',
+      registry: 'American Trakehner Association',
+      gender: 'mare' as const,
+      color: 'Chestnut',
+      date_of_birth: '2020-04-18',
+      age_years: 5,
+      height_hands: 16.2,
+      sire: 'Hirtentanz TSF',
+      dam: 'Kassandra',
+      discipline_ids: disc(['Eventing', 'Dressage']),
+      level: 'Training',
+      show_experience: 'Talented young horse. Completing Training level with top-5 finishes. Brave cross-country.',
+      show_record: 'USEA Young Event Horse qualifier, Area III Training HT top-5',
+      price: 25000000,
+      price_display: '$250,000',
+      price_negotiable: false,
+      warranty: 'as_is' as const,
+      vet_name: 'Dr. Steven Craig, Tryon Equine Hospital',
+      vet_phone: '(828) 555-0177',
+      vaccination_status: 'Current — full protocol',
+      coggins_date: '2026-01-01',
+      coggins_expiry: '2027-01-01',
+      location_city: 'Southern Pines',
+      location_state: 'NC',
+      location_zip: '28387',
+      barn_name: 'Tryon Ridge Stables',
+      temperament: 'Brave, elastic, and athletic. Blood horse with a brain. Upper-level prospect.',
+      suitable_for: 'Professional eventer, advanced amateur, Olympic pathway',
+      henneke_score: 4,
+      soundness_level: 'minor_findings' as const,
+      years_with_current_owner: 2,
+      reason_for_sale: 'Estate sale. Trainer placing horses in appropriate programs.',
+      seller_state: 'NC',
+      farm_id: farmIds['tryon-ridge-stables'],
+      published_at: daysAgo(3),
+    },
   ];
 
   const listingIds: string[] = [];
@@ -528,6 +892,78 @@ async function main() {
     { listing: 5, type: 'photo', url: img('photo-1501706362039-c06b2d715385'), alt: 'Jumping 1.40m at CSI2*' },
     { listing: 5, type: 'photo', url: img('photo-1569098644584-210bcd375b59'), alt: 'Head portrait — stallion presence' },
     { listing: 5, type: 'photo', url: img('photo-1557438159-51eec7a6c9e8'), alt: 'Trot work in the ring' },
+
+    // ── Royal Dorado (6 photos + 1 video) ──
+    { listing: 6, type: 'photo', url: img('photo-1460926616206-66b22abccd76'), alt: 'Conformation — black Andalusian stallion', primary: true },
+    { listing: 6, type: 'photo', url: img('photo-1450052590821-8bf91254a353'), alt: 'Extended trot on the diagonal' },
+    { listing: 6, type: 'photo', url: img('photo-1529064541268-a5a79d898cdf'), alt: 'Portrait — proud stallion head' },
+    { listing: 6, type: 'photo', url: img('photo-1558618666-fcd25c85f82e'), alt: 'Passage work in outdoor arena' },
+    { listing: 6, type: 'photo', url: img('photo-1520580413066-ac45756bdc71'), alt: 'Turnout in California sunshine' },
+    { listing: 6, type: 'photo', url: img('photo-1590926938512-c0c2c59eaa7e'), alt: 'Under saddle — collected canter' },
+    { listing: 6, type: 'video', url: 'https://assets.mixkit.co/videos/4857/4857-720.mp4', alt: 'Dressage schooling session', w: 1280, h: 720 },
+
+    // ── Galway Bay (6 photos + 1 video) ──
+    { listing: 7, type: 'photo', url: img('photo-1560461396-ec0ef7bb29dd'), alt: 'Conformation — grey Irish Sport Horse', primary: true },
+    { listing: 7, type: 'photo', url: img('photo-1533137098665-8b93baea8f24'), alt: 'Cross-country water jump' },
+    { listing: 7, type: 'photo', url: img('photo-1518378188025-0cf0e2c29a03'), alt: 'Stadium jumping round' },
+    { listing: 7, type: 'photo', url: img('photo-1573586022-8e8aff1cbaf4'), alt: 'Dressage warm-up at HT' },
+    { listing: 7, type: 'photo', url: img('photo-1469854523086-cc02fe5d8800'), alt: 'Relaxing in the paddock' },
+    { listing: 7, type: 'photo', url: img('photo-1492534513006-37715f336a39'), alt: 'Portrait — kind eye' },
+    { listing: 7, type: 'video', url: 'https://assets.mixkit.co/videos/4858/4858-720.mp4', alt: 'Cross-country schooling round', w: 1280, h: 720 },
+
+    // ── Painted Sky (6 photos + 1 video) ──
+    { listing: 8, type: 'photo', url: img('photo-1528111290032-88aceb8a5243'), alt: 'Conformation — tobiano Paint mare', primary: true },
+    { listing: 8, type: 'photo', url: img('photo-1504714832850-63e0e4bd0c56'), alt: 'Western pleasure under saddle' },
+    { listing: 8, type: 'photo', url: img('photo-1494976388531-d1058494cdd8'), alt: 'Mountain trail ride' },
+    { listing: 8, type: 'photo', url: img('photo-1535930891271-042bcc5b9213'), alt: 'Head portrait with halter' },
+    { listing: 8, type: 'photo', url: img('photo-1491614890966-d5efc93bc368'), alt: 'Grazing in Rocky Mountain pasture' },
+    { listing: 8, type: 'photo', url: img('photo-1517958925786-ea0d76102862'), alt: 'Trail crossing water' },
+    { listing: 8, type: 'video', url: 'https://assets.mixkit.co/videos/1485/1485-720.mp4', alt: 'Trail riding in the mountains', w: 1280, h: 720 },
+
+    // ── Valkenswaard (6 photos + 1 video) ──
+    { listing: 9, type: 'photo', url: img('photo-1500924131192-fcfe071d30de'), alt: 'Conformation — bay Dutch Warmblood gelding', primary: true },
+    { listing: 9, type: 'photo', url: img('photo-1477496939245-a61e51c8d54a'), alt: 'Jumping 1.35m at Tryon' },
+    { listing: 9, type: 'photo', url: img('photo-1509822929063-6b6cfc9b42f2'), alt: 'Head portrait — alert expression' },
+    { listing: 9, type: 'photo', url: img('photo-1536691089222-f1d4b714a90f'), alt: 'Flatwork — collected canter' },
+    { listing: 9, type: 'photo', url: img('photo-1527246969559-cf6d99b94293'), alt: 'Walking course at CSI' },
+    { listing: 9, type: 'photo', url: img('photo-1581450194557-d6ba7d85b65b'), alt: 'In the wash stall after show' },
+    { listing: 9, type: 'video', url: 'https://assets.mixkit.co/videos/4859/4859-720.mp4', alt: '1.35m show jumping round', w: 1280, h: 720 },
+
+    // ── Heritage Brass (6 photos + 1 video) ──
+    { listing: 10, type: 'photo', url: img('photo-1583949661964-7bf8e2b6d8a6'), alt: 'Conformation — chestnut Morgan gelding', primary: true },
+    { listing: 10, type: 'photo', url: img('photo-1517164850305-13b6e15e6d16'), alt: 'Sport horse in-hand' },
+    { listing: 10, type: 'photo', url: img('photo-1499803270242-467bfccc872a'), alt: 'Dressage test — medium trot' },
+    { listing: 10, type: 'photo', url: img('photo-1503614472-8c93d56e92ce'), alt: 'Portrait — Morgan character' },
+    { listing: 10, type: 'photo', url: img('photo-1485550409059-9afb054cada4'), alt: 'Grazing in California hills' },
+    { listing: 10, type: 'photo', url: img('photo-1514567402414-96dd35cf2891'), alt: 'Tacked up and ready' },
+    { listing: 10, type: 'video', url: 'https://assets.mixkit.co/videos/1486/1486-720.mp4', alt: 'Dressage schooling at home', w: 1280, h: 720 },
+
+    // ── Dark Raven (6 photos + 1 video) ──
+    { listing: 11, type: 'photo', url: img('photo-1581889470536-467bdab29166'), alt: 'Conformation — black Friesian gelding', primary: true },
+    { listing: 11, type: 'photo', url: img('photo-1527154943700-db7be03a7ea0'), alt: 'Extended trot — mane flowing' },
+    { listing: 11, type: 'photo', url: img('photo-1497031758898-5eb73c5e5f68'), alt: 'In the barn aisle — gentle giant' },
+    { listing: 11, type: 'photo', url: img('photo-1501432377862-3d0432b87a14'), alt: 'Liberty work in the arena' },
+    { listing: 11, type: 'photo', url: img('photo-1562770584-eaf0ab016df4'), alt: 'Head portrait — Friesian presence' },
+    { listing: 11, type: 'photo', url: img('photo-1565624779498-e1954f13fe59'), alt: 'Under saddle at dressage show' },
+    { listing: 11, type: 'video', url: 'https://assets.mixkit.co/videos/34480/34480-720.mp4', alt: 'Third Level dressage test', w: 1280, h: 720 },
+
+    // ── Spotted Eagle (6 photos + 1 video) ──
+    { listing: 12, type: 'photo', url: img('photo-1550001392-5d8c6f735c0b'), alt: 'Conformation — leopard Appaloosa mare', primary: true },
+    { listing: 12, type: 'photo', url: img('photo-1543466835-00a7907e9de1'), alt: 'Western pleasure jog' },
+    { listing: 12, type: 'photo', url: img('photo-1517854335830-97e09d26c45a'), alt: 'Halter class at show' },
+    { listing: 12, type: 'photo', url: img('photo-1580764581792-05f22e56eb55'), alt: 'Head portrait — spotted beauty' },
+    { listing: 12, type: 'photo', url: img('photo-1542359649-6bfbeb0adfe9'), alt: 'In the round pen' },
+    { listing: 12, type: 'photo', url: img('photo-1591561582301-7ce5dde7a1f1'), alt: 'Trail riding in Texas hill country' },
+    { listing: 12, type: 'video', url: 'https://assets.mixkit.co/videos/4860/4860-720.mp4', alt: 'Arena work session', w: 1280, h: 720 },
+
+    // ── Königsberg (6 photos + 1 video) ──
+    { listing: 13, type: 'photo', url: img('photo-1576675784432-994941412b3d'), alt: 'Conformation — chestnut Trakehner mare', primary: true },
+    { listing: 13, type: 'photo', url: img('photo-1519948528883-0a68ddb2e4e8'), alt: 'Cross-country gallop' },
+    { listing: 13, type: 'photo', url: img('photo-1487730116645-74489c95b41b'), alt: 'Stadium jumping — scope for days' },
+    { listing: 13, type: 'photo', url: img('photo-1574168411700-4e22cabf9d7b'), alt: 'Dressage phase at HT' },
+    { listing: 13, type: 'photo', url: img('photo-1567599672391-17b31b92d965'), alt: 'Portrait — elegant Trakehner head' },
+    { listing: 13, type: 'photo', url: img('photo-1519409369806-8e923ea66184'), alt: 'Turnout — morning gallop' },
+    { listing: 13, type: 'video', url: 'https://assets.mixkit.co/videos/1487/1487-720.mp4', alt: 'Eventing highlight reel', w: 1280, h: 720 },
   ];
 
   const mediaRows = listingMedia.map((m, i) => ({
@@ -544,7 +980,7 @@ async function main() {
   const { error: mediaErr } = await supabase.from('listing_media').insert(mediaRows);
   if (mediaErr) die('Creating listing media', mediaErr);
   const videoCount = listingMedia.filter(m => m.type === 'video').length;
-  console.log(`     ${listingMedia.length - videoCount} photos + ${videoCount} videos across 6 listings`);
+  console.log(`     ${listingMedia.length - videoCount} photos + ${videoCount} videos across ${horseData.length} listings`);
 
   // ── Step 7: Create conversations ───────────────────────────────────────────
 
@@ -612,6 +1048,34 @@ async function main() {
   });
   if (offerErr) die('Creating offer', offerErr);
   console.log("     $80,000 offer on Bellissimo's Legacy (pending)");
+
+  // Offer for Heritage Brass (under_offer)
+  const { error: offerErr2 } = await supabase.from('offers').insert({
+    listing_id: listingIds[10],
+    buyer_id: userIds.buyer,
+    seller_id: userIds.seller,
+    amount_cents: 2000000,
+    message: "Interested in Heritage Brass for my daughter's dressage program. Offering $20,000. Can do PPE this week.",
+    payment_method: 'ach',
+    status: 'pending',
+    expires_at: daysFromNow(5),
+  });
+  if (offerErr2) die('Creating offer for Heritage Brass', offerErr2);
+  console.log('     $20,000 offer on Heritage Brass (pending — under_offer)');
+
+  // Offer for Dark Raven (sold)
+  const { error: offerErr3 } = await supabase.from('offers').insert({
+    listing_id: listingIds[11],
+    buyer_id: userIds.buyer,
+    seller_id: userIds.seller,
+    amount_cents: 6200000,
+    message: "Dark Raven is exactly what I've been looking for. Offering $62,000 through ManeVault.",
+    payment_method: 'ach',
+    status: 'accepted',
+    expires_at: daysAgo(15),
+  });
+  if (offerErr3) die('Creating offer for Dark Raven', offerErr3);
+  console.log('     $62,000 offer on Dark Raven (accepted — sold)');
 
   // ── Steps 10-13: Engagement data (requires migrations 009-011 in schema cache) ──
 
@@ -729,11 +1193,12 @@ async function main() {
   console.log('  │ trainer@test.com     │ Test1234!  │ No    │');
   console.log('  └──────────────────────┴────────────┴───────┘\n');
   console.log('  Verification:');
-  console.log('  1. seller@test.com  → Dashboard with 6 listings, messages, offer');
-  console.log('  2. buyer@test.com   → Messages, offer, Dream Barn');
-  console.log('  3. /browse          → 6 active listings');
+  console.log('  1. seller@test.com  → Dashboard with 14 listings, messages, offers');
+  console.log('  2. buyer@test.com   → Messages, offers, Dream Barn');
+  console.log('  3. /browse          → 12 active listings (+ 1 sold, 1 under_offer)');
   console.log('  4. /admin (seller)  → Admin panel with stats');
-  console.log('  5. /horses/bellissimos-legacy → Full listing detail\n');
+  console.log('  5. /horses/bellissimos-legacy → Full listing detail');
+  console.log('  6. /just-sold       → Dark Raven (sold listing)\n');
 
   if (skipped.length) {
     console.log('  !! Schema cache issue !!');
