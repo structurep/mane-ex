@@ -152,8 +152,9 @@ export function BrowseFilters({ params }: Props) {
 
       {/* Location — grouped by region */}
       <div>
-        <Label className="text-xs">Location</Label>
+        <Label htmlFor="filter-state" className="text-xs">Location</Label>
         <select
+          id="filter-state"
           value={params.state || ""}
           onChange={(e) => updateFilter("state", e.target.value)}
           className="mt-1.5 w-full rounded-md border border-border bg-paper-white px-3 py-2 text-sm"
@@ -266,8 +267,9 @@ export function BrowseFilters({ params }: Props) {
           <div className="mt-3 space-y-5 border-t border-crease-light pt-4">
             {/* Breed */}
             <div>
-              <Label className="text-xs">Breed</Label>
+              <Label htmlFor="filter-breed" className="text-xs">Breed</Label>
               <select
+                id="filter-breed"
                 value={params.breed || ""}
                 onChange={(e) => updateFilter("breed", e.target.value)}
                 className="mt-1.5 w-full rounded-md border border-border bg-paper-white px-3 py-2 text-sm"
@@ -341,8 +343,9 @@ export function BrowseFilters({ params }: Props) {
 
             {/* Soundness Level */}
             <div>
-              <Label className="text-xs">Soundness</Label>
+              <Label htmlFor="filter-soundness" className="text-xs">Soundness</Label>
               <select
+                id="filter-soundness"
                 value={params.soundness || ""}
                 onChange={(e) => updateFilter("soundness", e.target.value)}
                 className="mt-1.5 w-full rounded-md border border-border bg-paper-white px-3 py-2 text-sm"
@@ -361,8 +364,9 @@ export function BrowseFilters({ params }: Props) {
 
       {/* Sort */}
       <div>
-        <Label className="text-xs">Sort By</Label>
+        <Label htmlFor="filter-sort" className="text-xs">Sort By</Label>
         <select
+          id="filter-sort"
           value={params.sort || "newest"}
           onChange={(e) => updateFilter("sort", e.target.value)}
           className="mt-1.5 w-full rounded-md border border-border bg-paper-white px-3 py-2 text-sm"

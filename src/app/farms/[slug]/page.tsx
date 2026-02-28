@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -169,12 +170,15 @@ export default async function FarmPage({ params }: Props) {
           </nav>
 
           {/* Cover image */}
-          <div className="mb-6 aspect-[3/1] overflow-hidden rounded-lg bg-paper-warm">
+          <div className="relative mb-6 aspect-[3/1] overflow-hidden rounded-lg bg-paper-warm">
             {farm.cover_url && (
-              <img
+              <Image
                 src={farm.cover_url}
                 alt={`${farm.name} cover`}
-                className="h-full w-full object-cover"
+                fill
+                sizes="(min-width: 1200px) 1200px, 100vw"
+                className="object-cover"
+                priority
               />
             )}
           </div>
@@ -184,9 +188,11 @@ export default async function FarmPage({ params }: Props) {
             <div className="flex items-end gap-4">
               {/* Logo */}
               {farm.logo_url ? (
-                <img
+                <Image
                   src={farm.logo_url}
                   alt={`${farm.name} logo`}
+                  width={64}
+                  height={64}
                   className="h-16 w-16 shrink-0 rounded-lg border-2 border-paper-white object-cover shadow-flat"
                 />
               ) : (
@@ -355,9 +361,11 @@ export default async function FarmPage({ params }: Props) {
                 className="inline-flex items-center gap-4 rounded-lg border-0 bg-paper-cream p-4 shadow-flat transition-shadow hover:shadow-folded"
               >
                 {owner.avatar_url ? (
-                  <img
+                  <Image
                     src={owner.avatar_url}
                     alt={owner.display_name || "Owner"}
+                    width={48}
+                    height={48}
                     className="h-12 w-12 shrink-0 rounded-full object-cover"
                   />
                 ) : (
@@ -408,9 +416,11 @@ export default async function FarmPage({ params }: Props) {
                       className="flex items-center gap-3 rounded-lg border-0 bg-paper-cream p-4 shadow-flat"
                     >
                       {profile?.avatar_url ? (
-                        <img
+                        <Image
                           src={profile.avatar_url}
                           alt={profile.display_name || "Member"}
+                          width={40}
+                          height={40}
                           className="h-10 w-10 shrink-0 rounded-full object-cover"
                         />
                       ) : (
@@ -455,9 +465,11 @@ export default async function FarmPage({ params }: Props) {
                     >
                       <div className="flex items-center gap-2.5">
                         {postAuthor?.avatar_url ? (
-                          <img
+                          <Image
                             src={postAuthor.avatar_url}
                             alt=""
+                            width={28}
+                            height={28}
                             className="h-7 w-7 rounded-full object-cover"
                           />
                         ) : (

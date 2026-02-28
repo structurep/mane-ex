@@ -103,10 +103,10 @@ export function ListingTabs({ listing }: { listing: ListingTabsData }) {
               </p>
             </div>
             <div className="flex gap-2">
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" aria-label="Save to Dream Barn">
                 <Heart className="h-5 w-5" />
               </Button>
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" aria-label="Share listing">
                 <Share2 className="h-5 w-5" />
               </Button>
             </div>

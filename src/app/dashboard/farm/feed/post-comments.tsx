@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import Image from "next/image";
 import { createComment, getComments, deleteComment } from "@/actions/barn-comments";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -111,9 +112,11 @@ export function PostComments({
             <div key={commentId} className="py-3">
               <div className="flex gap-2.5">
                 {author?.avatar_url ? (
-                  <img
+                  <Image
                     src={author.avatar_url}
                     alt=""
+                    width={28}
+                    height={28}
                     className="h-7 w-7 rounded-full object-cover"
                   />
                 ) : (
@@ -160,9 +163,11 @@ export function PostComments({
                         return (
                           <div key={reply.id as string} className="flex gap-2">
                             {replyAuthor?.avatar_url ? (
-                              <img
+                              <Image
                                 src={replyAuthor.avatar_url}
                                 alt=""
+                                width={20}
+                                height={20}
                                 className="h-5 w-5 rounded-full object-cover"
                               />
                             ) : (

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import Image from "next/image";
 import { Play, Images } from "lucide-react";
 import { Lightbox } from "@/components/lightbox";
 
@@ -114,6 +115,7 @@ export function ListingGallery({ media }: { media: MediaItem[] }) {
               <button
                 key={item.id}
                 onClick={() => openLightbox(i)}
+                aria-label={`View photo ${i + 1}`}
                 className={`relative h-14 w-[4.5rem] flex-shrink-0 overflow-hidden rounded-md border-2 transition-all ${
                   i === 0
                     ? "border-primary ring-1 ring-primary/30"
@@ -126,10 +128,12 @@ export function ListingGallery({ media }: { media: MediaItem[] }) {
                   </div>
                 ) : (
                    
-                  <img
+                  <Image
                     src={item.url}
                     alt={item.alt_text || ""}
-                    className="h-full w-full object-cover"
+                    fill
+                    sizes="72px"
+                    className="object-cover"
                   />
                 )}
               </button>
@@ -178,12 +182,13 @@ function GalleryMedia({
   }
 
   return (
-     
-    <img
+    <Image
       src={item.url}
       alt={item.alt_text || "Listing photo"}
-      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-      loading={priority ? "eager" : "lazy"}
+      fill
+      sizes="(min-width: 1024px) 66vw, 100vw"
+      priority={priority}
+      className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
     />
   );
 }

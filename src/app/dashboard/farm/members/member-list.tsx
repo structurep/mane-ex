@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { removeMember, updateMemberRole } from "@/actions/barn";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -78,9 +79,11 @@ export function MemberList({
           >
             {/* Avatar */}
             {profile?.avatar_url ? (
-              <img
+              <Image
                 src={profile.avatar_url}
                 alt={profile.display_name ?? "Member"}
+                width={40}
+                height={40}
                 className="h-10 w-10 rounded-full object-cover"
               />
             ) : (

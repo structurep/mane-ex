@@ -2,6 +2,7 @@
 
 import { useEffect, useCallback, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import Image from "next/image";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 type LightboxItem = {
@@ -134,10 +135,13 @@ export function Lightbox({ items, initialIndex, onClose }: LightboxProps) {
           />
         ) : (
            
-          <img
+          <Image
             key={current.url}
             src={current.url}
             alt={current.alt}
+            width={1200}
+            height={800}
+            sizes="90vw"
             className="max-h-[90vh] max-w-[90vw] rounded-lg object-contain"
           />
         )}

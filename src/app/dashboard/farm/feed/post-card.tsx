@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { deletePost, pinPost } from "@/actions/barn-posts";
 import { PostMediaGrid } from "./post-media-grid";
@@ -74,9 +75,11 @@ export function PostCard({
       {/* Header */}
       <div className="flex items-start gap-3 p-4 pb-0">
         {author?.avatar_url ? (
-          <img
+          <Image
             src={author.avatar_url}
             alt={author.display_name ?? ""}
+            width={36}
+            height={36}
             className="h-9 w-9 rounded-full object-cover"
           />
         ) : (

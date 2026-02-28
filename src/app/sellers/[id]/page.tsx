@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -116,11 +117,14 @@ export default async function SellerProfilePage({ params }: Props) {
 
           {/* Cover photo */}
           {profile.cover_url && (
-            <div className="mb-6 h-48 overflow-hidden rounded-xl sm:h-56">
-              <img
+            <div className="relative mb-6 h-48 overflow-hidden rounded-xl sm:h-56">
+              <Image
                 src={profile.cover_url}
                 alt={`${displayName}'s cover`}
-                className="h-full w-full object-cover"
+                fill
+                sizes="(min-width: 1200px) 1200px, 100vw"
+                className="object-cover"
+                priority
               />
             </div>
           )}
@@ -130,9 +134,11 @@ export default async function SellerProfilePage({ params }: Props) {
             <div className="flex items-start gap-5">
               {/* Avatar */}
               {profile.avatar_url ? (
-                <img
+                <Image
                   src={profile.avatar_url}
                   alt={displayName}
+                  width={80}
+                  height={80}
                   className="h-20 w-20 flex-shrink-0 rounded-full border-4 border-paper-white object-cover shadow-flat"
                 />
               ) : (

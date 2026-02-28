@@ -163,10 +163,10 @@ export async function BrowseResults({ params }: Props) {
     <div>
       {/* Results count + timestamp */}
       <div className="mb-4 flex items-center justify-between">
-        <p className="text-sm text-ink-mid">
+        <h2 className="text-sm font-normal text-ink-mid">
           {count} horse{count !== 1 ? "s" : ""} available
           <span className="ml-1 text-ink-light">· Updated just now</span>
-        </p>
+        </h2>
         <SaveSearchButton params={params} />
       </div>
 

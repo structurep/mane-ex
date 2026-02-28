@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { getStoriesListings } from "@/actions/discovery";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ChevronUp,
@@ -104,10 +105,13 @@ export function StoriesViewer() {
     <div className="relative h-screen w-full overflow-hidden bg-paddock">
       {/* Background image */}
       {typeof listing.primary_image_url === "string" ? (
-        <img
+        <Image
           src={listing.primary_image_url}
           alt={listing.name}
-          className="h-full w-full object-cover"
+          fill
+          sizes="100vw"
+          priority
+          className="object-cover"
         />
       ) : (
         <div className="flex h-full w-full items-center justify-center bg-paper-cream/10 text-ink-light">

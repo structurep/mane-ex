@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, ArrowRight, Loader2 } from "lucide-react";
 import type { OnboardingData } from "../onboarding-flow";
@@ -32,9 +33,11 @@ export function CompleteStep({
         <div className="space-y-3">
           {data.avatar_url && (
             <div className="flex items-center gap-3">
-              <img
+              <Image
                 src={data.avatar_url}
                 alt=""
+                width={40}
+                height={40}
                 className="h-10 w-10 rounded-full object-cover"
               />
               <div>

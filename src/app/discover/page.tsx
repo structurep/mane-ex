@@ -2,6 +2,7 @@ import { getDiscoveryFeed } from "@/actions/discovery";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 import Link from "next/link";
 import {
   Sparkles,
@@ -96,12 +97,14 @@ export default async function DiscoverPage() {
                         className="animate-fade-up"
                       >
                         <div className="group overflow-hidden rounded-lg bg-paper-white shadow-flat transition-elevation hover-lift hover:shadow-lifted">
-                          <div className="aspect-[4/3] bg-paper-warm">
+                          <div className="relative aspect-[4/3] bg-paper-warm">
                             {typeof l.primary_image_url === "string" ? (
-                              <img
+                              <Image
                                 src={l.primary_image_url}
                                 alt={String(l.name)}
-                                className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                                fill
+                                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                                className="object-cover transition-transform group-hover:scale-105"
                               />
                             ) : (
                               <div className="flex h-full items-center justify-center text-ink-faint">
