@@ -759,6 +759,41 @@ async function main() {
       farm_id: farmIds['hudson-valley-equestrian'],
       published_at: daysAgo(5),
     },
+
+    // ── CTA demo: LOW-BASICS — no DOB/height/color/registry/sire/dam, strong everything else ──
+    {
+      name: 'Canyon Drift',
+      slug: 'canyon-drift',
+      breed: 'Quarter Horse',
+      // Intentionally omitting: date_of_birth, height_hands, color,
+      // registered_name, registration_number, registry, sire, dam
+      // Basics score: name(20) + breed(20) + gender(15) + price(30) = 85/200 = 42.5%
+      gender: 'gelding' as const,
+      discipline_ids: disc(['Western Pleasure', 'Trail']),
+      level: 'Intermediate',
+      show_experience: 'Experienced trail horse with over 50 competitive trail miles. Steady on terrain.',
+      show_record: 'AQHA trail versatility champion, multiple ranch riding placings',
+      price: 2800000,
+      price_display: '$28,000',
+      warranty: 'sound_at_sale' as const,
+      vet_name: 'Dr. Robert Hale, Scottsdale Equine',
+      vaccination_status: 'Current — full protocol',
+      coggins_date: '2026-01-15',
+      coggins_expiry: '2027-01-15',
+      henneke_score: 5,
+      soundness_level: 'vet_confirmed_sound' as const,
+      location_city: 'Scottsdale',
+      location_state: 'AZ',
+      location_zip: '85255',
+      barn_name: 'Tryon Ridge Stables',
+      temperament: 'Steady, confident, and traffic-safe. Will go anywhere you point him.',
+      suitable_for: 'Trail rider, ranch work, beginner-safe',
+      years_with_current_owner: 5,
+      reason_for_sale: 'Owner downsizing herd.',
+      seller_state: 'AZ',
+      farm_id: farmIds['tryon-ridge-stables'],
+      published_at: daysAgo(6),
+    },
   ];
 
   const listingIds: string[] = [];
@@ -886,6 +921,15 @@ async function main() {
 
     // ── Silver Cascade (1 photo only — LOW MEDIA demo) ──
     { listing: 14, type: 'photo', url: img('photo-1594768816441-1dd241ffaa67'), alt: 'Conformation — grey Holsteiner gelding', primary: true },
+
+    // ── Canyon Drift (6 photos + 1 video — strong media, LOW BASICS demo) ──
+    { listing: 16, type: 'photo', url: img('photo-1566824871434-85201e8430ef'), alt: 'Conformation — Quarter Horse gelding', primary: true },
+    { listing: 16, type: 'photo', url: img('photo-1759174727484-85977922f406'), alt: 'Trail riding in the canyon' },
+    { listing: 16, type: 'photo', url: img('photo-1763130063555-1544100e84d7'), alt: 'Relaxed in the pasture' },
+    { listing: 16, type: 'photo', url: img('photo-1580216501592-7493ce4d6b58'), alt: 'Under saddle — western pleasure' },
+    { listing: 16, type: 'photo', url: img('photo-1574174170574-c3a7955a227a'), alt: 'At the water crossing' },
+    { listing: 16, type: 'photo', url: img('photo-1686075876492-f19c1d18f6e1'), alt: 'Head portrait — calm expression' },
+    { listing: 16, type: 'video', url: 'https://assets.mixkit.co/videos/1484/1484-720.mp4', alt: 'Trail riding highlight', w: 1280, h: 720 },
 
     // ── Autumn Ember (6 photos + 1 video — strong media, LOW DETAILS demo) ──
     { listing: 15, type: 'photo', url: img('photo-1553284965-83fd3e82fa5a'), alt: 'Conformation — chestnut Thoroughbred mare', primary: true },
