@@ -32,8 +32,9 @@ async function getListing(slug: string) {
       `
       *,
       seller:profiles!seller_id(id, display_name, full_name, avatar_url, seller_tier, identity_verified),
-      media:listing_media(id, url, alt_text, caption, sort_order, is_primary, type)
-    `
+      media:listing_media(id, url, alt_text, caption, sort_order, is_primary, type),
+      registry_records:listing_registry_records(id, registry, registry_number, registered_name, status, verified_at)
+`
     )
     .eq("slug", slug)
     .in("status", ["active", "under_offer", "sold"])

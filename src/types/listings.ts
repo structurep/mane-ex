@@ -8,6 +8,17 @@ export type ListingStatus =
   | "removed";
 
 export type WarrantyType = "as_is" | "sound_at_sale" | "sound_for_use";
+
+export interface ListingRegistryRecord {
+  id: string;
+  listing_id: string;
+  registry: string;
+  registry_number: string;
+  registered_name: string | null;
+  status: string;
+  verified_at: string | null;
+  notes: string | null;
+}
 export type HorseGender = "mare" | "gelding" | "stallion";
 export type MediaType = "photo" | "video";
 export type DocumentType =

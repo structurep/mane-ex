@@ -34,6 +34,8 @@ import { ManeScoreBadge } from "@/components/mane-score-badge";
 import { BadgeShowcase } from "@/components/badge-showcase";
 import { ListingGallery } from "@/components/listing-gallery";
 import { HennekeScoreDisplay } from "@/components/henneke-score";
+import { RegistryBadges, type RegistryRecord, type RegistryType } from "@/components/registry-lookup";
+import type { ListingRegistryRecord } from "@/types/listings";
 
 type MediaItem = {
   id: string;
@@ -60,7 +62,18 @@ export type ListingTabsData = HorseListing & {
   seller: SellerInfo;
   media: MediaItem[];
   seller_score: SellerScoreInfo;
+  registry_records?: ListingRegistryRecord[];
 };
+
+function mapDbToRegistryRecord(r: ListingRegistryRecord): RegistryRecord {
+  return {
+    registry: r.registry as RegistryType,
+    registrationNumber: r.registry_number || "",
+    registeredName: r.registered_name || undefined,
+    verificationStatus: r.status === "verified" ? "verified" : r.status === "pending" ? "pending" : "unverified",
+    verifiedAt: r.verified_at || undefined,
+  };
+}
 
 function daysSincePublished(dateStr: string): number {
   return Math.max(1, Math.floor((Date.now() - new Date(dateStr).getTime()) / 86400000));
@@ -235,6 +248,11 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
                     <QuickFact label="Dam" value={l.dam} />
                   )}
                 </div>
+                {l.registry_records && l.registry_records.length > 0 && (
+                  <div className="mt-3">
+                    <RegistryBadges records={l.registry_records.map(mapDbToRegistryRecord)} />
+                  </div>
+                )}
               </section>
 
               {/* Description / Temperament preview */}

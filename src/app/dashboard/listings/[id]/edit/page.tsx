@@ -54,6 +54,13 @@ export default async function EditListingPage({ params }: Props) {
 
   if (listing.status === "removed") return notFound();
 
+  // Fetch registry records for this listing
+  const { data: registryRecords } = await supabase
+    .from("listing_registry_records")
+    .select("*")
+    .eq("listing_id", id)
+    .order("created_at");
+
   // Extract only the form-relevant fields, converting price from cents to dollars
   const initialData: Record<string, unknown> = {};
   for (const key of FORM_FIELDS) {
@@ -65,6 +72,17 @@ export default async function EditListingPage({ params }: Props) {
         initialData[key] = value;
       }
     }
+  }
+
+  // Map DB records to RegistryRecord shape for the component
+  if (registryRecords?.length) {
+    initialData.registry_records = registryRecords.map((r) => ({
+      registry: r.registry,
+      registrationNumber: r.registry_number || "",
+      registeredName: r.registered_name || undefined,
+      verificationStatus: r.status || "unverified",
+      verifiedAt: r.verified_at || undefined,
+    }));
   }
 
   return (

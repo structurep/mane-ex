@@ -10,6 +10,86 @@ export type ListingActionState = {
   listingId?: string;
 };
 
+type RegistryRecordInput = {
+  registry: string;
+  registrationNumber: string;
+  registeredName?: string;
+  verificationStatus: string;
+};
+
+/** Extract and parse registry_records JSON from FormData, then remove from raw object. */
+function extractRegistryRecords(formData: FormData): RegistryRecordInput[] {
+  const raw = formData.get("registry_records") as string | null;
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw) as RegistryRecordInput[];
+    // Filter out records without required registry_number
+    return parsed.filter((r) => r.registrationNumber?.trim());
+  } catch {
+    return [];
+  }
+}
+
+/** Parse listing FormData into a raw object for Zod validation. */
+function parseListingFormData(formData: FormData, skipKeys: string[] = []): Record<string, unknown> {
+  const raw: Record<string, unknown> = {};
+  formData.forEach((value, key) => {
+    if (skipKeys.includes(key)) return;
+    if (key === "registry_records") return; // handled separately
+    if (key === "discipline_ids") {
+      const existing = raw[key] as string[] | undefined;
+      raw[key] = existing ? [...existing, value as string] : [value as string];
+    } else if (key === "price") {
+      raw[key] = Math.round(Number(value) * 100);
+    } else if (value === "true" || value === "false") {
+      raw[key] = value === "true";
+    } else if (value === "") {
+      // Skip empty strings
+    } else {
+      raw[key] = value;
+    }
+  });
+  return raw;
+}
+
+/** Persist registry records for a listing (delete-then-insert). */
+async function saveRegistryRecords(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  listingId: string,
+  records: RegistryRecordInput[]
+): Promise<string | null> {
+  // Delete existing records
+  const { error: deleteErr } = await supabase
+    .from("listing_registry_records")
+    .delete()
+    .eq("listing_id", listingId);
+
+  if (deleteErr) {
+    return `Failed to clear registry records: ${deleteErr.message}`;
+  }
+
+  // Insert current set (if any)
+  if (records.length > 0) {
+    const { error: insertErr } = await supabase
+      .from("listing_registry_records")
+      .insert(
+        records.map((r) => ({
+          listing_id: listingId,
+          registry: r.registry,
+          registry_number: r.registrationNumber.trim(),
+          registered_name: r.registeredName?.trim() || null,
+          status: r.verificationStatus || "unverified",
+        }))
+      );
+
+    if (insertErr) {
+      return `Listing saved but registry records failed: ${insertErr.message}`;
+    }
+  }
+
+  return null; // success
+}
+
 export async function createListing(
   _prevState: ListingActionState,
   formData: FormData
@@ -23,24 +103,8 @@ export async function createListing(
     return { error: "You must be logged in to create a listing." };
   }
 
-  // Parse form data into object
-  const raw: Record<string, unknown> = {};
-  formData.forEach((value, key) => {
-    if (key === "discipline_ids") {
-      // Handle array fields
-      const existing = raw[key] as string[] | undefined;
-      raw[key] = existing ? [...existing, value as string] : [value as string];
-    } else if (key === "price") {
-      // Convert dollars to cents
-      raw[key] = Math.round(Number(value) * 100);
-    } else if (value === "true" || value === "false") {
-      raw[key] = value === "true";
-    } else if (value === "") {
-      // Skip empty strings
-    } else {
-      raw[key] = value;
-    }
-  });
+  const registryRecords = extractRegistryRecords(formData);
+  const raw = parseListingFormData(formData);
 
   const parsed = fullListingSchema.safeParse(raw);
 
@@ -65,6 +129,15 @@ export async function createListing(
 
   if (error) {
     return { error: error.message };
+  }
+
+  // Save registry records (best-effort — listing is already created)
+  if (registryRecords.length > 0) {
+    const regErr = await saveRegistryRecords(supabase, data.id, registryRecords);
+    if (regErr) {
+      // Listing exists but records failed — redirect anyway, user can re-add
+      console.error(regErr);
+    }
   }
 
   redirect(`/horses/${data.slug}`);
@@ -103,23 +176,8 @@ export async function updateListing(
     return { error: "Archived listings cannot be edited." };
   }
 
-  // Parse form data into object (same logic as createListing)
-  const raw: Record<string, unknown> = {};
-  formData.forEach((value, key) => {
-    if (key === "_listingId") return; // skip meta field
-    if (key === "discipline_ids") {
-      const arr = raw[key] as string[] | undefined;
-      raw[key] = arr ? [...arr, value as string] : [value as string];
-    } else if (key === "price") {
-      raw[key] = Math.round(Number(value) * 100);
-    } else if (value === "true" || value === "false") {
-      raw[key] = value === "true";
-    } else if (value === "") {
-      // Skip empty strings
-    } else {
-      raw[key] = value;
-    }
-  });
+  const registryRecords = extractRegistryRecords(formData);
+  const raw = parseListingFormData(formData, ["_listingId"]);
 
   const parsed = fullListingSchema.safeParse(raw);
 
@@ -140,6 +198,12 @@ export async function updateListing(
 
   if (error) {
     return { error: error.message };
+  }
+
+  // Save registry records
+  const regErr = await saveRegistryRecords(supabase, listingId, registryRecords);
+  if (regErr) {
+    return { error: regErr };
   }
 
   return { listingId };
@@ -209,14 +273,14 @@ export async function toggleFavorite(
   }
 
   // Check if already favorited
-  const { data: existing } = await supabase
+  const { data: existingFav } = await supabase
     .from("listing_favorites")
     .select("id")
     .eq("listing_id", listingId)
     .eq("user_id", user.id)
     .single();
 
-  if (existing) {
+  if (existingFav) {
     await supabase
       .from("listing_favorites")
       .delete()

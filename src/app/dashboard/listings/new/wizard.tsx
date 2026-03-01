@@ -123,6 +123,10 @@ export function ListingWizard({ mode = "create", listingId, initialData }: Listi
           <input type="hidden" name="_listingId" value={listingId} />
         )}
         {Object.entries(state.data).map(([key, value]) => {
+          // registry_records is an array of objects — serialize as JSON
+          if (key === "registry_records" && Array.isArray(value)) {
+            return <input key={key} type="hidden" name={key} value={JSON.stringify(value)} />;
+          }
           if (Array.isArray(value)) {
             return value.map((v, i) => (
               <input key={`${key}-${i}`} type="hidden" name={key} value={String(v)} />
