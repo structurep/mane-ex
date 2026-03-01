@@ -32,6 +32,7 @@ export function EditPageClient({
   const router = useRouter();
   const [isDirty, setIsDirty] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
+  const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null);
   const isDirtyRef = useRef(false);
 
   // Keep ref in sync for use inside event handlers
@@ -106,10 +107,21 @@ export function EditPageClient({
             </Link>
           )}
         </div>
-        <p className="mt-1 text-sm text-ink-mid">
-          Update {listingName} — changes are saved without affecting listing
-          status.
-        </p>
+        <div className="mt-1 flex items-center gap-2">
+          <p className="text-sm text-ink-mid">
+            Update {listingName} — changes are saved without affecting listing
+            status.
+          </p>
+          {lastSavedAt && (
+            <span className="text-xs text-ink-faint">
+              Saved at{" "}
+              {lastSavedAt.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </span>
+          )}
+        </div>
       </div>
 
       <ListingWizard
@@ -117,6 +129,7 @@ export function EditPageClient({
         listingId={listingId}
         initialData={initialData}
         onDirtyChange={setIsDirty}
+        onSaveSuccess={() => setLastSavedAt(new Date())}
       />
 
       <AlertDialog open={showDialog} onOpenChange={setShowDialog}>

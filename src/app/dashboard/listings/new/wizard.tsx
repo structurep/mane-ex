@@ -43,9 +43,10 @@ type ListingWizardProps = {
   listingId?: string;
   initialData?: Record<string, unknown>;
   onDirtyChange?: (dirty: boolean) => void;
+  onSaveSuccess?: () => void;
 };
 
-export function ListingWizard({ mode = "create", listingId, initialData, onDirtyChange }: ListingWizardProps) {
+export function ListingWizard({ mode = "create", listingId, initialData, onDirtyChange, onSaveSuccess }: ListingWizardProps) {
   const isEdit = mode === "edit";
 
   const [state, dispatch] = useReducer(wizardReducer, {
@@ -76,6 +77,7 @@ export function ListingWizard({ mode = "create", listingId, initialData, onDirty
       toast.success("Changes saved");
       initialSnapshotRef.current = JSON.stringify(state.data);
       onDirtyChange?.(false);
+      onSaveSuccess?.();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- fire on every action completion
   }, [actionState]);
