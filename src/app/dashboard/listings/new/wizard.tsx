@@ -1,7 +1,8 @@
 "use client";
 
-import { useReducer, useActionState, useEffect, useRef } from "react";
+import { useReducer, useActionState, useEffect, useRef, useCallback } from "react";
 import { createListing, updateListing, type ListingActionState } from "@/actions/listings";
+import { useAutosave, type SaveStatus } from "@/hooks/use-autosave";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { WIZARD_STEPS } from "@/types/listings";
@@ -43,10 +44,11 @@ type ListingWizardProps = {
   listingId?: string;
   initialData?: Record<string, unknown>;
   onDirtyChange?: (dirty: boolean) => void;
-  onSaveSuccess?: () => void;
+  onSaveStatus?: (status: SaveStatus) => void;
+  retryRef?: React.MutableRefObject<(() => void) | null>;
 };
 
-export function ListingWizard({ mode = "create", listingId, initialData, onDirtyChange, onSaveSuccess }: ListingWizardProps) {
+export function ListingWizard({ mode = "create", listingId, initialData, onDirtyChange, onSaveStatus, retryRef }: ListingWizardProps) {
   const isEdit = mode === "edit";
 
   const [state, dispatch] = useReducer(wizardReducer, {
@@ -67,17 +69,48 @@ export function ListingWizard({ mode = "create", listingId, initialData, onDirty
     onDirtyChange(JSON.stringify(state.data) !== initialSnapshotRef.current);
   }, [state.data, onDirtyChange]);
 
-  // Toast on server action result + reset dirty on successful save
+  // Autosave (edit mode only)
+  const { flush, retry } = useAutosave({
+    data: state.data,
+    listingId: listingId ?? "",
+    enabled: isEdit && !!listingId,
+    delay: 1200,
+    onStatusChange: (status) => onSaveStatus?.(status),
+    onSaveComplete: (savedSnapshot) => {
+      initialSnapshotRef.current = savedSnapshot;
+      onDirtyChange?.(false);
+      onSaveStatus?.("saved");
+    },
+    onSaveError: () => onSaveStatus?.("error"),
+  });
+
+  // Expose retry to parent for "Retry" button
+  useEffect(() => {
+    if (retryRef) retryRef.current = retry;
+  }, [retry, retryRef]);
+
+  // Cancel autosave before manual form submission
+  const handleFormAction = useCallback(
+    (formData: FormData) => {
+      flush();
+      onSaveStatus?.("saving");
+      submitAction(formData);
+    },
+    [flush, submitAction, onSaveStatus],
+  );
+
+  // Toast on server action result (manual save via form submission)
   useEffect(() => {
     if (actionState.error) {
       toast.error(isEdit ? "Save failed" : "Listing creation failed", {
         description: actionState.error,
       });
+      if (isEdit) onSaveStatus?.("error");
     } else if (isEdit && actionState.listingId) {
       toast.success("Changes saved");
       initialSnapshotRef.current = JSON.stringify(state.data);
       onDirtyChange?.(false);
-      onSaveSuccess?.();
+      onSaveStatus?.("saved");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- fire on every action completion
   }, [actionState]);
@@ -129,7 +162,7 @@ export function ListingWizard({ mode = "create", listingId, initialData, onDirty
 
       {/* Step content */}
       <form
-        action={submitAction}
+        action={handleFormAction}
         className="p-6"
       >
         {/* Hidden fields for all wizard data */}

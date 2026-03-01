@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft, ExternalLink } from "lucide-react";
 import { ListingWizard } from "../../new/wizard";
+import type { SaveStatus } from "@/hooks/use-autosave";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -32,8 +33,15 @@ export function EditPageClient({
   const router = useRouter();
   const [isDirty, setIsDirty] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
+  const [saveStatus, setSaveStatus] = useState<SaveStatus>("idle");
   const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null);
   const isDirtyRef = useRef(false);
+  const retryRef = useRef<(() => void) | null>(null);
+
+  const handleSaveStatus = useCallback((status: SaveStatus) => {
+    setSaveStatus(status);
+    if (status === "saved") setLastSavedAt(new Date());
+  }, []);
 
   // Keep ref in sync for use inside event handlers
   useEffect(() => {
@@ -112,13 +120,28 @@ export function EditPageClient({
             Update {listingName} — changes are saved without affecting listing
             status.
           </p>
-          {lastSavedAt && (
+          {saveStatus === "saving" && (
+            <span className="text-xs text-ink-mid">Saving…</span>
+          )}
+          {saveStatus === "saved" && lastSavedAt && (
             <span className="text-xs text-ink-faint">
               Saved at{" "}
               {lastSavedAt.toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
               })}
+            </span>
+          )}
+          {saveStatus === "error" && (
+            <span className="flex items-center gap-1 text-xs text-red">
+              Save failed
+              <button
+                type="button"
+                onClick={() => retryRef.current?.()}
+                className="underline hover:no-underline"
+              >
+                Retry
+              </button>
             </span>
           )}
         </div>
@@ -129,7 +152,8 @@ export function EditPageClient({
         listingId={listingId}
         initialData={initialData}
         onDirtyChange={setIsDirty}
-        onSaveSuccess={() => setLastSavedAt(new Date())}
+        onSaveStatus={handleSaveStatus}
+        retryRef={retryRef}
       />
 
       <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
