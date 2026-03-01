@@ -67,7 +67,7 @@ export type ListingTabsData = HorseListing & {
 
 function mapDbToRegistryRecord(r: ListingRegistryRecord): RegistryRecord {
   return {
-    registry: r.registry as RegistryType,
+    registry: r.registry.toLowerCase() as RegistryType,
     registrationNumber: r.registry_number || "",
     registeredName: r.registered_name || undefined,
     verificationStatus: r.status === "verified" ? "verified" : r.status === "pending" ? "pending" : "unverified",

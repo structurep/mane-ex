@@ -961,10 +961,10 @@ async function main() {
 
   console.log('  6b. Adding registry records...');
   const registryRows = [
-    { listing_id: listingIds[0], registry: 'aqha', registry_number: '5678901', registered_name: "Bellissimo's Legacy", status: 'verified', verified_at: new Date().toISOString() },
-    { listing_id: listingIds[0], registry: 'usef', registry_number: '5234567', status: 'pending' },
-    { listing_id: listingIds[2], registry: 'usdf', registry_number: '12345', status: 'unverified' },
-    { listing_id: listingIds[4], registry: 'ushja', registry_number: '8901234', status: 'verified', verified_at: new Date().toISOString() },
+    { listing_id: listingIds[0], registry: 'AQHA', registry_number: '5678901', registered_name: "Bellissimo's Legacy", status: 'verified', verified_at: new Date().toISOString() },
+    { listing_id: listingIds[0], registry: 'USEF', registry_number: '5234567', status: 'pending' },
+    { listing_id: listingIds[2], registry: 'USDF', registry_number: '12345', status: 'unverified' },
+    { listing_id: listingIds[4], registry: 'USHJA', registry_number: '8901234', status: 'verified', verified_at: new Date().toISOString() },
   ];
   const { error: regErr } = await supabase.from('listing_registry_records').insert(registryRows);
   if (regErr) die('Creating registry records', regErr);

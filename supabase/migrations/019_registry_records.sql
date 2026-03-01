@@ -4,7 +4,7 @@
 CREATE TABLE IF NOT EXISTS listing_registry_records (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   listing_id uuid NOT NULL REFERENCES horse_listings(id) ON DELETE CASCADE,
-  registry text NOT NULL,            -- e.g. 'aqha', 'usef', 'usdf', 'ushja', 'jockey_club', 'other'
+  registry text NOT NULL,            -- e.g. 'AQHA', 'USEF', 'USDF', 'USHJA', 'JOCKEY_CLUB', 'OTHER'
   registry_number text NOT NULL,     -- user-entered registration number (required)
   registered_name text,
   status text NOT NULL DEFAULT 'unverified',  -- 'unverified' | 'pending' | 'verified' | 'not_found'
@@ -26,13 +26,13 @@ CREATE INDEX registry_records_listing_idx ON listing_registry_records(listing_id
 
 ALTER TABLE listing_registry_records ENABLE ROW LEVEL SECURITY;
 
--- SELECT: same visibility as horse_listings (active/under_offer/sold = public, seller sees own)
+-- SELECT: public sees records for active listings only; seller always sees own
 CREATE POLICY "Registry records readable for viewable listings"
   ON listing_registry_records FOR SELECT
   USING (
     listing_id IN (
       SELECT id FROM horse_listings
-      WHERE status IN ('active', 'under_offer', 'sold')
+      WHERE status = 'active'
          OR seller_id = auth.uid()
     )
   );

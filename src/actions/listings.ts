@@ -23,8 +23,10 @@ function extractRegistryRecords(formData: FormData): RegistryRecordInput[] {
   if (!raw) return [];
   try {
     const parsed = JSON.parse(raw) as RegistryRecordInput[];
-    // Filter out records without required registry_number
-    return parsed.filter((r) => r.registrationNumber?.trim());
+    // Filter out records without required registry_number; normalize registry to uppercase
+    return parsed
+      .filter((r) => r.registrationNumber?.trim())
+      .map((r) => ({ ...r, registry: r.registry.toUpperCase().trim() }));
   } catch {
     return [];
   }
@@ -75,7 +77,7 @@ async function saveRegistryRecords(
       .insert(
         records.map((r) => ({
           listing_id: listingId,
-          registry: r.registry,
+          registry: r.registry.toUpperCase().trim(),
           registry_number: r.registrationNumber.trim(),
           registered_name: r.registeredName?.trim() || null,
           status: r.verificationStatus || "unverified",

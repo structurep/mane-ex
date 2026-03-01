@@ -77,7 +77,7 @@ export default async function EditListingPage({ params }: Props) {
   // Map DB records to RegistryRecord shape for the component
   if (registryRecords?.length) {
     initialData.registry_records = registryRecords.map((r) => ({
-      registry: r.registry,
+      registry: r.registry.toLowerCase(),
       registrationNumber: r.registry_number || "",
       registeredName: r.registered_name || undefined,
       verificationStatus: r.status || "unverified",
