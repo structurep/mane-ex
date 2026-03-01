@@ -50,39 +50,31 @@ export default async function BrowsePage({ searchParams }: Props) {
             </p>
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-4">
-            {/* Filters sidebar — sticky on desktop */}
-            <aside className="lg:col-span-1">
-              <div className="lg:sticky lg:top-20">
-                <BrowseFilters params={params} />
-              </div>
-            </aside>
+          {/* Filters — horizontal top bar */}
+          <BrowseFilters params={params} />
 
-            {/* Results */}
-            <div className="lg:col-span-3">
-              <Suspense
-                fallback={
-                  <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                    {Array.from({ length: 6 }).map((_, i) => (
-                      <div
-                        key={i}
-                        className="overflow-hidden rounded-lg bg-paper-white shadow-flat"
-                      >
-                        <div className="aspect-[3/2] animate-shimmer" />
-                        <div className="space-y-2 p-3.5">
-                          <div className="h-4 w-3/4 animate-shimmer rounded" />
-                          <div className="h-3 w-1/2 animate-shimmer rounded" />
-                          <div className="h-3 w-2/3 animate-shimmer rounded" />
-                        </div>
-                      </div>
-                    ))}
+          {/* Results — full width */}
+          <Suspense
+            fallback={
+              <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="overflow-hidden rounded-lg bg-paper-white shadow-flat"
+                  >
+                    <div className="aspect-[3/2] animate-shimmer" />
+                    <div className="space-y-2 p-3.5">
+                      <div className="h-4 w-3/4 animate-shimmer rounded" />
+                      <div className="h-3 w-1/2 animate-shimmer rounded" />
+                      <div className="h-3 w-2/3 animate-shimmer rounded" />
+                    </div>
                   </div>
-                }
-              >
-                <BrowseResults params={params} />
-              </Suspense>
-            </div>
-          </div>
+                ))}
+              </div>
+            }
+          >
+            <BrowseResults params={params} />
+          </Suspense>
 
           {/* Personalized recommendations */}
           <Suspense fallback={null}>
