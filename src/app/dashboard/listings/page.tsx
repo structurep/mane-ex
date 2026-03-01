@@ -45,7 +45,7 @@ const BUCKET_CTA: Record<BucketKey, { message: string; tab: string }> = {
   },
 };
 
-function getWeakestBucket(listing: Record<string, unknown>): { key: BucketKey; message: string; tab: string } | null {
+function getWeakestBucket(listing: Record<string, unknown>): { key: BucketKey; pct: number; message: string; tab: string } | null {
   const b = listing.basics_score as number | null;
   const d = listing.details_score as number | null;
   const t = listing.trust_score as number | null;
@@ -61,7 +61,7 @@ function getWeakestBucket(listing: Record<string, unknown>): { key: BucketKey; m
   ];
   buckets.sort((a, z) => a.pct - z.pct);
   const weakest = buckets[0];
-  return { key: weakest.key, ...BUCKET_CTA[weakest.key] };
+  return { key: weakest.key, pct: weakest.pct, ...BUCKET_CTA[weakest.key] };
 }
 
 export default async function MyListingsPage() {
@@ -202,7 +202,7 @@ export default async function MyListingsPage() {
                   </div>
                 </div>
 
-                {weakest && score != null && score < 1000 && (
+                {weakest && score != null && (score < 850 || weakest.pct < 0.70) && (
                   <div className="mt-2 flex items-center gap-3 rounded-md bg-surface-wash px-3 py-2">
                     <TrendingUp className="h-4 w-4 shrink-0 text-oxblood" />
                     <p className="flex-1 text-xs text-ink-mid">{weakest.message}</p>
