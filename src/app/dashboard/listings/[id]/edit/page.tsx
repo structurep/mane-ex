@@ -1,9 +1,7 @@
 import { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
-import { ListingWizard } from "../../new/wizard";
-import Link from "next/link";
-import { ChevronLeft, ExternalLink } from "lucide-react";
+import { EditPageClient } from "./edit-page-client";
 
 export const metadata: Metadata = {
   title: "Edit Listing",
@@ -86,34 +84,11 @@ export default async function EditListingPage({ params }: Props) {
   }
 
   return (
-    <div>
-      <div className="mb-6">
-        <Link
-          href="/dashboard/listings"
-          className="mb-2 inline-flex items-center text-sm text-ink-mid hover:text-ink-dark"
-        >
-          <ChevronLeft className="mr-0.5 h-4 w-4" />
-          Back to listings
-        </Link>
-        <div className="flex items-center gap-3">
-          <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">
-            Edit Listing
-          </h1>
-          {listing.slug && (
-            <Link
-              href={`/horses/${listing.slug}`}
-              className="inline-flex items-center gap-1 rounded-md border border-surface-wash px-2.5 py-1 text-xs font-medium text-ink-mid transition-colors hover:border-oxblood/30 hover:text-oxblood"
-            >
-              View listing
-              <ExternalLink className="h-3 w-3" />
-            </Link>
-          )}
-        </div>
-        <p className="mt-1 text-sm text-ink-mid">
-          Update {listing.name} — changes are saved without affecting listing status.
-        </p>
-      </div>
-      <ListingWizard mode="edit" listingId={id} initialData={initialData} />
-    </div>
+    <EditPageClient
+      listingId={id}
+      listingName={listing.name}
+      listingSlug={listing.slug}
+      initialData={initialData}
+    />
   );
 }

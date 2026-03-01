@@ -1,6 +1,6 @@
 "use client";
 
-import { useReducer, useActionState, useEffect } from "react";
+import { useReducer, useActionState, useEffect, useRef } from "react";
 import { createListing, updateListing, type ListingActionState } from "@/actions/listings";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -42,9 +42,10 @@ type ListingWizardProps = {
   mode?: "create" | "edit";
   listingId?: string;
   initialData?: Record<string, unknown>;
+  onDirtyChange?: (dirty: boolean) => void;
 };
 
-export function ListingWizard({ mode = "create", listingId, initialData }: ListingWizardProps) {
+export function ListingWizard({ mode = "create", listingId, initialData, onDirtyChange }: ListingWizardProps) {
   const isEdit = mode === "edit";
 
   const [state, dispatch] = useReducer(wizardReducer, {
@@ -57,7 +58,15 @@ export function ListingWizard({ mode = "create", listingId, initialData }: Listi
     {}
   );
 
-  // Toast on server action result
+  // Dirty tracking via JSON snapshot comparison
+  const initialSnapshotRef = useRef(JSON.stringify(initialData ?? {}));
+
+  useEffect(() => {
+    if (!onDirtyChange) return;
+    onDirtyChange(JSON.stringify(state.data) !== initialSnapshotRef.current);
+  }, [state.data, onDirtyChange]);
+
+  // Toast on server action result + reset dirty on successful save
   useEffect(() => {
     if (actionState.error) {
       toast.error(isEdit ? "Save failed" : "Listing creation failed", {
@@ -65,8 +74,11 @@ export function ListingWizard({ mode = "create", listingId, initialData }: Listi
       });
     } else if (isEdit && actionState.listingId) {
       toast.success("Changes saved");
+      initialSnapshotRef.current = JSON.stringify(state.data);
+      onDirtyChange?.(false);
     }
-  }, [actionState.error, actionState.listingId, isEdit]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- fire on every action completion
+  }, [actionState]);
 
   const currentStep = WIZARD_STEPS[state.step];
   const progress = ((state.step + 1) / WIZARD_STEPS.length) * 100;
