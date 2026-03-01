@@ -205,7 +205,7 @@ export type WizardStep =
 
 export const WIZARD_STEPS: { key: WizardStep; label: string; number: number }[] = [
   { key: "basic", label: "Basic Info", number: 1 },
-  { key: "farm-life", label: "Farm Life", number: 2 },
+  { key: "farm-life", label: "Barn Life", number: 2 },
   { key: "show", label: "Show Info", number: 3 },
   { key: "vet", label: "Vet Info", number: 4 },
   { key: "media", label: "Media", number: 5 },

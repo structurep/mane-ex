@@ -65,8 +65,8 @@ export function FarmForm({ farm }: { farm: Farm | null }) {
           <CheckCircle className="h-4 w-4 shrink-0" />
           <p>
             {farm
-              ? "Farm page updated successfully."
-              : "Farm page created successfully!"}
+              ? "Barn page updated successfully."
+              : "Barn page created successfully!"}
           </p>
         </div>
       )}
@@ -82,19 +82,19 @@ export function FarmForm({ farm }: { farm: Farm | null }) {
       <section className="rounded-lg border-0 bg-paper-cream p-6 shadow-flat">
         <div className="mb-4 flex items-center gap-2">
           <Store className="h-4 w-4 text-ink-light" />
-          <span className="overline text-ink-light">Farm Details</span>
+          <span className="overline text-ink-light">Barn Details</span>
         </div>
 
         <div className="space-y-4">
           <div>
             <Label htmlFor="name">
-              Farm Name <span className="text-red">*</span>
+              Barn Name <span className="text-red">*</span>
             </Label>
             <Input
               id="name"
               name="name"
               defaultValue={farm?.name ?? ""}
-              placeholder="e.g. Rolling Hills Farm"
+              placeholder="e.g. Rolling Hills Equestrian"
               required
               className="mt-1.5"
             />
@@ -109,7 +109,7 @@ export function FarmForm({ farm }: { farm: Farm | null }) {
               id="description"
               name="description"
               defaultValue={farm?.description ?? ""}
-              placeholder="Tell buyers about your farm, your program, and what makes it special..."
+              placeholder="Tell buyers about your barn, your program, and what makes it special..."
               rows={4}
               className="mt-1.5"
             />
@@ -136,7 +136,7 @@ export function FarmForm({ farm }: { farm: Farm | null }) {
               id="address"
               name="address"
               defaultValue={farm?.address ?? ""}
-              placeholder="123 Farm Road"
+              placeholder="123 Bridle Path Lane"
               className="mt-1.5"
             />
             {state.fieldErrors?.address && (
@@ -331,7 +331,7 @@ export function FarmForm({ farm }: { farm: Farm | null }) {
           <div>
             <Label>Disciplines</Label>
             <p className="mt-0.5 text-xs text-ink-light">
-              Select all disciplines your farm specializes in.
+              Select all disciplines your barn specializes in.
             </p>
             <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
               {DISCIPLINES.map((discipline) => {
@@ -376,7 +376,7 @@ export function FarmForm({ farm }: { farm: Farm | null }) {
           ) : (
             <>
               <Store className="mr-2 h-4 w-4" />
-              Create Farm Page
+              Create Barn Page
             </>
           )}
         </Button>

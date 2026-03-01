@@ -28,7 +28,7 @@ export default async function MembersPage() {
             Members
           </h1>
           <p className="mt-1 text-sm text-ink-mid">
-            Create a farm page first to manage team members.
+            Create a barn page first to manage team members.
           </p>
         </div>
       </div>

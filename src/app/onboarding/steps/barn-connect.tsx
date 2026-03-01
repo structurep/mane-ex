@@ -30,7 +30,7 @@ export function BarnConnectStep({
             <Store className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <p className="font-medium text-ink-black">Create a Farm Page</p>
+            <p className="font-medium text-ink-black">Create a Barn Page</p>
             <p className="mt-0.5 text-xs text-ink-light">
               Set up your barn and invite team members.
             </p>

@@ -105,7 +105,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const result = await getFarmData(slug);
 
   if (!result) {
-    return { title: "Farm Not Found" };
+    return { title: "Barn Not Found" };
   }
 
   const { farm, listings } = result;
@@ -163,7 +163,7 @@ export default async function FarmPage({ params }: Props) {
             </Link>
             <ChevronRight className="h-3 w-3" />
             <Link href="/browse?view=farms" className="hover:text-ink-black">
-              Farms
+              Barns
             </Link>
             <ChevronRight className="h-3 w-3" />
             <span className="text-ink-mid">{farm.name}</span>
@@ -373,9 +373,9 @@ export default async function FarmPage({ params }: Props) {
                 )}
                 <div>
                   <p className="text-sm font-medium text-ink-black">
-                    {owner.display_name || owner.full_name || "Farm Owner"}
+                    {owner.display_name || owner.full_name || "Barn Owner"}
                   </p>
-                  <p className="text-xs text-ink-light">Farm Owner</p>
+                  <p className="text-xs text-ink-light">Barn Owner</p>
                   {owner.identity_verified === true && (
                     <Badge variant="secondary" className="mt-1 text-xs">
                       <Shield className="mr-1 h-3 w-3" />

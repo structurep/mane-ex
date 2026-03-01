@@ -495,13 +495,13 @@ export function SignupWizard() {
               {/* Farm name */}
               <div>
                 <label htmlFor="farmName" className={labelClassName}>
-                  Farm Name{" "}
+                  Barn Name{" "}
                   <span className="font-normal text-ink-light">(optional)</span>
                 </label>
                 <input
                   id="farmName"
                   type="text"
-                  placeholder="Your farm or barn name"
+                  placeholder="Your barn or training facility name"
                   value={formData.farmName}
                   onChange={(e) => updateField("farmName", e.target.value)}
                   className={inputClassName}

@@ -371,7 +371,7 @@ async function generateSuggestions(
 
   if (!farm) {
     suggestions.push({
-      action: "Create your farm page to build credibility",
+      action: "Create your barn page to build credibility",
       points: "+25 pts",
       link: "/dashboard/farm",
       priority: "medium",

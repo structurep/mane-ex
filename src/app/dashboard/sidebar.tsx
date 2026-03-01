@@ -55,7 +55,7 @@ const navGroups: NavGroup[] = [
       { href: "/dashboard/offers", label: "Offers", icon: HandCoins },
       { href: "/dashboard/reviews", label: "Reviews", icon: Star },
       { href: "/dashboard/analytics", label: "Analytics", icon: BarChart3 },
-      { href: "/dashboard/farm", label: "Farm Page", icon: Store },
+      { href: "/dashboard/farm", label: "Barn Page", icon: Store },
       { href: "/dashboard/farm/members", label: "Members", icon: Users },
       { href: "/dashboard/farm/feed", label: "Barn Feed", icon: Newspaper },
     ],

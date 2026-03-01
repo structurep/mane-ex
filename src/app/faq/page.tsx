@@ -38,7 +38,7 @@ const FAQ_ITEMS: FaqItem[] = [
     category: "Selling",
     question: "How do I list a horse?",
     answer:
-      "From your dashboard, click 'New Listing' to start our 7-step listing wizard. You'll enter basic info (breed, age, height, discipline), farm and training details, show records, vet history, photos and videos, ownership history, and pricing. The wizard handles state-specific legal disclosures automatically — including Florida Rule 5H, California requirements, and UCC Article 2 warranty language. Save as a draft anytime and publish when ready.",
+      "From your dashboard, click 'New Listing' to start our 7-step listing wizard. You'll enter basic info (breed, age, height, discipline), barn and training details, show records, vet history, photos and videos, ownership history, and pricing. The wizard handles state-specific legal disclosures automatically — including Florida Rule 5H, California requirements, and UCC Article 2 warranty language. Save as a draft anytime and publish when ready.",
   },
   {
     category: "Selling",

@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { FarmForm } from "./farm-form";
 
 export const metadata: Metadata = {
-  title: "Farm Page",
+  title: "Barn Page",
 };
 
 export default async function FarmPage() {
@@ -24,12 +24,12 @@ export default async function FarmPage() {
     <div>
       <div className="mb-6">
         <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">
-          {farm ? "Edit Farm Page" : "Create Your Farm Page"}
+          {farm ? "Edit Barn Page" : "Create Your Barn Page"}
         </h1>
         <p className="mt-1 text-sm text-ink-mid">
           {farm
-            ? "Update your farm's public profile."
-            : "Set up your farm page to showcase your operation."}
+            ? "Update your barn's public profile."
+            : "Set up your barn page to showcase your operation."}
         </p>
       </div>
       <FarmForm farm={farm} />

@@ -153,7 +153,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       },
       {
         value: "branding",
-        label: "A branded farm page and featured placement",
+        label: "A branded barn page and featured placement",
         points: { casual_rider: 0, weekend_warrior: 0, pro_seller: 1, barn_manager: 2, elite_seller: 3 },
       },
     ],
@@ -193,7 +193,7 @@ export const ARCHETYPE_INFO: Record<
   barn_manager: {
     title: "The Barn Manager",
     description:
-      "You're managing an inventory. Elite gives you unlimited listings, a branded farm page, and featured placement.",
+      "You're managing an inventory. Elite gives you unlimited listings, a branded barn page, and featured placement.",
     recommended_tier: "premium",
     emoji: "🏠",
   },

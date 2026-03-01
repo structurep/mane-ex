@@ -49,7 +49,7 @@ const buyerBenefits = [
     icon: Calendar,
     title: "Easy Scheduling",
     description:
-      "Book trial rides and farm visits directly through the platform.",
+      "Book trial rides and barn visits directly through the platform.",
   },
 ];
 

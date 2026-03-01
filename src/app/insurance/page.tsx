@@ -80,11 +80,11 @@ const providers = [
   },
   {
     name: "KBIS Insurance",
-    specialization: "Comprehensive farm and multi-horse policies",
+    specialization: "Comprehensive barn and multi-horse policies",
     rating: 4.6,
     coverages: ["Mortality", "Major Medical", "Loss of Use", "Liability"],
     startingPrice: "$55/month",
-    highlight: "Best for farms",
+    highlight: "Best for barns",
   },
 ];
 
