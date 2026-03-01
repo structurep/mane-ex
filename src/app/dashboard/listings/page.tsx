@@ -3,7 +3,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Eye, Heart, ClipboardList, TrendingUp } from "lucide-react";
+import { Plus, Eye, Heart, ClipboardList, TrendingUp, Pencil } from "lucide-react";
 import type { ListingStatus } from "@/types/listings";
 import { DeleteListingButton } from "@/components/delete-listing-button";
 
@@ -183,6 +183,15 @@ export default async function MyListingsPage() {
                     <Badge variant={config?.variant || "secondary"}>
                       {config?.label || String(listing.status)}
                     </Badge>
+                    {listing.status !== "removed" && (
+                      <Link
+                        href={`/dashboard/listings/${String(listing.id)}/edit`}
+                        className="rounded p-1 text-ink-faint transition-colors hover:bg-paper-warm hover:text-ink-dark"
+                        title="Edit listing"
+                      >
+                        <Pencil className="h-3.5 w-3.5" />
+                      </Link>
+                    )}
                     {listing.status !== "sold" &&
                       listing.status !== "removed" && (
                         <DeleteListingButton

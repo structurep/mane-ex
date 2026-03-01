@@ -1168,7 +1168,7 @@ async function main() {
   console.log('  │ trainer@test.com     │ Test1234!  │ No    │');
   console.log('  └──────────────────────┴────────────┴───────┘\n');
   const totalListings = horseData.length;
-  const nonActive = horseData.filter((h) => 'status' in h && h.status !== 'active').length;
+  const nonActive = horseData.filter((h) => 'status' in h).length;
   const activeListings = totalListings - nonActive;
 
   console.log('  Verification:');

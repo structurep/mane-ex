@@ -1,11 +1,11 @@
 "use client";
 
 import { useReducer, useActionState, useEffect } from "react";
-import { createListing, type ListingActionState } from "@/actions/listings";
+import { createListing, updateListing, type ListingActionState } from "@/actions/listings";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { WIZARD_STEPS } from "@/types/listings";
-import { ChevronLeft, ChevronRight, Send } from "lucide-react";
+import { ChevronLeft, ChevronRight, Send, Save } from "lucide-react";
 import { toast } from "sonner";
 import { StepBasicInfo } from "./steps/basic-info";
 import { StepFarmLife } from "./steps/farm-life";
@@ -38,25 +38,35 @@ function wizardReducer(state: WizardState, action: WizardAction): WizardState {
   }
 }
 
-export function ListingWizard() {
+type ListingWizardProps = {
+  mode?: "create" | "edit";
+  listingId?: string;
+  initialData?: Record<string, unknown>;
+};
+
+export function ListingWizard({ mode = "create", listingId, initialData }: ListingWizardProps) {
+  const isEdit = mode === "edit";
+
   const [state, dispatch] = useReducer(wizardReducer, {
     step: 0,
-    data: {},
+    data: initialData ?? {},
   });
 
   const [actionState, submitAction, isPending] = useActionState<ListingActionState, FormData>(
-    createListing,
+    isEdit ? updateListing : createListing,
     {}
   );
 
-  // Toast on server action error (redirect handles success)
+  // Toast on server action result
   useEffect(() => {
     if (actionState.error) {
-      toast.error("Listing creation failed", {
+      toast.error(isEdit ? "Save failed" : "Listing creation failed", {
         description: actionState.error,
       });
+    } else if (isEdit && actionState.listingId) {
+      toast.success("Changes saved");
     }
-  }, [actionState.error]);
+  }, [actionState.error, actionState.listingId, isEdit]);
 
   const currentStep = WIZARD_STEPS[state.step];
   const progress = ((state.step + 1) / WIZARD_STEPS.length) * 100;
@@ -109,6 +119,9 @@ export function ListingWizard() {
         className="p-6"
       >
         {/* Hidden fields for all wizard data */}
+        {isEdit && listingId && (
+          <input type="hidden" name="_listingId" value={listingId} />
+        )}
         {Object.entries(state.data).map(([key, value]) => {
           if (Array.isArray(value)) {
             return value.map((v, i) => (
@@ -159,8 +172,10 @@ export function ListingWizard() {
 
           {isLastStep ? (
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Creating..." : "Create Listing"}
-              <Send className="ml-1 h-4 w-4" />
+              {isPending
+                ? isEdit ? "Saving..." : "Creating..."
+                : isEdit ? "Save Changes" : "Create Listing"}
+              {isEdit ? <Save className="ml-1 h-4 w-4" /> : <Send className="ml-1 h-4 w-4" />}
             </Button>
           ) : (
             <Button
