@@ -1167,10 +1167,14 @@ async function main() {
   console.log('  │ buyer@test.com       │ Test1234!  │ No    │');
   console.log('  │ trainer@test.com     │ Test1234!  │ No    │');
   console.log('  └──────────────────────┴────────────┴───────┘\n');
+  const totalListings = horseData.length;
+  const nonActive = horseData.filter((h) => 'status' in h && h.status !== 'active').length;
+  const activeListings = totalListings - nonActive;
+
   console.log('  Verification:');
-  console.log('  1. seller@test.com  → Dashboard with 14 listings, messages, offers');
+  console.log(`  1. seller@test.com  → Dashboard with ${totalListings} listings, messages, offers`);
   console.log('  2. buyer@test.com   → Messages, offers, Dream Barn');
-  console.log('  3. /browse          → 12 active listings (+ 1 sold, 1 under_offer)');
+  console.log(`  3. /browse          → ${activeListings} active listings (+ ${nonActive} non-active)`);
   console.log('  4. /admin (seller)  → Admin panel with stats');
   console.log('  5. /horses/bellissimos-legacy → Full listing detail');
   console.log('  6. /just-sold       → Dark Raven (sold listing)\n');
