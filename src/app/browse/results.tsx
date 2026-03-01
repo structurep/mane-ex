@@ -6,7 +6,6 @@ import {
   Heart,
   Ruler,
   Calendar,
-  BarChart3,
   Sparkles,
   Flame,
   Star,
@@ -231,9 +230,21 @@ export async function BrowseResults({ params }: Props) {
 
               {/* Content */}
               <div className="p-3.5">
-                <h3 className="font-medium text-ink-black group-hover:text-primary">
-                  {l.name}
-                </h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="truncate font-medium text-ink-black group-hover:text-primary">
+                    {l.name}
+                  </h3>
+                  {l.completeness_grade && (
+                    <span className={`shrink-0 rounded-full px-1.5 py-0.5 text-[10px] font-semibold capitalize leading-none ${
+                      l.completeness_grade === 'excellent' ? 'bg-oxblood/10 text-oxblood' :
+                      l.completeness_grade === 'good' ? 'bg-surface-wash text-ink-dark' :
+                      l.completeness_grade === 'fair' ? 'bg-surface-wash text-ink-mid' :
+                      'bg-surface-wash text-ink-faint'
+                    }`}>
+                      {l.completeness_grade}
+                    </span>
+                  )}
+                </div>
                 <p className="mt-0.5 text-sm text-ink-mid">
                   {[l.breed, l.color].filter(Boolean).join(" · ")}
                 </p>
@@ -260,21 +271,17 @@ export async function BrowseResults({ params }: Props) {
                   )}
                 </div>
 
-                {/* Score + Saves */}
-                <div className="mt-2.5 flex items-center justify-between text-xs">
-                  <span
-                    className={`flex items-center gap-1 font-medium ${
-                      l.completeness_grade === "excellent"
-                        ? "text-forest"
-                        : l.completeness_grade === "good"
-                          ? "text-blue"
-                          : "text-ink-light"
-                    }`}
-                  >
-                    <BarChart3 className="h-3 w-3" />
-                    {l.completeness_score}
-                  </span>
-                  <span className="flex items-center gap-1 text-ink-light">
+                {/* Mane Score bar + Saves */}
+                <div className="mt-2.5 flex items-center gap-3">
+                  {l.completeness_score != null ? (
+                    <div className="h-1 flex-1 rounded-full bg-surface-wash">
+                      <div
+                        className="h-1 rounded-full bg-oxblood"
+                        style={{ width: `${Math.min(100, Math.max(0, Math.round((l.completeness_score / 1000) * 100)))}%` }}
+                      />
+                    </div>
+                  ) : <div className="flex-1" />}
+                  <span className="flex shrink-0 items-center gap-1 text-xs text-ink-light">
                     <Heart className="h-3 w-3" />
                     {l.favorite_count}
                   </span>
