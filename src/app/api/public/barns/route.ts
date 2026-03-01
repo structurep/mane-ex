@@ -14,5 +14,8 @@ export async function GET() {
     return NextResponse.json({ barns: [], error: error.message }, { status: 200 });
   }
 
-  return NextResponse.json({ barns: data ?? [] });
+  return NextResponse.json(
+    { barns: data ?? [] },
+    { headers: { "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300" } }
+  );
 }
