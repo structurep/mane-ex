@@ -41,6 +41,10 @@ yarn-error.log*
 next-env.d.ts
 .env*.local
 
+# playwright
+/test-results/
+/playwright-report/
+
 # screenshots
 mane-screenshots/
 mane-screenshots.zip

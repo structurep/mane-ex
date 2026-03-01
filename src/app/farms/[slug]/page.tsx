@@ -355,7 +355,7 @@ export default async function FarmPage({ params }: Props) {
           {/* Owner section */}
           {owner && (
             <section className="mb-8">
-              <p className="overline mb-4 text-ink-light">FARM OWNER</p>
+              <p className="overline mb-4 text-ink-light">BARN OWNER</p>
               <Link
                 href={`/sellers/${owner.id}`}
                 className="inline-flex items-center gap-4 rounded-lg border-0 bg-paper-cream p-4 shadow-flat transition-shadow hover:shadow-folded"
