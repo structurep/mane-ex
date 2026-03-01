@@ -786,7 +786,7 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
                   Listing Completeness
                 </span>
               </div>
-              <span className={`text-sm font-bold ${completenessColor}`}>
+              <span data-testid="mane-score-total" className={`text-sm font-bold ${completenessColor}`}>
                 {l.completeness_score}/1000
               </span>
             </div>
@@ -795,7 +795,7 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
             </p>
 
             {l.basics_score != null && l.details_score != null && l.trust_score != null && l.media_score != null && (
-              <div className="mt-3 space-y-2">
+              <div data-testid="mane-score-buckets" className="mt-3 space-y-2">
                 {[
                   { label: 'Basics', score: l.basics_score, max: 200, hint: 'Core listing info' },
                   { label: 'Details', score: l.details_score, max: 250, hint: 'Performance & pedigree depth' },

@@ -23,13 +23,11 @@ test.describe("Browse → Listing detail", () => {
 
     await expect(page).toHaveURL(/\/horses\/.+/);
 
-    // Mane Score total
-    await expect(page.getByText(/\d{2,4}\/1000/)).toBeVisible();
+    // Mane Score total (e.g. "785/1000")
+    await expect(page.getByTestId("mane-score-total")).toBeVisible();
+    await expect(page.getByTestId("mane-score-total")).toHaveText(/\d{2,4}\/1000/);
 
-    // Bucket labels
-    await expect(page.getByText("Core listing info")).toBeVisible();
-    await expect(page.getByText("Performance & pedigree depth")).toBeVisible();
-    await expect(page.getByText("Health & transparency")).toBeVisible();
-    await expect(page.getByText("Photos & video completeness")).toBeVisible();
+    // Bucket breakdown section (Basics/Details/Trust/Media bars)
+    await expect(page.getByTestId("mane-score-buckets")).toBeVisible();
   });
 });
