@@ -1,15 +1,21 @@
 name: E2E Smoke Tests
 
+# Runs Playwright against the live production deployment.
+# No local build or Supabase secrets needed — tests hit the deployed site directly.
+
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
 
+env:
+  BASE_URL: https://mane-ex.vercel.app
+
 jobs:
   e2e:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
 
@@ -22,14 +28,16 @@ jobs:
 
       - run: npx playwright install --with-deps chromium
 
-      - run: npm run build
-        env:
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+      - name: Preflight — verify prod is reachable
+        run: |
+          status=$(curl -s -o /dev/null -w "%{http_code}" "$BASE_URL")
+          if [ "$status" != "200" ]; then
+            echo "::error::Production site returned HTTP $status — expected 200. Is $BASE_URL deployed?"
+            exit 1
+          fi
+          echo "Production site reachable (HTTP $status)"
 
       - run: npm run test:e2e
-        env:
-          BASE_URL: https://mane-ex.vercel.app
 
       - uses: actions/upload-artifact@v4
         if: failure()
