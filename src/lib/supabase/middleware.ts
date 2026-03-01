@@ -26,9 +26,13 @@ export async function updateSession(request: NextRequest) {
   );
 
   // Refresh the session — this is critical for keeping users logged in
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  let user: Awaited<ReturnType<typeof supabase.auth.getUser>>["data"]["user"] = null;
+  try {
+    const { data } = await supabase.auth.getUser();
+    user = data.user;
+  } catch {
+    // Auth check failed — treat as unauthenticated
+  }
 
   // Protect dashboard routes — redirect to login if not authenticated
   if (

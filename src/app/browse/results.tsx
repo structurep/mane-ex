@@ -196,6 +196,7 @@ export async function BrowseResults({ params }: Props) {
             <Link
               key={l.id}
               href={`/horses/${l.slug}`}
+              data-testid="listing-card"
               className="animate-fade-up group overflow-hidden rounded-lg bg-paper-white shadow-flat transition-all duration-300 hover:shadow-lifted"
             >
               {/* Image with gradient overlay price */}
