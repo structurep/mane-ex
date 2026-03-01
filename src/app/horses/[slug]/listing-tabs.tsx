@@ -79,7 +79,7 @@ function getCompletenessColor(grade: string | null) {
   }
 }
 
-export function ListingTabs({ listing }: { listing: ListingTabsData }) {
+export function ListingTabs({ listing, defaultTab = "overview" }: { listing: ListingTabsData; defaultTab?: string }) {
   const l = listing;
 
   const priceStr = l.price
@@ -164,7 +164,7 @@ export function ListingTabs({ listing }: { listing: ListingTabsData }) {
         <Separator className="mb-6" />
 
         {/* Tabbed content */}
-        <Tabs defaultValue="overview" className="w-full">
+        <Tabs defaultValue={defaultTab} className="w-full">
           <TabsList
             variant="line"
             className="w-full flex-wrap justify-start gap-0 border-b border-border pb-0"

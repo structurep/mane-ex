@@ -21,6 +21,7 @@ import { ListingTabs, type ListingTabsData } from "./listing-tabs";
 
 type Props = {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ tab?: string }>;
 };
 
 async function getListing(slug: string) {
@@ -84,8 +85,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function ListingDetailPage({ params }: Props) {
+export default async function ListingDetailPage({ params, searchParams }: Props) {
   const { slug } = await params;
+  const { tab } = await searchParams;
   const listing = await getListing(slug);
 
   if (!listing) {
@@ -179,7 +181,7 @@ export default async function ListingDetailPage({ params }: Props) {
           </div>
 
           {/* Tabbed layout + sidebar */}
-          <ListingTabs listing={l as unknown as ListingTabsData} />
+          <ListingTabs listing={l as unknown as ListingTabsData} defaultTab={tab} />
         </div>
       </main>
 

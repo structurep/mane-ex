@@ -3,7 +3,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Eye, Heart, ClipboardList } from "lucide-react";
+import { Plus, Eye, Heart, ClipboardList, TrendingUp } from "lucide-react";
 import type { ListingStatus } from "@/types/listings";
 import { DeleteListingButton } from "@/components/delete-listing-button";
 
@@ -24,6 +24,46 @@ const statusConfig: Record<
   removed: { label: "Removed", variant: "destructive" },
 };
 
+type BucketKey = "basics" | "details" | "trust" | "media";
+
+const BUCKET_CTA: Record<BucketKey, { message: string; tab: string }> = {
+  basics: {
+    message: "Complete core listing information to improve visibility.",
+    tab: "overview",
+  },
+  details: {
+    message: "Add performance and pedigree details to strengthen your listing.",
+    tab: "performance",
+  },
+  trust: {
+    message: "Health and transparency details increase buyer confidence.",
+    tab: "health",
+  },
+  media: {
+    message: "Your listing could improve with stronger media. Add more photos or a video.",
+    tab: "media",
+  },
+};
+
+function getWeakestBucket(listing: Record<string, unknown>): { key: BucketKey; message: string; tab: string } | null {
+  const b = listing.basics_score as number | null;
+  const d = listing.details_score as number | null;
+  const t = listing.trust_score as number | null;
+  const m = listing.media_score as number | null;
+  if (b == null || d == null || t == null || m == null) return null;
+
+  // Normalize to percentage of max so comparison is fair
+  const buckets: { key: BucketKey; pct: number }[] = [
+    { key: "basics", pct: b / 200 },
+    { key: "details", pct: d / 250 },
+    { key: "trust", pct: t / 250 },
+    { key: "media", pct: m / 300 },
+  ];
+  buckets.sort((a, z) => a.pct - z.pct);
+  const weakest = buckets[0];
+  return { key: weakest.key, ...BUCKET_CTA[weakest.key] };
+}
+
 export default async function MyListingsPage() {
   const supabase = await createClient();
   const {
@@ -35,7 +75,7 @@ export default async function MyListingsPage() {
   const { data: listings } = await supabase
     .from("horse_listings")
     .select(
-      "id, name, slug, status, price, breed, location_state, view_count, favorite_count, created_at, media:listing_media(url, is_primary)"
+      "id, name, slug, status, price, breed, location_state, view_count, favorite_count, created_at, completeness_score, basics_score, details_score, trust_score, media_score, media:listing_media(url, is_primary)"
     )
     .eq("seller_id", user.id)
     .order("created_at", { ascending: false });
@@ -91,59 +131,79 @@ export default async function MyListingsPage() {
                 ? `$${(listing.price as number / 100).toLocaleString()}`
                 : "No price";
 
+            const weakest = getWeakestBucket(listing);
+            const score = listing.completeness_score as number | null;
+
             return (
               <div
                 key={String(listing.id)}
-                className="flex items-center gap-4 px-6 py-4 transition-colors hover:bg-paper-warm"
+                className="px-6 py-4 transition-colors hover:bg-paper-warm"
               >
-                <Link
-                  href={`/horses/${String(listing.slug)}`}
-                  className="min-w-0 flex-1"
-                >
-                  <p className="truncate font-medium text-ink-dark hover:text-primary">
-                    {String(listing.name)}
-                  </p>
-                  <div className="mt-0.5 flex flex-wrap gap-2 text-xs text-ink-mid">
-                    <span>{price}</span>
-                    {typeof listing.breed === "string" && (
-                      <span>&middot; {listing.breed}</span>
-                    )}
-                    {typeof listing.location_state === "string" && (
-                      <span>&middot; {listing.location_state}</span>
-                    )}
-                    <span>
-                      &middot;{" "}
-                      {new Date(
-                        listing.created_at as string
-                      ).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
-                    </span>
-                  </div>
-                </Link>
+                <div className="flex items-center gap-4">
+                  <Link
+                    href={`/horses/${String(listing.slug)}`}
+                    className="min-w-0 flex-1"
+                  >
+                    <p className="truncate font-medium text-ink-dark hover:text-primary">
+                      {String(listing.name)}
+                    </p>
+                    <div className="mt-0.5 flex flex-wrap gap-2 text-xs text-ink-mid">
+                      <span>{price}</span>
+                      {typeof listing.breed === "string" && (
+                        <span>&middot; {listing.breed}</span>
+                      )}
+                      {typeof listing.location_state === "string" && (
+                        <span>&middot; {listing.location_state}</span>
+                      )}
+                      <span>
+                        &middot;{" "}
+                        {new Date(
+                          listing.created_at as string
+                        ).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        })}
+                      </span>
+                    </div>
+                  </Link>
 
-                <div className="flex items-center gap-4 text-xs text-ink-mid">
-                  <span className="flex items-center gap-1">
-                    <Eye className="h-3 w-3" />
-                    {((listing.view_count as number) || 0).toLocaleString()}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Heart className="h-3 w-3" />
-                    {((listing.favorite_count as number) || 0).toLocaleString()}
-                  </span>
-                  <Badge variant={config?.variant || "secondary"}>
-                    {config?.label || String(listing.status)}
-                  </Badge>
-                  {listing.status !== "sold" &&
-                    listing.status !== "removed" && (
-                      <DeleteListingButton
-                        listingId={String(listing.id)}
-                        listingName={String(listing.name)}
-                      />
+                  <div className="flex items-center gap-4 text-xs text-ink-mid">
+                    <span className="flex items-center gap-1">
+                      <Eye className="h-3 w-3" />
+                      {((listing.view_count as number) || 0).toLocaleString()}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Heart className="h-3 w-3" />
+                      {((listing.favorite_count as number) || 0).toLocaleString()}
+                    </span>
+                    {score != null && (
+                      <span className="font-medium text-ink-dark">{score}/1000</span>
                     )}
+                    <Badge variant={config?.variant || "secondary"}>
+                      {config?.label || String(listing.status)}
+                    </Badge>
+                    {listing.status !== "sold" &&
+                      listing.status !== "removed" && (
+                        <DeleteListingButton
+                          listingId={String(listing.id)}
+                          listingName={String(listing.name)}
+                        />
+                      )}
+                  </div>
                 </div>
+
+                {weakest && score != null && score < 1000 && (
+                  <div className="mt-2 flex items-center gap-3 rounded-md bg-surface-wash px-3 py-2">
+                    <TrendingUp className="h-4 w-4 shrink-0 text-oxblood" />
+                    <p className="flex-1 text-xs text-ink-mid">{weakest.message}</p>
+                    <Button variant="outline" size="sm" className="shrink-0 text-xs" asChild>
+                      <Link href={`/horses/${String(listing.slug)}?tab=${weakest.tab}`}>
+                        Improve this section
+                      </Link>
+                    </Button>
+                  </div>
+                )}
               </div>
             );
           })}
