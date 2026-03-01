@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
+export const revalidate = 60;
+
 export async function GET() {
   const supabase = await createClient();
 
@@ -14,8 +16,5 @@ export async function GET() {
     return NextResponse.json({ barns: [], error: error.message }, { status: 200 });
   }
 
-  return NextResponse.json(
-    { barns: data ?? [] },
-    { headers: { "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300" } }
-  );
+  return NextResponse.json({ barns: data ?? [] });
 }
