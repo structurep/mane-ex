@@ -29,6 +29,24 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Testing
+
+Smoke tests use [Playwright](https://playwright.dev/) against 3 critical flows: browse → listing, public barn page, and auth redirect.
+
+```bash
+# Run against local dev server (default: http://localhost:3002)
+npm run dev &
+npm run test:e2e
+
+# Run against production
+BASE_URL=https://mane-ex.vercel.app npm run test:e2e
+
+# Interactive UI mode
+npm run test:e2e:ui
+```
+
+Reports land in `playwright-report/` and failure artifacts in `test-results/` (both gitignored).
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
