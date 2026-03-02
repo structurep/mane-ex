@@ -149,14 +149,20 @@ export default async function ListingDetailPage({ params, searchParams }: Props)
     return a.sort_order - b.sort_order;
   });
   const heroPhoto = sortedMedia.find((m) => m.type === "photo");
+  // Direct CDN delivery: skip /_next/image proxy, let Unsplash serve WebP
+  let heroUrl = heroPhoto?.url || "";
+  if (heroUrl.includes("images.unsplash.com")) {
+    heroUrl += (heroUrl.includes("?") ? "&" : "?") + "auto=format&q=70";
+  }
   const heroImage = heroPhoto ? (
     <Image
-      src={heroPhoto.url}
+      src={heroUrl}
       alt={heroPhoto.alt_text || "Listing photo"}
       fill
-      sizes="(min-width: 1024px) 66vw, 100vw"
+      sizes="(max-width: 1024px) 100vw, 66vw"
       priority
       fetchPriority="high"
+      unoptimized
       className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
     />
   ) : null;
