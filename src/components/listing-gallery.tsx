@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { type ReactNode, useState, useCallback } from "react";
 import Image from "next/image";
 import { Play, Images } from "lucide-react";
 import { Lightbox } from "@/components/lightbox";
@@ -15,7 +15,7 @@ type MediaItem = {
   type: "photo" | "video";
 };
 
-export function ListingGallery({ media }: { media: MediaItem[] }) {
+export function ListingGallery({ media, heroImage }: { media: MediaItem[]; heroImage?: ReactNode }) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   // Photo-first sorting: photos float to top so a photo is the LCP hero,
@@ -62,7 +62,7 @@ export function ListingGallery({ media }: { media: MediaItem[] }) {
             onClick={() => openLightbox(0)}
             className="group relative col-span-2 row-span-2 aspect-[4/3] overflow-hidden bg-paper-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crease-light"
           >
-            <GalleryMedia item={sorted[0]} priority posterUrl={firstPhotoUrl} />
+            {heroImage || <GalleryMedia item={sorted[0]} priority posterUrl={firstPhotoUrl} />}
           </button>
 
           {/* Right column — 2 stacked cells */}
@@ -102,7 +102,7 @@ export function ListingGallery({ media }: { media: MediaItem[] }) {
           onClick={() => openLightbox(0)}
           className="group relative w-full aspect-[4/3] overflow-hidden rounded-lg bg-paper-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crease-light"
         >
-          <GalleryMedia item={sorted[0]} priority posterUrl={firstPhotoUrl} />
+          {heroImage || <GalleryMedia item={sorted[0]} priority posterUrl={firstPhotoUrl} />}
           {/* Photo count badge */}
           {sorted.length > 1 && (
             <div className="absolute bottom-3 right-3 flex items-center gap-1 rounded-full bg-ink-black/60 px-2.5 py-1 text-xs text-paper-white">

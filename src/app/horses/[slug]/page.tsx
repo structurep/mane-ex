@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import type { HorseListing } from "@/types/listings";
 import type { SellerScore } from "@/types/scoring";
+import Image from "next/image";
 import { OfferModal } from "@/components/offer-modal";
 import { ListingGallery } from "@/components/listing-gallery";
 import { ListingTabs, type ListingTabsData } from "./listing-tabs";
@@ -139,6 +140,27 @@ export default async function ListingDetailPage({ params, searchParams }: Props)
     ].filter(Boolean),
   };
 
+  // Hero image rendered as Server Component (outside client hydration boundary)
+  const sortedMedia = [...(l.media || [])].sort((a, b) => {
+    if (a.type === "photo" && b.type !== "photo") return -1;
+    if (a.type !== "photo" && b.type === "photo") return 1;
+    if (a.is_primary && !b.is_primary) return -1;
+    if (!a.is_primary && b.is_primary) return 1;
+    return a.sort_order - b.sort_order;
+  });
+  const heroPhoto = sortedMedia.find((m) => m.type === "photo");
+  const heroImage = heroPhoto ? (
+    <Image
+      src={heroPhoto.url}
+      alt={heroPhoto.alt_text || "Listing photo"}
+      fill
+      sizes="(min-width: 1024px) 66vw, 100vw"
+      priority
+      fetchPriority="high"
+      className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+    />
+  ) : null;
+
   return (
     <div className="min-h-screen">
       <script
@@ -175,7 +197,7 @@ export default async function ListingDetailPage({ params, searchParams }: Props)
           {/* Gallery — always visible above tabs */}
           <div className="mb-2 lg:grid lg:grid-cols-3 lg:gap-8">
             <div className="lg:col-span-2">
-              <ListingGallery media={l.media || []} />
+              <ListingGallery media={l.media || []} heroImage={heroImage} />
             </div>
             {/* Empty spacer to align with sidebar grid */}
             <div className="hidden lg:block" />
