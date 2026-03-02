@@ -59,7 +59,7 @@
   /* Fonts */
   --font-sans: var(--font-inter);
   --font-heading: var(--font-space-grotesk);
-  --font-serif: var(--font-playfair-display);
+  --font-serif: var(--font-playfair-display), ui-serif, Georgia, serif;
 
   /* ── Institutional Equestrian Palette ── */
 

@@ -194,6 +194,7 @@ function GalleryMedia({
       fill
       sizes="(min-width: 1024px) 66vw, 100vw"
       priority={priority}
+      fetchPriority={priority ? "high" : undefined}
       className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
     />
   );
