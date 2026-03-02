@@ -100,6 +100,8 @@ export default async function Home() {
               fill
               className="object-cover opacity-20"
               priority
+              fetchPriority="high"
+              sizes="100vw"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[#0F1A12]/90 via-[#0F1A12]/70 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0F1A12]/80 via-transparent to-transparent" />

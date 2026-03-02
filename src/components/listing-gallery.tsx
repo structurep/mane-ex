@@ -44,6 +44,9 @@ export function ListingGallery({ media }: { media: MediaItem[] }) {
     type: m.type,
   }));
 
+  // Find first photo URL for use as video poster
+  const firstPhotoUrl = sorted.find((m) => m.type === "photo")?.url;
+
   // How many items to show in the mosaic grid (desktop)
   const mosaicCount = Math.min(sorted.length, 3);
   const extraCount = sorted.length - mosaicCount;
@@ -58,7 +61,7 @@ export function ListingGallery({ media }: { media: MediaItem[] }) {
             onClick={() => openLightbox(0)}
             className="group relative col-span-2 row-span-2 aspect-[4/3] overflow-hidden bg-paper-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crease-light"
           >
-            <GalleryMedia item={sorted[0]} priority />
+            <GalleryMedia item={sorted[0]} priority posterUrl={firstPhotoUrl} />
           </button>
 
           {/* Right column — 2 stacked cells */}
@@ -67,7 +70,7 @@ export function ListingGallery({ media }: { media: MediaItem[] }) {
               onClick={() => openLightbox(1)}
               className="group relative aspect-[4/3] overflow-hidden bg-paper-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crease-light"
             >
-              <GalleryMedia item={sorted[1]} />
+              <GalleryMedia item={sorted[1]} posterUrl={firstPhotoUrl} />
             </button>
           )}
           {mosaicCount >= 3 ? (
@@ -75,7 +78,7 @@ export function ListingGallery({ media }: { media: MediaItem[] }) {
               onClick={() => openLightbox(2)}
               className="group relative aspect-[4/3] overflow-hidden bg-paper-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crease-light"
             >
-              <GalleryMedia item={sorted[2]} />
+              <GalleryMedia item={sorted[2]} posterUrl={firstPhotoUrl} />
               {/* "View all" overlay on last mosaic cell */}
               {extraCount > 0 && (
                 <div className="absolute inset-0 flex items-center justify-center bg-ink-black/40 transition-colors group-hover:bg-ink-black/50">
@@ -98,7 +101,7 @@ export function ListingGallery({ media }: { media: MediaItem[] }) {
           onClick={() => openLightbox(0)}
           className="group relative w-full aspect-[4/3] overflow-hidden rounded-lg bg-paper-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crease-light"
         >
-          <GalleryMedia item={sorted[0]} priority />
+          <GalleryMedia item={sorted[0]} priority posterUrl={firstPhotoUrl} />
           {/* Photo count badge */}
           {sorted.length > 1 && (
             <div className="absolute bottom-3 right-3 flex items-center gap-1 rounded-full bg-ink-black/60 px-2.5 py-1 text-xs text-paper-white">
@@ -158,9 +161,11 @@ export function ListingGallery({ media }: { media: MediaItem[] }) {
 function GalleryMedia({
   item,
   priority,
+  posterUrl,
 }: {
   item: MediaItem;
   priority?: boolean;
+  posterUrl?: string;
 }) {
   if (item.type === "video") {
     return (
@@ -170,7 +175,7 @@ function GalleryMedia({
           muted
           playsInline
           className="h-full w-full object-cover"
-          poster=""
+          poster={posterUrl || undefined}
         />
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="rounded-full bg-ink-black/60 p-3 transition-transform group-hover:scale-110">

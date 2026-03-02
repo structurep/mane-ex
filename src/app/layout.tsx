@@ -20,7 +20,7 @@ const playfairDisplay = Playfair_Display({
   variable: "--font-playfair-display",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -54,6 +54,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="vt-enabled" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://images.unsplash.com" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
+        <link rel="preconnect" href="https://assets.mixkit.co" />
+        <link rel="dns-prefetch" href="https://assets.mixkit.co" />
+      </head>
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} ${playfairDisplay.variable} antialiased`}
       >
