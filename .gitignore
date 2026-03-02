@@ -48,3 +48,6 @@ next-env.d.ts
 # screenshots
 mane-screenshots/
 mane-screenshots.zip
+
+# lighthouse
+/lighthouse-reports/
