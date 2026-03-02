@@ -171,7 +171,7 @@ export async function BrowseResults({ params }: Props) {
 
       {/* Card grid with scroll-reveal */}
       <ScrollReveal className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {listings.map((listing) => {
+        {listings.map((listing, listingIndex) => {
           const l = listing as unknown as HorseListing & {
             media: { url: string; is_primary: boolean }[];
           };
@@ -218,6 +218,7 @@ export async function BrowseResults({ params }: Props) {
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                      {...(listingIndex === 0 ? { priority: true } : {})}
                     />
                   ) : null;
                 })()}

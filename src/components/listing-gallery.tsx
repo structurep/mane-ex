@@ -18,10 +18,11 @@ type MediaItem = {
 export function ListingGallery({ media }: { media: MediaItem[] }) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  // Video-first sorting: videos float to top, then primary, then sort_order
+  // Photo-first sorting: photos float to top so a photo is the LCP hero,
+  // then primary, then sort_order. Videos stay accessible in strip/lightbox.
   const sorted = [...media].sort((a, b) => {
-    if (a.type === "video" && b.type !== "video") return -1;
-    if (a.type !== "video" && b.type === "video") return 1;
+    if (a.type === "photo" && b.type !== "photo") return -1;
+    if (a.type !== "photo" && b.type === "photo") return 1;
     if (a.is_primary && !b.is_primary) return -1;
     if (!a.is_primary && b.is_primary) return 1;
     return a.sort_order - b.sort_order;
