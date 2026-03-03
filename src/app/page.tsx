@@ -92,7 +92,10 @@ export default async function Home() {
         {/* ══════════════════════════════════════════════
             SECTION 1 — HERO (full-bleed photo + search)
             ══════════════════════════════════════════════ */}
-        <section className="relative min-h-[85vh] overflow-hidden bg-hero-dark">
+        <section
+          className="relative min-h-[85vh] overflow-hidden bg-hero-dark"
+          style={{ backgroundColor: "#0F1A12" }}
+        >
           <div className="absolute inset-0">
             <Image
               src="https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=1920&q=80&auto=format&fit=crop"
