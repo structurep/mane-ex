@@ -38,6 +38,7 @@ function parseListingFormData(formData: FormData, skipKeys: string[] = []): Reco
   formData.forEach((value, key) => {
     if (skipKeys.includes(key)) return;
     if (key === "registry_records") return; // handled separately
+    if (key === "media_checklist") return; // handled below
     if (key === "discipline_ids") {
       const existing = raw[key] as string[] | undefined;
       raw[key] = existing ? [...existing, value as string] : [value as string];
@@ -51,6 +52,33 @@ function parseListingFormData(formData: FormData, skipKeys: string[] = []): Reco
       raw[key] = value;
     }
   });
+
+  // Map _checkedAngles/_checkedVideos → media_checklist (only if present)
+  const rawChecklist = formData.get("media_checklist") as string | null;
+  const hasAngles = formData.has("_checkedAngles");
+  const hasVideos = formData.has("_checkedVideos");
+
+  if (rawChecklist) {
+    // Prefer pre-serialized media_checklist JSON from buildListingFormData
+    try {
+      const parsed = JSON.parse(rawChecklist);
+      if (parsed && typeof parsed === "object") {
+        raw.media_checklist = {
+          angles: Array.isArray(parsed.angles) ? parsed.angles : [],
+          videos: Array.isArray(parsed.videos) ? parsed.videos : [],
+        };
+      }
+    } catch {
+      // Invalid JSON — skip, don't overwrite existing
+    }
+  } else if (hasAngles || hasVideos) {
+    // Fallback: read individual fields from form submission
+    const angles = formData.getAll("_checkedAngles").map(String).filter(Boolean);
+    const videos = formData.getAll("_checkedVideos").map(String).filter(Boolean);
+    raw.media_checklist = { angles, videos };
+  }
+  // If neither key is present, media_checklist is NOT set → preserves existing DB value
+
   return raw;
 }
 

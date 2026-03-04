@@ -302,6 +302,7 @@ async function main() {
       suitable_for: 'Competitive amateur, strong junior, adult amateur',
       henneke_score: 5,
       soundness_level: 'vet_confirmed_sound' as const,
+      media_checklist: { angles: ['left_profile','right_profile','front_view','rear_view','head_closeup','legs_detail','markings'], videos: ['walk_trot','canter','under_saddle','turnout'] },
       published_at: daysAgo(5),
     },
     {
@@ -438,6 +439,7 @@ async function main() {
       price_display: '$250,000',
       price_negotiable: false,
       warranty: 'as_is' as const,
+      media_checklist: { angles: ['left_profile','right_profile','front_view','rear_view'], videos: ['walk_trot'] },
       published_at: daysAgo(1),
     },
 

@@ -9,7 +9,20 @@ export function buildListingFormData(
   const fd = new FormData();
   fd.set("_listingId", listingId);
 
+  // Map wizard _checkedAngles/_checkedVideos → media_checklist JSON
+  const checkedAngles = data._checkedAngles;
+  const checkedVideos = data._checkedVideos;
+  if (Array.isArray(checkedAngles) || Array.isArray(checkedVideos)) {
+    fd.set("media_checklist", JSON.stringify({
+      angles: Array.isArray(checkedAngles) ? checkedAngles : [],
+      videos: Array.isArray(checkedVideos) ? checkedVideos : [],
+    }));
+  }
+
   for (const [key, value] of Object.entries(data)) {
+    // Skip ephemeral wizard keys and already-handled fields
+    if (key === "_checkedAngles" || key === "_checkedVideos") continue;
+
     // registry_records is an array of objects — must be JSON-serialized
     if (key === "registry_records" && Array.isArray(value)) {
       fd.set(key, JSON.stringify(value));

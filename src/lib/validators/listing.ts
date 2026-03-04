@@ -97,6 +97,12 @@ export const fullListingSchema = basicInfoSchema
   .merge(showInfoSchema)
   .merge(vetInfoSchema)
   .merge(historySchema)
-  .merge(pricingSchema);
+  .merge(pricingSchema)
+  .extend({
+    media_checklist: z.object({
+      angles: z.array(z.string()).default([]),
+      videos: z.array(z.string()).default([]),
+    }).optional(),
+  });
 
 export type ListingFormData = z.infer<typeof fullListingSchema>;
