@@ -3,7 +3,12 @@
 import { type ReactNode, useState, useCallback } from "react";
 import Image from "next/image";
 import { Play, Images } from "lucide-react";
-import { Lightbox } from "@/components/lightbox";
+import dynamic from "next/dynamic";
+
+const Lightbox = dynamic(
+  () => import("@/components/lightbox").then((m) => m.Lightbox),
+  { ssr: false }
+);
 
 type MediaItem = {
   id: string;
@@ -137,6 +142,7 @@ export function ListingGallery({ media, heroImage }: { media: MediaItem[]; heroI
                     alt={item.alt_text || ""}
                     fill
                     sizes="72px"
+                    loading="lazy"
                     className="object-cover"
                   />
                 )}

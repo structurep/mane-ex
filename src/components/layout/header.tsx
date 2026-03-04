@@ -5,7 +5,12 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { MobileMenu } from "./mobile-menu";
+import dynamic from "next/dynamic";
+
+const MobileMenu = dynamic(
+  () => import("./mobile-menu").then((m) => m.MobileMenu),
+  { ssr: false }
+);
 import { useUser } from "@/hooks/use-user";
 import { signOut } from "@/actions/auth";
 import {
