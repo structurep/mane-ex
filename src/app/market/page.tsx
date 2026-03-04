@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { getCreateListingUrl } from "@/lib/urls";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
@@ -828,7 +829,7 @@ export default function MarketIntelligencePage() {
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg">
-                <Link href="/dashboard/listings/new">List Your Horse</Link>
+                <Link href={getCreateListingUrl()}>List Your Horse</Link>
               </Button>
             </div>
           </div>

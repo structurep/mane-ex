@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { BottomCTA } from "@/components/bottom-cta";
 import { FaqAccordion } from "@/components/faq-accordion";
+import { getCreateListingUrl } from "@/lib/urls";
 import { Button } from "@/components/ui/button";
 import {
   ArrowRight,
@@ -174,7 +175,7 @@ export default function SellPage() {
                 </p>
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <Button size="lg" asChild>
-                    <Link href="/dashboard/listings/new">
+                    <Link href={getCreateListingUrl()}>
                       Start Your Listing
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>

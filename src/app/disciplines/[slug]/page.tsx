@@ -7,6 +7,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { BottomCTA } from "@/components/bottom-cta";
 import { Button } from "@/components/ui/button";
+import { getCreateListingUrl } from "@/lib/urls";
 import {
   ArrowRight,
   MapPin,
@@ -405,7 +406,7 @@ export default async function DisciplinePage({ params }: Props) {
                 </p>
                 <div className="mt-4 flex justify-center gap-3">
                   <Button size="sm" asChild>
-                    <Link href="/dashboard/listings/new">List a Horse</Link>
+                    <Link href={getCreateListingUrl()}>List a Horse</Link>
                   </Button>
                   <Button variant="outline" size="sm" asChild>
                     <Link href="/iso/new">Post an ISO</Link>

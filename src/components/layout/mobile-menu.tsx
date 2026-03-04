@@ -12,6 +12,7 @@ import {
 import { useState } from "react";
 import { signOut } from "@/actions/auth";
 import type { User } from "@supabase/supabase-js";
+import { getCreateListingUrl } from "@/lib/urls";
 
 const publicLinks = [
   { href: "/browse", label: "Browse Horses" },
@@ -29,7 +30,7 @@ const authedLinks = [
   { href: "/iso", label: "ISOs" },
   { href: "/dashboard/messages", label: "Messages" },
   { href: "/dashboard/offers", label: "Offers" },
-  { href: "/dashboard/listings/new", label: "List a Horse" },
+  { href: getCreateListingUrl(), label: "List a Horse" },
   { href: "/just-sold", label: "Just Sold" },
   { href: "/dashboard/settings", label: "Settings" },
 ];

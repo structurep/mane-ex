@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { getCreateListingUrl } from "@/lib/urls";
 import type { LucideIcon } from "lucide-react";
 import {
   LayoutDashboard,
@@ -90,7 +91,7 @@ export function DashboardSidebar() {
       <div className="flex h-full flex-col overflow-y-auto p-4">
         {/* New listing CTA */}
         <Button size="sm" className="mb-5 w-full" asChild>
-          <Link href="/dashboard/listings/new">
+          <Link href={getCreateListingUrl()}>
             <Plus className="mr-2 h-4 w-4" />
             New Listing
           </Link>

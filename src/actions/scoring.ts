@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { leaderboardQuerySchema } from "@/lib/validators/scoring";
+import { getCreateListingUrl, getDashboardUrl } from "@/lib/urls";
 import type {
   SellerScore,
   LeaderboardEntry,
@@ -306,7 +307,7 @@ async function generateSuggestions(
     suggestions.push({
       action: "Create your first listing to start building your Mane Score",
       points: "+100-200 pts",
-      link: "/dashboard/listings/new",
+      link: getCreateListingUrl(),
       priority: "high",
     });
     return suggestions;
@@ -330,7 +331,7 @@ async function generateSuggestions(
     suggestions.push({
       action: "Complete your listing details for a higher completeness score",
       points: "+50-150 pts",
-      link: "/dashboard",
+      link: getDashboardUrl(),
       priority: "high",
     });
   }
@@ -339,7 +340,7 @@ async function generateSuggestions(
     suggestions.push({
       action: "Add show records and competition experience",
       points: "+55 pts",
-      link: "/dashboard",
+      link: getDashboardUrl(),
       priority: "medium",
     });
   }
@@ -348,7 +349,7 @@ async function generateSuggestions(
     suggestions.push({
       action: "Upload Coggins test and add vet information",
       points: "+60 pts",
-      link: "/dashboard",
+      link: getDashboardUrl(),
       priority: "medium",
     });
   }
@@ -357,7 +358,7 @@ async function generateSuggestions(
     suggestions.push({
       action: "Add training history and reason for sale",
       points: "+40 pts",
-      link: "/dashboard",
+      link: getDashboardUrl(),
       priority: "low",
     });
   }
@@ -377,7 +378,7 @@ async function generateSuggestions(
     suggestions.push({
       action: "Complete the photography checklist to improve your Mane Score",
       points: "+32-60 pts",
-      link: "/dashboard",
+      link: getDashboardUrl(),
       priority: "medium",
     });
   }
@@ -393,7 +394,7 @@ async function generateSuggestions(
     suggestions.push({
       action: "Create your barn page to build credibility",
       points: "+25 pts",
-      link: "/dashboard/farm",
+      link: getDashboardUrl("farm"),
       priority: "medium",
     });
   }
@@ -405,7 +406,7 @@ async function generateSuggestions(
     suggestions.push({
       action: "Share your listings to boost engagement",
       points: "+50-100 pts",
-      link: "/dashboard",
+      link: getDashboardUrl(),
       priority: "medium",
     });
   }

@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Plus, Eye, Heart, ClipboardList, TrendingUp, Pencil } from "lucide-react";
 import type { ListingStatus } from "@/types/listings";
 import { DeleteListingButton } from "@/components/delete-listing-button";
+import { getCreateListingUrl, getEditListingUrl } from "@/lib/urls";
 
 export const metadata: Metadata = {
   title: "My Listings",
@@ -98,7 +99,7 @@ export default async function MyListingsPage() {
           </p>
         </div>
         <Button asChild>
-          <Link href="/dashboard/listings/new">
+          <Link href={getCreateListingUrl()}>
             <Plus className="mr-2 h-4 w-4" />
             New Listing
           </Link>
@@ -115,7 +116,7 @@ export default async function MyListingsPage() {
             </p>
           </div>
           <Button className="mt-2" asChild>
-            <Link href="/dashboard/listings/new">
+            <Link href={getCreateListingUrl()}>
               <Plus className="mr-2 h-4 w-4" />
               Create Your First Listing
             </Link>
@@ -185,7 +186,7 @@ export default async function MyListingsPage() {
                     </Badge>
                     {listing.status !== "removed" && (
                       <Link
-                        href={`/dashboard/listings/${String(listing.id)}/edit`}
+                        href={getEditListingUrl(String(listing.id))}
                         className="rounded p-1 text-ink-faint transition-colors hover:bg-paper-warm hover:text-ink-dark"
                         title="Edit listing"
                       >

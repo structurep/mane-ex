@@ -16,6 +16,7 @@ import {
 import type { ListingStatus } from "@/types/listings";
 import { getMyScore } from "@/actions/scoring";
 import { GRADE_LABELS, MANE_SCORE_DISCLAIMER } from "@/types/scoring";
+import { getCreateListingUrl } from "@/lib/urls";
 import { SavedSearchesWidget } from "./saved-searches";
 import { DeleteListingButton } from "@/components/delete-listing-button";
 
@@ -226,7 +227,7 @@ export default async function DashboardPage() {
           </p>
         </div>
         <Button asChild>
-          <Link href="/dashboard/listings/new">
+          <Link href={getCreateListingUrl()}>
             <Plus className="mr-2 h-4 w-4" />
             New Listing
           </Link>
@@ -441,7 +442,7 @@ export default async function DashboardPage() {
             Create your first listing to start attracting buyers.
           </p>
           <Button className="mt-4" asChild>
-            <Link href="/dashboard/listings/new">
+            <Link href={getCreateListingUrl()}>
               <Plus className="mr-2 h-4 w-4" />
               Create Your First Listing
             </Link>
