@@ -49,7 +49,10 @@ export default function AboutPage() {
         {/* ══════════════════════════════════════════════
             SECTION 1 — HERO (photo + overlay)
             ══════════════════════════════════════════════ */}
-        <section className="relative flex min-h-[60vh] items-center overflow-hidden bg-hero-dark">
+        <section
+          className="relative flex min-h-[60vh] items-center overflow-hidden bg-hero-dark"
+          style={{ backgroundColor: "#0F1A12" }}
+        >
           <div className="absolute inset-0">
             <Image
               src="https://images.unsplash.com/photo-1534307671554-9a6d81f4d629?w=1920&q=80&auto=format&fit=crop"
