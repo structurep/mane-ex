@@ -297,7 +297,7 @@ async function generateSuggestions(
   const { data: listings } = await supabase
     .from("horse_listings")
     .select(
-      "id, completeness_score, show_record, show_experience, vet_name, coggins_date, training_history, reason_for_sale"
+      "id, completeness_score, show_record, show_experience, vet_name, coggins_date, training_history, reason_for_sale, media_checklist"
     )
     .eq("seller_id", sellerId)
     .in("status", ["active", "draft", "under_offer"]);
@@ -359,6 +359,26 @@ async function generateSuggestions(
       points: "+40 pts",
       link: "/dashboard",
       priority: "low",
+    });
+  }
+
+  // Check for incomplete photography checklist (single suggestion, not per-listing)
+  const missingChecklist = listings.some((l) => {
+    const checklist = l.media_checklist as { angles?: string[]; videos?: string[] } | null;
+    if (!checklist || typeof checklist !== "object") return true;
+    const angles = Array.isArray(checklist.angles) ? checklist.angles : [];
+    const hasAllRequired = ["left_profile", "right_profile", "front_view", "rear_view"].every(
+      (a) => angles.includes(a)
+    );
+    return !hasAllRequired;
+  });
+
+  if (missingChecklist) {
+    suggestions.push({
+      action: "Complete the photography checklist to improve your Mane Score",
+      points: "+32-60 pts",
+      link: "/dashboard",
+      priority: "medium",
     });
   }
 
