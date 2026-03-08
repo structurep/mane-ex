@@ -51,3 +51,9 @@ mane-screenshots.zip
 
 # lighthouse
 /lighthouse-reports/
+
+# workspace (presentation builds, scratch)
+/workspace/
+
+# supabase temp
+supabase/.temp/
