@@ -56,8 +56,6 @@ export default function RootLayout({
   return (
     <html lang="en" className="vt-enabled" suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://images.unsplash.com" />
-        <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <link rel="preconnect" href={process.env.NEXT_PUBLIC_SUPABASE_URL} />
         <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_SUPABASE_URL} />
         <link rel="preconnect" href="https://assets.mixkit.co" />

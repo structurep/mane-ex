@@ -117,37 +117,42 @@ export function ListingGallery({ media, heroImage }: { media: MediaItem[]; heroI
           )}
         </button>
 
-        {/* Thumbnail strip */}
+        {/* Thumbnail strip with scroll-snap */}
         {sorted.length > 1 && (
-          <div className="mt-2 flex gap-1.5 overflow-x-auto pb-1">
-            {sorted.map((item, i) => (
-              <button
-                key={item.id}
-                onClick={() => openLightbox(i)}
-                aria-label={`View photo ${i + 1}`}
-                className={`relative h-14 w-[4.5rem] flex-shrink-0 overflow-hidden rounded-md border-2 transition-all ${
-                  i === 0
-                    ? "border-primary ring-1 ring-primary/30"
-                    : "border-transparent opacity-70 hover:opacity-100"
-                } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crease-light`}
-              >
-                {item.type === "video" ? (
-                  <div className="flex h-full w-full items-center justify-center bg-ink-black/80">
-                    <Play className="h-4 w-4 text-paper-white" />
-                  </div>
-                ) : (
-                   
-                  <Image
-                    src={item.url}
-                    alt={item.alt_text || ""}
-                    fill
-                    sizes="72px"
-                    loading="lazy"
-                    className="object-cover"
-                  />
-                )}
-              </button>
-            ))}
+          <div className="relative mt-2">
+            <div className="flex snap-x snap-mandatory gap-1.5 overflow-x-auto pb-1 scrollbar-hide">
+              {sorted.map((item, i) => (
+                <button
+                  key={item.id}
+                  onClick={() => openLightbox(i)}
+                  aria-label={`View ${item.type === "video" ? "video" : "photo"} ${i + 1} of ${sorted.length}`}
+                  className={`relative h-14 w-[4.5rem] flex-shrink-0 snap-start overflow-hidden rounded-md border-2 transition-all ${
+                    i === 0
+                      ? "border-primary ring-1 ring-primary/30"
+                      : "border-transparent opacity-70 hover:opacity-100"
+                  } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crease-light`}
+                >
+                  {item.type === "video" ? (
+                    <div className="flex h-full w-full items-center justify-center bg-ink-black/80">
+                      <Play className="h-4 w-4 text-paper-white" />
+                    </div>
+                  ) : (
+                    <Image
+                      src={item.url}
+                      alt={item.alt_text || ""}
+                      fill
+                      sizes="72px"
+                      loading="lazy"
+                      className="object-cover"
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+            {/* Fade edge to hint scrollability */}
+            {sorted.length > 4 && (
+              <div className="pointer-events-none absolute right-0 top-0 h-14 w-8 bg-gradient-to-l from-background to-transparent" />
+            )}
           </div>
         )}
       </div>

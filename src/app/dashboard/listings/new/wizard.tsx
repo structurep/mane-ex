@@ -120,22 +120,12 @@ export function ListingWizard({ mode = "create", listingId, initialData, onDirty
   const progress = ((state.step + 1) / WIZARD_STEPS.length) * 100;
   const isLastStep = state.step === WIZARD_STEPS.length - 1;
 
-  const setField = (field: string, value: unknown) => {
+  const setField = useCallback((field: string, value: unknown) => {
     dispatch({ type: "SET_FIELD", field, value });
-  };
+  }, []);
 
-  const stepProps = { data: state.data, setField };
-
-  const steps = [
-    <StepBasicInfo key="basic" {...stepProps} />,
-    <StepFarmLife key="farm" {...stepProps} />,
-    <StepShowInfo key="show" {...stepProps} />,
-    <StepVetInfo key="vet" {...stepProps} />,
-    <StepMedia key="media" {...stepProps} />,
-    <StepVerification key="verification" {...stepProps} />,
-    <StepHistory key="history" {...stepProps} />,
-    <StepPricing key="pricing" {...stepProps} />,
-  ];
+  const stepComponents = [StepBasicInfo, StepFarmLife, StepShowInfo, StepVetInfo, StepMedia, StepVerification, StepHistory, StepPricing];
+  const ActiveStep = stepComponents[state.step];
 
   return (
     <div className="rounded-lg border-0 bg-paper-cream shadow-folded">
@@ -207,7 +197,7 @@ export function ListingWizard({ mode = "create", listingId, initialData, onDirty
         )}
 
         {/* Current step */}
-        {steps[state.step]}
+        <ActiveStep data={state.data} setField={setField} />
 
         {/* Navigation */}
         <div className="mt-8 flex items-center justify-between border-t border-crease-light pt-4">

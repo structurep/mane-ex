@@ -69,7 +69,7 @@ export default async function Home() {
         >
           <div className="absolute inset-0">
             <Image
-              src="https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=1920&q=80&auto=format&fit=crop"
+              src="/hero.jpg"
               alt=""
               fill
               className="object-cover opacity-30"
