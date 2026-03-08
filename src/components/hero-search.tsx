@@ -25,10 +25,12 @@ export function HeroSearch() {
 
   return (
     <div className="w-full max-w-xl">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} role="search">
         <div className="relative">
+          <label htmlFor="hero-search" className="sr-only">Search horses by breed, discipline, or location</label>
           <Search className="absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-mid" />
           <input
+            id="hero-search"
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -42,7 +44,7 @@ export function HeroSearch() {
           <Link
             key={d.value}
             href={`/browse?discipline=${d.value}`}
-            className="rounded-full border border-white/30 bg-white/20 px-4 py-2 text-sm text-white transition-colors hover:bg-white/30"
+            className="rounded-full border border-white/30 bg-white/20 px-4 py-2 text-sm text-white transition-colors hover:bg-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-ink-black"
           >
             {d.label}
           </Link>

@@ -3,7 +3,7 @@ import { Search, Send, ArrowRight } from "lucide-react";
 
 export function ISOBanner() {
   return (
-    <section className="bg-paper-white px-4 py-10 md:px-8 md:py-14">
+    <section aria-label="In search of" className="bg-paper-white px-4 py-10 md:px-8 md:py-14">
       <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-2">
         {/* Looking for a horse */}
         <div className="flex items-start gap-5 rounded-xl border border-crease-light bg-white p-6">

@@ -138,10 +138,12 @@ export function Header() {
 
         {/* ─── Center: Search bar (desktop) ─── */}
         <div className="mx-6 hidden max-w-md flex-1 lg:block">
-          <form onSubmit={handleSearchSubmit}>
+          <form onSubmit={handleSearchSubmit} role="search">
             <div className="relative">
+              <label htmlFor="header-search" className="sr-only">Search horses</label>
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-light" />
               <input
+                id="header-search"
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -199,30 +201,32 @@ export function Header() {
               {/* Authed icons */}
               <Link
                 href="/dashboard/messages"
-                className="rounded-full p-2 text-ink-mid transition-colors hover:bg-paper-warm hover:text-ink-black"
+                className="rounded-full p-2.5 text-ink-mid transition-colors hover:bg-paper-warm hover:text-ink-black"
                 aria-label="Messages"
               >
-                <MessageCircle className="h-[18px] w-[18px]" />
+                <MessageCircle className="h-5 w-5" />
               </Link>
               <Link
                 href="/dashboard/dream-barn"
-                className="rounded-full p-2 text-ink-mid transition-colors hover:bg-paper-warm hover:text-ink-black"
+                className="rounded-full p-2.5 text-ink-mid transition-colors hover:bg-paper-warm hover:text-ink-black"
                 aria-label="Saved"
               >
-                <Heart className="h-[18px] w-[18px]" />
+                <Heart className="h-5 w-5" />
               </Link>
               <Link
                 href="/dashboard/notifications"
-                className="rounded-full p-2 text-ink-mid transition-colors hover:bg-paper-warm hover:text-ink-black"
+                className="rounded-full p-2.5 text-ink-mid transition-colors hover:bg-paper-warm hover:text-ink-black"
                 aria-label="Notifications"
               >
-                <Bell className="h-[18px] w-[18px]" />
+                <Bell className="h-5 w-5" />
               </Link>
 
               {/* Avatar dropdown */}
               <div className="relative ml-1" ref={menuRef}>
                 <button
                   onClick={() => setMenuOpen(!menuOpen)}
+                  aria-expanded={menuOpen}
+                  aria-haspopup="true"
                   className="flex items-center gap-1.5 rounded-full border border-crease-light py-1 pl-1 pr-2.5 text-sm font-medium text-ink-dark transition-colors hover:bg-paper-warm focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                 >
                   <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground">

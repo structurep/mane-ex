@@ -30,6 +30,7 @@ export function StepVerification({ data, setField }: StepProps) {
               onChange={(e) =>
                 setField("has_current_coggins", e.target.checked)
               }
+              aria-describedby="coggins-help"
               className="mt-0.5 h-5 w-5 rounded border-crease-mid text-primary accent-primary"
             />
             <div>
@@ -44,7 +45,7 @@ export function StepVerification({ data, setField }: StepProps) {
                   Recommended
                 </Badge>
               </div>
-              <p className="mt-0.5 text-xs text-ink-mid">
+              <p id="coggins-help" className="mt-0.5 text-xs text-ink-mid">
                 Confirm that this horse has a negative Coggins test within the
                 last 12 months
               </p>
@@ -59,13 +60,14 @@ export function StepVerification({ data, setField }: StepProps) {
               onChange={(e) =>
                 setField("has_vet_check_available", e.target.checked)
               }
+              aria-describedby="vetcheck-help"
               className="mt-0.5 h-5 w-5 rounded border-crease-mid text-primary accent-primary"
             />
             <div>
               <span className="text-sm font-semibold text-ink-black">
                 Vet Check Available
               </span>
-              <p className="mt-0.5 text-xs text-ink-mid">
+              <p id="vetcheck-help" className="mt-0.5 text-xs text-ink-mid">
                 You have recent veterinary records available for potential buyers
               </p>
             </div>

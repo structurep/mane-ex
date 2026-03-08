@@ -52,10 +52,11 @@ export function StepBasicInfo({ data, setField }: StepProps) {
       {/* Name */}
       <div>
         <Label htmlFor="name">
-          Horse Name <span className="text-red">*</span>
+          Horse Name <span className="text-red" aria-label="required">*</span>
         </Label>
         <Input
           id="name"
+          required
           value={(data.name as string) || ""}
           onChange={(e) => setField("name", e.target.value)}
           placeholder="Barn name or show name"

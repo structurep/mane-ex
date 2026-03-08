@@ -63,6 +63,7 @@ export default async function Home() {
             SECTION 1 — HERO
             ══════════════════════════════════════════════ */}
         <section
+          aria-label="Hero search"
           className="relative min-h-[85vh] overflow-hidden bg-hero-dark"
           style={{ backgroundColor: "#0F1A12" }}
         >
@@ -91,21 +92,21 @@ export default async function Home() {
                   <br />
                   next partner.
                 </h1>
-                <p className="mb-8 max-w-lg text-lg text-white/70">
+                <p className="mb-8 max-w-lg text-lg text-white/85">
                   The modern way to buy and sell hunters, jumpers, and dressage
                   horses. Transparent. Trusted. Beautiful.
                 </p>
 
                 <HeroSearch />
 
-                <p className="mt-4 text-sm text-white/40">
+                <p className="mt-4 text-sm text-white/80">
                   {activeCount ?? 0} horses listed &middot; Join free
                 </p>
 
                 <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                   <Button
                     size="lg"
-                    className="bg-coral text-white hover:bg-coral-hover"
+                    className="bg-coral text-white hover:bg-coral-hover focus-visible:ring-white focus-visible:ring-offset-ink-black"
                     asChild
                   >
                     <Link href="/browse">
@@ -116,7 +117,7 @@ export default async function Home() {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="bg-ink-black border-white/30 text-white hover:bg-ink-dark"
+                    className="bg-ink-black border-white/30 text-white hover:bg-ink-dark focus-visible:ring-white focus-visible:ring-offset-ink-black"
                     asChild
                   >
                     <Link href="/sell">List Your Horse</Link>
@@ -141,7 +142,7 @@ export default async function Home() {
             SECTION 4 — FEATURED LISTINGS
             ══════════════════════════════════════════════ */}
         {featuredListings.length > 0 && (
-          <section className="bg-paper-white px-4 py-16 md:px-8 md:py-20">
+          <section aria-label="Featured listings" className="bg-paper-white px-4 py-16 md:px-8 md:py-20">
             <div className="mx-auto max-w-7xl">
               <div className="mb-8 flex items-center justify-between">
                 <div>
@@ -197,13 +198,13 @@ export default async function Home() {
                           {/* Badges */}
                           <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
                             {score >= 750 && (
-                              <span className="flex items-center gap-1 rounded-full bg-coral px-2.5 py-1 text-[10px] font-semibold text-white shadow-sm">
+                              <span className="flex items-center gap-1 rounded-full bg-coral px-2.5 py-1 text-[10px] sm:text-xs font-semibold text-white shadow-sm">
                                 <Award className="h-3 w-3" />
                                 Featured Seller
                               </span>
                             )}
                             {score >= 500 && score < 750 && (
-                              <span className="flex items-center gap-1 rounded-full bg-ink-black/70 px-2.5 py-1 text-[10px] font-semibold text-white shadow-sm backdrop-blur-sm">
+                              <span className="flex items-center gap-1 rounded-full bg-ink-black/70 px-2.5 py-1 text-[10px] sm:text-xs font-semibold text-white shadow-sm backdrop-blur-sm">
                                 <Sparkles className="h-3 w-3" />
                                 Featured
                               </span>
@@ -252,7 +253,7 @@ export default async function Home() {
                                 <span>{l.breed as string}</span>
                               </>
                             )}
-                            <span className="ml-auto rounded-full bg-forest/10 px-2 py-0.5 text-[10px] font-medium text-forest">
+                            <span className="ml-auto rounded-full bg-forest/10 px-2 py-0.5 text-[10px] sm:text-xs font-medium text-forest">
                               Active
                             </span>
                           </div>
@@ -271,13 +272,13 @@ export default async function Home() {
                                 style={{ width: `${scorePercent}%` }}
                               />
                             </div>
-                            <span className="text-[10px] font-medium text-ink-mid">
+                            <span className="text-[10px] sm:text-xs font-medium text-ink-mid">
                               Mane Score {score}
                             </span>
                           </div>
 
                           {/* Views */}
-                          <div className="mt-2 flex items-center justify-end gap-3 text-[10px] text-ink-faint">
+                          <div className="mt-2 flex items-center justify-end gap-3 text-[10px] sm:text-xs text-ink-faint">
                             {typeof l.view_count === "number" &&
                               (l.view_count as number) > 0 && (
                                 <span className="flex items-center gap-0.5">

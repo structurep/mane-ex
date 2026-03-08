@@ -48,7 +48,7 @@ const features = [
 
 export function PlatformFeatures() {
   return (
-    <section className="bg-white px-4 py-14 md:px-8 md:py-18">
+    <section aria-label="Platform features" className="bg-white px-4 py-14 md:px-8 md:py-18">
       <div className="mx-auto max-w-5xl">
         <div className="mb-10 text-center">
           <h2 className="font-serif text-3xl text-ink-black md:text-4xl">

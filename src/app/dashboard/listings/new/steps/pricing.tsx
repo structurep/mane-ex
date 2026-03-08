@@ -99,7 +99,7 @@ export function StepPricing({ data, setField }: StepProps) {
           (data.listing_type || "fixed_price") === "auction") && (
           <div className="mt-4">
             <Label htmlFor="price">
-              Asking Price <span className="text-red">*</span>
+              Asking Price <span className="text-red" aria-label="required">*</span>
             </Label>
             <div className="relative mt-1.5">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-light">
@@ -110,6 +110,7 @@ export function StepPricing({ data, setField }: StepProps) {
                 type="number"
                 min="0"
                 step="100"
+                required
                 value={(data.price as string) || ""}
                 onChange={(e) => setField("price", e.target.value)}
                 placeholder="0"
@@ -183,7 +184,7 @@ export function StepPricing({ data, setField }: StepProps) {
       {/* Warranty — UCC 2-316 compliant display */}
       <div>
         <Label>
-          Warranty <span className="text-red">*</span>
+          Warranty <span className="text-red" aria-label="required">*</span>
         </Label>
         <p className="mb-3 text-xs text-ink-light">
           Select the warranty type for this sale. This will be included in the

@@ -110,18 +110,21 @@ export function StepHistory({ data, setField }: StepProps) {
       {/* Description */}
       <div>
         <Label htmlFor="description">
-          Description <span className="text-red">*</span>{" "}
+          Description <span className="text-red" aria-label="required">*</span>{" "}
           <span className="text-xs font-normal text-ink-light">(minimum 100 characters)</span>
         </Label>
         <Textarea
           id="description"
+          required
+          minLength={100}
+          aria-describedby="description-count"
           value={(data.description as string) || ""}
           onChange={(e) => setField("description", e.target.value)}
           placeholder="Describe your horse's training, accomplishments, personality, and what makes them special..."
           rows={5}
           className="mt-1.5"
         />
-        <p className={`mt-1 text-xs ${((data.description as string) || "").length >= 100 ? "text-forest" : "text-ink-light"}`}>
+        <p id="description-count" className={`mt-1 text-xs ${((data.description as string) || "").length >= 100 ? "text-forest" : "text-ink-light"}`}>
           {((data.description as string) || "").length}/100 characters minimum
         </p>
       </div>

@@ -38,7 +38,7 @@ const maneWay = [
 
 export function ComparisonSection() {
   return (
-    <section className="bg-paper-white px-4 py-16 md:px-8 md:py-20">
+    <section aria-label="How ManeExchange compares" className="bg-paper-white px-4 py-16 md:px-8 md:py-20">
       <div className="mx-auto max-w-5xl">
         <div className="mb-10 text-center">
           <h2 className="font-serif text-3xl text-ink-black md:text-4xl">
