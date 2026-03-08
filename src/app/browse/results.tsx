@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import type { HorseListing } from "@/types/listings";
 import { SaveSearchButton } from "./save-search-button";
+import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "@/components/scroll-reveal";
 
 type Props = {
@@ -98,6 +99,9 @@ export async function BrowseResults({ params }: Props) {
   if (params.soundness) {
     query = query.eq("soundness_level", params.soundness);
   }
+  if (params.discipline) {
+    query = query.contains("discipline_ids", [params.discipline]);
+  }
   if (params.region) {
     const regionStates: Record<string, string[]> = {
       southeast: ["FL", "GA", "SC", "NC", "VA", "KY", "TN", "AL", "MS", "LA"],
@@ -146,12 +150,22 @@ export async function BrowseResults({ params }: Props) {
   }
 
   if (!listings || listings.length === 0) {
+    const hasFilters = Object.keys(params).some(
+      (k) => k !== "page" && params[k as keyof typeof params]
+    );
     return (
       <div className="rounded-lg border border-dashed border-crease-mid bg-paper-cream p-12 text-center">
         <p className="text-lg font-medium text-ink-dark">No horses found</p>
         <p className="mt-1 text-sm text-ink-mid">
-          Try adjusting your filters or check back soon for new listings.
+          {hasFilters
+            ? "No listings match your current filters. Try broadening your search."
+            : "Check back soon — new listings are added daily."}
         </p>
+        {hasFilters && (
+          <Button variant="outline" size="sm" className="mt-4" asChild>
+            <Link href="/browse">Reset All Filters</Link>
+          </Button>
+        )}
       </div>
     );
   }

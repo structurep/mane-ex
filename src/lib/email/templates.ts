@@ -62,6 +62,49 @@ export function welcomeEmail(name: string): { subject: string; html: string } {
   };
 }
 
+export function newMessageEmail(
+  recipientName: string,
+  senderName: string,
+  messagePreview: string,
+  conversationId: string
+): { subject: string; html: string } {
+  return {
+    subject: `New message from ${senderName}`,
+    html: layout(`
+      <h1>You have a new message.</h1>
+      <p>Hi ${recipientName}, <strong>${senderName}</strong> sent you a message:</p>
+      <div class="highlight">
+        <p style="margin:0; font-style: italic;">"${messagePreview.slice(0, 200)}${messagePreview.length > 200 ? "..." : ""}"</p>
+      </div>
+      <p style="text-align: center; margin-top: 24px;">
+        <a href="${BASE_URL}/dashboard/messages/${conversationId}" class="btn">View Conversation</a>
+      </p>
+      <p style="font-size: 13px; color: #8E9B91;">Do not share personal financial information in messages.</p>
+    `),
+  };
+}
+
+export function inquirySentEmail(
+  buyerName: string,
+  horseName: string,
+  sellerName: string,
+  conversationId: string
+): { subject: string; html: string } {
+  return {
+    subject: `Your inquiry about ${horseName}`,
+    html: layout(`
+      <h1>Inquiry sent.</h1>
+      <p>Hi ${buyerName}, your message about <strong>${horseName}</strong> has been sent to ${sellerName}.</p>
+      <div class="highlight">
+        <p style="margin:0">The seller will typically respond within 24 hours. You can continue the conversation from your dashboard.</p>
+      </div>
+      <p style="text-align: center; margin-top: 24px;">
+        <a href="${BASE_URL}/dashboard/messages/${conversationId}" class="btn">View Conversation</a>
+      </p>
+    `),
+  };
+}
+
 export function offerReceivedEmail(
   sellerName: string,
   horseName: string,
@@ -81,6 +124,40 @@ export function offerReceivedEmail(
         <a href="${BASE_URL}/dashboard/offers/${offerId}" class="btn">Review Offer</a>
       </p>
       <p style="font-size: 13px; color: #8E9B91;">You can accept, counter, or decline from your dashboard.</p>
+    `),
+  };
+}
+
+export function offerStatusEmail(
+  buyerName: string,
+  horseName: string,
+  status: "accepted" | "rejected" | "countered",
+  offerId: string,
+  counterAmount?: string
+): { subject: string; html: string } {
+  const statusText = {
+    accepted: "Your offer has been accepted",
+    rejected: "Your offer has been declined",
+    countered: `The seller has countered with ${counterAmount}`,
+  }[status];
+
+  const nextStep = {
+    accepted: "Proceed to payment to secure the transaction via ManeVault escrow.",
+    rejected: "You can browse other listings or submit a new offer.",
+    countered: "Review the counter-offer and decide whether to accept.",
+  }[status];
+
+  return {
+    subject: `Offer update: ${horseName}`,
+    html: layout(`
+      <h1>${statusText}.</h1>
+      <p>Hi ${buyerName}, regarding your offer on <strong>${horseName}</strong>:</p>
+      <div class="highlight">
+        <p style="margin:0">${nextStep}</p>
+      </div>
+      <p style="text-align: center; margin-top: 24px;">
+        <a href="${BASE_URL}/dashboard/offers/${offerId}" class="btn">View Offer</a>
+      </p>
     `),
   };
 }

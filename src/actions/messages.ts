@@ -1,6 +1,9 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { getUserEmail } from "@/lib/supabase/admin";
+import { sendEmail } from "@/lib/email/resend";
+import { newMessageEmail } from "@/lib/email/templates";
 
 export type MessageActionState = {
   error?: string;
@@ -40,6 +43,18 @@ export async function startConversation(
     return { error: "Message cannot exceed 5,000 characters." };
   }
 
+  // Rate limit: max 5 new conversations per hour
+  const oneHourAgo = new Date(Date.now() - 3600000).toISOString();
+  const { count: recentConvos } = await supabase
+    .from("conversations")
+    .select("*", { count: "exact", head: true })
+    .eq("participant_1_id", user.id)
+    .gte("created_at", oneHourAgo);
+
+  if ((recentConvos ?? 0) >= 5) {
+    return { error: "You're sending messages too quickly. Please wait before starting new conversations." };
+  }
+
   // Check if a conversation already exists between these two users for this listing
   let query = supabase
     .from("conversations")
@@ -67,6 +82,9 @@ export async function startConversation(
     if (msgError) {
       return { error: msgError.message };
     }
+
+    // Send email notification to seller (fire-and-forget)
+    notifyRecipient(supabase, sellerId, user.id, body, existing.id).catch(() => {});
 
     return { conversationId: existing.id };
   }
@@ -97,7 +115,54 @@ export async function startConversation(
     return { error: msgError.message };
   }
 
+  // Send email notifications (fire-and-forget)
+  notifyRecipient(supabase, sellerId, user.id, body, conversation.id).catch(() => {});
+
+  // Also create in-app notification for seller
+  const { data: senderProfile } = await supabase
+    .from("profiles")
+    .select("display_name")
+    .eq("id", user.id)
+    .single();
+
+  await supabase.from("notifications").insert({
+    user_id: sellerId,
+    type: "message",
+    title: `New message from ${senderProfile?.display_name || "a buyer"}`,
+    body: body.slice(0, 100),
+    link: `/dashboard/messages/${conversation.id}`,
+    metadata: { conversation_id: conversation.id, sender_id: user.id },
+  });
+
   return { conversationId: conversation.id };
+}
+
+/**
+ * Send email notification to the message recipient (fire-and-forget).
+ */
+async function notifyRecipient(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  recipientId: string,
+  senderId: string,
+  messageBody: string,
+  conversationId: string
+) {
+  const [{ data: recipient }, { data: sender }, recipientEmail] = await Promise.all([
+    supabase.from("profiles").select("display_name").eq("id", recipientId).single(),
+    supabase.from("profiles").select("display_name").eq("id", senderId).single(),
+    getUserEmail(recipientId),
+  ]);
+
+  if (!recipientEmail) return;
+
+  const email = newMessageEmail(
+    recipient?.display_name || "there",
+    sender?.display_name || "Someone",
+    messageBody,
+    conversationId
+  );
+
+  await sendEmail({ to: recipientEmail, ...email });
 }
 
 /**
@@ -123,6 +188,19 @@ export async function sendMessage(
   }
   if (trimmed.length > 5000) {
     return { error: "Message cannot exceed 5,000 characters." };
+  }
+
+  // Rate limit: max 20 messages per conversation per 10 minutes
+  const tenMinsAgo = new Date(Date.now() - 600000).toISOString();
+  const { count: recentMsgCount } = await supabase
+    .from("messages")
+    .select("*", { count: "exact", head: true })
+    .eq("conversation_id", conversationId)
+    .eq("sender_id", user.id)
+    .gte("created_at", tenMinsAgo);
+
+  if ((recentMsgCount ?? 0) >= 20) {
+    return { error: "You're sending messages too quickly. Please slow down." };
   }
 
   // Verify user is a participant in this conversation

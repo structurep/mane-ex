@@ -3,6 +3,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { sendEmail } from "@/lib/email/resend";
+import { welcomeEmail } from "@/lib/email/templates";
 
 const signUpSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -51,6 +53,12 @@ export async function signUp(
   if (error) {
     return { error: error.message };
   }
+
+  // Send welcome email (fire-and-forget)
+  (async () => {
+    const tmpl = welcomeEmail(parsed.data.full_name);
+    await sendEmail({ to: parsed.data.email, ...tmpl });
+  })().catch(() => {});
 
   return { success: true };
 }

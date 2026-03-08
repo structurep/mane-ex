@@ -40,6 +40,7 @@ import Image from "next/image";
 import type { HorseListing } from "@/types/listings";
 import type { SellerScore } from "@/types/scoring";
 import { OfferModal } from "@/components/offer-modal";
+import { MessageSellerModal } from "@/components/message-seller-modal";
 import { ListingGallery } from "@/components/listing-gallery";
 import { HennekeScoreDisplay } from "@/components/henneke-score";
 import { RegistryBadges, type RegistryRecord, type RegistryType } from "@/components/registry-lookup";
@@ -689,10 +690,12 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
             )}
 
             <div className="mt-4 space-y-2">
-              <Button className="w-full" size="lg">
-                <MessageCircle className="mr-2 h-4 w-4" />
-                Message Seller
-              </Button>
+              <MessageSellerModal
+                sellerId={l.seller_id}
+                sellerName={l.seller?.display_name || "Seller"}
+                listingId={l.id}
+                listingName={l.name}
+              />
               {l.status === "active" && (
                 <>
                   <Button
@@ -791,6 +794,25 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
             </p>
           </div>
         </div>
+      </div>
+
+      {/* Equine purchase disclaimer */}
+      <div className="mt-8 rounded-md bg-paper-warm px-4 py-3">
+        <p className="text-[11px] leading-relaxed text-ink-faint">
+          <span className="font-medium text-ink-light">Important:</span>{" "}
+          ManeExchange is a marketplace platform and is not a party to any
+          transaction between buyers and sellers. All listing information is
+          provided by the seller and has not been independently verified.
+          We strongly recommend a pre-purchase examination (PPE) by a licensed
+          veterinarian and review of all registration documents before completing
+          any purchase. Equine activities involve inherent risks; buyers assume
+          all risk associated with the purchase and ownership of any horse.
+          See our{" "}
+          <a href="/terms" className="underline hover:text-ink-mid">
+            Terms of Service
+          </a>{" "}
+          for full details.
+        </p>
       </div>
     </div>
   );

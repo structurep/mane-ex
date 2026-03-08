@@ -2,11 +2,11 @@ import { z } from "zod";
 
 // Step 1: Basic Info
 export const basicInfoSchema = z.object({
-  name: z.string().min(2, "Horse name is required"),
-  breed: z.string().optional(),
-  registered_name: z.string().optional(),
-  registration_number: z.string().optional(),
-  registry: z.string().optional(),
+  name: z.string().min(2, "Horse name is required").max(100, "Name cannot exceed 100 characters"),
+  breed: z.string().max(100).optional(),
+  registered_name: z.string().max(200).optional(),
+  registration_number: z.string().max(50).optional(),
+  registry: z.string().max(50).optional(),
   gender: z.enum(["mare", "gelding", "stallion"]).optional(),
   color: z.string().optional(),
   date_of_birth: z.string().optional(),
@@ -73,15 +73,15 @@ export const verificationSchema = z.object({
 
 // Step 7: History
 export const historySchema = z.object({
-  description: z.string().optional(),
+  description: z.string().max(5000, "Description cannot exceed 5,000 characters").optional(),
   years_with_current_owner: z.coerce.number().int().min(0).optional(),
   number_of_previous_owners: z.coerce.number().int().min(0).optional(),
-  reason_for_sale: z.string().optional(),
-  training_history: z.string().optional(),
-  temperament: z.string().optional(),
-  vices: z.string().optional(),
-  suitable_for: z.string().optional(),
-  good_with: z.string().optional(),
+  reason_for_sale: z.string().max(1000).optional(),
+  training_history: z.string().max(2000).optional(),
+  temperament: z.string().max(1000).optional(),
+  vices: z.string().max(1000).optional(),
+  suitable_for: z.string().max(500).optional(),
+  good_with: z.string().max(500).optional(),
 });
 
 // Step 7: Pricing

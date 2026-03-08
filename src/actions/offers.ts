@@ -5,8 +5,10 @@ import {
   createOfferSchema,
   counterOfferSchema,
 } from "@/lib/validators/offers";
-import { MIN_COMPLETENESS_FOR_OFFER } from "@/lib/stripe/config";
-import { formatCentsToDollars } from "@/lib/stripe/config";
+import { MIN_COMPLETENESS_FOR_OFFER, formatCentsToDollars } from "@/lib/stripe/config";
+import { getUserEmail } from "@/lib/supabase/admin";
+import { sendEmail } from "@/lib/email/resend";
+import { offerReceivedEmail, offerStatusEmail } from "@/lib/email/templates";
 
 export type OfferActionState = {
   error?: string;
@@ -123,6 +125,25 @@ export async function createOffer(
     },
   });
 
+  // Email seller about new offer (fire-and-forget)
+  (async () => {
+    const sellerEmail = await getUserEmail(listing.seller_id);
+    if (sellerEmail) {
+      const { data: sellerProfile } = await supabase
+        .from("profiles")
+        .select("display_name")
+        .eq("id", listing.seller_id)
+        .single();
+      const tmpl = offerReceivedEmail(
+        sellerProfile?.display_name || "Seller",
+        listing.name,
+        formatCentsToDollars(parsed.data.amount_cents),
+        offer.id
+      );
+      await sendEmail({ to: sellerEmail, ...tmpl });
+    }
+  })().catch(() => {});
+
   // Inject system message into conversation (if one exists for this listing)
   const { data: conversation } = await supabase
     .from("conversations")
@@ -225,6 +246,16 @@ export async function acceptOffer(
     },
   });
 
+  // Email buyer about acceptance (fire-and-forget)
+  (async () => {
+    const buyerEmail = await getUserEmail(offer.buyer_id);
+    if (buyerEmail) {
+      const { data: buyerProfile } = await supabase.from("profiles").select("display_name").eq("id", offer.buyer_id).single();
+      const tmpl = offerStatusEmail(buyerProfile?.display_name || "Buyer", listing?.name ?? "a listing", "accepted", offerId);
+      await sendEmail({ to: buyerEmail, ...tmpl });
+    }
+  })().catch(() => {});
+
   return { offerId, success: true };
 }
 
@@ -294,6 +325,16 @@ export async function rejectOffer(
       offer_id: offerId,
     },
   });
+
+  // Email buyer about rejection (fire-and-forget)
+  (async () => {
+    const buyerEmail = await getUserEmail(offer.buyer_id);
+    if (buyerEmail) {
+      const { data: buyerProfile } = await supabase.from("profiles").select("display_name").eq("id", offer.buyer_id).single();
+      const tmpl = offerStatusEmail(buyerProfile?.display_name || "Buyer", listing?.name ?? "a listing", "rejected", offerId);
+      await sendEmail({ to: buyerEmail, ...tmpl });
+    }
+  })().catch(() => {});
 
   return { offerId, success: true };
 }
@@ -404,6 +445,22 @@ export async function counterOffer(
       original_offer_id: originalOffer.id,
     },
   });
+
+  // Email buyer about counter-offer (fire-and-forget)
+  (async () => {
+    const buyerEmail = await getUserEmail(originalOffer.buyer_id);
+    if (buyerEmail) {
+      const { data: buyerProfile } = await supabase.from("profiles").select("display_name").eq("id", originalOffer.buyer_id).single();
+      const tmpl = offerStatusEmail(
+        buyerProfile?.display_name || "Buyer",
+        listing?.name ?? "a listing",
+        "countered",
+        newOffer.id,
+        formatCentsToDollars(parsed.data.counter_amount_cents)
+      );
+      await sendEmail({ to: buyerEmail, ...tmpl });
+    }
+  })().catch(() => {});
 
   // Inject system message
   const { data: conversation } = await supabase

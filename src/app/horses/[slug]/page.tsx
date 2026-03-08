@@ -3,8 +3,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { Button } from "@/components/ui/button";
-import { MessageCircle } from "lucide-react";
+import { MobileCTA } from "./mobile-cta";
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -16,7 +15,6 @@ import {
 import type { HorseListing } from "@/types/listings";
 import type { SellerScore } from "@/types/scoring";
 import Image from "next/image";
-import { OfferModal } from "@/components/offer-modal";
 import { ListingGallery } from "@/components/listing-gallery";
 import { ListingTabs, type ListingTabsData } from "./listing-tabs";
 
@@ -230,30 +228,15 @@ export default async function ListingDetailPage({ params, searchParams }: Props)
       </main>
 
       {/* Mobile sticky CTA */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-border bg-paper-white p-3 md:hidden">
-        <div className="flex items-center gap-3">
-          <div className="flex-1">
-            <p className="font-serif text-lg font-bold text-ink-black">{priceStr}</p>
-          </div>
-          <Button size="sm">
-            <MessageCircle className="mr-1 h-4 w-4" />
-            Message
-          </Button>
-          {l.status === "active" && (
-            <OfferModal
-              listingId={l.id}
-              listingName={l.name}
-              listingPrice={l.price}
-              completenessScore={l.completeness_score}
-              trigger={
-                <Button variant="outline" size="sm">
-                  Make Offer
-                </Button>
-              }
-            />
-          )}
-        </div>
-      </div>
+      <MobileCTA
+        listingId={l.id}
+        listingName={l.name}
+        sellerId={l.seller_id}
+        sellerName={l.seller?.display_name || "Seller"}
+        price={l.price}
+        completenessScore={l.completeness_score}
+        status={l.status}
+      />
 
       <Footer />
     </div>

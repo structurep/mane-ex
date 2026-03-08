@@ -286,6 +286,16 @@ export function OfferModal({
                 </p>
               </div>
 
+              {/* Legal disclaimer */}
+              <p className="text-[11px] leading-relaxed text-ink-faint">
+                By submitting this offer you agree to the ManeExchange{" "}
+                <a href="/terms" target="_blank" className="underline">Terms of Service</a>.
+                ManeExchange facilitates the transaction but is not a party to the sale.
+                We strongly recommend a pre-purchase examination (PPE) by a licensed
+                veterinarian before completing any equine purchase. All sales are subject
+                to the warranty terms stated in the listing.
+              </p>
+
               <DialogFooter>
                 <DialogClose asChild>
                   <Button type="button" variant="outline">

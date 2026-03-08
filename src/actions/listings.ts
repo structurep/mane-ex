@@ -249,6 +249,34 @@ export async function publishListing(listingId: string): Promise<ListingActionSt
     return { error: "You must be logged in." };
   }
 
+  // Pre-publish validation: require minimum listing quality
+  const { data: listing } = await supabase
+    .from("horse_listings")
+    .select("name, breed, description, location_state, price")
+    .eq("id", listingId)
+    .eq("seller_id", user.id)
+    .single();
+
+  if (!listing) {
+    return { error: "Listing not found." };
+  }
+
+  const missing: string[] = [];
+  if (!listing.name || listing.name.trim().length < 2) missing.push("horse name");
+  if (!listing.location_state) missing.push("location (state)");
+
+  // Require at least one photo
+  const { count: photoCount } = await supabase
+    .from("listing_media")
+    .select("*", { count: "exact", head: true })
+    .eq("listing_id", listingId);
+
+  if (!photoCount || photoCount === 0) missing.push("at least one photo");
+
+  if (missing.length > 0) {
+    return { error: `Please complete the following before publishing: ${missing.join(", ")}.` };
+  }
+
   const { error } = await supabase
     .from("horse_listings")
     .update({

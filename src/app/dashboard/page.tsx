@@ -143,7 +143,7 @@ export default async function DashboardPage() {
     convoIds.length > 0
       ? supabase
           .from("messages")
-          .select("id, content, created_at, sender_id, conversation_id, profiles:sender_id(display_name)")
+          .select("id, body, created_at, sender_id, conversation_id, profiles:sender_id(display_name)")
           .in("conversation_id", convoIds)
           .neq("sender_id", user.id)
           .order("created_at", { ascending: false })
@@ -495,7 +495,7 @@ export default async function DashboardPage() {
                       </span>
                     </div>
                     <p className="text-sm text-ink-mid truncate">
-                      {msg.content}
+                      {msg.body}
                     </p>
                   </div>
                 </Link>

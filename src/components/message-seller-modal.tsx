@@ -1,0 +1,142 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { startConversation } from "@/actions/messages";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { MessageCircle, AlertTriangle, Shield } from "lucide-react";
+import { toast } from "sonner";
+
+type Props = {
+  sellerId: string;
+  sellerName: string;
+  listingId: string;
+  listingName: string;
+  trigger?: React.ReactNode;
+};
+
+export function MessageSellerModal({
+  sellerId,
+  sellerName,
+  listingId,
+  listingName,
+  trigger,
+}: Props) {
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleSend() {
+    const trimmed = message.trim();
+    if (!trimmed) return;
+
+    setSending(true);
+    setError(null);
+
+    const result = await startConversation(sellerId, listingId, trimmed);
+
+    setSending(false);
+
+    if (result.error) {
+      setError(result.error);
+      toast.error(result.error);
+      return;
+    }
+
+    toast.success("Message sent", {
+      description: `${sellerName} has been notified.`,
+    });
+    setOpen(false);
+    setMessage("");
+    router.push(`/dashboard/messages/${result.conversationId}`);
+  }
+
+  function handleOpenChange(nextOpen: boolean) {
+    if (nextOpen) {
+      setMessage("");
+      setError(null);
+    }
+    setOpen(nextOpen);
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      <DialogTrigger asChild>
+        {trigger ?? (
+          <Button className="w-full" size="lg">
+            <MessageCircle className="mr-2 h-4 w-4" />
+            Message Seller
+          </Button>
+        )}
+      </DialogTrigger>
+
+      <DialogContent className="bg-paper-cream sm:max-w-md animate-fade-up">
+        <DialogHeader>
+          <DialogTitle className="text-ink-black">
+            Message {sellerName}
+          </DialogTitle>
+          <DialogDescription className="text-ink-mid">
+            About: {listingName}
+          </DialogDescription>
+        </DialogHeader>
+
+        {error && (
+          <div className="flex items-start gap-2 rounded-md border border-red/20 bg-red-light px-3 py-2.5 text-sm text-red">
+            <AlertTriangle className="mt-0.5 size-4 shrink-0" />
+            <span>{error}</span>
+          </div>
+        )}
+
+        <div className="space-y-4">
+          <Textarea
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Introduce yourself and ask about the horse..."
+            maxLength={5000}
+            rows={4}
+            className="bg-paper-white resize-none"
+          />
+          <p className="text-xs text-ink-light">
+            {message.length}/5,000 characters
+          </p>
+        </div>
+
+        <div className="flex items-start gap-2 rounded-md bg-paper-warm p-3">
+          <Shield className="mt-0.5 h-4 w-4 shrink-0 text-forest" />
+          <p className="text-xs text-ink-mid">
+            Messages are private between you and the seller. Never share bank
+            account numbers, SSNs, or other financial credentials. Use ManeVault
+            escrow for all payments.
+          </p>
+        </div>
+
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button type="button" variant="outline">
+              Cancel
+            </Button>
+          </DialogClose>
+          <Button
+            onClick={handleSend}
+            disabled={sending || !message.trim()}
+          >
+            {sending ? "Sending..." : "Send Message"}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
