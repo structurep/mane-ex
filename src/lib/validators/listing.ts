@@ -13,6 +13,7 @@ export const basicInfoSchema = z.object({
   height_hands: z.coerce.number().min(8).max(20).optional(),
   sire: z.string().optional(),
   dam: z.string().optional(),
+  is_microchipped: z.boolean().default(false),
 });
 
 // Step 2: Farm Life
@@ -20,6 +21,8 @@ export const farmLifeSchema = z.object({
   location_city: z.string().optional(),
   location_state: z.string().optional(),
   location_zip: z.string().optional(),
+  trial_available: z.boolean().default(false),
+  trial_location: z.string().optional(),
   barn_name: z.string().optional(),
   current_rider: z.string().optional(),
   current_trainer: z.string().optional(),
@@ -62,8 +65,15 @@ export const vetInfoSchema = z.object({
 
 // Step 5: Media (validated separately — file uploads)
 
-// Step 6: History
+// Step 6: Verification
+export const verificationSchema = z.object({
+  has_current_coggins: z.boolean().default(false),
+  has_vet_check_available: z.boolean().default(false),
+});
+
+// Step 7: History
 export const historySchema = z.object({
+  description: z.string().optional(),
   years_with_current_owner: z.coerce.number().int().min(0).optional(),
   number_of_previous_owners: z.coerce.number().int().min(0).optional(),
   reason_for_sale: z.string().optional(),
@@ -76,12 +86,16 @@ export const historySchema = z.object({
 
 // Step 7: Pricing
 export const pricingSchema = z.object({
+  listing_type: z.enum(["fixed_price", "price_on_inquiry", "for_lease", "auction"]).default("fixed_price"),
   price: z.coerce.number().int().min(100, "Price must be at least $1.00").optional(),
   price_display: z.enum(["exact", "range", "contact"]).default("exact"),
   price_negotiable: z.boolean().default(true),
   warranty: z.enum(["as_is", "sound_at_sale", "sound_for_use"]).default("as_is"),
   lease_available: z.boolean().default(false),
   lease_terms: z.string().optional(),
+  // Seller info
+  seller_role: z.enum(["owner", "trainer", "agent", "dealer"]).optional(),
+  contact_preference: z.enum(["email_only", "phone_only", "email_and_phone"]).default("email_and_phone"),
   // State compliance
   seller_state: z.string().optional(),
   fl_medical_disclosure: z.string().optional(),
@@ -96,6 +110,7 @@ export const fullListingSchema = basicInfoSchema
   .merge(farmLifeSchema)
   .merge(showInfoSchema)
   .merge(vetInfoSchema)
+  .merge(verificationSchema)
   .merge(historySchema)
   .merge(pricingSchema)
   .extend({

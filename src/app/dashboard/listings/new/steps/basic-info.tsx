@@ -14,6 +14,36 @@ const genderOptions = [
   { value: "stallion", label: "Stallion" },
 ];
 
+const breeds = [
+  "Warmblood",
+  "Dutch Warmblood",
+  "Hanoverian",
+  "Holsteiner",
+  "Oldenburg",
+  "Thoroughbred",
+  "Belgian Warmblood",
+  "Westphalian",
+  "Irish Sport Horse",
+  "Selle Francais",
+  "Quarter Horse",
+  "Other",
+];
+
+const colors = [
+  "Bay",
+  "Chestnut",
+  "Black",
+  "Gray",
+  "Dun",
+  "Palomino",
+  "Buckskin",
+  "Roan",
+  "Pinto",
+  "Appaloosa",
+  "Cremello",
+  "Other",
+];
+
 const registries = ["AQHA", "USEF", "USDF", "USEA", "APHA", "Jockey Club", "Warmblood Registry", "Other"];
 
 export function StepBasicInfo({ data, setField }: StepProps) {
@@ -37,23 +67,35 @@ export function StepBasicInfo({ data, setField }: StepProps) {
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <Label htmlFor="breed">Breed</Label>
-          <Input
+          <select
             id="breed"
             value={(data.breed as string) || ""}
             onChange={(e) => setField("breed", e.target.value)}
-            placeholder="e.g. Warmblood, Thoroughbred"
-            className="mt-1.5"
-          />
+            className="mt-1.5 w-full rounded-md border-0 bg-paper-white px-3 py-2 text-sm text-ink-black shadow-flat focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
+          >
+            <option value="">Select breed</option>
+            {breeds.map((b) => (
+              <option key={b} value={b}>
+                {b}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
           <Label htmlFor="color">Color</Label>
-          <Input
+          <select
             id="color"
             value={(data.color as string) || ""}
             onChange={(e) => setField("color", e.target.value)}
-            placeholder="e.g. Bay, Chestnut, Grey"
-            className="mt-1.5"
-          />
+            className="mt-1.5 w-full rounded-md border-0 bg-paper-white px-3 py-2 text-sm text-ink-black shadow-flat focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
+          >
+            <option value="">Select color</option>
+            {colors.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
@@ -71,7 +113,7 @@ export function StepBasicInfo({ data, setField }: StepProps) {
                 onChange={() => setField("gender", opt.value)}
                 className="peer sr-only"
               />
-              <span className="block rounded-md border border-crease-light px-4 py-2 text-sm font-medium text-ink-mid transition-colors peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground">
+              <span className="block rounded-md border border-crease-light px-4 py-2 text-sm font-medium text-ink-mid transition-colors peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-1">
                 {opt.label}
               </span>
             </label>
@@ -137,7 +179,7 @@ export function StepBasicInfo({ data, setField }: StepProps) {
           id="registry"
           value={(data.registry as string) || ""}
           onChange={(e) => setField("registry", e.target.value)}
-          className="mt-1.5 w-full rounded-md border-0 bg-paper-white px-3 py-2 text-sm text-ink-black shadow-flat"
+          className="mt-1.5 w-full rounded-md border-0 bg-paper-white px-3 py-2 text-sm text-ink-black shadow-flat focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
         >
           <option value="">Select registry...</option>
           {registries.map((r) => (
@@ -169,6 +211,17 @@ export function StepBasicInfo({ data, setField }: StepProps) {
           />
         </div>
       </div>
+
+      {/* Microchipped */}
+      <label className="flex cursor-pointer items-center gap-3">
+        <input
+          type="checkbox"
+          checked={data.is_microchipped === true}
+          onChange={(e) => setField("is_microchipped", e.target.checked)}
+          className="h-4 w-4 rounded border-crease-light text-primary accent-primary"
+        />
+        <span className="text-sm font-medium text-ink-dark">Horse is microchipped</span>
+      </label>
     </div>
   );
 }

@@ -104,6 +104,7 @@ export interface HorseListing {
   soundness_level: SoundnessLevel | null;
 
   // History
+  description: string | null;
   years_with_current_owner: number | null;
   number_of_previous_owners: number | null;
   reason_for_sale: string | null;
@@ -113,13 +114,26 @@ export interface HorseListing {
   suitable_for: string | null;
   good_with: string | null;
 
+  // Trial
+  trial_available: boolean;
+  trial_location: string | null;
+
+  // Verification badges
+  has_current_coggins: boolean;
+  has_vet_check_available: boolean;
+
   // Pricing
+  listing_type: "fixed_price" | "price_on_inquiry" | "for_lease" | "auction";
   price: number | null;
   price_display: string | null;
   price_negotiable: boolean;
   warranty: WarrantyType;
   lease_available: boolean;
   lease_terms: string | null;
+
+  // Seller Info
+  seller_role: "owner" | "trainer" | "agent" | "dealer" | null;
+  contact_preference: "email_only" | "phone_only" | "email_and_phone";
 
   // Compliance
   seller_state: string | null;
@@ -211,6 +225,7 @@ export type WizardStep =
   | "show"
   | "vet"
   | "media"
+  | "verification"
   | "history"
   | "pricing";
 
@@ -220,6 +235,7 @@ export const WIZARD_STEPS: { key: WizardStep; label: string; number: number }[] 
   { key: "show", label: "Show Info", number: 3 },
   { key: "vet", label: "Vet Info", number: 4 },
   { key: "media", label: "Media", number: 5 },
-  { key: "history", label: "History", number: 6 },
-  { key: "pricing", label: "Pricing", number: 7 },
+  { key: "verification", label: "Verification", number: 6 },
+  { key: "history", label: "History", number: 7 },
+  { key: "pricing", label: "Pricing", number: 8 },
 ];

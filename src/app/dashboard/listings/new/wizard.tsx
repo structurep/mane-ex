@@ -13,6 +13,7 @@ import { StepFarmLife } from "./steps/farm-life";
 import { StepShowInfo } from "./steps/show-info";
 import { StepVetInfo } from "./steps/vet-info";
 import { StepMedia } from "./steps/media";
+import { StepVerification } from "./steps/verification";
 import { StepHistory } from "./steps/history";
 import { StepPricing } from "./steps/pricing";
 
@@ -131,6 +132,7 @@ export function ListingWizard({ mode = "create", listingId, initialData, onDirty
     <StepShowInfo key="show" {...stepProps} />,
     <StepVetInfo key="vet" {...stepProps} />,
     <StepMedia key="media" {...stepProps} />,
+    <StepVerification key="verification" {...stepProps} />,
     <StepHistory key="history" {...stepProps} />,
     <StepPricing key="pricing" {...stepProps} />,
   ];
@@ -157,7 +159,7 @@ export function ListingWizard({ mode = "create", listingId, initialData, onDirty
             </button>
           ))}
         </div>
-        <Progress value={progress} className="h-1" />
+        <Progress value={progress} className="h-1" aria-label={`Step ${state.step + 1} of ${WIZARD_STEPS.length}`} />
       </div>
 
       {/* Step content */}
@@ -222,7 +224,7 @@ export function ListingWizard({ mode = "create", listingId, initialData, onDirty
           </Button>
 
           {isLastStep ? (
-            <Button type="submit" disabled={isPending}>
+            <Button type="submit" disabled={isPending} aria-busy={isPending}>
               {isPending
                 ? isEdit ? "Saving..." : "Creating..."
                 : isEdit ? "Save Changes" : "Create Listing"}
@@ -251,6 +253,7 @@ const stepDescriptions = [
   "Show history and discipline experience. Performance horses sell faster with documented records.",
   "Vet info and health history. Transparency here drives trust and higher completeness scores.",
   "Photos and videos are the #1 factor in listing engagement. Lead with your best shot.",
+  "Verification badges and health disclosures. Earn trust and increase visibility.",
   "Ownership history, temperament, and suitability. Help buyers picture this horse in their barn.",
   "Set your price and warranty terms. Compliance disclosures are handled automatically.",
 ];

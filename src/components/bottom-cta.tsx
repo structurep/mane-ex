@@ -14,7 +14,11 @@ export function BottomCTA() {
           ManeExchange.
         </p>
         <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-          <Button size="lg" asChild>
+          <Button
+            size="lg"
+            className="bg-coral text-white hover:bg-coral-hover"
+            asChild
+          >
             <Link href="/browse">
               Browse Horses
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -23,7 +27,7 @@ export function BottomCTA() {
           <Button
             variant="outline"
             size="lg"
-            className="!bg-transparent border-white/30 text-white hover:!bg-white/10"
+            className="bg-transparent border-white/30 text-white hover:bg-white/10"
             asChild
           >
             <Link href="/sell">List Your Horse</Link>

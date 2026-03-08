@@ -107,6 +107,25 @@ export function StepHistory({ data, setField }: StepProps) {
         />
       </div>
 
+      {/* Description */}
+      <div>
+        <Label htmlFor="description">
+          Description <span className="text-red">*</span>{" "}
+          <span className="text-xs font-normal text-ink-light">(minimum 100 characters)</span>
+        </Label>
+        <Textarea
+          id="description"
+          value={(data.description as string) || ""}
+          onChange={(e) => setField("description", e.target.value)}
+          placeholder="Describe your horse's training, accomplishments, personality, and what makes them special..."
+          rows={5}
+          className="mt-1.5"
+        />
+        <p className={`mt-1 text-xs ${((data.description as string) || "").length >= 100 ? "text-forest" : "text-ink-light"}`}>
+          {((data.description as string) || "").length}/100 characters minimum
+        </p>
+      </div>
+
       {/* Vices */}
       <div>
         <Label htmlFor="vices">Vices or Behavioral Notes</Label>
@@ -137,7 +156,7 @@ export function StepHistory({ data, setField }: StepProps) {
                 }}
                 className="peer sr-only"
               />
-              <span className="block rounded-full border border-crease-light px-3 py-1.5 text-xs font-medium text-ink-mid transition-colors peer-checked:border-forest peer-checked:bg-forest/10 peer-checked:text-forest">
+              <span className="block rounded-full border border-crease-light px-3 py-1.5 text-xs font-medium text-ink-mid transition-colors peer-checked:border-forest peer-checked:bg-forest/10 peer-checked:text-forest peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-1">
                 {opt}
               </span>
             </label>
@@ -162,7 +181,7 @@ export function StepHistory({ data, setField }: StepProps) {
                 }}
                 className="peer sr-only"
               />
-              <span className="block rounded-full border border-crease-light px-3 py-1.5 text-xs font-medium text-ink-mid transition-colors peer-checked:border-forest peer-checked:bg-forest/10 peer-checked:text-forest">
+              <span className="block rounded-full border border-crease-light px-3 py-1.5 text-xs font-medium text-ink-mid transition-colors peer-checked:border-forest peer-checked:bg-forest/10 peer-checked:text-forest peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-1">
                 {opt}
               </span>
             </label>

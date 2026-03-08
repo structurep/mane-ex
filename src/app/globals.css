@@ -88,6 +88,10 @@
   --color-gold: #C4A265;
   --color-blue: #3B6FC2;
 
+  /* Warm CTA accent (coral/salmon) */
+  --color-coral: #D4715E;
+  --color-coral-hover: #C4624F;
+
   /* Accent tints (premium backgrounds) */
   --color-gold-light: rgba(196, 162, 101, 0.08);
   --color-forest-light: rgba(45, 106, 79, 0.08);

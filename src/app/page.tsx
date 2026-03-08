@@ -4,21 +4,19 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { ISOBanner } from "@/components/iso-banner";
+import { PlatformFeatures } from "@/components/platform-features";
+import { ComparisonSection } from "@/components/comparison-section";
+import { TestimonialSection } from "@/components/testimonial-section";
 import { BottomCTA } from "@/components/bottom-cta";
 import { HeroSearch } from "@/components/hero-search";
-import { FeatureGrid } from "@/components/feature-grid";
-import { TestimonialSection } from "@/components/testimonial-section";
 import { createClient } from "@/lib/supabase/server";
 import {
   ArrowRight,
   Eye,
   Heart,
-  Shield,
-  BarChart3,
-  Bookmark,
-  UserCheck,
-  GitCompareArrows,
-  Search,
+  Award,
+  Sparkles,
 } from "lucide-react";
 
 function formatPrice(cents: number | null): string {
@@ -26,44 +24,10 @@ function formatPrice(cents: number | null): string {
   return `$${(cents / 100).toLocaleString()}`;
 }
 
-const platformFeatures = [
-  {
-    icon: Shield,
-    title: "ManeVault Escrow",
-    description:
-      "Funds held securely until the horse is delivered and inspected. No more wiring money to strangers.",
-  },
-  {
-    icon: BarChart3,
-    title: "Mane Score",
-    description:
-      "Every seller earns a transparent quality score based on completeness, responsiveness, and transaction history.",
-  },
-  {
-    icon: Bookmark,
-    title: "Dream Barn",
-    description:
-      "Save favorites, track price changes, and organize your search into collections you can share with your trainer.",
-  },
-  {
-    icon: UserCheck,
-    title: "Verified Sellers",
-    description:
-      "Identity-verified sellers with documented track records. Look for the verified badge on every listing.",
-  },
-  {
-    icon: GitCompareArrows,
-    title: "Compare Side-by-Side",
-    description:
-      "Put two horses next to each other — vet records, show history, conformation, price — and make a confident decision.",
-  },
-  {
-    icon: Search,
-    title: "ISO Matching",
-    description:
-      "Post what you're looking for and let sellers come to you. Our matching engine connects the right horses to the right riders.",
-  },
-];
+function formatHeight(hands: number | null): string {
+  if (!hands) return "";
+  return `${hands}hh`;
+}
 
 export default async function Home() {
   const supabase = await createClient();
@@ -72,11 +36,17 @@ export default async function Home() {
   const { data: featured } = await supabase
     .from("horse_listings")
     .select(
-      "id, name, slug, breed, price, location_state, view_count, favorite_count, media:listing_media(url, is_primary)"
+      "id, name, slug, breed, price, height_hands, age, gender, location_city, location_state, view_count, favorite_count, completeness_score, discipline_ids, media:listing_media(url, is_primary)"
     )
     .eq("status", "active")
     .order("completeness_score", { ascending: false })
     .limit(6);
+
+  // Active listing count for stats
+  const { count: activeCount } = await supabase
+    .from("horse_listings")
+    .select("id", { count: "exact", head: true })
+    .eq("status", "active");
 
   const featuredListings = (featured ?? []) as Array<
     Record<string, unknown> & {
@@ -90,7 +60,7 @@ export default async function Home() {
 
       <main>
         {/* ══════════════════════════════════════════════
-            SECTION 1 — HERO (full-bleed photo + search)
+            SECTION 1 — HERO
             ══════════════════════════════════════════════ */}
         <section
           className="relative min-h-[85vh] overflow-hidden bg-hero-dark"
@@ -101,32 +71,43 @@ export default async function Home() {
               src="https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=1920&q=80&auto=format&fit=crop"
               alt=""
               fill
-              className="object-cover opacity-20"
+              className="object-cover opacity-30"
               priority
               fetchPriority="high"
               sizes="100vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0F1A12]/90 via-[#0F1A12]/70 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0F1A12]/80 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0F1A12]/90 via-[#0F1A12]/60 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0F1A12]/70 via-transparent to-transparent" />
           </div>
 
           <div className="relative flex min-h-[85vh] items-center px-4 md:px-8">
             <div className="mx-auto w-full max-w-7xl">
               <div className="max-w-2xl">
+                <p className="overline mb-4 text-coral">
+                  THE EQUESTRIAN MARKETPLACE
+                </p>
                 <h1 className="mb-6 font-serif text-4xl text-white sm:text-5xl md:text-6xl">
                   Find your
                   <br />
                   next partner.
                 </h1>
                 <p className="mb-8 max-w-lg text-lg text-white/70">
-                  Verified listings. Secured payments. The marketplace built for
-                  equestrians.
+                  The modern way to buy and sell hunters, jumpers, and dressage
+                  horses. Transparent. Trusted. Beautiful.
                 </p>
 
                 <HeroSearch />
 
-                <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                  <Button size="lg" asChild>
+                <p className="mt-4 text-sm text-white/40">
+                  {activeCount ?? 0} horses listed &middot; Join free
+                </p>
+
+                <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                  <Button
+                    size="lg"
+                    className="bg-coral text-white hover:bg-coral-hover"
+                    asChild
+                  >
                     <Link href="/browse">
                       Browse Horses
                       <ArrowRight className="ml-2 h-4 w-4" />
@@ -135,7 +116,7 @@ export default async function Home() {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="!bg-transparent border-white/30 text-white hover:!bg-white/10"
+                    className="bg-ink-black border-white/30 text-white hover:bg-ink-dark"
                     asChild
                   >
                     <Link href="/sell">List Your Horse</Link>
@@ -147,34 +128,60 @@ export default async function Home() {
         </section>
 
         {/* ══════════════════════════════════════════════
-            SECTION 2 — FEATURED LISTINGS (3-col grid)
+            SECTION 2 — ISO BANNER
+            ══════════════════════════════════════════════ */}
+        <ISOBanner />
+
+        {/* ══════════════════════════════════════════════
+            SECTION 3 — PLATFORM FEATURES (icon row)
+            ══════════════════════════════════════════════ */}
+        <PlatformFeatures />
+
+        {/* ══════════════════════════════════════════════
+            SECTION 4 — FEATURED LISTINGS
             ══════════════════════════════════════════════ */}
         {featuredListings.length > 0 && (
           <section className="bg-paper-white px-4 py-16 md:px-8 md:py-20">
             <div className="mx-auto max-w-7xl">
               <div className="mb-8 flex items-center justify-between">
-                <h2 className="font-serif text-3xl text-ink-black">
-                  Featured Listings
-                </h2>
-                <Button variant="outline" asChild className="hidden md:flex">
-                  <Link href="/browse" className="gap-1.5">
-                    View All
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </Button>
+                <div>
+                  <h2 className="font-serif text-3xl text-ink-black">
+                    Featured Listings
+                  </h2>
+                  <p className="mt-1 text-sm text-ink-mid">
+                    {activeCount ?? 0} horses listed right now
+                  </p>
+                </div>
+                <Link
+                  href="/browse"
+                  className="hidden items-center gap-1 text-sm font-medium text-ink-dark hover:text-ink-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-sm md:flex"
+                >
+                  View All
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
               </div>
               <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {featuredListings.map((l) => {
-                  const primaryMedia = l.media?.find((m) => m.is_primary) ?? l.media?.[0];
+                  const primaryMedia =
+                    l.media?.find((m) => m.is_primary) ?? l.media?.[0];
+                  const score =
+                    typeof l.completeness_score === "number"
+                      ? (l.completeness_score as number)
+                      : 0;
+                  const scorePercent = Math.min(
+                    Math.round((score / 1000) * 100),
+                    100
+                  );
+
                   return (
-                  <Link
-                    key={String(l.id)}
-                    href={`/horses/${String(l.slug)}`}
-                  >
-                    <Card className="group overflow-hidden border-0 shadow-flat transition-elevation hover-lift hover:shadow-lifted">
-                      <div className="relative aspect-[4/3] bg-paper-warm">
-                        {primaryMedia ? (
-                          <>
+                    <Link
+                      key={String(l.id)}
+                      href={`/horses/${String(l.slug)}`}
+                    >
+                      <Card className="group overflow-hidden border-0 shadow-flat transition-elevation hover-lift hover:shadow-lifted">
+                        {/* Image */}
+                        <div className="relative aspect-[4/3] bg-paper-warm">
+                          {primaryMedia ? (
                             <Image
                               src={primaryMedia.url}
                               alt={String(l.name)}
@@ -182,59 +189,113 @@ export default async function Home() {
                               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                               className="object-cover transition-transform group-hover:scale-105"
                             />
-                            <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent" />
-                            <span className="absolute bottom-3 left-3 font-serif text-lg font-semibold text-white">
-                              {formatPrice(
-                                typeof l.price === "number"
-                                  ? (l.price as number)
-                                  : null
-                              )}
-                            </span>
-                          </>
-                        ) : (
-                          <div className="flex h-full items-center justify-center text-ink-faint">
-                            No photo
+                          ) : (
+                            <div className="flex h-full items-center justify-center text-ink-faint">
+                              No photo
+                            </div>
+                          )}
+                          {/* Badges */}
+                          <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
+                            {score >= 750 && (
+                              <span className="flex items-center gap-1 rounded-full bg-coral px-2.5 py-1 text-[10px] font-semibold text-white shadow-sm">
+                                <Award className="h-3 w-3" />
+                                Featured Seller
+                              </span>
+                            )}
+                            {score >= 500 && score < 750 && (
+                              <span className="flex items-center gap-1 rounded-full bg-ink-black/70 px-2.5 py-1 text-[10px] font-semibold text-white shadow-sm backdrop-blur-sm">
+                                <Sparkles className="h-3 w-3" />
+                                Featured
+                              </span>
+                            )}
                           </div>
-                        )}
-                      </div>
-                      <div className="p-4">
-                        <p className="font-heading text-sm font-semibold text-ink-black line-clamp-1">
-                          {String(l.name)}
-                        </p>
-                        <div className="mt-1 flex items-center gap-2 text-xs text-ink-mid">
-                          {typeof l.breed === "string" && (
-                            <span>{l.breed}</span>
-                          )}
-                          {typeof l.location_state === "string" && (
-                            <span>{l.location_state}</span>
-                          )}
+                          {/* Favorite */}
+                          <div className="absolute right-3 top-3">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 shadow-sm backdrop-blur-sm">
+                              <Heart className="h-4 w-4 text-ink-mid" />
+                            </div>
+                          </div>
                         </div>
-                        <div className="mt-2 flex items-center justify-end gap-2 text-xs text-ink-light">
-                          {typeof l.view_count === "number" &&
-                            (l.view_count as number) > 0 && (
-                              <span className="flex items-center gap-0.5">
-                                <Eye className="h-3 w-3" />
-                                {l.view_count as number}
-                              </span>
+
+                        {/* Details */}
+                        <div className="p-4">
+                          <p className="font-serif text-lg font-semibold text-ink-black">
+                            {formatPrice(
+                              typeof l.price === "number"
+                                ? (l.price as number)
+                                : null
                             )}
-                          {typeof l.favorite_count === "number" &&
-                            (l.favorite_count as number) > 0 && (
-                              <span className="flex items-center gap-0.5">
-                                <Heart className="h-3 w-3" />
-                                {l.favorite_count as number}
-                              </span>
+                          </p>
+                          <div className="mt-1 flex flex-wrap items-center gap-1.5 text-xs text-ink-mid">
+                            {typeof l.age === "number" && (
+                              <span>{l.age as number}yo</span>
                             )}
+                            {typeof l.height_hands === "number" && (
+                              <>
+                                <span className="text-crease-mid">&middot;</span>
+                                <span>
+                                  {formatHeight(l.height_hands as number)}
+                                </span>
+                              </>
+                            )}
+                            {typeof l.gender === "string" && (
+                              <>
+                                <span className="text-crease-mid">&middot;</span>
+                                <span className="capitalize">
+                                  {l.gender as string}
+                                </span>
+                              </>
+                            )}
+                            {typeof l.breed === "string" && (
+                              <>
+                                <span className="text-crease-mid">&middot;</span>
+                                <span>{l.breed as string}</span>
+                              </>
+                            )}
+                            <span className="ml-auto rounded-full bg-forest/10 px-2 py-0.5 text-[10px] font-medium text-forest">
+                              Active
+                            </span>
+                          </div>
+                          <p className="mt-1.5 text-xs text-ink-light">
+                            {typeof l.location_city === "string" &&
+                              `${l.location_city as string}, `}
+                            {typeof l.location_state === "string" &&
+                              (l.location_state as string)}
+                          </p>
+
+                          {/* Mane Score bar */}
+                          <div className="mt-3 flex items-center gap-2">
+                            <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-paper-warm">
+                              <div
+                                className="h-full rounded-full bg-primary"
+                                style={{ width: `${scorePercent}%` }}
+                              />
+                            </div>
+                            <span className="text-[10px] font-medium text-ink-mid">
+                              Mane Score {score}
+                            </span>
+                          </div>
+
+                          {/* Views */}
+                          <div className="mt-2 flex items-center justify-end gap-3 text-[10px] text-ink-faint">
+                            {typeof l.view_count === "number" &&
+                              (l.view_count as number) > 0 && (
+                                <span className="flex items-center gap-0.5">
+                                  <Eye className="h-3 w-3" />
+                                  {l.view_count as number}+ views
+                                </span>
+                              )}
+                          </div>
                         </div>
-                      </div>
-                    </Card>
-                  </Link>
+                      </Card>
+                    </Link>
                   );
                 })}
               </div>
               <div className="mt-6 text-center md:hidden">
                 <Link
                   href="/browse"
-                  className="text-sm font-medium text-primary"
+                  className="text-sm font-medium text-coral"
                 >
                   View All Horses
                   <ArrowRight className="ml-1 inline h-4 w-4" />
@@ -245,23 +306,17 @@ export default async function Home() {
         )}
 
         {/* ══════════════════════════════════════════════
-            SECTION 3 — FEATURE GRID (dark, 6 features)
+            SECTION 5 — COMPARISON (old way vs ManeExchange)
             ══════════════════════════════════════════════ */}
-        <FeatureGrid
-          title="A better way to find your horse."
-          subtitle="Every feature is designed to bring transparency, trust, and confidence to the equestrian marketplace."
-          features={platformFeatures}
-          columns={3}
-          dark
-        />
+        <ComparisonSection />
 
         {/* ══════════════════════════════════════════════
-            SECTION 4 — TESTIMONIALS
+            SECTION 6 — TESTIMONIALS
             ══════════════════════════════════════════════ */}
         <TestimonialSection />
 
         {/* ══════════════════════════════════════════════
-            SECTION 5 — BOTTOM CTA
+            SECTION 7 — BOTTOM CTA
             ══════════════════════════════════════════════ */}
         <BottomCTA />
       </main>

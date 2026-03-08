@@ -3,12 +3,32 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, DollarSign, Heart, CalendarDays, Gavel } from "lucide-react";
 
 type StepProps = {
   data: Record<string, unknown>;
   setField: (field: string, value: unknown) => void;
 };
+
+const listingTypes = [
+  { value: "fixed_price", label: "Fixed Price", icon: DollarSign },
+  { value: "price_on_inquiry", label: "Price on Inquiry", icon: Heart },
+  { value: "for_lease", label: "For Lease", icon: CalendarDays },
+  { value: "auction", label: "Auction", icon: Gavel },
+];
+
+const sellerRoles = [
+  { value: "owner", label: "Owner" },
+  { value: "trainer", label: "Trainer" },
+  { value: "agent", label: "Agent" },
+  { value: "dealer", label: "Dealer" },
+];
+
+const contactPreferences = [
+  { value: "email_only", label: "Email Only" },
+  { value: "phone_only", label: "Phone Only" },
+  { value: "email_and_phone", label: "Email & Phone" },
+];
 
 const warrantyOptions = [
   {
@@ -36,63 +56,129 @@ export function StepPricing({ data, setField }: StepProps) {
   const isComplianceState = ["FL", "CA", "KY"].includes(sellerState);
 
   return (
-    <div className="space-y-6">
-      {/* Price */}
-      <div>
-        <Label htmlFor="price">Asking Price ($)</Label>
-        <div className="relative mt-1.5">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-light">
-            $
-          </span>
-          <Input
-            id="price"
-            type="number"
-            min="0"
-            step="100"
-            value={(data.price as string) || ""}
-            onChange={(e) => setField("price", e.target.value)}
-            placeholder="50000"
-            className="pl-7"
-          />
+    <div className="space-y-8">
+      {/* Listing Type cards */}
+      <div className="rounded-lg border border-crease-light bg-white p-5">
+        <h3 className="mb-1 text-base font-semibold text-ink-black">Pricing</h3>
+        <Label className="mt-3">Listing Type</Label>
+        <div className="mt-2 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {listingTypes.map((lt) => {
+            const Icon = lt.icon;
+            const selected = (data.listing_type || "fixed_price") === lt.value;
+            return (
+              <label
+                key={lt.value}
+                className={`flex cursor-pointer flex-col items-center gap-2 rounded-lg border-2 px-3 py-4 text-center transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary has-[:focus-visible]:ring-offset-1 ${
+                  selected
+                    ? "border-ink-black bg-ink-black text-white"
+                    : "border-crease-light bg-white text-ink-mid hover:border-crease-mid"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="listing-type"
+                  value={lt.value}
+                  checked={selected}
+                  onChange={() => {
+                    setField("listing_type", lt.value);
+                    if (lt.value === "price_on_inquiry") setField("price_display", "contact");
+                    else if (lt.value === "for_lease") setField("lease_available", true);
+                    else setField("price_display", "exact");
+                  }}
+                  className="sr-only"
+                />
+                <Icon className="h-5 w-5" />
+                <span className="text-xs font-medium">{lt.label}</span>
+              </label>
+            );
+          })}
         </div>
-      </div>
 
-      {/* Price Display */}
-      <div>
-        <Label>Price Display</Label>
-        <div className="mt-1.5 flex gap-2">
-          {[
-            { value: "exact", label: "Show exact price" },
-            { value: "range", label: "Price range" },
-            { value: "contact", label: "Contact for price" },
-          ].map((opt) => (
-            <label key={opt.value} className="cursor-pointer">
-              <input
-                type="radio"
-                name="price-display"
-                value={opt.value}
-                checked={(data.price_display || "exact") === opt.value}
-                onChange={() => setField("price_display", opt.value)}
-                className="peer sr-only"
-              />
-              <span className="block rounded-md border border-crease-light px-3 py-2 text-xs font-medium text-ink-mid transition-colors peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground">
-                {opt.label}
+        {/* Asking Price — shown for fixed_price and auction */}
+        {((data.listing_type || "fixed_price") === "fixed_price" ||
+          (data.listing_type || "fixed_price") === "auction") && (
+          <div className="mt-4">
+            <Label htmlFor="price">
+              Asking Price <span className="text-red">*</span>
+            </Label>
+            <div className="relative mt-1.5">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-light">
+                $
               </span>
-            </label>
-          ))}
-        </div>
+              <Input
+                id="price"
+                type="number"
+                min="0"
+                step="100"
+                value={(data.price as string) || ""}
+                onChange={(e) => setField("price", e.target.value)}
+                placeholder="0"
+                className="pl-7"
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Negotiable */}
+        <label className="mt-4 flex items-center gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={data.price_negotiable !== false}
+            onChange={(e) => setField("price_negotiable", e.target.checked)}
+            className="h-4 w-4 rounded border-crease-light text-primary accent-primary"
+          />
+          <span className="text-sm text-ink-dark">Price is negotiable</span>
+        </label>
       </div>
 
-      {/* Negotiable */}
-      <label className="flex items-center gap-3 cursor-pointer">
-        <input
-          type="checkbox"
-          checked={data.price_negotiable !== false}
-          onChange={(e) => setField("price_negotiable", e.target.checked)}
-          className="h-4 w-4 rounded border-crease-light"
-        />
-        <span className="text-sm text-ink-dark">Price is negotiable</span>
-      </label>
+      {/* Seller Information */}
+      <div className="rounded-lg border border-crease-light bg-white p-5">
+        <h3 className="mb-4 text-base font-semibold text-ink-black">Seller Information</h3>
+
+        {/* Seller Role */}
+        <div>
+          <Label>You are the...</Label>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {sellerRoles.map((role) => (
+              <label key={role.value} className="cursor-pointer">
+                <input
+                  type="radio"
+                  name="seller-role"
+                  value={role.value}
+                  checked={data.seller_role === role.value}
+                  onChange={() => setField("seller_role", role.value)}
+                  className="peer sr-only"
+                />
+                <span className="block rounded-full border border-crease-light px-4 py-2 text-sm font-medium text-ink-mid transition-colors peer-checked:border-ink-black peer-checked:bg-ink-black peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-1">
+                  {role.label}
+                </span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* Contact Preference */}
+        <div className="mt-5">
+          <Label>Contact Preference</Label>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {contactPreferences.map((cp) => (
+              <label key={cp.value} className="cursor-pointer">
+                <input
+                  type="radio"
+                  name="contact-pref"
+                  value={cp.value}
+                  checked={(data.contact_preference || "email_and_phone") === cp.value}
+                  onChange={() => setField("contact_preference", cp.value)}
+                  className="peer sr-only"
+                />
+                <span className="block rounded-full border border-crease-light px-4 py-2 text-sm font-medium text-ink-mid transition-colors peer-checked:border-ink-black peer-checked:bg-ink-black peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-1">
+                  {cp.label}
+                </span>
+              </label>
+            ))}
+          </div>
+        </div>
+      </div>
 
       {/* Warranty — UCC 2-316 compliant display */}
       <div>
@@ -107,7 +193,7 @@ export function StepPricing({ data, setField }: StepProps) {
           {warrantyOptions.map((opt) => (
             <label
               key={opt.value}
-              className="block cursor-pointer rounded-lg border border-crease-light p-4 transition-colors has-[:checked]:border-ink-black has-[:checked]:bg-paper-warm"
+              className="block cursor-pointer rounded-lg border border-crease-light p-4 transition-colors has-[:checked]:border-ink-black has-[:checked]:bg-paper-warm has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary has-[:focus-visible]:ring-offset-1"
             >
               <input
                 type="radio"
@@ -150,31 +236,20 @@ export function StepPricing({ data, setField }: StepProps) {
         )}
       </div>
 
-      {/* Lease */}
-      <div className="space-y-3">
-        <label className="flex items-center gap-3 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={data.lease_available === true}
-            onChange={(e) => setField("lease_available", e.target.checked)}
-            className="h-4 w-4 rounded border-crease-light"
+      {/* Lease terms — shown when listing type is For Lease */}
+      {data.listing_type === "for_lease" && (
+        <div>
+          <Label htmlFor="lease_terms">Lease Terms</Label>
+          <Textarea
+            id="lease_terms"
+            value={(data.lease_terms as string) || ""}
+            onChange={(e) => setField("lease_terms", e.target.value)}
+            placeholder="Describe lease terms, duration, and monthly rate..."
+            rows={3}
+            className="mt-1.5"
           />
-          <span className="text-sm text-ink-dark">Lease available</span>
-        </label>
-        {data.lease_available === true && (
-          <div>
-            <Label htmlFor="lease_terms">Lease Terms</Label>
-            <Textarea
-              id="lease_terms"
-              value={(data.lease_terms as string) || ""}
-              onChange={(e) => setField("lease_terms", e.target.value)}
-              placeholder="Describe lease terms, duration, and monthly rate..."
-              rows={3}
-              className="mt-1.5"
-            />
-          </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* State-specific compliance */}
       {isComplianceState && (

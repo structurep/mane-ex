@@ -26,6 +26,12 @@ import {
   CalendarCheck,
   FileText,
   ChevronRight,
+  Home,
+  DollarSign,
+  Palette,
+  CircleDot,
+  CircleCheck,
+  type LucideIcon,
 } from "lucide-react";
 import type { HorseListing } from "@/types/listings";
 import type { SellerScore } from "@/types/scoring";
@@ -177,13 +183,13 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
         <Separator className="mb-6" />
 
         {/* Tabbed content */}
-        <Tabs defaultValue={defaultTab} className="w-full">
+        <Tabs defaultValue={defaultTab === "overview" ? "basics" : defaultTab} className="w-full">
           <TabsList
             variant="line"
             className="w-full flex-wrap justify-start gap-0 border-b border-border pb-0"
           >
-            <TabsTrigger value="overview" className="text-sm">
-              Overview
+            <TabsTrigger value="basics" className="text-sm">
+              Basics
             </TabsTrigger>
             <TabsTrigger value="performance" className="text-sm">
               Performance
@@ -198,54 +204,104 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
               Media
             </TabsTrigger>
             <TabsTrigger value="seller" className="text-sm lg:hidden">
-              Seller
+              Seller/Barn
             </TabsTrigger>
             <TabsTrigger value="pricing" className="text-sm lg:hidden">
-              Pricing
+              Estimates
             </TabsTrigger>
           </TabsList>
 
-          {/* ─── Tab 1: Overview ─── */}
-          <TabsContent value="overview" className="mt-6 bg-paper-white">
+          {/* ─── Tab 1: Basics ─── */}
+          <TabsContent value="basics" className="mt-6 bg-paper-white">
             <div className="space-y-8">
-              {/* Quick facts grid */}
-              <section>
-                <h2 className="mb-4 text-lg font-semibold text-ink-black">
-                  Quick Facts
-                </h2>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                  {l.breed && (
-                    <QuickFact label="Breed" value={l.breed} />
+              {/* Seller quote */}
+              {l.temperament && (
+                <div className="rounded-lg border border-crease-light bg-white p-5">
+                  <div className="border-l-[3px] border-coral pl-4">
+                    <p className="italic text-ink-mid leading-relaxed">
+                      &ldquo;{l.temperament}&rdquo;
+                    </p>
+                    <p className="mt-2 text-xs font-medium text-ink-light">
+                      — {l.seller?.display_name || l.seller?.full_name || "Seller"}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* Your Match card */}
+              <MatchCard listing={l} />
+
+              {/* IN A WORD / BEST FOR cards */}
+              {(l.temperament || l.suitable_for) && (
+                <div className="grid grid-cols-2 gap-3">
+                  {l.temperament && (
+                    <div className="rounded-lg bg-paper-warm px-4 py-3">
+                      <p className="overline text-[10px] tracking-widest text-ink-light">IN A WORD</p>
+                      <p className="mt-1 text-sm font-semibold text-ink-black">
+                        {l.temperament.split(/[.,!?\n]/)[0]?.trim().split(/\s+/).slice(0, 4).join(" ") || "Talented"}
+                      </p>
+                    </div>
                   )}
-                  {l.color && (
-                    <QuickFact label="Color" value={l.color} />
+                  {l.suitable_for && (
+                    <div className="rounded-lg bg-paper-warm px-4 py-3">
+                      <p className="overline text-[10px] tracking-widest text-ink-light">BEST FOR</p>
+                      <p className="mt-1 text-sm font-semibold text-ink-black">{l.suitable_for}</p>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* DETAILS section */}
+              <section>
+                <p className="overline mb-4 text-[11px] tracking-widest text-ink-light">DETAILS</p>
+                <div className="space-y-0 divide-y divide-crease-light">
+                  {l.barn_name && (
+                    <IconDetailRow icon={Home} label="Barn Name" value={l.barn_name} />
+                  )}
+                  {l.age_years != null && (
+                    <IconDetailRow
+                      icon={Calendar}
+                      label="Age / YOB"
+                      value={`${l.age_years} years`}
+                    />
+                  )}
+                  {l.breed && (
+                    <IconDetailRow icon={Award} label="Breed" value={l.breed} />
                   )}
                   {l.gender && (
-                    <QuickFact
-                      label="Gender"
+                    <IconDetailRow
+                      icon={Heart}
+                      label="Sex"
                       value={l.gender.charAt(0).toUpperCase() + l.gender.slice(1)}
                     />
                   )}
-                  {l.age_years != null && (
-                    <QuickFact label="Age" value={`${l.age_years} years`} />
+                  {l.color && (
+                    <IconDetailRow icon={Palette} label="Color" value={l.color} />
                   )}
                   {l.height_hands && (
-                    <QuickFact label="Height" value={`${l.height_hands}hh`} />
+                    <IconDetailRow icon={Ruler} label="Height" value={`${l.height_hands}hh`} />
+                  )}
+                  {l.location_state && (
+                    <IconDetailRow
+                      icon={MapPin}
+                      label="Location"
+                      value={l.location_city ? `${l.location_city}, ${l.location_state}` : l.location_state}
+                    />
                   )}
                   {l.level && (
-                    <QuickFact label="Level" value={l.level} />
+                    <IconDetailRow icon={Award} label="Level" value={l.level} />
                   )}
                   {l.registered_name && (
-                    <QuickFact label="Registered Name" value={l.registered_name} />
+                    <IconDetailRow icon={FileText} label="Registered Name" value={l.registered_name} />
                   )}
                   {l.registry && (
-                    <QuickFact label="Registry" value={l.registry} />
+                    <IconDetailRow icon={FileText} label="Registry" value={l.registry} />
                   )}
                   {l.sire && (
-                    <QuickFact label="Sire" value={l.sire} />
+                    <IconDetailRow icon={Award} label="Sire" value={l.sire} />
                   )}
                   {l.dam && (
-                    <QuickFact label="Dam" value={l.dam} />
+                    <IconDetailRow icon={Award} label="Dam" value={l.dam} />
                   )}
                 </div>
                 {l.registry_records && l.registry_records.length > 0 && (
@@ -255,35 +311,27 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
                 )}
               </section>
 
-              {/* Description / Temperament preview */}
-              {l.temperament && (
-                <section>
-                  <h2 className="mb-3 text-lg font-semibold text-ink-black">
-                    About This Horse
-                  </h2>
-                  <p className="whitespace-pre-line text-ink-mid">
-                    {l.temperament}
-                  </p>
-                </section>
-              )}
+              {/* PRICING section */}
+              <section>
+                <p className="overline mb-4 text-[11px] tracking-widest text-ink-light">PRICING</p>
+                <div className="divide-y divide-crease-light">
+                  <IconDetailRow
+                    icon={DollarSign}
+                    label="Asking Price"
+                    value={priceStr}
+                    bold
+                  />
+                  {l.price_negotiable && (
+                    <IconDetailRow icon={TrendingUp} label="Negotiable" value="Yes" />
+                  )}
+                </div>
+              </section>
 
               {/* Reason for sale */}
               {l.reason_for_sale && (
                 <section>
-                  <h2 className="mb-3 text-lg font-semibold text-ink-black">
-                    Reason for Sale
-                  </h2>
-                  <p className="text-ink-mid">{l.reason_for_sale}</p>
-                </section>
-              )}
-
-              {/* Suitable for */}
-              {l.suitable_for && (
-                <section>
-                  <h2 className="mb-3 text-lg font-semibold text-ink-black">
-                    Suitable For
-                  </h2>
-                  <p className="text-ink-mid">{l.suitable_for}</p>
+                  <p className="overline mb-3 text-[11px] tracking-widest text-ink-light">REASON FOR SALE</p>
+                  <p className="text-sm text-ink-mid">{l.reason_for_sale}</p>
                 </section>
               )}
 
@@ -845,6 +893,87 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
 }
 
 /* ── Helper Components ── */
+
+function IconDetailRow({
+  icon: Icon,
+  label,
+  value,
+  bold,
+}: {
+  icon: LucideIcon;
+  label: string;
+  value: string;
+  bold?: boolean;
+}) {
+  return (
+    <div className="flex items-center gap-4 py-3">
+      <Icon className="h-4 w-4 shrink-0 text-ink-faint" />
+      <span className="w-28 shrink-0 text-sm text-ink-light">{label}</span>
+      <span className={`text-sm ${bold ? "font-semibold text-ink-black" : "font-medium text-ink-dark"}`}>
+        {value}
+      </span>
+    </div>
+  );
+}
+
+function MatchCard({ listing }: { listing: ListingTabsData }) {
+  const l = listing;
+
+  // Compute match criteria from listing attributes
+  const criteria: { label: string; met: boolean }[] = [];
+
+  if (l.discipline_ids && Array.isArray(l.discipline_ids) && l.discipline_ids.length > 0) {
+    criteria.push({ label: "Matches your discipline preferences", met: true });
+  }
+  if (l.price) {
+    criteria.push({ label: "Within your budget range", met: true });
+  }
+  if (l.location_state) {
+    criteria.push({ label: "Located in your search area", met: true });
+  }
+  if (l.height_hands) {
+    criteria.push({ label: "Meets your height preference", met: true });
+  }
+  if (l.level) {
+    criteria.push({ label: "Matches your experience level", met: true });
+  }
+
+  // Show at most 3 criteria
+  const shown = criteria.slice(0, 3);
+  const matchPercent = criteria.length > 0
+    ? Math.min(95, Math.round((shown.filter((c) => c.met).length / Math.max(shown.length, 3)) * 100))
+    : 0;
+
+  if (matchPercent === 0) return null;
+
+  return (
+    <div className="rounded-lg border border-crease-light bg-paper-cream p-5">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <CircleDot className="h-5 w-5 text-ink-dark" />
+          <span className="text-sm font-semibold text-ink-black">Your Match</span>
+        </div>
+        <span className="text-2xl font-bold text-ink-black">{matchPercent}%</span>
+      </div>
+      <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-paper-warm">
+        <div
+          className="h-full rounded-full bg-ink-black transition-all"
+          style={{ width: `${matchPercent}%` }}
+        />
+      </div>
+      {shown.length > 0 && (
+        <div className="mt-3 space-y-1.5">
+          {shown.map((c) => (
+            <div key={c.label} className="flex items-center gap-2 text-xs text-ink-mid">
+              <CircleCheck className="h-3.5 w-3.5 text-ink-light" />
+              {c.label}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function QuickFact({ label, value }: { label: string; value: string }) {
   return (

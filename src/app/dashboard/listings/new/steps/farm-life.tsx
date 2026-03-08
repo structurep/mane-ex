@@ -37,7 +37,7 @@ export function StepFarmLife({ data, setField }: StepProps) {
             id="location_state"
             value={(data.location_state as string) || ""}
             onChange={(e) => setField("location_state", e.target.value)}
-            className="mt-1.5 w-full rounded-md border-0 bg-paper-white px-3 py-2 text-sm text-ink-black shadow-flat"
+            className="mt-1.5 w-full rounded-md border-0 bg-paper-white px-3 py-2 text-sm text-ink-black shadow-flat focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
           >
             <option value="">Select...</option>
             {US_STATES.map((s) => (
@@ -55,6 +55,31 @@ export function StepFarmLife({ data, setField }: StepProps) {
             className="mt-1.5"
           />
         </div>
+      </div>
+
+      {/* Trial Availability */}
+      <div className="space-y-3">
+        <label className="flex cursor-pointer items-center gap-3">
+          <input
+            type="checkbox"
+            checked={data.trial_available === true}
+            onChange={(e) => setField("trial_available", e.target.checked)}
+            className="h-4 w-4 rounded border-crease-light text-primary accent-primary"
+          />
+          <span className="text-sm font-medium text-ink-dark">Available for trial</span>
+        </label>
+        {data.trial_available === true && (
+          <div>
+            <Label htmlFor="trial_location">Trial Location</Label>
+            <Input
+              id="trial_location"
+              value={(data.trial_location as string) || ""}
+              onChange={(e) => setField("trial_location", e.target.value)}
+              placeholder="Trial location if different from above"
+              className="mt-1.5"
+            />
+          </div>
+        )}
       </div>
 
       {/* Barn & People */}
