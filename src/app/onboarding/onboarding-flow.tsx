@@ -74,7 +74,9 @@ export function OnboardingFlow({
       {/* Progress bar */}
       <div className="mb-8">
         <div className="flex items-center justify-between text-xs text-ink-light">
-          <span>Step {currentIndex + 1} of {STEPS.length}</span>
+          <span>Step {currentIndex + 1} of {STEPS.length} &mdash; {
+            ["Pick your role", "Set up your profile", "Add your location", "Connect your barn", "You\u2019re all set!"][currentIndex]
+          }</span>
           <span>{Math.round(progress)}%</span>
         </div>
         <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-paper-warm">

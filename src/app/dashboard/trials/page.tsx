@@ -131,7 +131,12 @@ export default async function TrialsPage() {
           {pastTrials.length === 0 ? (
             <Card className="flex flex-col items-center gap-3 border-0 p-12 text-center shadow-flat">
               <Clock className="h-10 w-10 text-ink-faint" />
-              <p className="text-sm text-ink-mid">No past trials yet.</p>
+              <div>
+                <p className="font-medium text-ink-black">No past trials</p>
+                <p className="mt-1 text-sm text-ink-mid">
+                  Once you complete a trial visit, it&apos;ll show up here for your records.
+                </p>
+              </div>
             </Card>
           ) : (
             pastTrials.map((trial: Record<string, unknown>) => (

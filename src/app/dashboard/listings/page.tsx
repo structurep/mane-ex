@@ -110,9 +110,9 @@ export default async function MyListingsPage() {
         <div className="flex flex-col items-center gap-3 rounded-lg border-0 bg-paper-cream p-12 text-center shadow-flat">
           <ClipboardList className="h-10 w-10 text-ink-faint" />
           <div>
-            <p className="font-medium text-ink-black">No listings yet</p>
+            <p className="font-medium text-ink-black">Your stable is empty</p>
             <p className="mt-1 text-sm text-ink-mid">
-              Create your first listing to start attracting buyers.
+              List your first horse and start reaching thousands of qualified buyers.
             </p>
           </div>
           <Button className="mt-2" asChild>

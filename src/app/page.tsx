@@ -68,15 +68,20 @@ export default async function Home() {
           style={{ backgroundColor: "#0F1A12" }}
         >
           <div className="absolute inset-0">
-            <Image
-              src="/hero.webp"
-              alt=""
-              fill
-              className="object-cover opacity-30"
-              priority
-              fetchPriority="high"
-              sizes="100vw"
-            />
+            <picture>
+              <source
+                media="(max-width: 768px)"
+                srcSet="/hero-mobile.webp"
+                type="image/webp"
+              />
+              <img
+                src="/hero.webp"
+                alt=""
+                className="absolute inset-0 h-full w-full object-cover opacity-30"
+                fetchPriority="high"
+                decoding="async"
+              />
+            </picture>
             <div className="absolute inset-0 bg-gradient-to-r from-[#0F1A12]/90 via-[#0F1A12]/60 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0F1A12]/70 via-transparent to-transparent" />
           </div>
