@@ -9,6 +9,8 @@ import {
   Sparkles,
   Flame,
   Star,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import type { HorseListing } from "@/types/listings";
 import { SaveSearchButton } from "./save-search-button";
@@ -63,45 +65,19 @@ export async function BrowseResults({ params }: Props) {
     .range(offset, offset + PAGE_SIZE - 1);
 
   // Apply filters
-  if (params.q) {
-    query = query.textSearch("search_vector", params.q);
-  }
-  if (params.state) {
-    query = query.eq("location_state", params.state);
-  }
-  if (params.gender) {
-    query = query.eq("gender", params.gender);
-  }
-  if (params.minPrice) {
-    query = query.gte("price", parseInt(params.minPrice) * 100);
-  }
-  if (params.maxPrice) {
-    query = query.lte("price", parseInt(params.maxPrice) * 100);
-  }
-  if (params.minHeight) {
-    query = query.gte("height_hands", parseFloat(params.minHeight));
-  }
-  if (params.maxHeight) {
-    query = query.lte("height_hands", parseFloat(params.maxHeight));
-  }
-  if (params.breed) {
-    query = query.eq("breed", params.breed);
-  }
-  if (params.minAge) {
-    query = query.gte("age_years", parseInt(params.minAge));
-  }
-  if (params.maxAge) {
-    query = query.lte("age_years", parseInt(params.maxAge));
-  }
-  if (params.henneke) {
-    query = query.eq("henneke_score", parseInt(params.henneke));
-  }
-  if (params.soundness) {
-    query = query.eq("soundness_level", params.soundness);
-  }
-  if (params.discipline) {
-    query = query.contains("discipline_ids", [params.discipline]);
-  }
+  if (params.q) query = query.textSearch("search_vector", params.q);
+  if (params.state) query = query.eq("location_state", params.state);
+  if (params.gender) query = query.eq("gender", params.gender);
+  if (params.minPrice) query = query.gte("price", parseInt(params.minPrice) * 100);
+  if (params.maxPrice) query = query.lte("price", parseInt(params.maxPrice) * 100);
+  if (params.minHeight) query = query.gte("height_hands", parseFloat(params.minHeight));
+  if (params.maxHeight) query = query.lte("height_hands", parseFloat(params.maxHeight));
+  if (params.breed) query = query.eq("breed", params.breed);
+  if (params.minAge) query = query.gte("age_years", parseInt(params.minAge));
+  if (params.maxAge) query = query.lte("age_years", parseInt(params.maxAge));
+  if (params.henneke) query = query.eq("henneke_score", parseInt(params.henneke));
+  if (params.soundness) query = query.eq("soundness_level", params.soundness);
+  if (params.discipline) query = query.contains("discipline_ids", [params.discipline]);
   if (params.region) {
     const regionStates: Record<string, string[]> = {
       southeast: ["FL", "GA", "SC", "NC", "VA", "KY", "TN", "AL", "MS", "LA"],
@@ -111,9 +87,7 @@ export async function BrowseResults({ params }: Props) {
       southwest: ["TX", "AZ", "NM", "OK", "AR"],
     };
     const states = regionStates[params.region];
-    if (states) {
-      query = query.in("location_state", states);
-    }
+    if (states) query = query.in("location_state", states);
   }
 
   // Sort
@@ -131,17 +105,14 @@ export async function BrowseResults({ params }: Props) {
       query = query.order("favorite_count", { ascending: false, nullsFirst: false });
       break;
     default:
-      query = query.order("published_at", {
-        ascending: false,
-        nullsFirst: false,
-      });
+      query = query.order("published_at", { ascending: false, nullsFirst: false });
   }
 
   const { data: listings, count, error } = await query;
 
   if (error) {
     return (
-      <div className="rounded-lg border border-border bg-paper-cream p-8 text-center">
+      <div className="rounded-lg border border-crease-light bg-paper-cream p-10 text-center">
         <p className="text-ink-mid">
           Something went wrong loading listings. Please try again.
         </p>
@@ -154,15 +125,17 @@ export async function BrowseResults({ params }: Props) {
       (k) => k !== "page" && params[k as keyof typeof params]
     );
     return (
-      <div className="rounded-lg border border-dashed border-crease-mid bg-paper-cream p-12 text-center">
-        <p className="text-lg font-medium text-ink-dark">No horses found</p>
-        <p className="mt-1 text-sm text-ink-mid">
+      <div className="rounded-lg border border-dashed border-crease-mid bg-paper-cream px-8 py-16 text-center">
+        <p className="font-serif text-xl font-semibold text-ink-dark">
+          No horses found
+        </p>
+        <p className="mx-auto mt-2 max-w-sm text-sm text-ink-mid">
           {hasFilters
-            ? "No listings match your current filters. Try broadening your search."
-            : "Check back soon — new listings are added daily."}
+            ? "No listings match your current filters. Try broadening your search or removing some filters."
+            : "Check back soon — new listings are added regularly."}
         </p>
         {hasFilters && (
-          <Button variant="outline" size="sm" className="mt-4" asChild>
+          <Button variant="outline" size="sm" className="mt-5" asChild>
             <Link href="/browse">Reset All Filters</Link>
           </Button>
         )}
@@ -174,133 +147,135 @@ export async function BrowseResults({ params }: Props) {
 
   return (
     <div>
-      {/* Results count + timestamp */}
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-sm font-normal text-ink-mid">
-          {count} horse{count !== 1 ? "s" : ""} available
-          <span className="ml-1 text-ink-light">· Updated just now</span>
-        </h2>
+      {/* Results header */}
+      <div className="mb-5 flex items-baseline justify-between">
+        <p className="text-[13px] text-ink-mid">
+          <span className="font-medium text-ink-dark">{count}</span>{" "}
+          {count === 1 ? "horse" : "horses"} available
+        </p>
         <SaveSearchButton params={params} />
       </div>
 
-      {/* Card grid with scroll-reveal */}
-      <ScrollReveal className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Card grid */}
+      <ScrollReveal className="grid gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
         {listings.map((listing, listingIndex) => {
           const l = listing as unknown as HorseListing & {
             media: { url: string; is_primary: boolean }[];
           };
           const priceStr = l.price
             ? `$${(l.price / 100).toLocaleString()}`
-            : "Contact";
+            : "Contact for Price";
 
-          // FOMO badge: New (<3 days) > Popular (>5 saves) > Featured (score >800)
-          const daysListed = l.published_at
-            ? daysSince(l.published_at)
-            : 999;
-          const fomoBadge =
+          const daysListed = l.published_at ? daysSince(l.published_at) : 999;
+          const badge =
             daysListed < 3
-              ? { label: "New", icon: Sparkles, className: "bg-blue text-paper-white" }
+              ? { label: "Just Listed", Icon: Sparkles, bg: "bg-blue/90" }
               : (l.favorite_count ?? 0) > 5
-                ? { label: "Popular", icon: Flame, className: "bg-red text-paper-white" }
+                ? { label: "Popular", Icon: Flame, bg: "bg-oxblood/90" }
                 : (l.completeness_score ?? 0) > 800
-                  ? { label: "Top Rated", icon: Star, className: "bg-gold text-paper-white" }
+                  ? { label: "Top Rated", Icon: Star, bg: "bg-gold/90" }
                   : null;
+
+          // Build subtitle line
+          const subtitleParts = [l.breed, l.color, l.gender].filter(Boolean);
+          const subtitle = subtitleParts.length > 0
+            ? subtitleParts.join(" · ")
+            : null;
 
           return (
             <Link
               key={l.id}
               href={`/horses/${l.slug}`}
               data-testid="listing-card"
-              className="animate-fade-up group overflow-hidden rounded-lg bg-paper-white shadow-flat transition-all duration-300 hover:shadow-lifted"
+              className="animate-fade-up group"
             >
-              {/* Image with gradient overlay price */}
-              <div className="relative aspect-[3/2] overflow-hidden bg-paper-warm">
-                {/* FOMO Badge */}
-                {fomoBadge && (
-                  <div className={`absolute top-2.5 left-2.5 z-10 flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${fomoBadge.className}`}>
-                    <fomoBadge.icon className="h-3 w-3" />
-                    {fomoBadge.label}
+              {/* Image — borderless, rounded, with hover zoom */}
+              <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-paper-warm">
+                {badge && (
+                  <div className={`absolute top-2.5 left-2.5 z-10 flex items-center gap-1 rounded-full ${badge.bg} px-2.5 py-1 text-[11px] font-semibold text-paper-white backdrop-blur-sm`}>
+                    <badge.Icon className="h-3 w-3" />
+                    {badge.label}
                   </div>
                 )}
                 {(() => {
                   const primary = l.media?.find((m) => m.is_primary) || l.media?.[0];
                   return primary ? (
-                     
                     <Image
                       src={primary.url}
                       alt={l.name}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
                       {...(listingIndex === 0 ? { priority: true } : {})}
                     />
-                  ) : null;
+                  ) : (
+                    <div className="flex h-full items-center justify-center text-sm text-ink-faint">
+                      No photo
+                    </div>
+                  );
                 })()}
-                {/* Price overlay on gradient */}
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink-black/70 via-ink-black/30 to-transparent px-3 pb-3 pt-8">
-                  <p className="font-serif text-lg font-bold text-paper-white drop-shadow-sm">
-                    {priceStr}
-                  </p>
-                </div>
+
+                {/* Saves count — top right */}
+                {(l.favorite_count ?? 0) > 0 && (
+                  <div className="absolute top-2.5 right-2.5 z-10 flex items-center gap-1 rounded-full bg-ink-black/50 px-2 py-1 text-[11px] font-medium text-paper-white backdrop-blur-sm">
+                    <Heart className="h-3 w-3" />
+                    {l.favorite_count}
+                  </div>
+                )}
               </div>
 
-              {/* Content */}
-              <div className="p-3.5">
-                <div className="flex items-center gap-2">
-                  <h3 className="truncate font-medium text-ink-black group-hover:text-primary">
-                    {l.name}
-                  </h3>
-                  {l.completeness_grade && (
-                    <span className={`shrink-0 rounded-full px-1.5 py-0.5 text-[10px] font-semibold capitalize leading-none ${
-                      l.completeness_grade === 'excellent' ? 'bg-oxblood/10 text-oxblood' :
-                      l.completeness_grade === 'good' ? 'bg-surface-wash text-ink-dark' :
-                      l.completeness_grade === 'fair' ? 'bg-surface-wash text-ink-mid' :
-                      'bg-surface-wash text-ink-faint'
-                    }`}>
-                      {l.completeness_grade}
+              {/* Content — open layout, no card border */}
+              <div className="pt-3">
+                {/* Price + Location row */}
+                <div className="flex items-baseline justify-between">
+                  <p className="font-serif text-lg font-bold tracking-tight text-ink-black">
+                    {priceStr}
+                  </p>
+                  {l.location_state && (
+                    <span className="flex items-center gap-0.5 text-[12px] text-ink-mid">
+                      <MapPin className="h-3 w-3" />
+                      {l.location_city ? `${l.location_city}, ${l.location_state}` : l.location_state}
                     </span>
                   )}
                 </div>
-                <p className="mt-0.5 text-sm text-ink-mid">
-                  {[l.breed, l.color].filter(Boolean).join(" · ")}
-                </p>
 
-                {/* Quick stats */}
-                <div className="mt-2.5 flex flex-wrap gap-3 text-xs text-ink-mid">
+                {/* Name */}
+                <h3 className="mt-0.5 truncate text-[15px] font-medium text-ink-dark group-hover:text-primary">
+                  {l.name}
+                </h3>
+
+                {/* Subtitle */}
+                {subtitle && (
+                  <p className="mt-0.5 truncate text-[13px] text-ink-mid">
+                    {subtitle}
+                  </p>
+                )}
+
+                {/* Stats row */}
+                <div className="mt-2 flex items-center gap-3 text-[12px] text-ink-light">
                   {l.age_years != null && (
                     <span className="flex items-center gap-1">
                       <Calendar className="h-3 w-3" />
-                      {l.age_years}yo
+                      {l.age_years} yr{l.age_years !== 1 ? "s" : ""}
                     </span>
                   )}
                   {l.height_hands && (
                     <span className="flex items-center gap-1">
                       <Ruler className="h-3 w-3" />
-                      {l.height_hands}hh
+                      {l.height_hands} hh
                     </span>
                   )}
-                  {l.location_state && (
-                    <span className="flex items-center gap-1">
-                      <MapPin className="h-3 w-3 text-blue" />
-                      {l.location_state}
+                  {l.completeness_grade && (
+                    <span className={`ml-auto rounded px-1.5 py-0.5 text-[11px] font-semibold capitalize leading-none ${
+                      l.completeness_grade === "excellent"
+                        ? "bg-forest/10 text-forest"
+                        : l.completeness_grade === "good"
+                          ? "bg-ink-black/5 text-ink-dark"
+                          : "bg-ink-black/5 text-ink-faint"
+                    }`}>
+                      {l.completeness_grade}
                     </span>
                   )}
-                </div>
-
-                {/* Mane Score bar + Saves */}
-                <div className="mt-2.5 flex items-center gap-3">
-                  {l.completeness_score != null ? (
-                    <div className="h-1 flex-1 rounded-full bg-surface-wash">
-                      <div
-                        className="h-1 rounded-full bg-primary"
-                        style={{ width: `${Math.min(100, Math.max(0, Math.round((l.completeness_score / 1000) * 100)))}%` }}
-                      />
-                    </div>
-                  ) : <div className="flex-1" />}
-                  <span className="flex shrink-0 items-center gap-1 text-xs text-ink-mid">
-                    <Heart className="h-3 w-3 text-coral" />
-                    {l.favorite_count}
-                  </span>
                 </div>
               </div>
             </Link>
@@ -310,28 +285,58 @@ export async function BrowseResults({ params }: Props) {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="mt-8 flex justify-center gap-2">
+        <nav className="mt-10 flex items-center justify-center gap-1" aria-label="Pagination">
+          {/* Previous */}
+          {page > 1 && (
+            <Link
+              href={`/browse?${new URLSearchParams({
+                ...Object.fromEntries(
+                  Object.entries(params).filter(([, v]) => v !== undefined) as [string, string][]
+                ),
+                page: String(page - 1),
+              }).toString()}`}
+              className="flex h-9 w-9 items-center justify-center rounded-full text-ink-mid transition-colors hover:bg-paper-warm hover:text-ink-dark"
+              aria-label="Previous page"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Link>
+          )}
+
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
             <Link
               key={p}
               href={`/browse?${new URLSearchParams({
                 ...Object.fromEntries(
-                  Object.entries(params).filter(
-                    ([, v]) => v !== undefined
-                  ) as [string, string][]
+                  Object.entries(params).filter(([, v]) => v !== undefined) as [string, string][]
                 ),
                 page: String(p),
               }).toString()}`}
-              className={`rounded-md px-3 py-1.5 text-sm font-medium ${
+              className={`flex h-9 w-9 items-center justify-center rounded-full text-sm font-medium transition-colors ${
                 p === page
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-paper-warm text-ink-mid hover:bg-paper-white"
+                  ? "bg-ink-black text-paper-white"
+                  : "text-ink-mid hover:bg-paper-warm hover:text-ink-dark"
               }`}
             >
               {p}
             </Link>
           ))}
-        </div>
+
+          {/* Next */}
+          {page < totalPages && (
+            <Link
+              href={`/browse?${new URLSearchParams({
+                ...Object.fromEntries(
+                  Object.entries(params).filter(([, v]) => v !== undefined) as [string, string][]
+                ),
+                page: String(page + 1),
+              }).toString()}`}
+              className="flex h-9 w-9 items-center justify-center rounded-full text-ink-mid transition-colors hover:bg-paper-warm hover:text-ink-dark"
+              aria-label="Next page"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Link>
+          )}
+        </nav>
       )}
     </div>
   );

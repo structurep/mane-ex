@@ -3,7 +3,6 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -13,13 +12,13 @@ import {
   SheetDescription,
   SheetFooter,
 } from "@/components/ui/sheet";
-import { Search, X, SlidersHorizontal } from "lucide-react";
+import { Search, X, SlidersHorizontal, ChevronDown } from "lucide-react";
 
 type Props = {
   params: Record<string, string | undefined>;
 };
 
-// ─── Data (unchanged) ──────────────────────────────────
+// ─── Data ──────────────────────────────────────
 
 const disciplines = [
   "Hunter/Jumper", "Dressage", "Eventing", "Western Pleasure", "Reining",
@@ -38,18 +37,18 @@ const genders = [
   { value: "stallion", label: "Stallion" },
 ];
 
-const US_REGIONS: { label: string; states: string[] }[] = [
-  { label: "Southeast", states: ["FL", "GA", "SC", "NC", "VA", "KY", "TN", "AL", "MS", "LA"] },
-  { label: "Northeast", states: ["NY", "NJ", "PA", "CT", "MA", "MD", "NH", "VT", "ME", "RI"] },
-  { label: "Midwest", states: ["OH", "IL", "MI", "IN", "WI", "MN", "MO", "IA", "KS", "NE"] },
-  { label: "West", states: ["CA", "OR", "WA", "CO", "MT", "ID", "WY", "UT", "NV"] },
-  { label: "Southwest", states: ["TX", "AZ", "NM", "OK", "AR"] },
+const US_REGIONS: { label: string; value: string; states: string[] }[] = [
+  { label: "Southeast", value: "southeast", states: ["FL", "GA", "SC", "NC", "VA", "KY", "TN", "AL", "MS", "LA"] },
+  { label: "Northeast", value: "northeast", states: ["NY", "NJ", "PA", "CT", "MA", "MD", "NH", "VT", "ME", "RI"] },
+  { label: "Midwest", value: "midwest", states: ["OH", "IL", "MI", "IN", "WI", "MN", "MO", "IA", "KS", "NE"] },
+  { label: "West", value: "west", states: ["CA", "OR", "WA", "CO", "MT", "ID", "WY", "UT", "NV"] },
+  { label: "Southwest", value: "southwest", states: ["TX", "AZ", "NM", "OK", "AR"] },
 ];
 
 const sortOptions = [
-  { value: "newest", label: "Newest First" },
-  { value: "price_asc", label: "Price: Low to High" },
-  { value: "price_desc", label: "Price: High to Low" },
+  { value: "newest", label: "Newest" },
+  { value: "price_asc", label: "Price ↑" },
+  { value: "price_desc", label: "Price ↓" },
   { value: "score", label: "Mane Score" },
   { value: "popular", label: "Most Saved" },
 ];
@@ -61,19 +60,66 @@ const soundnessOptions = [
   { value: "not_assessed", label: "Not assessed" },
 ];
 
-// ─── Shared styles ─────────────────────────────────────
+// ─── Pill Component ─────────────────────────────
 
-const selectClass =
-  "h-9 cursor-pointer rounded-md border border-border bg-paper-white px-3 text-sm text-ink-dark";
+function FilterPill({
+  label,
+  active,
+  onClick,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`rounded-full border px-3 py-1.5 text-[13px] font-medium transition-all duration-150 ${
+        active
+          ? "border-ink-black bg-ink-black text-paper-white"
+          : "border-crease-light bg-paper-white text-ink-mid hover:border-ink-light hover:text-ink-dark"
+      }`}
+    >
+      {label}
+    </button>
+  );
+}
 
-// ─── Component ─────────────────────────────────────────
+// ─── Dropdown Filter ────────────────────────────
+
+function FilterDropdown({
+  label,
+  value,
+  onChange,
+  children,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="relative">
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="h-9 cursor-pointer appearance-none rounded-full border border-crease-light bg-paper-white py-1.5 pr-8 pl-3.5 text-[13px] font-medium text-ink-dark transition-colors hover:border-ink-light focus:border-ink-black focus:outline-none"
+      >
+        <option value="">{label}</option>
+        {children}
+      </select>
+      <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-faint" />
+    </div>
+  );
+}
+
+// ─── Component ──────────────────────────────────
 
 export function BrowseFilters({ params }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [sheetOpen, setSheetOpen] = useState(false);
-
-  // ── URL-param updaters (unchanged logic) ──
 
   const updateFilter = useCallback(
     (key: string, value: string) => {
@@ -105,8 +151,6 @@ export function BrowseFilters({ params }: Props) {
     ([k, v]) => v && k !== "sort" && k !== "page"
   );
 
-  // ── Filter counts ──
-
   const advancedFilterCount = [
     params.gender,
     params.minHeight, params.maxHeight,
@@ -118,44 +162,34 @@ export function BrowseFilters({ params }: Props) {
   ].filter(Boolean).length;
 
   const totalFilterCount = [
-    params.q,
-    params.discipline,
+    params.q, params.discipline,
     params.minPrice, params.maxPrice,
     params.state, params.region,
     params.gender,
     params.minHeight, params.maxHeight,
     params.breed,
     params.minAge, params.maxAge,
-    params.henneke,
-    params.soundness,
+    params.henneke, params.soundness,
   ].filter(Boolean).length;
 
   // ── Active filter chips ──
-
   const activeChips: { label: string; onClear: () => void }[] = [];
 
-  if (params.q) {
-    activeChips.push({ label: `"${params.q}"`, onClear: () => updateFilter("q", "") });
-  }
-  if (params.discipline) {
-    activeChips.push({ label: params.discipline, onClear: () => updateFilter("discipline", "") });
-  }
+  if (params.q) activeChips.push({ label: `"${params.q}"`, onClear: () => updateFilter("q", "") });
+  if (params.discipline) activeChips.push({ label: params.discipline, onClear: () => updateFilter("discipline", "") });
   if (params.minPrice || params.maxPrice) {
     const minStr = params.minPrice ? `$${Number(params.minPrice).toLocaleString()}` : "";
     const maxStr = params.maxPrice ? `$${Number(params.maxPrice).toLocaleString()}` : "";
     const label = minStr && maxStr ? `${minStr}–${maxStr}` : minStr ? `${minStr}+` : `Up to ${maxStr}`;
     activeChips.push({ label, onClear: () => clearPairedFilter("minPrice", "maxPrice") });
   }
-  if (params.state) {
-    activeChips.push({ label: params.state, onClear: () => updateFilter("state", "") });
-  }
+  if (params.state) activeChips.push({ label: params.state, onClear: () => updateFilter("state", "") });
   if (params.region) {
-    const regionLabel = US_REGIONS.find((r) => r.label.toLowerCase() === params.region)?.label || params.region;
+    const regionLabel = US_REGIONS.find((r) => r.value === params.region)?.label || params.region;
     activeChips.push({ label: regionLabel, onClear: () => updateFilter("region", "") });
   }
   if (params.gender) {
-    const genderLabel = genders.find((g) => g.value === params.gender)?.label || params.gender;
-    activeChips.push({ label: genderLabel, onClear: () => updateFilter("gender", "") });
+    activeChips.push({ label: genders.find((g) => g.value === params.gender)?.label || params.gender, onClear: () => updateFilter("gender", "") });
   }
   if (params.minHeight || params.maxHeight) {
     const minStr = params.minHeight ? `${params.minHeight}hh` : "";
@@ -163,55 +197,29 @@ export function BrowseFilters({ params }: Props) {
     const label = minStr && maxStr ? `${minStr}–${maxStr}` : minStr ? `${minStr}+` : `Up to ${maxStr}`;
     activeChips.push({ label, onClear: () => clearPairedFilter("minHeight", "maxHeight") });
   }
-  if (params.breed) {
-    activeChips.push({ label: params.breed, onClear: () => updateFilter("breed", "") });
-  }
+  if (params.breed) activeChips.push({ label: params.breed, onClear: () => updateFilter("breed", "") });
   if (params.minAge || params.maxAge) {
     const minStr = params.minAge ? `${params.minAge}yo` : "";
     const maxStr = params.maxAge ? `${params.maxAge}yo` : "";
     const label = minStr && maxStr ? `${minStr}–${maxStr}` : minStr ? `${minStr}+` : `Up to ${maxStr}`;
     activeChips.push({ label, onClear: () => clearPairedFilter("minAge", "maxAge") });
   }
-  if (params.henneke) {
-    activeChips.push({ label: `BCS ${params.henneke}`, onClear: () => updateFilter("henneke", "") });
-  }
+  if (params.henneke) activeChips.push({ label: `BCS ${params.henneke}`, onClear: () => updateFilter("henneke", "") });
   if (params.soundness) {
-    const soundnessLabel = soundnessOptions.find((o) => o.value === params.soundness)?.label || params.soundness;
-    activeChips.push({ label: soundnessLabel, onClear: () => updateFilter("soundness", "") });
+    activeChips.push({ label: soundnessOptions.find((o) => o.value === params.soundness)?.label || params.soundness, onClear: () => updateFilter("soundness", "") });
   }
-
-  // ── Count badge helper ──
-
-  const countBadge = (count: number) =>
-    count > 0 ? (
-      <span className="ml-1.5 inline-flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-oxblood px-1 text-[10px] font-semibold leading-none text-paper-white">
-        {count}
-      </span>
-    ) : null;
 
   return (
     <div className="space-y-3">
-      {/* ─── Top filter bar ─── */}
-      <div className="flex flex-wrap items-center gap-2 rounded-lg border border-border bg-paper-cream p-3">
-        {/* Mobile: open all-filters sheet */}
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setSheetOpen(true)}
-          className="md:hidden"
-        >
-          <SlidersHorizontal className="mr-1.5 h-3.5 w-3.5" />
-          Filters
-          {countBadge(totalFilterCount)}
-        </Button>
-
-        {/* Desktop: Search */}
+      {/* ─── Desktop filter bar ─── */}
+      <div className="flex items-center gap-2">
+        {/* Search */}
         <div className="relative hidden md:block">
-          <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-light" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-faint" />
           <Input
-            placeholder="Search horses..."
+            placeholder="Search..."
             defaultValue={params.q || ""}
-            className="h-9 w-48 pl-8 text-sm"
+            className="h-9 w-44 rounded-full border-crease-light bg-paper-white pl-9 text-[13px] placeholder:text-ink-faint focus-visible:ring-1 focus-visible:ring-ink-black/20"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 updateFilter("q", (e.target as HTMLInputElement).value);
@@ -220,44 +228,58 @@ export function BrowseFilters({ params }: Props) {
           />
         </div>
 
-        {/* Desktop: Discipline */}
-        <select
-          value={params.discipline || ""}
-          onChange={(e) => updateFilter("discipline", e.target.value)}
-          className={`hidden md:block ${selectClass}`}
+        {/* Mobile: open sheet */}
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setSheetOpen(true)}
+          className="rounded-full border-crease-light md:hidden"
         >
-          <option value="">Discipline</option>
+          <SlidersHorizontal className="mr-1.5 h-3.5 w-3.5" />
+          Filters
+          {totalFilterCount > 0 && (
+            <span className="ml-1 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-ink-black px-1 text-[10px] font-bold text-paper-white">
+              {totalFilterCount}
+            </span>
+          )}
+        </Button>
+
+        {/* Desktop: Discipline */}
+        <FilterDropdown
+          label="Discipline"
+          value={params.discipline || ""}
+          onChange={(v) => updateFilter("discipline", v)}
+        >
           {disciplines.map((d) => (
             <option key={d} value={d}>{d}</option>
           ))}
-        </select>
+        </FilterDropdown>
 
-        {/* Desktop: Price range */}
-        <div className="hidden items-center gap-1 md:flex">
+        {/* Desktop: Price */}
+        <div className="hidden items-center gap-1.5 md:flex">
           <Input
             type="number"
             placeholder="Min $"
             defaultValue={params.minPrice || ""}
-            className="h-9 w-24 text-sm"
+            className="h-9 w-[88px] rounded-full border-crease-light text-[13px] text-center placeholder:text-ink-faint"
             onBlur={(e) => updateFilter("minPrice", e.target.value)}
           />
-          <span className="text-xs text-ink-light">–</span>
+          <span className="text-[11px] text-ink-faint">to</span>
           <Input
             type="number"
             placeholder="Max $"
             defaultValue={params.maxPrice || ""}
-            className="h-9 w-24 text-sm"
+            className="h-9 w-[88px] rounded-full border-crease-light text-[13px] text-center placeholder:text-ink-faint"
             onBlur={(e) => updateFilter("maxPrice", e.target.value)}
           />
         </div>
 
         {/* Desktop: Location */}
-        <select
+        <FilterDropdown
+          label="Location"
           value={params.state || ""}
-          onChange={(e) => updateFilter("state", e.target.value)}
-          className={`hidden md:block ${selectClass}`}
+          onChange={(v) => updateFilter("state", v)}
         >
-          <option value="">Location</option>
           {US_REGIONS.map((region) => (
             <optgroup key={region.label} label={region.label}>
               {region.states.map((s) => (
@@ -265,33 +287,39 @@ export function BrowseFilters({ params }: Props) {
               ))}
             </optgroup>
           ))}
-        </select>
+        </FilterDropdown>
 
-        {/* Spacer — pushes Sort + More to right */}
+        {/* Desktop: More filters */}
+        <button
+          type="button"
+          onClick={() => setSheetOpen(true)}
+          className="hidden items-center gap-1.5 rounded-full border border-crease-light px-3.5 py-1.5 text-[13px] font-medium text-ink-mid transition-colors hover:border-ink-light hover:text-ink-dark md:flex"
+        >
+          <SlidersHorizontal className="h-3.5 w-3.5" />
+          More
+          {advancedFilterCount > 0 && (
+            <span className="inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-ink-black px-1 text-[10px] font-bold text-paper-white">
+              {advancedFilterCount}
+            </span>
+          )}
+        </button>
+
+        {/* Spacer */}
         <div className="flex-1" />
 
-        {/* Sort — always visible */}
-        <select
-          value={params.sort || "newest"}
-          onChange={(e) => updateFilter("sort", e.target.value)}
-          className={selectClass}
-        >
-          {sortOptions.map((opt) => (
-            <option key={opt.value} value={opt.value}>{opt.label}</option>
-          ))}
-        </select>
-
-        {/* Desktop: More Filters */}
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setSheetOpen(true)}
-          className="hidden md:inline-flex"
-        >
-          <SlidersHorizontal className="mr-1.5 h-3.5 w-3.5" />
-          More
-          {countBadge(advancedFilterCount)}
-        </Button>
+        {/* Sort */}
+        <div className="flex items-center gap-1.5">
+          <span className="hidden text-[12px] text-ink-faint md:inline">Sort</span>
+          <FilterDropdown
+            label="Newest"
+            value={params.sort || "newest"}
+            onChange={(v) => updateFilter("sort", v)}
+          >
+            {sortOptions.map((opt) => (
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
+            ))}
+          </FilterDropdown>
+        </div>
       </div>
 
       {/* ─── Active filter chips ─── */}
@@ -302,42 +330,46 @@ export function BrowseFilters({ params }: Props) {
               key={chip.label}
               type="button"
               onClick={chip.onClear}
-              className="flex items-center gap-1 rounded-full bg-paper-warm px-2.5 py-1 text-xs text-ink-dark transition-colors hover:bg-ink-black hover:text-paper-white"
+              className="group flex items-center gap-1 rounded-full border border-crease-light bg-paper-white px-2.5 py-1 text-[12px] font-medium text-ink-dark transition-all hover:border-red/30 hover:bg-red-light hover:text-red"
             >
               {chip.label}
-              <X className="h-3 w-3" />
+              <X className="h-3 w-3 text-ink-faint transition-colors group-hover:text-red" />
             </button>
           ))}
           <button
             type="button"
             onClick={clearFilters}
-            className="px-1.5 py-1 text-xs font-medium text-oxblood hover:text-oxblood/70"
+            className="px-1.5 py-1 text-[12px] font-medium text-ink-faint underline decoration-ink-faint/40 underline-offset-2 hover:text-ink-dark hover:decoration-ink-dark/40"
           >
             Clear all
           </button>
         </div>
       )}
 
-      {/* ─── Filter Sheet (all filters) ─── */}
+      {/* ─── Filter Sheet (mobile + advanced) ─── */}
       <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-        <SheetContent side="right" className="sm:max-w-md">
-          <SheetHeader>
-            <SheetTitle>Filters</SheetTitle>
-            <SheetDescription>Narrow your results</SheetDescription>
+        <SheetContent side="right" className="overflow-y-auto sm:max-w-sm">
+          <SheetHeader className="pb-2">
+            <SheetTitle className="font-serif text-xl">Refine Search</SheetTitle>
+            <SheetDescription className="text-[13px]">
+              {totalFilterCount > 0
+                ? `${totalFilterCount} filter${totalFilterCount !== 1 ? "s" : ""} active`
+                : "Narrow your results"}
+            </SheetDescription>
           </SheetHeader>
 
-          {/* Scrollable filter sections — key forces fresh defaultValues on URL change */}
-          <div key={searchParams.toString()} className="flex-1 space-y-5 overflow-y-auto px-4 pb-6">
+          <div key={searchParams.toString()} className="flex-1 space-y-6 px-4 pb-8">
             {/* Search */}
             <div>
-              <Label htmlFor="sheet-search" className="text-xs">Search</Label>
-              <div className="relative mt-1.5">
-                <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-light" />
+              <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
+                Search
+              </label>
+              <div className="relative mt-2">
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-faint" />
                 <Input
-                  id="sheet-search"
-                  placeholder="Search horses..."
+                  placeholder="Name, breed, keyword..."
                   defaultValue={params.q || ""}
-                  className="pl-8"
+                  className="pl-9"
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       updateFilter("q", (e.target as HTMLInputElement).value);
@@ -347,31 +379,29 @@ export function BrowseFilters({ params }: Props) {
               </div>
             </div>
 
-            {/* Discipline — pill grid */}
+            {/* Discipline */}
             <div>
-              <Label className="text-xs">Discipline</Label>
-              <div className="mt-1.5 flex flex-wrap gap-1.5">
+              <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
+                Discipline
+              </label>
+              <div className="mt-2 flex flex-wrap gap-1.5">
                 {disciplines.map((d) => (
-                  <button
+                  <FilterPill
                     key={d}
-                    type="button"
+                    label={d}
+                    active={params.discipline === d}
                     onClick={() => updateFilter("discipline", params.discipline === d ? "" : d)}
-                    className={`rounded-full px-2.5 py-1 text-xs font-medium transition-colors ${
-                      params.discipline === d
-                        ? "bg-ink-black text-paper-white"
-                        : "bg-paper-warm text-ink-mid hover:bg-paper-white"
-                    }`}
-                  >
-                    {d}
-                  </button>
+                  />
                 ))}
               </div>
             </div>
 
             {/* Price Range */}
             <div>
-              <Label className="text-xs">Price Range</Label>
-              <div className="mt-1.5 grid grid-cols-2 gap-2">
+              <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
+                Price
+              </label>
+              <div className="mt-2 grid grid-cols-2 gap-2">
                 <Input
                   type="number"
                   placeholder="Min $"
@@ -389,138 +419,142 @@ export function BrowseFilters({ params }: Props) {
 
             {/* Location */}
             <div>
-              <Label htmlFor="sheet-state" className="text-xs">Location</Label>
-              <select
-                id="sheet-state"
-                value={params.state || ""}
-                onChange={(e) => updateFilter("state", e.target.value)}
-                className={`mt-1.5 w-full ${selectClass}`}
-              >
-                <option value="">All States</option>
-                {US_REGIONS.map((region) => (
-                  <optgroup key={region.label} label={region.label}>
-                    {region.states.map((s) => (
-                      <option key={s} value={s}>{s}</option>
-                    ))}
-                  </optgroup>
-                ))}
-              </select>
-              {/* Region pills */}
+              <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
+                Location
+              </label>
+              <div className="relative mt-2">
+                <select
+                  value={params.state || ""}
+                  onChange={(e) => updateFilter("state", e.target.value)}
+                  className="h-9 w-full cursor-pointer appearance-none rounded-md border border-border bg-paper-white px-3 pr-8 text-sm text-ink-dark"
+                >
+                  <option value="">All States</option>
+                  {US_REGIONS.map((region) => (
+                    <optgroup key={region.label} label={region.label}>
+                      {region.states.map((s) => (
+                        <option key={s} value={s}>{s}</option>
+                      ))}
+                    </optgroup>
+                  ))}
+                </select>
+                <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-faint" />
+              </div>
               <div className="mt-2 flex flex-wrap gap-1">
                 {US_REGIONS.map((region) => (
-                  <button
-                    key={region.label}
-                    type="button"
+                  <FilterPill
+                    key={region.value}
+                    label={region.label}
+                    active={params.region === region.value}
                     onClick={() => {
                       const sp = new URLSearchParams(searchParams.toString());
-                      sp.set("region", region.label.toLowerCase());
-                      sp.delete("state");
+                      if (params.region === region.value) {
+                        sp.delete("region");
+                      } else {
+                        sp.set("region", region.value);
+                        sp.delete("state");
+                      }
                       sp.delete("page");
                       router.push(`/browse?${sp.toString()}`);
                     }}
-                    className={`rounded-full px-2 py-0.5 text-[10px] font-medium transition-colors ${
-                      params.region === region.label.toLowerCase()
-                        ? "bg-ink-black text-paper-white"
-                        : "bg-paper-warm text-ink-light hover:text-ink-mid"
-                    }`}
-                  >
-                    {region.label}
-                  </button>
+                  />
                 ))}
               </div>
             </div>
 
-            {/* ─── Divider: Advanced ─── */}
-            <div className="border-t border-crease-light pt-1">
-              <p className="text-[10px] font-medium uppercase tracking-wider text-ink-faint">
-                Advanced
-              </p>
-            </div>
+            {/* Divider */}
+            <div className="border-t border-crease-light" />
 
             {/* Gender */}
             <div>
-              <Label className="text-xs">Gender</Label>
-              <div className="mt-1.5 flex gap-1.5">
+              <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
+                Gender
+              </label>
+              <div className="mt-2 flex gap-1.5">
                 {genders.map((g) => (
-                  <button
+                  <FilterPill
                     key={g.value}
-                    type="button"
+                    label={g.label}
+                    active={params.gender === g.value}
                     onClick={() => updateFilter("gender", params.gender === g.value ? "" : g.value)}
-                    className={`rounded-full px-2.5 py-1 text-xs font-medium transition-colors ${
-                      params.gender === g.value
-                        ? "bg-ink-black text-paper-white"
-                        : "bg-paper-warm text-ink-mid hover:bg-paper-white"
-                    }`}
-                  >
-                    {g.label}
-                  </button>
+                  />
                 ))}
-              </div>
-            </div>
-
-            {/* Height */}
-            <div>
-              <Label className="text-xs">Height (hands)</Label>
-              <div className="mt-1.5 grid grid-cols-2 gap-2">
-                <Input
-                  type="number"
-                  step="0.1"
-                  placeholder="Min"
-                  defaultValue={params.minHeight || ""}
-                  onBlur={(e) => updateFilter("minHeight", e.target.value)}
-                />
-                <Input
-                  type="number"
-                  step="0.1"
-                  placeholder="Max"
-                  defaultValue={params.maxHeight || ""}
-                  onBlur={(e) => updateFilter("maxHeight", e.target.value)}
-                />
               </div>
             </div>
 
             {/* Breed */}
             <div>
-              <Label htmlFor="sheet-breed" className="text-xs">Breed</Label>
-              <select
-                id="sheet-breed"
-                value={params.breed || ""}
-                onChange={(e) => updateFilter("breed", e.target.value)}
-                className={`mt-1.5 w-full ${selectClass}`}
-              >
-                <option value="">All Breeds</option>
-                {breeds.map((b) => (
-                  <option key={b} value={b}>{b}</option>
-                ))}
-              </select>
-            </div>
-
-            {/* Age Range */}
-            <div>
-              <Label className="text-xs">Age (years)</Label>
-              <div className="mt-1.5 grid grid-cols-2 gap-2">
-                <Input
-                  type="number"
-                  placeholder="Min"
-                  defaultValue={params.minAge || ""}
-                  onBlur={(e) => updateFilter("minAge", e.target.value)}
-                />
-                <Input
-                  type="number"
-                  placeholder="Max"
-                  defaultValue={params.maxAge || ""}
-                  onBlur={(e) => updateFilter("maxAge", e.target.value)}
-                />
+              <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
+                Breed
+              </label>
+              <div className="relative mt-2">
+                <select
+                  value={params.breed || ""}
+                  onChange={(e) => updateFilter("breed", e.target.value)}
+                  className="h-9 w-full cursor-pointer appearance-none rounded-md border border-border bg-paper-white px-3 pr-8 text-sm text-ink-dark"
+                >
+                  <option value="">All Breeds</option>
+                  {breeds.map((b) => (
+                    <option key={b} value={b}>{b}</option>
+                  ))}
+                </select>
+                <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-faint" />
               </div>
             </div>
 
-            {/* Body Condition (Henneke) */}
+            {/* Height + Age side by side */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
+                  Height (hh)
+                </label>
+                <div className="mt-2 grid grid-cols-2 gap-1.5">
+                  <Input
+                    type="number"
+                    step="0.1"
+                    placeholder="Min"
+                    defaultValue={params.minHeight || ""}
+                    className="text-center text-sm"
+                    onBlur={(e) => updateFilter("minHeight", e.target.value)}
+                  />
+                  <Input
+                    type="number"
+                    step="0.1"
+                    placeholder="Max"
+                    defaultValue={params.maxHeight || ""}
+                    className="text-center text-sm"
+                    onBlur={(e) => updateFilter("maxHeight", e.target.value)}
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
+                  Age (yrs)
+                </label>
+                <div className="mt-2 grid grid-cols-2 gap-1.5">
+                  <Input
+                    type="number"
+                    placeholder="Min"
+                    defaultValue={params.minAge || ""}
+                    className="text-center text-sm"
+                    onBlur={(e) => updateFilter("minAge", e.target.value)}
+                  />
+                  <Input
+                    type="number"
+                    placeholder="Max"
+                    defaultValue={params.maxAge || ""}
+                    className="text-center text-sm"
+                    onBlur={(e) => updateFilter("maxAge", e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Henneke */}
             <div>
-              <Label className="text-xs">
-                Body Condition{" "}
-                <span className="font-normal text-ink-light">(Henneke 1-9)</span>
-              </Label>
-              <div className="mt-1.5 flex gap-1">
+              <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
+                Body Condition
+              </label>
+              <div className="mt-2 flex gap-0.5">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((score) => {
                   const isSelected = params.henneke === String(score);
                   const isIdeal = score >= 4 && score <= 6;
@@ -528,15 +562,13 @@ export function BrowseFilters({ params }: Props) {
                     <button
                       key={score}
                       type="button"
-                      onClick={() =>
-                        updateFilter("henneke", isSelected ? "" : String(score))
-                      }
-                      className={`flex h-7 flex-1 items-center justify-center rounded text-xs font-medium transition-colors ${
+                      onClick={() => updateFilter("henneke", isSelected ? "" : String(score))}
+                      className={`flex h-8 flex-1 items-center justify-center rounded text-[13px] font-medium transition-all ${
                         isSelected
-                          ? "bg-primary text-primary-foreground"
+                          ? "bg-ink-black text-paper-white shadow-sm"
                           : isIdeal
-                            ? "bg-forest/10 text-forest hover:bg-forest/20"
-                            : "bg-paper-warm text-ink-mid hover:bg-paper-white"
+                            ? "bg-forest/8 text-forest hover:bg-forest/15"
+                            : "bg-paper-warm text-ink-light hover:bg-washi hover:text-ink-mid"
                       }`}
                       title={`BCS ${score}`}
                     >
@@ -545,53 +577,55 @@ export function BrowseFilters({ params }: Props) {
                   );
                 })}
               </div>
-              <p className="mt-1 text-[10px] text-ink-light">
-                4-6 = ideal range (highlighted)
+              <p className="mt-1.5 text-[11px] text-ink-faint">
+                4–6 ideal <span className="mx-1 text-crease-mid">·</span> Henneke scale
               </p>
             </div>
 
-            {/* Soundness Level */}
+            {/* Soundness */}
             <div>
-              <Label htmlFor="sheet-soundness" className="text-xs">Soundness</Label>
-              <select
-                id="sheet-soundness"
-                value={params.soundness || ""}
-                onChange={(e) => updateFilter("soundness", e.target.value)}
-                className={`mt-1.5 w-full ${selectClass}`}
-              >
-                <option value="">Any soundness level</option>
-                {soundnessOptions.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
+              <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
+                Soundness
+              </label>
+              <div className="relative mt-2">
+                <select
+                  value={params.soundness || ""}
+                  onChange={(e) => updateFilter("soundness", e.target.value)}
+                  className="h-9 w-full cursor-pointer appearance-none rounded-md border border-border bg-paper-white px-3 pr-8 text-sm text-ink-dark"
+                >
+                  <option value="">Any level</option>
+                  {soundnessOptions.map((opt) => (
+                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                  ))}
+                </select>
+                <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-faint" />
+              </div>
             </div>
 
             {/* Sort */}
             <div>
-              <Label htmlFor="sheet-sort" className="text-xs">Sort By</Label>
-              <select
-                id="sheet-sort"
-                value={params.sort || "newest"}
-                onChange={(e) => updateFilter("sort", e.target.value)}
-                className={`mt-1.5 w-full ${selectClass}`}
-              >
+              <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
+                Sort By
+              </label>
+              <div className="mt-2 flex flex-wrap gap-1.5">
                 {sortOptions.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
+                  <FilterPill
+                    key={opt.value}
+                    label={opt.label}
+                    active={(params.sort || "newest") === opt.value}
+                    onClick={() => updateFilter("sort", opt.value)}
+                  />
                 ))}
-              </select>
+              </div>
             </div>
           </div>
 
-          {/* Footer: Clear all */}
+          {/* Footer */}
           {hasFilters && (
-            <SheetFooter>
+            <SheetFooter className="border-t border-crease-light px-4 pt-3">
               <Button
                 variant="ghost"
-                className="w-full"
+                className="w-full text-ink-faint hover:text-ink-dark"
                 onClick={() => {
                   clearFilters();
                   setSheetOpen(false);
