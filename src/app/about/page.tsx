@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
-import { BottomCTA } from "@/components/bottom-cta";
+import { BottomCTA } from "@/components/marketing/bottom-cta";
 import { ArrowRight, Eye, Shield, Users } from "lucide-react";
 
 export const metadata: Metadata = {

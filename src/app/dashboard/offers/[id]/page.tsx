@@ -10,10 +10,10 @@ import {
   Shield,
 } from "lucide-react";
 import { OfferActions } from "./offer-actions";
-import { InterstateChecklist } from "@/components/interstate-checklist";
+import { InterstateChecklist } from "@/components/offers/interstate-checklist";
 import { BillOfSaleSection } from "./bill-of-sale-section";
-import { TransactionTimeline } from "@/components/transaction-timeline";
-import { EscrowMilestonePreview } from "@/components/smart-escrow";
+import { TransactionTimeline } from "@/components/offers/transaction-timeline";
+import { EscrowMilestonePreview } from "@/components/offers/smart-escrow";
 
 type Props = {
   params: Promise<{ id: string }>;

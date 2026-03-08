@@ -2,9 +2,9 @@
 
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { BottomCTA } from "@/components/bottom-cta";
+import { BottomCTA } from "@/components/marketing/bottom-cta";
 import { Sparkles } from "lucide-react";
-import { ManeMatchDashboard } from "@/components/manematch-engine";
+import { ManeMatchDashboard } from "@/components/marketplace/manematch-engine";
 
 export default function RecommendationsPage() {
   return (

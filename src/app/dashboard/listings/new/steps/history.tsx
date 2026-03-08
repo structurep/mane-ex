@@ -3,7 +3,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { RegistryLookup, type RegistryRecord } from "@/components/registry-lookup";
+import { RegistryLookup, type RegistryRecord } from "@/components/marketplace/registry-lookup";
 
 type StepProps = {
   data: Record<string, unknown>;

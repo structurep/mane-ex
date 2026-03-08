@@ -15,7 +15,7 @@ import {
 import type { HorseListing } from "@/types/listings";
 import type { SellerScore } from "@/types/scoring";
 import Image from "next/image";
-import { ListingGallery } from "@/components/listing-gallery";
+import { ListingGallery } from "@/components/marketplace/listing-gallery";
 import { ListingTabs, type ListingTabsData } from "./listing-tabs";
 
 type Props = {

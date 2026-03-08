@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { BottomCTA } from "@/components/bottom-cta";
+import { BottomCTA } from "@/components/marketing/bottom-cta";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, ArrowRight } from "lucide-react";

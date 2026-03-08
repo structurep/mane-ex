@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import Image from "next/image";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { BottomCTA } from "@/components/bottom-cta";
-import { FaqAccordion } from "@/components/faq-accordion";
+import { BottomCTA } from "@/components/marketing/bottom-cta";
+import { FaqAccordion } from "@/components/marketplace/faq-accordion";
 import { FlowToggle } from "./flow-toggle";
 import {
   BarChart3,

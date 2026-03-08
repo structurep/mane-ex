@@ -1,6 +1,6 @@
 "use client";
 
-import { UpgradePrompt } from "./upgrade-prompt";
+import { UpgradePrompt } from "@/components/upgrade-prompt";
 
 interface MessageLimitBarProps {
   sent: number;

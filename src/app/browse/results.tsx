@@ -13,7 +13,7 @@ import {
 import type { HorseListing } from "@/types/listings";
 import { SaveSearchButton } from "./save-search-button";
 import { Button } from "@/components/ui/button";
-import { ScrollReveal } from "@/components/scroll-reveal";
+import { ScrollReveal } from "@/components/marketplace/scroll-reveal";
 
 type Props = {
   params: {

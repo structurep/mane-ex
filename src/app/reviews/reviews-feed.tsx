@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
-import { ReviewCard } from "@/components/review-card";
+import { ReviewCard } from "@/components/marketplace/review-card";
 
 type ReviewData = {
   id: string;

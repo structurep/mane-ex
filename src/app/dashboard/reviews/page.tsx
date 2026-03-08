@@ -1,7 +1,7 @@
 import { getMyReviews } from "@/actions/reviews";
 import { Card } from "@/components/ui/card";
-import { ReviewCard } from "@/components/review-card";
-import { StarRating } from "@/components/star-rating";
+import { ReviewCard } from "@/components/marketplace/review-card";
+import { StarRating } from "@/components/marketplace/star-rating";
 import { Star } from "lucide-react";
 import { RespondForm } from "./respond-form";
 

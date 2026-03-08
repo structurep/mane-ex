@@ -4,12 +4,12 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ISOBanner } from "@/components/iso-banner";
-import { PlatformFeatures } from "@/components/platform-features";
-import { ComparisonSection } from "@/components/comparison-section";
-import { TestimonialSection } from "@/components/testimonial-section";
-import { BottomCTA } from "@/components/bottom-cta";
-import { HeroSearch } from "@/components/hero-search";
+import { ISOBanner } from "@/components/marketing/iso-banner";
+import { PlatformFeatures } from "@/components/marketing/platform-features";
+import { ComparisonSection } from "@/components/marketing/comparison-section";
+import { TestimonialSection } from "@/components/marketing/testimonial-section";
+import { BottomCTA } from "@/components/marketing/bottom-cta";
+import { HeroSearch } from "@/components/marketing/hero-search";
 import { createClient } from "@/lib/supabase/server";
 import {
   ArrowRight,

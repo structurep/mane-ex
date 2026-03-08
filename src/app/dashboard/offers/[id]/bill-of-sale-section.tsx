@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { generateBillOfSale, acceptBillOfSale } from "@/lib/legal/bill-of-sale";
-import { BillOfSale } from "@/components/bill-of-sale";
+import { BillOfSale } from "@/components/offers/bill-of-sale";
 import { Button } from "@/components/ui/button";
 import type { BillOfSaleData } from "@/types/offers";
 import { FileText, CheckCircle, Loader2 } from "lucide-react";

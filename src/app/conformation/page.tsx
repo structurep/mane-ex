@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { BottomCTA } from "@/components/bottom-cta";
+import { BottomCTA } from "@/components/marketing/bottom-cta";
 import {
   Scan,
   Mountain,
@@ -21,7 +21,7 @@ import { Badge } from "@/components/ui/badge";
 import {
   ConformationUploader,
   ConformationAnalysisResult,
-} from "@/components/conformation-analysis";
+} from "@/components/marketplace/conformation-analysis";
 
 /* ─── Area definitions ─── */
 

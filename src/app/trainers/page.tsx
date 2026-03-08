@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { BottomCTA } from "@/components/bottom-cta";
+import { BottomCTA } from "@/components/marketing/bottom-cta";
 import { Badge } from "@/components/ui/badge";
 import {
   MapPin,
@@ -14,7 +14,7 @@ import {
   GraduationCap,
   Search as SearchIcon,
 } from "lucide-react";
-import type { TrainerServiceType } from "@/components/trainer-services";
+import type { TrainerServiceType } from "@/components/marketplace/trainer-services";
 import { TrainerDirectoryFilters } from "./trainer-filters";
 
 export const metadata: Metadata = {

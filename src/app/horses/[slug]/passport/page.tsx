@@ -29,8 +29,8 @@ import {
   FarrierLog,
   type PassportDocument,
   type VerificationLevel,
-} from "@/components/passport-enhancements";
-import { BloodlineExplorer } from "@/components/bloodline-explorer";
+} from "@/components/marketplace/passport-enhancements";
+import { BloodlineExplorer } from "@/components/marketplace/bloodline-explorer";
 
 type Props = {
   params: Promise<{ slug: string }>;

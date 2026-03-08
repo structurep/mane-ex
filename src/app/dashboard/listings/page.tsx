@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Plus, Eye, Heart, ClipboardList, TrendingUp, Pencil } from "lucide-react";
 import type { ListingStatus } from "@/types/listings";
-import { DeleteListingButton } from "@/components/delete-listing-button";
+import { DeleteListingButton } from "@/components/marketplace/delete-listing-button";
 import { getCreateListingUrl, getEditListingUrl } from "@/lib/urls";
 
 export const metadata: Metadata = {

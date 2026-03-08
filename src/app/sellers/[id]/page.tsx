@@ -16,8 +16,8 @@ import {
   ChevronRight,
   Store,
 } from "lucide-react";
-import { ManeScoreBadge } from "@/components/mane-score-badge";
-import { BadgeShowcase } from "@/components/badge-showcase";
+import { ManeScoreBadge } from "@/components/marketplace/mane-score-badge";
+import { BadgeShowcase } from "@/components/marketplace/badge-showcase";
 import type { SellerScore } from "@/types/scoring";
 
 type Props = {

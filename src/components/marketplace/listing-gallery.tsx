@@ -6,7 +6,7 @@ import { Play, Images } from "lucide-react";
 import dynamic from "next/dynamic";
 
 const Lightbox = dynamic(
-  () => import("@/components/lightbox").then((m) => m.Lightbox),
+  () => import("@/components/marketplace/lightbox").then((m) => m.Lightbox),
   { ssr: false }
 );
 

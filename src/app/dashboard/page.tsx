@@ -18,7 +18,7 @@ import { getMyScore } from "@/actions/scoring";
 import { GRADE_LABELS, MANE_SCORE_DISCLAIMER } from "@/types/scoring";
 import { getCreateListingUrl } from "@/lib/urls";
 import { SavedSearchesWidget } from "./saved-searches";
-import { DeleteListingButton } from "@/components/delete-listing-button";
+import { DeleteListingButton } from "@/components/marketplace/delete-listing-button";
 
 export const metadata: Metadata = {
   title: "Dashboard",

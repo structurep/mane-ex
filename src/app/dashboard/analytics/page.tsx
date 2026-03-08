@@ -2,11 +2,11 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getMyScore } from "@/actions/scoring";
-import { ManeScoreBadge } from "@/components/mane-score-badge";
-import { BadgeShowcase } from "@/components/badge-showcase";
-import { Leaderboard } from "@/components/leaderboard";
+import { ManeScoreBadge } from "@/components/marketplace/mane-score-badge";
+import { BadgeShowcase } from "@/components/marketplace/badge-showcase";
+import { Leaderboard } from "@/components/marketplace/leaderboard";
 import { MANE_SCORE_DISCLAIMER } from "@/types/scoring";
-import { SellerIntelligenceDashboard } from "@/components/seller-intelligence";
+import { SellerIntelligenceDashboard } from "@/components/marketplace/seller-intelligence";
 import {
   BarChart3,
   ArrowRight,

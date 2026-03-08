@@ -1,4 +1,4 @@
-import { StarRating } from "@/components/star-rating";
+import { StarRating } from "@/components/marketplace/star-rating";
 
 const testimonials = [
   {

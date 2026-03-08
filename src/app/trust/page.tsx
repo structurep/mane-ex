@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { BottomCTA } from "@/components/bottom-cta";
+import { BottomCTA } from "@/components/marketing/bottom-cta";
 import { Button } from "@/components/ui/button";
 import {
   Shield,
@@ -14,7 +14,7 @@ import {
   ArrowRight,
   Phone,
 } from "lucide-react";
-import { SmartEscrowDashboard } from "@/components/smart-escrow";
+import { SmartEscrowDashboard } from "@/components/offers/smart-escrow";
 
 export const metadata: Metadata = {
   title: "Trust & Safety",

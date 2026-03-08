@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { DashboardSidebar } from "./sidebar";
-import { NotificationBell } from "@/components/notification-bell";
+import { NotificationBell } from "@/components/messaging/notification-bell";
 
 export default function DashboardLayout({
   children,

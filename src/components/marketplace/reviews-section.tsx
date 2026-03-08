@@ -1,6 +1,6 @@
 import { getSellerReviews } from "@/actions/reviews";
-import { ReviewCard } from "@/components/review-card";
-import { StarRating } from "@/components/star-rating";
+import { ReviewCard } from "@/components/marketplace/review-card";
+import { StarRating } from "@/components/marketplace/star-rating";
 import { Separator } from "@/components/ui/separator";
 
 interface ReviewsSectionProps {

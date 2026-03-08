@@ -20,7 +20,7 @@ import {
   SERVICE_CATALOG,
   type TrainerService,
   type TrainerServiceType,
-} from "@/components/trainer-services";
+} from "@/components/marketplace/trainer-services";
 
 /* ─── Sample Data (static until DB wiring) ─── */
 

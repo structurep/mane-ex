@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { BottomCTA } from "@/components/bottom-cta";
+import { BottomCTA } from "@/components/marketing/bottom-cta";
 import { Badge } from "@/components/ui/badge";
 import {
   BookOpen,

@@ -1,8 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { MessageSellerModal } from "@/components/message-seller-modal";
-import { OfferModal } from "@/components/offer-modal";
+import { MessageSellerModal } from "@/components/messaging/message-seller-modal";
+import { OfferModal } from "@/components/offers/offer-modal";
 
 type Props = {
   listingId: string;

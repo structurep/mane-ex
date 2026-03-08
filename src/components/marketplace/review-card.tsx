@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { StarRating } from "@/components/star-rating";
+import { StarRating } from "@/components/marketplace/star-rating";
 import { CheckCircle2, MessageSquare } from "lucide-react";
 
 interface ReviewCardProps {

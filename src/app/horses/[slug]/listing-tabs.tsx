@@ -39,11 +39,11 @@ import {
 import Image from "next/image";
 import type { HorseListing } from "@/types/listings";
 import type { SellerScore } from "@/types/scoring";
-import { OfferModal } from "@/components/offer-modal";
-import { MessageSellerModal } from "@/components/message-seller-modal";
-import { ListingGallery } from "@/components/listing-gallery";
-import { HennekeScoreDisplay } from "@/components/henneke-score";
-import { RegistryBadges, type RegistryRecord, type RegistryType } from "@/components/registry-lookup";
+import { OfferModal } from "@/components/offers/offer-modal";
+import { MessageSellerModal } from "@/components/messaging/message-seller-modal";
+import { ListingGallery } from "@/components/marketplace/listing-gallery";
+import { HennekeScoreDisplay } from "@/components/marketplace/henneke-score";
+import { RegistryBadges, type RegistryRecord, type RegistryType } from "@/components/marketplace/registry-lookup";
 import type { ListingRegistryRecord } from "@/types/listings";
 
 type MediaItem = {
