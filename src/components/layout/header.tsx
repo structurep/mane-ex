@@ -168,8 +168,8 @@ export function Header() {
                   href={link.href}
                   className={`rounded-full px-3.5 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none ${
                     isActive
-                      ? "bg-paper-cream text-ink-black"
-                      : "text-ink-mid hover:bg-paper-warm hover:text-ink-black"
+                      ? "bg-primary/5 text-primary"
+                      : "text-ink-mid hover:bg-paper-warm hover:text-ink-dark"
                   }`}
                 >
                   {link.label}
@@ -201,21 +201,21 @@ export function Header() {
               {/* Authed icons */}
               <Link
                 href="/dashboard/messages"
-                className="rounded-full p-2.5 text-ink-mid transition-colors hover:bg-paper-warm hover:text-ink-black"
+                className="rounded-full p-2.5 text-ink-mid transition-colors hover:bg-blue-light hover:text-blue"
                 aria-label="Messages"
               >
                 <MessageCircle className="h-5 w-5" />
               </Link>
               <Link
                 href="/dashboard/dream-barn"
-                className="rounded-full p-2.5 text-ink-mid transition-colors hover:bg-paper-warm hover:text-ink-black"
+                className="rounded-full p-2.5 text-ink-mid transition-colors hover:bg-red-light hover:text-coral"
                 aria-label="Saved"
               >
                 <Heart className="h-5 w-5" />
               </Link>
               <Link
                 href="/dashboard/notifications"
-                className="rounded-full p-2.5 text-ink-mid transition-colors hover:bg-paper-warm hover:text-ink-black"
+                className="rounded-full p-2.5 text-ink-mid transition-colors hover:bg-gold-light hover:text-gold"
                 aria-label="Notifications"
               >
                 <Bell className="h-5 w-5" />

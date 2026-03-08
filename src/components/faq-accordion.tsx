@@ -39,11 +39,16 @@ export function FaqAccordion({ heading, items }: FaqAccordionProps) {
                     className={`h-5 w-5 shrink-0 text-ink-mid transition-transform ${isOpen ? "rotate-180" : ""}`}
                   />
                 </button>
-                {isOpen && (
-                  <p className="pb-4 text-sm leading-relaxed text-ink-mid">
-                    {item.answer}
-                  </p>
-                )}
+                <div
+                  className="grid transition-[grid-template-rows] duration-300 ease-out"
+                  style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
+                >
+                  <div className="overflow-hidden">
+                    <p className={`pb-4 text-sm leading-relaxed text-ink-mid transition-opacity duration-200 ${isOpen ? "opacity-100" : "opacity-0"}`}>
+                      {item.answer}
+                    </p>
+                  </div>
+                </div>
               </div>
             );
           })}

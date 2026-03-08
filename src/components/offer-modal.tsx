@@ -112,7 +112,7 @@ export function OfferModal({
         )}
       </DialogTrigger>
 
-      <DialogContent className="bg-paper-cream sm:max-w-md">
+      <DialogContent className="bg-paper-cream sm:max-w-md animate-fade-up">
         {state.offerId ? (
           <div className="flex flex-col items-center gap-4 py-6 text-center">
             <div className="flex size-12 items-center justify-center rounded-full bg-forest/10">

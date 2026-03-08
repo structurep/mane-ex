@@ -50,7 +50,27 @@ async function getListing(slug: string) {
     .eq("seller_id", data.seller.id)
     .single();
 
-  return { ...data, seller_score: sellerScore as Pick<SellerScore, "mane_score" | "grade" | "badges"> | null };
+  // Fetch other active listings by the same seller (for "Other Horses" section)
+  const { data: otherListings } = await supabase
+    .from("horse_listings")
+    .select("id, name, slug, price, media:listing_media(url, is_primary)")
+    .eq("seller_id", data.seller.id)
+    .eq("status", "active")
+    .neq("id", data.id)
+    .order("completeness_score", { ascending: false })
+    .limit(3);
+
+  return {
+    ...data,
+    seller_score: sellerScore as Pick<SellerScore, "mane_score" | "grade" | "badges"> | null,
+    other_listings: (otherListings ?? []) as Array<{
+      id: string;
+      name: string;
+      slug: string;
+      price: number | null;
+      media: Array<{ url: string; is_primary: boolean }>;
+    }>,
+  };
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

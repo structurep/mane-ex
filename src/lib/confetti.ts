@@ -1,7 +1,6 @@
-import confetti from 'canvas-confetti';
-
 /** Offer accepted — gold/forest/green celebration */
-export function celebrateSuccess() {
+export async function celebrateSuccess() {
+  const confetti = (await import('canvas-confetti')).default;
   confetti({
     particleCount: 80,
     spread: 60,
@@ -14,7 +13,8 @@ export function celebrateSuccess() {
 }
 
 /** Listing published — subtle gold burst */
-export function celebrateGold() {
+export async function celebrateGold() {
+  const confetti = (await import('canvas-confetti')).default;
   confetti({
     particleCount: 50,
     spread: 45,

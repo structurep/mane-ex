@@ -68,15 +68,15 @@ export default function SignupPage() {
 
           <div className="mt-6 flex items-center justify-center gap-6 text-xs text-ink-light">
             <span className="flex items-center gap-1.5">
-              <Lock className="h-3.5 w-3.5" />
+              <Lock className="h-3.5 w-3.5 text-gold" />
               Encrypted
             </span>
             <span className="flex items-center gap-1.5">
-              <Shield className="h-3.5 w-3.5" />
+              <Shield className="h-3.5 w-3.5 text-forest" />
               Stripe KYC
             </span>
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="h-3.5 w-3.5" />
+              <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
               Verified
             </span>
           </div>

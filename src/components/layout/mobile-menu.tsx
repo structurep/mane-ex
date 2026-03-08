@@ -80,7 +80,7 @@ export function MobileMenu({
               <button
                 type="submit"
                 onClick={() => setOpen(false)}
-                className="w-full rounded-md border border-crease-light px-4 py-2.5 text-sm font-medium text-ink-mid transition-colors hover:bg-paper-warm"
+                className="w-full rounded-md border border-red/20 px-4 py-2.5 text-sm font-medium text-red transition-colors hover:bg-red-light"
               >
                 Sign Out
               </button>

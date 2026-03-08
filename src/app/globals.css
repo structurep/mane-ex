@@ -84,6 +84,7 @@
   /* Accents */
   --color-red: #6B1D29;
   --color-red-light: rgba(107, 29, 41, 0.06);
+  --color-oxblood: #7A1E2B;
   --color-forest: #2D6A4F;
   --color-gold: #C4A265;
   --color-blue: #3B6FC2;
@@ -391,6 +392,12 @@
     .animate-shimmer,
     .stagger-children > * {
       animation: none !important;
+      transition: none !important;
+    }
+    /* Disable accordion grid-row and hover transforms */
+    *[style*="grid-template-rows"],
+    button:hover,
+    a:hover {
       transition: none !important;
     }
   }

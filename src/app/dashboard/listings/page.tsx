@@ -171,11 +171,11 @@ export default async function MyListingsPage() {
 
                   <div className="flex items-center gap-4 text-xs text-ink-mid">
                     <span className="flex items-center gap-1">
-                      <Eye className="h-3 w-3" />
+                      <Eye className="h-3 w-3 text-blue" />
                       {((listing.view_count as number) || 0).toLocaleString()}
                     </span>
                     <span className="flex items-center gap-1">
-                      <Heart className="h-3 w-3" />
+                      <Heart className="h-3 w-3 text-coral" />
                       {((listing.favorite_count as number) || 0).toLocaleString()}
                     </span>
                     {score != null && (

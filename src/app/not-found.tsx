@@ -10,12 +10,12 @@ export default function NotFound() {
       <Header />
       <main className="flex flex-1 items-center justify-center px-4 py-16">
         <div className="text-center">
-          <p className="text-6xl font-bold text-paper-warm">404</p>
+          <p className="text-6xl font-bold text-crease-light">404</p>
           <h1 className="mt-4 font-serif text-2xl font-bold tracking-tight text-ink-black">
-            Horse Not Found
+            This one got away.
           </h1>
-          <p className="mt-2 text-ink-mid">
-            This listing may have been sold, removed, or the URL might be incorrect.
+          <p className="mt-2 text-sm text-ink-mid">
+            The horse you&apos;re looking for may have been sold, removed, or the link may be outdated. Let&apos;s find you another.
           </p>
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <Button asChild>

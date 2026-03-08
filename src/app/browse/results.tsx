@@ -252,7 +252,7 @@ export async function BrowseResults({ params }: Props) {
                 </p>
 
                 {/* Quick stats */}
-                <div className="mt-2.5 flex flex-wrap gap-3 text-xs text-ink-light">
+                <div className="mt-2.5 flex flex-wrap gap-3 text-xs text-ink-mid">
                   {l.age_years != null && (
                     <span className="flex items-center gap-1">
                       <Calendar className="h-3 w-3" />
@@ -267,7 +267,7 @@ export async function BrowseResults({ params }: Props) {
                   )}
                   {l.location_state && (
                     <span className="flex items-center gap-1">
-                      <MapPin className="h-3 w-3" />
+                      <MapPin className="h-3 w-3 text-blue" />
                       {l.location_state}
                     </span>
                   )}
@@ -278,13 +278,13 @@ export async function BrowseResults({ params }: Props) {
                   {l.completeness_score != null ? (
                     <div className="h-1 flex-1 rounded-full bg-surface-wash">
                       <div
-                        className="h-1 rounded-full bg-oxblood"
+                        className="h-1 rounded-full bg-primary"
                         style={{ width: `${Math.min(100, Math.max(0, Math.round((l.completeness_score / 1000) * 100)))}%` }}
                       />
                     </div>
                   ) : <div className="flex-1" />}
-                  <span className="flex shrink-0 items-center gap-1 text-xs text-ink-light">
-                    <Heart className="h-3 w-3" />
+                  <span className="flex shrink-0 items-center gap-1 text-xs text-ink-mid">
+                    <Heart className="h-3 w-3 text-coral" />
                     {l.favorite_count}
                   </span>
                 </div>

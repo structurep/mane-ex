@@ -69,7 +69,7 @@ export default async function Home() {
         >
           <div className="absolute inset-0">
             <Image
-              src="/hero.jpg"
+              src="/hero.webp"
               alt=""
               fill
               className="object-cover opacity-30"
@@ -83,30 +83,32 @@ export default async function Home() {
 
           <div className="relative flex min-h-[85vh] items-center px-4 md:px-8">
             <div className="mx-auto w-full max-w-7xl">
-              <div className="max-w-2xl">
-                <p className="overline mb-4 text-coral">
+              <div className="max-w-2xl stagger-children">
+                <p className="animate-fade-up overline mb-4 text-coral">
                   THE EQUESTRIAN MARKETPLACE
                 </p>
-                <h1 className="mb-6 font-serif text-4xl text-white sm:text-5xl md:text-6xl">
+                <h1 className="animate-fade-up mb-6 font-serif text-4xl text-white sm:text-5xl md:text-6xl">
                   Find your
                   <br />
                   next partner.
                 </h1>
-                <p className="mb-8 max-w-lg text-lg text-white/85">
+                <p className="animate-fade-up mb-8 max-w-lg text-lg text-white/85">
                   The modern way to buy and sell hunters, jumpers, and dressage
                   horses. Transparent. Trusted. Beautiful.
                 </p>
 
-                <HeroSearch />
+                <div className="animate-fade-up">
+                  <HeroSearch />
+                </div>
 
-                <p className="mt-4 text-sm text-white/80">
+                <p className="animate-fade-up mt-4 text-sm text-white/80">
                   {activeCount ?? 0} horses listed &middot; Join free
                 </p>
 
-                <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                <div className="animate-fade-up mt-5 flex flex-col gap-3 sm:flex-row">
                   <Button
                     size="lg"
-                    className="bg-coral text-white hover:bg-coral-hover focus-visible:ring-white focus-visible:ring-offset-ink-black"
+                    className="bg-coral text-white hover:bg-coral-hover hover:scale-[1.02] transition-transform focus-visible:ring-white focus-visible:ring-offset-ink-black"
                     asChild
                   >
                     <Link href="/browse">
@@ -213,7 +215,7 @@ export default async function Home() {
                           {/* Favorite */}
                           <div className="absolute right-3 top-3">
                             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 shadow-sm backdrop-blur-sm">
-                              <Heart className="h-4 w-4 text-ink-mid" />
+                              <Heart className="h-4 w-4 text-coral" />
                             </div>
                           </div>
                         </div>
@@ -278,7 +280,7 @@ export default async function Home() {
                           </div>
 
                           {/* Views */}
-                          <div className="mt-2 flex items-center justify-end gap-3 text-[10px] sm:text-xs text-ink-faint">
+                          <div className="mt-2 flex items-center justify-end gap-3 text-[10px] sm:text-xs text-ink-light">
                             {typeof l.view_count === "number" &&
                               (l.view_count as number) > 0 && (
                                 <span className="flex items-center gap-0.5">

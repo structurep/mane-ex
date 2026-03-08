@@ -54,7 +54,7 @@ export function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="rounded-sm text-sm text-ink-mid transition-colors hover:text-ink-black focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
+                      className="rounded-sm text-sm text-ink-mid transition-colors hover:text-primary focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
                     >
                       {link.label}
                     </Link>
@@ -69,7 +69,7 @@ export function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="rounded-sm text-sm text-ink-mid transition-colors hover:text-ink-black focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
+                      className="rounded-sm text-sm text-ink-mid transition-colors hover:text-primary focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
                     >
                       {link.label}
                     </Link>
@@ -84,7 +84,7 @@ export function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="rounded-sm text-sm text-ink-mid transition-colors hover:text-ink-black focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
+                      className="rounded-sm text-sm text-ink-mid transition-colors hover:text-primary focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
                     >
                       {link.label}
                     </Link>
@@ -99,7 +99,7 @@ export function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="rounded-sm text-sm text-ink-mid transition-colors hover:text-ink-black focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
+                      className="rounded-sm text-sm text-ink-mid transition-colors hover:text-primary focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
                     >
                       {link.label}
                     </Link>

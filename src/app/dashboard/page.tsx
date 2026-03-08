@@ -192,22 +192,26 @@ export default async function DashboardPage() {
       value: (listingCount || 0).toLocaleString(),
       icon: ClipboardList,
       href: "/dashboard/listings",
+      iconColor: "text-primary",
     },
     {
       label: "Total Views",
       value: totalViews.toLocaleString(),
       icon: Eye,
+      iconColor: "text-blue",
     },
     {
       label: "Messages",
       value: unreadCount.toLocaleString(),
       icon: MessageCircle,
       href: "/dashboard/messages",
+      iconColor: "text-gold",
     },
     {
       label: "Favorites",
       value: totalFavorites.toLocaleString(),
       icon: Heart,
+      iconColor: "text-coral",
     },
   ];
 
@@ -241,7 +245,7 @@ export default async function DashboardPage() {
           const content = (
             <>
               <div className="flex items-center justify-between">
-                <Icon className="h-5 w-5 text-ink-light" />
+                <Icon className={`h-5 w-5 ${stat.iconColor}`} />
                 {stat.href && (
                   <ArrowRight className="h-3 w-3 text-ink-faint" />
                 )}
@@ -499,7 +503,11 @@ export default async function DashboardPage() {
             })}
           </div>
         ) : (
-          <p className="text-sm text-ink-mid">No messages yet.</p>
+          <div className="flex flex-col items-center gap-2 rounded-lg border border-dashed border-crease-light py-8 text-center">
+            <MessageCircle className="h-6 w-6 text-ink-faint" />
+            <p className="text-sm font-medium text-ink-dark">No messages yet</p>
+            <p className="text-xs text-ink-mid">When you connect with a buyer or seller, your conversations will appear here.</p>
+          </div>
         )}
       </section>
 

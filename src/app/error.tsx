@@ -19,12 +19,12 @@ export default function Error({
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="text-center">
-        <p className="text-5xl font-bold text-paper-warm">Oops</p>
+        <p className="text-5xl font-bold text-crease-light">Hmm</p>
         <h1 className="mt-4 font-serif text-2xl font-bold tracking-tight text-ink-black">
-          Something went wrong
+          Something didn&apos;t go as planned
         </h1>
         <p className="mt-2 text-sm text-ink-mid">
-          An unexpected error occurred. Please try again.
+          This isn&apos;t your fault. Our team has been notified and we&apos;re looking into it.
         </p>
         {error.digest && (
           <p className="mt-1 font-mono text-xs text-ink-light">
