@@ -7,6 +7,7 @@ import { ModerationButtons } from "./moderation-buttons";
 const statusColors: Record<string, string> = {
   active: "bg-green-100 text-green-700",
   draft: "bg-yellow-100 text-yellow-700",
+  pending_review: "bg-gold/10 text-gold",
   sold: "bg-paper-warm text-ink-mid",
   archived: "bg-gray-100 text-gray-600",
 };
@@ -17,8 +18,8 @@ export default async function AdminListingsPage({
   searchParams: Promise<{ filter?: string }>;
 }) {
   const { filter } = await searchParams;
-  const activeFilter = filter === "reported" ? "reported" : "all";
-  const listings = await getAdminListings(activeFilter);
+  const activeFilter = (filter === "reported" || filter === "pending_review") ? filter : "all";
+  const listings = await getAdminListings(activeFilter as "all" | "reported" | "pending_review");
 
   return (
     <div className="space-y-6">
@@ -42,6 +43,16 @@ export default async function AdminListingsPage({
           }`}
         >
           All
+        </Link>
+        <Link
+          href="/admin/listings?filter=pending_review"
+          className={`rounded-md px-3 py-1.5 text-sm ${
+            activeFilter === "pending_review"
+              ? "bg-paddock text-white"
+              : "bg-paper-warm text-ink-mid hover:text-ink-black"
+          }`}
+        >
+          Pending Review
         </Link>
         <Link
           href="/admin/listings?filter=reported"

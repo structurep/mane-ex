@@ -1,9 +1,8 @@
-"use client";
-
-import { useState } from "react";
+import { Metadata } from "next";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { BottomCTA } from "@/components/marketing/bottom-cta";
+import { FeaturePreview } from "@/components/feature-preview";
 import {
   Scan,
   Mountain,
@@ -14,14 +13,13 @@ import {
   Sparkles,
   Shield,
   History,
-  ArrowRight,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import {
-  ConformationUploader,
-  ConformationAnalysisResult,
-} from "@/components/marketplace/conformation-analysis";
+
+export const metadata: Metadata = {
+  title: "Conformation Analysis — AI-Powered Horse Assessment",
+  description:
+    "AI-assisted conformation analysis evaluates structure, balance, and movement potential. Coming soon to ManeExchange.",
+};
 
 /* ─── Area definitions ─── */
 
@@ -61,8 +59,6 @@ const areas = [
 /* ─── Page ─── */
 
 export default function ConformationPage() {
-  const [analyzed, setAnalyzed] = useState(false);
-
   return (
     <div className="min-h-screen">
       <Header />
@@ -111,40 +107,22 @@ export default function ConformationPage() {
           </div>
         </section>
 
-        {/* ── Interactive Analysis ── */}
+        {/* ── Feature Preview ── */}
         <section className="bg-paper-white px-4 py-16 md:px-8 md:py-20">
-          <div className="mx-auto max-w-[1200px]">
-            <div className="mb-8 text-center">
-              <p className="overline mb-3 text-blue">
-                {analyzed ? "ANALYSIS COMPLETE" : "TRY IT NOW"}
-              </p>
-              <h2 className="font-serif text-2xl font-semibold text-ink-black">
-                {analyzed
-                  ? "Your Conformation Analysis"
-                  : "Upload a photo to analyze"}
-              </h2>
-            </div>
-
-            {!analyzed ? (
-              <div className="mx-auto max-w-xl">
-                <ConformationUploader onAnalyze={() => setAnalyzed(true)} />
-              </div>
-            ) : (
-              <ConformationAnalysisResult />
-            )}
-
-            {analyzed && (
-              <div className="mt-8 text-center">
-                <Button
-                  variant="outline"
-                  onClick={() => setAnalyzed(false)}
-                  className="gap-2"
-                >
-                  <ArrowRight className="h-4 w-4" />
-                  Analyze Another Horse
-                </Button>
-              </div>
-            )}
+          <div className="mx-auto max-w-[800px]">
+            <FeaturePreview
+              icon={<Scan className="size-8" />}
+              title="Conformation Analysis is coming soon"
+              description="Upload a photo and get an AI-powered structural assessment — evaluating balance, proportions, and discipline suitability."
+              capabilities={[
+                "Six-area structural analysis with confidence scores",
+                "Discipline suitability matching based on structural traits",
+                "Breed standard comparison against ideal conformation",
+                "Results recorded in the horse's Digital Passport",
+              ]}
+              actionLabel="Browse Horses"
+              actionHref="/browse"
+            />
           </div>
         </section>
 
@@ -186,32 +164,6 @@ export default function ConformationPage() {
                   <p className="text-sm text-ink-light">{prop.description}</p>
                 </div>
               ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── Passport Integration Callout ── */}
-        <section className="bg-paper-cream px-4 py-16 md:px-8 md:py-20">
-          <div className="mx-auto max-w-3xl text-center">
-            <Badge variant="secondary" className="mb-4 bg-gold/10 text-gold">
-              Digital Passport Integration
-            </Badge>
-            <h2 className="font-serif text-2xl font-semibold text-ink-black">
-              Every analysis lives on the horse&apos;s passport.
-            </h2>
-            <p className="mt-3 text-sm text-ink-mid">
-              Conformation scores are permanently recorded in the Digital Passport
-              — building a verified structural history that follows the horse
-              through every sale. Buyers can compare scores over time, and sellers
-              can prove their horse&apos;s quality with objective data.
-            </p>
-            <div className="mt-6 flex justify-center gap-3">
-              <Button asChild>
-                <a href="/browse">Browse Horses</a>
-              </Button>
-              <Button variant="outline" asChild>
-                <a href="/sell">List Your Horse</a>
-              </Button>
             </div>
           </div>
         </section>

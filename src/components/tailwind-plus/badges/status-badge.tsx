@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-type BadgeVariant =
+export type BadgeVariant =
   | "gray"
   | "red"
   | "yellow"
@@ -42,7 +42,8 @@ const dotStyles: Record<BadgeVariant, string> = {
 };
 
 interface StatusBadgeProps {
-  label: string;
+  label?: string;
+  children?: React.ReactNode;
   variant?: BadgeVariant;
   dot?: boolean;
   className?: string;
@@ -51,11 +52,13 @@ interface StatusBadgeProps {
 
 export function StatusBadge({
   label,
+  children,
   variant = "gray",
   dot = true,
   className,
   onRemove,
 }: StatusBadgeProps) {
+  const content = children ?? label;
   return (
     <span
       className={cn(
@@ -73,14 +76,14 @@ export function StatusBadge({
           <circle r={3} cx={3} cy={3} />
         </svg>
       )}
-      {label}
+      {content}
       {onRemove && (
         <button
           type="button"
           onClick={onRemove}
           className="-mr-0.5 ml-0.5 inline-flex size-4 items-center justify-center rounded-full hover:bg-ink-black/10"
         >
-          <span className="sr-only">Remove {label}</span>
+          <span className="sr-only">Remove {label || ""}</span>
           <svg viewBox="0 0 14 14" className="size-3 stroke-current stroke-[1.5]">
             <path d="M4 4l6 6m0-6l-6 6" />
           </svg>

@@ -17,6 +17,7 @@ import type { SellerScore } from "@/types/scoring";
 import Image from "next/image";
 import { ListingGallery } from "@/components/marketplace/listing-gallery";
 import { ListingTabs, type ListingTabsData } from "./listing-tabs";
+import { ViewTracker } from "@/components/marketplace/view-tracker";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -182,6 +183,7 @@ export default async function ListingDetailPage({ params, searchParams }: Props)
 
   return (
     <div className="min-h-screen">
+      <ViewTracker listingId={l.id} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

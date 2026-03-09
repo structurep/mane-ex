@@ -36,9 +36,9 @@ test.describe("Homepage", () => {
     await expect(page.getByText("The old way")).toBeVisible();
     await expect(page.getByText("The ManeExchange way")).toBeVisible();
 
-    // Testimonials
+    // Value propositions (replaced fake testimonials)
     await expect(
-      page.getByRole("heading", { name: /loved by riders everywhere/i })
+      page.getByRole("heading", { name: /built for the way you buy and sell/i })
     ).toBeVisible();
 
     // Bottom CTA

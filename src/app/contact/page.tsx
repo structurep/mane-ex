@@ -56,13 +56,10 @@ export default function ContactPage() {
                   <Phone className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-ink-black">Phone</h3>
-                  <a
-                    href="tel:+15615550123"
-                    className="rounded-sm text-sm text-ink-mid hover:text-blue focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
-                  >
-                    (561) 555-0123
-                  </a>
+                  <h3 className="text-sm font-medium text-ink-black">Response Time</h3>
+                  <p className="text-sm text-ink-mid">
+                    Within 24 hours via email
+                  </p>
                 </div>
               </div>
 

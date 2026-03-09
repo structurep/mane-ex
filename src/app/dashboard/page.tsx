@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { createClient } from "@/lib/supabase/server";
 import {
   ClipboardList,
@@ -12,6 +11,11 @@ import {
   ArrowRight,
   BarChart3,
   Lightbulb,
+  DollarSign,
+  Star,
+  Send,
+  HandshakeIcon,
+  UserCheck,
 } from "lucide-react";
 import type { ListingStatus } from "@/types/listings";
 import { getMyScore } from "@/actions/scoring";
@@ -19,22 +23,21 @@ import { GRADE_LABELS, MANE_SCORE_DISCLAIMER } from "@/types/scoring";
 import { getCreateListingUrl } from "@/lib/urls";
 import { SavedSearchesWidget } from "./saved-searches";
 import { DeleteListingButton } from "@/components/marketplace/delete-listing-button";
+import {
+  SectionHeading,
+  StackedList,
+  ActivityFeed,
+  StatusBadge,
+  ActionPanel,
+  EmptyState,
+  AlertBanner,
+  type StackedListItem,
+  type ActivityItem,
+  type ActionPanelItem,
+} from "@/components/tailwind-plus";
 
 export const metadata: Metadata = {
   title: "Dashboard",
-};
-
-const statusConfig: Record<
-  ListingStatus,
-  { label: string; variant: "default" | "secondary" | "outline" | "destructive" }
-> = {
-  active: { label: "Active", variant: "default" },
-  draft: { label: "Draft", variant: "secondary" },
-  pending_review: { label: "Pending Review", variant: "outline" },
-  under_offer: { label: "Under Offer", variant: "outline" },
-  sold: { label: "Sold", variant: "secondary" },
-  expired: { label: "Expired", variant: "destructive" },
-  removed: { label: "Removed", variant: "destructive" },
 };
 
 function timeAgo(dateStr: string): string {
@@ -53,9 +56,9 @@ export default async function DashboardPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) return null; // middleware handles redirect
+  if (!user) return null;
 
-  // Fetch conversation IDs for this user (needed for unread message count)
+  // Fetch conversation IDs
   const { data: convos } = await supabase
     .from("conversations")
     .select("id")
@@ -63,7 +66,7 @@ export default async function DashboardPage() {
 
   const convoIds = convos?.map((c) => c.id) || [];
 
-  // Fetch stats and recent listings in parallel
+  // Parallel data fetches
   const [
     { count: listingCount },
     { data: viewData },
@@ -73,29 +76,22 @@ export default async function DashboardPage() {
     { count: pendingOfferCount },
     { data: reviewData },
     { data: allListingsData },
-    { count: confirmedTrialCount },
     { data: recentMessages },
+    { data: recentOffers },
   ] = await Promise.all([
-    // Active listings count
     supabase
       .from("horse_listings")
       .select("*", { count: "exact", head: true })
       .eq("seller_id", user.id)
       .eq("status", "active"),
-
-    // Total views across all listings
     supabase
       .from("horse_listings")
       .select("view_count")
       .eq("seller_id", user.id),
-
-    // Favorite counts across all listings
     supabase
       .from("horse_listings")
       .select("favorite_count")
       .eq("seller_id", user.id),
-
-    // Unread messages in user's conversations
     convoIds.length > 0
       ? supabase
           .from("messages")
@@ -104,42 +100,25 @@ export default async function DashboardPage() {
           .neq("sender_id", user.id)
           .is("read_at", null)
       : Promise.resolve({ count: 0 }),
-
-    // Recent listings (last 5, any status)
     supabase
       .from("horse_listings")
       .select("id, name, slug, status, view_count, favorite_count, created_at")
       .eq("seller_id", user.id)
       .order("created_at", { ascending: false })
       .limit(5),
-
-    // Pending offers count (B11)
     supabase
       .from("offers")
       .select("*", { count: "exact", head: true })
       .eq("seller_id", user.id)
       .eq("status", "pending"),
-
-    // Reviews received (B11 — avg rating)
     supabase
       .from("reviews")
       .select("rating")
       .eq("seller_id", user.id),
-
-    // All listings with status for pipeline (B12)
     supabase
       .from("horse_listings")
       .select("status")
       .eq("seller_id", user.id),
-
-    // Confirmed trial count (B12)
-    supabase
-      .from("trial_requests")
-      .select("*", { count: "exact", head: true })
-      .eq("seller_id", user.id)
-      .eq("status", "confirmed"),
-
-    // Recent messages for preview (3 most recent)
     convoIds.length > 0
       ? supabase
           .from("messages")
@@ -147,88 +126,135 @@ export default async function DashboardPage() {
           .in("conversation_id", convoIds)
           .neq("sender_id", user.id)
           .order("created_at", { ascending: false })
-          .limit(3)
+          .limit(5)
       : Promise.resolve({ data: [] as Record<string, unknown>[] }),
+    supabase
+      .from("offers")
+      .select("id, amount, status, created_at, listing:horse_listings!listing_id(name, slug), buyer:profiles!buyer_id(display_name)")
+      .eq("seller_id", user.id)
+      .order("created_at", { ascending: false })
+      .limit(5),
   ]);
 
-  const totalViews =
-    viewData?.reduce((sum, l) => sum + (l.view_count || 0), 0) || 0;
-  const totalFavorites =
-    favoriteData?.reduce((sum, l) => sum + (l.favorite_count || 0), 0) || 0;
+  const totalViews = viewData?.reduce((sum, l) => sum + (l.view_count || 0), 0) || 0;
+  const totalFavorites = favoriteData?.reduce((sum, l) => sum + (l.favorite_count || 0), 0) || 0;
   const unreadCount = unreadResult?.count || 0;
-
-  // B11: Additional stats
   const avgRating =
     reviewData && reviewData.length > 0
-      ? (
-          reviewData.reduce((sum, r) => sum + (r.rating || 0), 0) /
-          reviewData.length
-        ).toFixed(1)
+      ? (reviewData.reduce((sum, r) => sum + (r.rating || 0), 0) / reviewData.length).toFixed(1)
       : null;
 
-  // B12: Pipeline counts
+  // Pipeline counts
   const statusCounts = (allListingsData || []).reduce<Record<string, number>>(
-    (acc, l) => {
-      acc[l.status] = (acc[l.status] || 0) + 1;
-      return acc;
-    },
+    (acc, l) => { acc[l.status] = (acc[l.status] || 0) + 1; return acc; },
     {}
   );
 
+  const pendingReviewCount = statusCounts["pending_review"] || 0;
+  const draftCount = statusCounts["draft"] || 0;
+
   const pipelineStages = [
-    { stage: "Listed", count: (statusCounts["active"] || 0) + (statusCounts["draft"] || 0), color: "bg-ink-light/20", textColor: "text-ink-mid" },
-    { stage: "Interest", count: totalFavorites > 0 ? Math.min(totalFavorites, 99) : 0, color: "bg-blue/10", textColor: "text-blue" },
-    { stage: "Trial", count: confirmedTrialCount || 0, color: "bg-gold/10", textColor: "text-gold" },
-    { stage: "Offer", count: pendingOfferCount || 0, color: "bg-red-light", textColor: "text-red" },
-    { stage: "Vetting", count: statusCounts["pending_review"] || 0, color: "bg-forest/10", textColor: "text-forest" },
-    { stage: "Under Offer", count: statusCounts["under_offer"] || 0, color: "bg-gold/10", textColor: "text-gold" },
-    { stage: "Closed", count: statusCounts["sold"] || 0, color: "bg-forest/10", textColor: "text-forest" },
+    { stage: "Draft", count: draftCount, color: "bg-blue/5", textColor: "text-blue" },
+    { stage: "In Review", count: pendingReviewCount, color: "bg-gold/10", textColor: "text-gold" },
+    { stage: "Active", count: statusCounts["active"] || 0, color: "bg-forest/8", textColor: "text-forest" },
+    { stage: "Offer", count: pendingOfferCount || 0, color: "bg-oxblood/5", textColor: "text-oxblood" },
+    { stage: "Sold", count: statusCounts["sold"] || 0, color: "bg-forest/15", textColor: "text-forest" },
   ];
 
-
-  const stats = [
-    {
-      label: "Active Listings",
-      value: (listingCount || 0).toLocaleString(),
-      icon: ClipboardList,
-      href: "/dashboard/listings",
-      iconColor: "text-primary",
-    },
-    {
-      label: "Total Views",
-      value: totalViews.toLocaleString(),
-      icon: Eye,
-      iconColor: "text-blue",
-    },
-    {
-      label: "Messages",
-      value: unreadCount.toLocaleString(),
-      icon: MessageCircle,
-      href: "/dashboard/messages",
-      iconColor: "text-gold",
-    },
-    {
-      label: "Favorites",
-      value: totalFavorites.toLocaleString(),
-      icon: Heart,
-      iconColor: "text-coral",
-    },
-  ];
-
-  // Fetch Mane Score
+  // Mane Score
   const { score: maneScore, suggestions } = await getMyScore();
   const gradeInfo = maneScore ? GRADE_LABELS[maneScore.grade] : null;
-
   const hasListings = recentListings && recentListings.length > 0;
+
+  // Build activity feed from messages + offers
+  const activityItems: ActivityItem[] = [];
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (recentMessages || []).forEach((msg: any) => {
+    const profile = Array.isArray(msg.profiles) ? msg.profiles[0] : msg.profiles;
+    const senderName = profile?.display_name || "Someone";
+    activityItems.push({
+      id: `msg-${msg.id}`,
+      icon: <MessageCircle className="h-4 w-4 text-ink-mid" />,
+      iconBg: "bg-paper-warm",
+      content: (
+        <p>
+          <span className="font-medium text-ink-dark">{senderName}</span>{" "}
+          sent a message: &ldquo;{(msg.body as string)?.slice(0, 60)}{(msg.body as string)?.length > 60 ? "..." : ""}&rdquo;
+        </p>
+      ),
+      timestamp: timeAgo(msg.created_at),
+      dateTime: msg.created_at,
+    });
+  });
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (recentOffers || []).forEach((offer: any) => {
+    const buyer = Array.isArray(offer.buyer) ? offer.buyer[0] : offer.buyer;
+    const listing = Array.isArray(offer.listing) ? offer.listing[0] : offer.listing;
+    const buyerName = buyer?.display_name || "A buyer";
+    const horseName = listing?.name || "a listing";
+    const statusVariant = offer.status === "pending" ? "yellow" : offer.status === "accepted" ? "green" : "gray";
+    activityItems.push({
+      id: `offer-${offer.id}`,
+      icon: <DollarSign className="h-4 w-4 text-gold" />,
+      iconBg: "bg-gold/10",
+      content: (
+        <p>
+          <span className="font-medium text-ink-dark">{buyerName}</span>{" "}
+          made a ${(offer.amount as number)?.toLocaleString()} offer on{" "}
+          <span className="font-medium text-ink-dark">{horseName}</span>
+          <StatusBadge variant={statusVariant} className="ml-2 inline-flex">
+            {offer.status}
+          </StatusBadge>
+        </p>
+      ),
+      timestamp: timeAgo(offer.created_at),
+      dateTime: offer.created_at,
+    });
+  });
+
+  // Sort by dateTime descending
+  activityItems.sort((a, b) => {
+    const da = a.dateTime ? new Date(a.dateTime).getTime() : 0;
+    const db = b.dateTime ? new Date(b.dateTime).getTime() : 0;
+    return db - da;
+  });
+
+  // Build recent inquiries for StackedList
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const inquiryItems: StackedListItem[] = (recentMessages || []).slice(0, 4).map((msg: any) => {
+    const profile = Array.isArray(msg.profiles) ? msg.profiles[0] : msg.profiles;
+    const senderName = profile?.display_name || "Unknown";
+    return {
+      id: msg.id,
+      href: `/dashboard/messages/${msg.conversation_id}`,
+      initials: senderName.charAt(0).toUpperCase(),
+      title: senderName,
+      subtitle: (msg.body as string)?.slice(0, 80) || "New message",
+      meta: <span className="text-xs text-ink-faint">{timeAgo(msg.created_at)}</span>,
+    };
+  });
+
+  // KPI stats
+  const kpis = [
+    { label: "Active Listings", value: (listingCount || 0).toLocaleString(), icon: ClipboardList, href: "/dashboard/listings", accent: "text-oxblood" },
+    { label: "Total Views", value: totalViews.toLocaleString(), icon: Eye, accent: "text-ink-mid" },
+    { label: "Unread Messages", value: unreadCount.toLocaleString(), icon: MessageCircle, href: "/dashboard/messages", accent: "text-gold" },
+    { label: "Saves", value: totalFavorites.toLocaleString(), icon: Heart, accent: "text-oxblood/70" },
+    { label: "Pending Offers", value: (pendingOfferCount || 0).toLocaleString(), icon: DollarSign, href: "/dashboard/offers", accent: "text-forest" },
+    { label: "Avg. Rating", value: avgRating ? `${avgRating} \u2605` : "\u2014", icon: Star, accent: "text-gold" },
+  ];
 
   return (
     <div>
+      {/* Header */}
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">Dashboard</h1>
-          <p className="mt-1 text-sm text-ink-mid">
-            Your activity overview.
-          </p>
+          <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">
+            Dashboard
+          </h1>
+          <p className="mt-1 text-sm text-ink-mid">Your marketplace at a glance.</p>
         </div>
         <Button asChild>
           <Link href={getCreateListingUrl()}>
@@ -238,181 +264,144 @@ export default async function DashboardPage() {
         </Button>
       </div>
 
-      {/* Stats grid */}
-      <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
-        {stats.map((stat) => {
-          const Icon = stat.icon;
-          const content = (
-            <>
-              <div className="flex items-center justify-between">
-                <Icon className={`h-5 w-5 ${stat.iconColor}`} />
-                {stat.href && (
-                  <ArrowRight className="h-3 w-3 text-ink-faint" />
-                )}
-              </div>
-              <p className="mt-3 font-serif text-2xl font-bold text-ink-black">
-                {stat.value}
-              </p>
-              <p className="mt-0.5 text-xs text-ink-mid">{stat.label}</p>
-            </>
-          );
-          const className =
-            "rounded-lg border-0 bg-paper-cream p-4 shadow-flat transition-elevation hover-lift hover:shadow-lifted";
-          return stat.href ? (
-            <Link key={stat.label} href={stat.href} className={className}>
-              {content}
-            </Link>
-          ) : (
-            <div key={stat.label} className={className}>
-              {content}
+      {/* ─── Attention Banner ─── */}
+      {(() => {
+        const actions: { text: string; href: string }[] = [];
+        if ((pendingOfferCount || 0) > 0)
+          actions.push({ text: `${pendingOfferCount} pending offer${(pendingOfferCount || 0) !== 1 ? "s" : ""} to review`, href: "/dashboard/offers" });
+        if (unreadCount > 0)
+          actions.push({ text: `${unreadCount} unread message${unreadCount !== 1 ? "s" : ""}`, href: "/dashboard/messages" });
+        if (draftCount > 0)
+          actions.push({ text: `${draftCount} draft listing${draftCount !== 1 ? "s" : ""} to finish`, href: "/dashboard" });
+
+        if (actions.length === 0) return null;
+
+        return (
+          <AlertBanner variant="warning" title="Needs your attention" className="mb-6">
+            <p className="text-sm">
+              {actions.map((a, i) => (
+                <span key={i}>
+                  {i > 0 && " · "}
+                  <Link href={a.href} className="font-medium text-oxblood hover:underline">{a.text}</Link>
+                </span>
+              ))}
+            </p>
+          </AlertBanner>
+        );
+      })()}
+
+      {/* ─── KPI Row ─── */}
+      <div className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+        {kpis.map((kpi) => {
+          const Icon = kpi.icon;
+          const inner = (
+            <div className="rounded-lg bg-paper-cream p-4 shadow-flat transition-all hover:shadow-folded">
+              <Icon className={`h-4 w-4 ${kpi.accent}`} />
+              <p className="mt-2 font-serif text-2xl font-bold text-ink-black">{kpi.value}</p>
+              <p className="mt-0.5 text-[11px] tracking-wide text-ink-faint">{kpi.label}</p>
             </div>
+          );
+          return kpi.href ? (
+            <Link key={kpi.label} href={kpi.href}>{inner}</Link>
+          ) : (
+            <div key={kpi.label}>{inner}</div>
           );
         })}
       </div>
 
-      {/* Additional Stats (B11) */}
-      <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
-        <div className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat">
-          <p className="text-xs text-ink-light">Pending Offers</p>
-          <p className="mt-1 font-serif text-2xl font-bold text-ink-black">
-            {(pendingOfferCount || 0).toLocaleString()}
-          </p>
-        </div>
-        <div className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat">
-          <p className="text-xs text-ink-light">Avg. Rating</p>
-          <p className="mt-1 font-serif text-2xl font-bold text-ink-black">
-            {avgRating ? `${avgRating} \u2605` : "\u2014"}
-          </p>
-        </div>
-        <div className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat">
-          <p className="text-xs text-ink-light">Response Rate</p>
-          <p className="mt-1 font-serif text-2xl font-bold text-forest">
-            {convoIds.length > 0 ? "94%" : "\u2014"}
-          </p>
-        </div>
-        <div className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat">
-          <p className="text-xs text-ink-light">Profile Views</p>
-          <p className="mt-1 font-serif text-2xl font-bold text-ink-black">
-            {totalViews.toLocaleString()}
-          </p>
-        </div>
-      </div>
-
-      {/* Mane Score + Suggestions */}
-      {maneScore && (
-        <div className="mb-8 grid gap-4 md:grid-cols-2">
-          {/* Score widget */}
-          <Link
-            href="/dashboard/analytics"
-            className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat transition-elevation hover-lift hover:shadow-lifted"
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <BarChart3 className="h-5 w-5 text-gold" />
-                <span className="text-sm font-medium text-ink-dark">
-                  Mane Score
-                </span>
-              </div>
-              <ArrowRight className="h-3 w-3 text-ink-faint" />
+      {/* ─── Two-column: Recent Inquiries + Activity Feed ─── */}
+      <div className="mb-8 grid gap-6 lg:grid-cols-2">
+        {/* Recent Inquiries (StackedList) */}
+        <section>
+          <SectionHeading
+            title="Recent Inquiries"
+            actions={
+              <Link href="/dashboard/messages" className="text-sm font-medium text-oxblood hover:underline">
+                View all
+              </Link>
+            }
+          />
+          {inquiryItems.length > 0 ? (
+            <div className="mt-2 rounded-lg bg-paper-cream px-4 shadow-flat">
+              <StackedList items={inquiryItems} />
             </div>
-            <p className="mt-2 font-serif text-3xl font-bold text-ink-black">
-              {maneScore.mane_score.toLocaleString()}
-              <span className="text-lg font-normal text-ink-light">/1,000</span>
-            </p>
-            {gradeInfo && (
-              <p className={`mt-0.5 text-xs font-medium ${gradeInfo.color}`}>
-                {gradeInfo.label}
-              </p>
-            )}
-            <p className="mt-2 text-xs text-ink-light">
-              {MANE_SCORE_DISCLAIMER}
-            </p>
-          </Link>
-
-          {/* Boost suggestions */}
-          {suggestions.length > 0 && (
-            <div className="rounded-lg border-0 bg-paper-cream p-4 shadow-flat">
-              <div className="mb-3 flex items-center gap-2">
-                <Lightbulb className="h-4 w-4 text-gold" />
-                <span className="text-sm font-medium text-ink-dark">
-                  Boost Your Score
-                </span>
-              </div>
-              <div className="space-y-2">
-                {suggestions.slice(0, 3).map((s, i) => (
-                  <Link
-                    key={i}
-                    href={s.link}
-                    className="flex items-center justify-between rounded-md border-0 bg-paper-white px-3 py-2 text-xs shadow-flat transition-colors hover:bg-paper-warm"
-                  >
-                    <span className="text-ink-mid">{s.action}</span>
-                    <span className="ml-2 whitespace-nowrap font-semibold text-forest">
-                      {s.points}
-                    </span>
-                  </Link>
-                ))}
-              </div>
+          ) : (
+            <div className="mt-2 rounded-lg bg-paper-cream shadow-flat">
+              <EmptyState
+                icon={<MessageCircle className="h-8 w-8" />}
+                title="No inquiries yet"
+                description="Messages from buyers will appear here."
+              />
             </div>
           )}
-        </div>
-      )}
+        </section>
 
-      {/* Sales Pipeline (B12) */}
+        {/* Activity Feed */}
+        <section>
+          <SectionHeading title="Recent Activity" />
+          {activityItems.length > 0 ? (
+            <div className="mt-2 rounded-lg bg-paper-cream p-5 shadow-flat">
+              <ActivityFeed items={activityItems.slice(0, 6)} />
+            </div>
+          ) : (
+            <div className="mt-2 rounded-lg bg-paper-cream shadow-flat">
+              <EmptyState
+                icon={<Send className="h-8 w-8" />}
+                title="No activity yet"
+                description="Messages, offers, and updates will appear here."
+              />
+            </div>
+          )}
+        </section>
+      </div>
+
+      {/* ─── Sales Pipeline ─── */}
       <section className="mb-8">
-        <h2 className="mb-4 text-lg font-semibold text-ink-black">
-          Sales Pipeline
-        </h2>
-        <div className="overflow-x-auto">
-          <div className="flex gap-2 min-w-[700px]">
-            {pipelineStages.map((item) => (
-              <div
-                key={item.stage}
-                className={`flex-1 rounded-lg ${item.color} p-3 text-center`}
-              >
-                <p className={`font-serif text-xl font-bold ${item.textColor}`}>
-                  {item.count}
-                </p>
-                <p className="text-xs text-ink-mid mt-0.5">{item.stage}</p>
+        <SectionHeading title="Sales Pipeline" />
+        <div className="mt-2 flex gap-1.5 overflow-x-auto">
+          {pipelineStages.map((item, i) => (
+            <div key={item.stage} className="flex items-center gap-1.5">
+              <div className={`min-w-[100px] flex-1 rounded-lg ${item.color} px-4 py-3 text-center`}>
+                <p className={`font-serif text-xl font-bold ${item.textColor}`}>{item.count}</p>
+                <p className="mt-0.5 text-[11px] text-ink-faint">{item.stage}</p>
               </div>
-            ))}
-          </div>
+              {i < pipelineStages.length - 1 && (
+                <ArrowRight className="h-3 w-3 shrink-0 text-crease-mid" />
+              )}
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* Recent listings or empty state */}
+      {/* ─── Recent Listings ─── */}
       {hasListings ? (
-        <div className="rounded-lg border-0 bg-paper-cream shadow-flat">
-          <div className="flex items-center justify-between border-b border-crease-light px-6 py-4">
-            <h2 className="font-medium text-ink-dark">Recent Listings</h2>
-            <Link
-              href="/dashboard/listings"
-              className="text-sm text-ink-mid hover:text-ink-dark"
-            >
-              View all
-              <ArrowRight className="ml-1 inline h-3 w-3" />
-            </Link>
-          </div>
-          <div className="divide-y divide-crease-light">
+        <section className="mb-8">
+          <SectionHeading
+            title="Your Listings"
+            actions={
+              <Link href="/dashboard/listings" className="text-sm font-medium text-oxblood hover:underline">
+                View all <ArrowRight className="ml-1 inline h-3 w-3" />
+              </Link>
+            }
+          />
+          <div className="mt-2 divide-y divide-crease-light rounded-lg bg-paper-cream shadow-flat">
             {recentListings.map((listing) => {
-              const config = statusConfig[listing.status as ListingStatus];
+              const status = listing.status as ListingStatus;
+              const variant = status === "active" ? "green" : status === "pending_review" ? "gold" : status === "sold" ? "gray" : status === "draft" ? "blue" : status === "under_offer" ? "yellow" : "gray";
+              const statusLabel = status === "active" ? "Active" : status === "pending_review" ? "In Review" : status === "draft" ? "Draft" : status === "under_offer" ? "Under Offer" : status === "sold" ? "Sold" : status;
               return (
                 <Link
                   key={listing.id}
                   href={`/horses/${listing.slug}`}
-                  className="flex items-center gap-4 px-6 py-3 transition-colors hover:bg-paper-warm"
+                  className="flex items-center gap-4 px-5 py-3.5 transition-colors hover:bg-paper-warm"
                 >
                   <div className="min-w-0 flex-1">
-                    <p className="truncate font-medium text-ink-dark">
-                      {listing.name}
-                    </p>
-                    <p className="text-xs text-ink-mid">
-                      {new Date(listing.created_at).toLocaleDateString(
-                        "en-US",
-                        { month: "short", day: "numeric", year: "numeric" }
-                      )}
+                    <p className="truncate text-sm font-medium text-ink-dark">{listing.name}</p>
+                    <p className="text-[11px] text-ink-faint">
+                      {new Date(listing.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                     </p>
                   </div>
-                  <div className="flex items-center gap-4 text-xs text-ink-mid">
+                  <div className="flex items-center gap-4 text-xs text-ink-faint">
                     <span className="flex items-center gap-1">
                       <Eye className="h-3 w-3" />
                       {(listing.view_count || 0).toLocaleString()}
@@ -421,120 +410,96 @@ export default async function DashboardPage() {
                       <Heart className="h-3 w-3" />
                       {(listing.favorite_count || 0).toLocaleString()}
                     </span>
-                    <Badge variant={config?.variant || "secondary"}>
-                      {config?.label || listing.status}
-                    </Badge>
+                    <StatusBadge variant={variant}>{statusLabel}</StatusBadge>
                   </div>
-                  {listing.status !== "sold" && listing.status !== "removed" && (
+                  {status !== "sold" && status !== "removed" && (
                     <div onClick={(e) => e.preventDefault()}>
-                      <DeleteListingButton
-                        listingId={listing.id}
-                        listingName={listing.name}
-                      />
+                      <DeleteListingButton listingId={listing.id} listingName={listing.name} />
                     </div>
                   )}
                 </Link>
               );
             })}
           </div>
-        </div>
+        </section>
       ) : (
-        <div className="rounded-lg border-0 bg-paper-cream p-12 text-center shadow-flat">
-          <ClipboardList className="mx-auto h-10 w-10 text-ink-faint" />
-          <h3 className="mt-4 font-medium text-ink-dark">Your stable is empty</h3>
-          <p className="mt-1 text-sm text-ink-mid">
-            List your first horse and start reaching thousands of qualified buyers.
-          </p>
-          <Button className="mt-4" asChild>
-            <Link href={getCreateListingUrl()}>
-              <Plus className="mr-2 h-4 w-4" />
-              Create Your First Listing
-            </Link>
-          </Button>
-        </div>
+        <section className="mb-8">
+          <div className="rounded-lg bg-paper-cream shadow-flat">
+            <EmptyState
+              icon={<ClipboardList className="h-10 w-10" />}
+              title="Your stable is empty"
+              description="List your first horse and start reaching thousands of qualified buyers."
+              actionLabel="Create Your First Listing"
+              actionHref={getCreateListingUrl()}
+            />
+          </div>
+        </section>
       )}
 
-      {/* Recent Messages */}
-      <section className="mt-8">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-ink-black">
-            Recent Messages
-          </h2>
+      {/* ─── Mane Score ─── */}
+      {maneScore && (
+        <section className="mb-8 grid gap-4 md:grid-cols-2">
           <Link
-            href="/dashboard/messages"
-            className="text-sm text-blue hover:underline"
+            href="/dashboard/analytics"
+            className="rounded-lg bg-paper-cream p-5 shadow-flat transition-all hover:shadow-folded"
           >
-            View all
-          </Link>
-        </div>
-        {recentMessages && recentMessages.length > 0 ? (
-          <div className="space-y-2">
-            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            {recentMessages.map((msg: any) => {
-              const profile = Array.isArray(msg.profiles)
-                ? msg.profiles[0]
-                : msg.profiles;
-              const senderName =
-                profile?.display_name || "Unknown";
-              return (
-                <Link
-                  key={msg.id}
-                  href={`/dashboard/messages/${msg.conversation_id}`}
-                  className="flex items-start gap-3 rounded-lg border-0 bg-paper-white p-3 shadow-flat transition-colors hover:bg-paper-warm"
-                >
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-paper-cream text-sm font-medium text-ink-mid">
-                    {senderName.charAt(0).toUpperCase()}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm font-medium text-ink-black">
-                        {senderName}
-                      </p>
-                      <span className="text-xs text-ink-light">
-                        {timeAgo(msg.created_at)}
-                      </span>
-                    </div>
-                    <p className="text-sm text-ink-mid truncate">
-                      {msg.body}
-                    </p>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="flex flex-col items-center gap-2 rounded-lg border border-dashed border-crease-light py-8 text-center">
-            <MessageCircle className="h-6 w-6 text-ink-faint" />
-            <p className="text-sm font-medium text-ink-dark">No messages yet</p>
-            <p className="text-xs text-ink-mid">When you connect with a buyer or seller, your conversations will appear here.</p>
-          </div>
-        )}
-      </section>
-
-      {/* Saved Searches */}
-      <section className="mt-8">
-        <SavedSearchesWidget />
-      </section>
-
-      {/* Recently Viewed (placeholder) */}
-      <section className="mt-8">
-        <h2 className="mb-4 text-lg font-semibold text-ink-black">
-          Recently Viewed
-        </h2>
-        <div className="grid gap-3 grid-cols-2 md:grid-cols-4">
-          {["Sapphire Blue", "Thunder Road", "Silver Lining", "Copper Canyon"].map(
-            (name) => (
-              <div
-                key={name}
-                className="rounded-lg border-0 bg-paper-cream p-3 shadow-flat"
-              >
-                <div className="aspect-[4/3] rounded-md bg-paper-warm mb-2" />
-                <p className="text-sm font-medium text-ink-black">{name}</p>
-                <p className="text-xs text-ink-mid">Viewed 2d ago</p>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <BarChart3 className="h-5 w-5 text-gold" />
+                <span className="text-sm font-medium text-ink-dark">Mane Score</span>
               </div>
-            )
+              <ArrowRight className="h-3 w-3 text-ink-faint" />
+            </div>
+            <p className="mt-3 font-serif text-3xl font-bold text-ink-black">
+              {maneScore.mane_score.toLocaleString()}
+              <span className="text-lg font-normal text-ink-faint">/1,000</span>
+            </p>
+            {gradeInfo && (
+              <p className={`mt-0.5 text-xs font-medium ${gradeInfo.color}`}>{gradeInfo.label}</p>
+            )}
+            <p className="mt-2 text-[11px] text-ink-faint">{MANE_SCORE_DISCLAIMER}</p>
+          </Link>
+
+          {suggestions.length > 0 && (
+            <div className="rounded-lg bg-paper-cream p-5 shadow-flat">
+              <div className="mb-3 flex items-center gap-2">
+                <Lightbulb className="h-4 w-4 text-gold" />
+                <span className="text-sm font-medium text-ink-dark">Boost Your Score</span>
+              </div>
+              <div className="space-y-2">
+                {suggestions.slice(0, 3).map((s, i) => (
+                  <Link
+                    key={i}
+                    href={s.link}
+                    className="flex items-center justify-between rounded-md bg-paper-white px-3 py-2 text-xs shadow-flat transition-colors hover:bg-paper-warm"
+                  >
+                    <span className="text-ink-mid">{s.action}</span>
+                    <span className="ml-2 whitespace-nowrap font-semibold text-forest">{s.points}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
           )}
-        </div>
+        </section>
+      )}
+
+      {/* ─── Quick Actions ─── */}
+      <section className="mb-8">
+        <SectionHeading title="Quick Actions" />
+        <ActionPanel
+          className="mt-2"
+          items={[
+            { label: "New Listing", icon: <Plus className="h-4 w-4" />, href: getCreateListingUrl(), accent: "text-oxblood" },
+            { label: "View Offers", icon: <HandshakeIcon className="h-4 w-4" />, href: "/dashboard/offers", accent: "text-gold" },
+            { label: "Edit Profile", icon: <UserCheck className="h-4 w-4" />, href: "/dashboard/settings", accent: "text-ink-mid" },
+            { label: "View Analytics", icon: <BarChart3 className="h-4 w-4" />, href: "/dashboard/analytics", accent: "text-forest" },
+          ] satisfies ActionPanelItem[]}
+        />
+      </section>
+
+      {/* ─── Saved Searches ─── */}
+      <section className="mb-8">
+        <SavedSearchesWidget />
       </section>
     </div>
   );

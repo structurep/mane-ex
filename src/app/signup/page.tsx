@@ -1,10 +1,8 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
+import { CheckCircle2 } from "lucide-react";
 import { SignupWizard } from "./signup-wizard";
-import { Lock, Shield, CheckCircle2 } from "lucide-react";
+import { AuthLayout } from "@/components/tailwind-plus";
 
 export const metadata: Metadata = {
   title: "Sign Up",
@@ -14,47 +12,43 @@ export const metadata: Metadata = {
 
 export default function SignupPage() {
   return (
-    <>
-      <Header />
-      <main className="with-grain flex min-h-[calc(100vh-4.5rem)] flex-col items-center justify-center bg-gradient-hero px-4 py-16">
-        <div className="w-full max-w-md">
-          {/* Logo + heading */}
-          <div className="mb-8 text-center">
-            <Link href="/" className="inline-block">
-              <Image
-                src="/icon.svg"
-                alt="ManeExchange"
-                width={48}
-                height={48}
-                className="mx-auto mb-4"
-              />
-            </Link>
-            <h1 className="font-serif text-3xl tracking-tight text-ink-black md:text-4xl">
-              Create Your Account
-            </h1>
-            <p className="mt-2 text-sm text-ink-mid">
-              The standard for equine transactions
-            </p>
-          </div>
-
-          {/* Card */}
-          <div className="rounded-lg bg-paper-cream p-6 shadow-folded md:p-8">
-            <SignupWizard />
-          </div>
-
-          {/* Switch to login */}
-          <p className="mt-6 text-center text-sm text-ink-mid">
+    <AuthLayout
+      headline={
+        <>
+          The standard for
+          <br />equine transactions.
+        </>
+      }
+      subContent={
+        <ul className="mt-2 space-y-3 text-sm text-paper-white/60">
+          <li className="flex items-center gap-2.5">
+            <CheckCircle2 className="h-4 w-4 shrink-0 text-forest" />
+            Bank-grade escrow on every transaction
+          </li>
+          <li className="flex items-center gap-2.5">
+            <CheckCircle2 className="h-4 w-4 shrink-0 text-forest" />
+            Verified seller identities via Stripe KYC
+          </li>
+          <li className="flex items-center gap-2.5">
+            <CheckCircle2 className="h-4 w-4 shrink-0 text-forest" />
+            5-day inspection period on every purchase
+          </li>
+        </ul>
+      }
+      title="Create Your Account"
+      subtitle="Join the marketplace trusted by serious horse people"
+      footer={
+        <>
+          <p className="mt-6 text-center text-sm text-ink-mid lg:text-left">
             Already have an account?{" "}
             <Link
               href="/login"
-              className="font-medium text-primary hover:underline"
+              className="font-medium text-oxblood hover:underline"
             >
               Log in
             </Link>
           </p>
-
-          {/* Legal + trust */}
-          <p className="mt-4 text-center text-xs text-ink-light">
+          <p className="mt-4 text-center text-xs text-ink-faint lg:text-left">
             By signing up, you agree to our{" "}
             <Link href="/terms" className="underline">
               Terms of Service
@@ -65,24 +59,10 @@ export default function SignupPage() {
             </Link>
             .
           </p>
-
-          <div className="mt-6 flex items-center justify-center gap-6 text-xs text-ink-light">
-            <span className="flex items-center gap-1.5">
-              <Lock className="h-3.5 w-3.5 text-gold" />
-              Encrypted
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Shield className="h-3.5 w-3.5 text-forest" />
-              Stripe KYC
-            </span>
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
-              Verified
-            </span>
-          </div>
-        </div>
-      </main>
-      <Footer />
-    </>
+        </>
+      }
+    >
+      <SignupWizard />
+    </AuthLayout>
   );
 }

@@ -2,11 +2,11 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getMyScore } from "@/actions/scoring";
+import { getViewsByDay, getTrafficSources, getListingPerformance } from "@/actions/analytics";
 import { ManeScoreBadge } from "@/components/marketplace/mane-score-badge";
 import { BadgeShowcase } from "@/components/marketplace/badge-showcase";
 import { Leaderboard } from "@/components/marketplace/leaderboard";
 import { MANE_SCORE_DISCLAIMER } from "@/types/scoring";
-import { SellerIntelligenceDashboard } from "@/components/marketplace/seller-intelligence";
 import {
   BarChart3,
   ArrowRight,
@@ -14,10 +14,19 @@ import {
   FileCheck,
   TrendingUp,
   ShieldCheck,
+  Eye,
 } from "lucide-react";
+import { SectionHeading, EmptyState } from "@/components/tailwind-plus";
 
 export const metadata: Metadata = {
   title: "Analytics — Mane Score",
+};
+
+const sourceColors: Record<string, string> = {
+  Direct: "bg-blue",
+  Browse: "bg-forest",
+  Search: "bg-gold",
+  "External Links": "bg-oxblood",
 };
 
 export default async function AnalyticsPage() {
@@ -28,7 +37,30 @@ export default async function AnalyticsPage() {
 
   if (!user) return null;
 
-  const { score, suggestions } = await getMyScore();
+  // Fetch all analytics data in parallel
+  const [{ score, suggestions }, viewsByDay, trafficSources, listingPerf] = await Promise.all([
+    getMyScore(),
+    getViewsByDay(user.id),
+    getTrafficSources(user.id),
+    getListingPerformance(user.id),
+  ]);
+
+  const totalViews = viewsByDay.reduce((sum, d) => sum + d.value, 0);
+  const maxView = Math.max(...viewsByDay.map((d) => d.value), 1);
+
+  // Traffic source percentages
+  const totalSourceHits = trafficSources.reduce((sum, s) => sum + s.count, 0);
+  const sourcesWithPercent = trafficSources.map((s) => ({
+    ...s,
+    percent: totalSourceHits > 0 ? Math.round((s.count / totalSourceHits) * 100) : 0,
+  }));
+
+  // Conversion funnel from real listing data
+  const funnelTotalViews = listingPerf.reduce((sum, l) => sum + l.views, 0);
+  const funnelInquiries = listingPerf.reduce((sum, l) => sum + l.inquiries, 0);
+  const funnelOffers = listingPerf.reduce((sum, l) => sum + l.offers, 0);
+
+  const hasAnalyticsData = totalViews > 0 || listingPerf.length > 0;
 
   return (
     <div>
@@ -201,128 +233,141 @@ export default async function AnalyticsPage() {
         </div>
       </div>
 
-      {/* Views Over Time */}
+      {/* Views Over Time — real data */}
       <section className="mt-8">
-        <h2 className="mb-4 text-lg font-semibold text-ink-black">Views Over Time</h2>
-        <div className="rounded-lg border-0 bg-paper-white p-6 shadow-flat">
-          {/* Simple bar chart visualization using divs */}
-          <div className="flex items-end gap-2 h-40">
-            {[
-              { label: "Mon", value: 12 },
-              { label: "Tue", value: 18 },
-              { label: "Wed", value: 24 },
-              { label: "Thu", value: 15 },
-              { label: "Fri", value: 32 },
-              { label: "Sat", value: 28 },
-              { label: "Sun", value: 20 },
-            ].map((day) => (
-              <div key={day.label} className="flex-1 flex flex-col items-center gap-1">
-                <span className="text-xs text-ink-mid">{day.value}</span>
-                <div
-                  className="w-full rounded-t-md bg-blue/20 transition-all"
-                  style={{ height: `${(day.value / 32) * 100}%` }}
-                />
-                <span className="text-xs text-ink-light">{day.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Traffic Sources */}
-      <section className="mt-8">
-        <h2 className="mb-4 text-lg font-semibold text-ink-black">Traffic Sources</h2>
-        <div className="grid gap-4 md:grid-cols-2">
+        <SectionHeading title="Views Over Time" />
+        {hasAnalyticsData ? (
           <div className="rounded-lg border-0 bg-paper-white p-6 shadow-flat">
-            <div className="space-y-4">
-              {[
-                { source: "Direct", percent: 42, color: "bg-blue" },
-                { source: "Search", percent: 28, color: "bg-forest" },
-                { source: "External Links", percent: 18, color: "bg-gold" },
-                { source: "Recommendations", percent: 12, color: "bg-primary" },
-              ].map((item) => (
-                <div key={item.source}>
-                  <div className="flex items-center justify-between text-sm mb-1">
-                    <span className="text-ink-dark">{item.source}</span>
-                    <span className="font-medium text-ink-black">{item.percent}%</span>
-                  </div>
-                  <div className="h-2 rounded-full bg-paper-warm">
-                    <div className={`h-2 rounded-full ${item.color}`} style={{ width: `${item.percent}%` }} />
-                  </div>
+            <p className="mb-4 text-sm text-ink-mid">
+              {totalViews} view{totalViews !== 1 ? "s" : ""} in the last 7 days
+            </p>
+            <div className="flex items-end gap-2 h-40">
+              {viewsByDay.map((day) => (
+                <div key={day.label} className="flex-1 flex flex-col items-center gap-1">
+                  <span className="text-xs text-ink-mid">{day.value}</span>
+                  <div
+                    className="w-full rounded-t-md bg-forest/20 transition-all"
+                    style={{ height: `${maxView > 0 ? (day.value / maxView) * 100 : 0}%`, minHeight: day.value > 0 ? "4px" : "0" }}
+                  />
+                  <span className="text-xs text-ink-light">{day.label}</span>
                 </div>
               ))}
             </div>
           </div>
-          <div className="rounded-lg border-0 bg-paper-white p-6 shadow-flat">
-            <h3 className="mb-4 font-medium text-ink-black">Conversion Funnel</h3>
-            <div className="space-y-3">
-              {[
-                { stage: "Views", count: 847, percent: 100 },
-                { stage: "Inquiries", count: 124, percent: 14.6 },
-                { stage: "Offers", count: 32, percent: 3.8 },
-                { stage: "Sold", count: 8, percent: 0.9 },
-              ].map((item) => (
-                <div key={item.stage} className="flex items-center gap-3">
-                  <div className="w-full">
+        ) : (
+          <div className="rounded-lg border border-dashed border-crease-mid bg-paper-cream p-10 text-center shadow-flat">
+            <Eye className="mx-auto h-8 w-8 text-ink-faint" />
+            <p className="mt-3 text-sm font-medium text-ink-dark">No views yet</p>
+            <p className="mt-1 text-xs text-ink-mid">View data will appear here once your listings get traffic.</p>
+          </div>
+        )}
+      </section>
+
+      {/* Traffic Sources — real data */}
+      {hasAnalyticsData && sourcesWithPercent.length > 0 && (
+        <section className="mt-8">
+          <SectionHeading title="Traffic Sources" />
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="rounded-lg border-0 bg-paper-white p-6 shadow-flat">
+              <div className="space-y-4">
+                {sourcesWithPercent.map((item) => (
+                  <div key={item.source}>
                     <div className="flex items-center justify-between text-sm mb-1">
-                      <span className="text-ink-dark">{item.stage}</span>
-                      <span className="text-ink-mid">{item.count} ({item.percent}%)</span>
+                      <span className="text-ink-dark">{item.source}</span>
+                      <span className="font-medium text-ink-black">
+                        {item.count} ({item.percent}%)
+                      </span>
                     </div>
                     <div className="h-2 rounded-full bg-paper-warm">
-                      <div className="h-2 rounded-full bg-forest" style={{ width: `${item.percent}%` }} />
+                      <div
+                        className={`h-2 rounded-full ${sourceColors[item.source] || "bg-ink-light"}`}
+                        style={{ width: `${item.percent}%`, minWidth: item.percent > 0 ? "4px" : "0" }}
+                      />
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+            </div>
+            <div className="rounded-lg border-0 bg-paper-white p-6 shadow-flat">
+              <h3 className="mb-4 font-medium text-ink-black">Conversion Funnel</h3>
+              <div className="space-y-3">
+                {[
+                  { stage: "Views", count: funnelTotalViews, percent: 100 },
+                  { stage: "Inquiries", count: funnelInquiries, percent: funnelTotalViews > 0 ? Math.round((funnelInquiries / funnelTotalViews) * 100 * 10) / 10 : 0 },
+                  { stage: "Offers", count: funnelOffers, percent: funnelTotalViews > 0 ? Math.round((funnelOffers / funnelTotalViews) * 100 * 10) / 10 : 0 },
+                ].map((item) => (
+                  <div key={item.stage} className="flex items-center gap-3">
+                    <div className="w-full">
+                      <div className="flex items-center justify-between text-sm mb-1">
+                        <span className="text-ink-dark">{item.stage}</span>
+                        <span className="text-ink-mid">{item.count} ({item.percent}%)</span>
+                      </div>
+                      <div className="h-2 rounded-full bg-paper-warm">
+                        <div
+                          className="h-2 rounded-full bg-forest"
+                          style={{ width: `${item.percent}%`, minWidth: item.percent > 0 ? "4px" : "0" }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* Per-Listing Performance */}
-      <section className="mt-8">
-        <h2 className="mb-4 text-lg font-semibold text-ink-black">Listing Performance</h2>
-        <div className="rounded-lg border-0 overflow-hidden shadow-flat">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-crease-light bg-paper-cream">
-                <th className="px-4 py-3 text-left text-xs font-medium text-ink-mid">Listing</th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-ink-mid">Views</th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-ink-mid">Saves</th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-ink-mid">Inquiries</th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-ink-mid">Offers</th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-ink-mid">Score</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                { name: "Midnight Storm", views: 342, saves: 28, inquiries: 12, offers: 3, score: 920 },
-                { name: "Golden Promise", views: 215, saves: 19, inquiries: 8, offers: 2, score: 845 },
-                { name: "Sapphire Blue", views: 178, saves: 14, inquiries: 5, offers: 1, score: 780 },
-                { name: "Thunder Road", views: 112, saves: 8, inquiries: 3, offers: 0, score: 650 },
-              ].map((listing) => (
-                <tr key={listing.name} className="border-b border-crease-light last:border-0">
-                  <td className="px-4 py-3 text-sm font-medium text-ink-black">{listing.name}</td>
-                  <td className="px-4 py-3 text-right text-sm text-ink-mid">{listing.views}</td>
-                  <td className="px-4 py-3 text-right text-sm text-ink-mid">{listing.saves}</td>
-                  <td className="px-4 py-3 text-right text-sm text-ink-mid">{listing.inquiries}</td>
-                  <td className="px-4 py-3 text-right text-sm text-ink-mid">{listing.offers}</td>
-                  <td className="px-4 py-3 text-right text-sm font-medium text-forest">{listing.score}</td>
+      {/* Per-Listing Performance — real data */}
+      {listingPerf.length > 0 && (
+        <section className="mt-8">
+          <SectionHeading title="Listing Performance" />
+          <div className="rounded-lg border-0 overflow-hidden shadow-flat">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-crease-light bg-paper-cream">
+                  <th className="px-4 py-3 text-left text-xs font-medium text-ink-mid">Listing</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium text-ink-mid">Views</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium text-ink-mid">Saves</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium text-ink-mid">Inquiries</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium text-ink-mid">Offers</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium text-ink-mid">Score</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
+              </thead>
+              <tbody>
+                {listingPerf.map((listing) => (
+                  <tr key={listing.slug} className="border-b border-crease-light last:border-0">
+                    <td className="px-4 py-3">
+                      <Link href={`/horses/${listing.slug}`} className="text-sm font-medium text-ink-black hover:text-oxblood">
+                        {listing.name}
+                      </Link>
+                    </td>
+                    <td className="px-4 py-3 text-right text-sm text-ink-mid">{listing.views}</td>
+                    <td className="px-4 py-3 text-right text-sm text-ink-mid">{listing.saves}</td>
+                    <td className="px-4 py-3 text-right text-sm text-ink-mid">{listing.inquiries}</td>
+                    <td className="px-4 py-3 text-right text-sm text-ink-mid">{listing.offers}</td>
+                    <td className="px-4 py-3 text-right text-sm font-medium text-forest">{listing.score}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
 
-      {/* Seller Intelligence */}
+      {/* Seller Intelligence — coming soon */}
       <section className="mt-8">
         <div className="crease-divider mb-6" />
         <h2 className="mb-2 font-serif text-2xl font-semibold tracking-tight text-ink-black">Seller Intelligence</h2>
         <p className="mb-6 text-sm text-ink-mid">
           Market insights and actionable recommendations for your listings.
         </p>
-        <SellerIntelligenceDashboard />
+        <div className="rounded-lg border border-dashed border-crease-mid bg-paper-cream">
+          <EmptyState
+            icon={<BarChart3 className="size-10" />}
+            title="Seller Intelligence is coming soon"
+            description="Pricing intelligence, demand signals, competitive positioning, and actionable recommendations — powered by real market data."
+          />
+        </div>
       </section>
 
       {/* Legal disclaimer */}

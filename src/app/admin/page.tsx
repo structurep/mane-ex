@@ -1,12 +1,26 @@
 import { getAdminStats } from "@/actions/admin";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Users, ListChecks, Flag, DollarSign, Clock } from "lucide-react";
+  Users,
+  ListChecks,
+  Flag,
+  DollarSign,
+  CheckCircle2,
+  XCircle,
+  Ban,
+  Unlock,
+  ShieldCheck,
+  Wallet,
+  Bell,
+  Settings,
+  Clock,
+} from "lucide-react";
+import {
+  SectionHeading,
+  ActivityFeed,
+  StatusBadge,
+  type ActivityItem,
+} from "@/components/tailwind-plus";
+import { type ReactNode } from "react";
 
 function timeAgo(dateStr: string): string {
   const seconds = Math.floor(
@@ -21,19 +35,58 @@ function timeAgo(dateStr: string): string {
   return `${days}d ago`;
 }
 
-const actionLabels: Record<string, string> = {
-  approve_listing: "Approved listing",
-  reject_listing: "Rejected listing",
-  suspend_user: "Suspended user",
-  unsuspend_user: "Unsuspended user",
-  resolve_report: "Resolved report",
-  override_escrow: "Override escrow",
-  update_score_config: "Updated score config",
-  manual_notification: "Sent notification",
+const actionConfig: Record<string, { label: string; icon: ReactNode; bg: string }> = {
+  approve_listing: { label: "Approved listing", icon: <CheckCircle2 className="h-4 w-4 text-forest" />, bg: "bg-forest/10" },
+  reject_listing: { label: "Rejected listing", icon: <XCircle className="h-4 w-4 text-red" />, bg: "bg-red-light" },
+  suspend_user: { label: "Suspended user", icon: <Ban className="h-4 w-4 text-red" />, bg: "bg-red-light" },
+  unsuspend_user: { label: "Unsuspended user", icon: <Unlock className="h-4 w-4 text-forest" />, bg: "bg-forest/10" },
+  resolve_report: { label: "Resolved report", icon: <ShieldCheck className="h-4 w-4 text-ink-mid" />, bg: "bg-paper-warm" },
+  override_escrow: { label: "Override escrow", icon: <Wallet className="h-4 w-4 text-gold" />, bg: "bg-gold/10" },
+  update_score_config: { label: "Updated score config", icon: <Settings className="h-4 w-4 text-ink-mid" />, bg: "bg-paper-warm" },
+  manual_notification: { label: "Sent notification", icon: <Bell className="h-4 w-4 text-oxblood" />, bg: "bg-oxblood/5" },
 };
 
 export default async function AdminOverviewPage() {
   const stats = await getAdminStats();
+
+  const kpis = [
+    { label: "Total Users", value: stats.totalUsers, icon: Users, accent: "text-ink-mid" },
+    { label: "Active Listings", value: stats.activeListings, icon: ListChecks, accent: "text-forest" },
+    { label: "Pending Review", value: stats.pendingReview, icon: Clock, accent: "text-gold" },
+    { label: "Open Reports", value: stats.openReports, icon: Flag, accent: "text-red" },
+    { label: "Active Escrows", value: stats.activeEscrows, icon: DollarSign, accent: "text-gold" },
+  ];
+
+  const activityItems: ActivityItem[] = stats.recentAuditLog.map(
+    (entry: {
+      id: string;
+      action: string;
+      target_type: string;
+      target_id: string;
+      created_at: string;
+    }) => {
+      const config = actionConfig[entry.action] || {
+        label: entry.action,
+        icon: <Settings className="h-4 w-4 text-ink-faint" />,
+        bg: "bg-paper-warm",
+      };
+      return {
+        id: entry.id,
+        icon: config.icon,
+        iconBg: config.bg,
+        content: (
+          <p>
+            <span className="font-medium text-ink-dark">{config.label}</span>
+            <StatusBadge variant="gray" className="ml-2 inline-flex">
+              {entry.target_type}
+            </StatusBadge>
+          </p>
+        ),
+        timestamp: timeAgo(entry.created_at),
+        dateTime: entry.created_at,
+      };
+    }
+  );
 
   return (
     <div className="space-y-8">
@@ -46,108 +99,37 @@ export default async function AdminOverviewPage() {
         </p>
       </div>
 
-      {/* Stats grid */}
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-        <Card>
-          <CardContent className="flex items-center gap-3 p-4">
-            <div className="rounded-lg bg-paper-warm p-2.5">
-              <Users className="h-5 w-5 text-ink-mid" />
-            </div>
-            <div>
-              <p className="font-serif text-2xl font-bold text-ink-black">
-                {stats.totalUsers}
+      {/* KPI grid */}
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
+        {kpis.map((kpi) => {
+          const Icon = kpi.icon;
+          return (
+            <div key={kpi.label} className="rounded-lg bg-paper-cream p-5 shadow-flat">
+              <Icon className={`h-4 w-4 ${kpi.accent}`} />
+              <p className="mt-2 font-serif text-2xl font-bold text-ink-black">
+                {kpi.value}
               </p>
-              <p className="text-xs text-ink-mid">Total Users</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="flex items-center gap-3 p-4">
-            <div className="rounded-lg bg-green-50 p-2.5">
-              <ListChecks className="h-5 w-5 text-green-600" />
-            </div>
-            <div>
-              <p className="font-serif text-2xl font-bold text-ink-black">
-                {stats.activeListings}
+              <p className="mt-0.5 text-[11px] tracking-wide text-ink-faint">
+                {kpi.label}
               </p>
-              <p className="text-xs text-ink-mid">Active Listings</p>
             </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="flex items-center gap-3 p-4">
-            <div className="rounded-lg bg-red-light p-2.5">
-              <Flag className="h-5 w-5 text-red" />
-            </div>
-            <div>
-              <p className="font-serif text-2xl font-bold text-ink-black">
-                {stats.openReports}
-              </p>
-              <p className="text-xs text-ink-mid">Open Reports</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="flex items-center gap-3 p-4">
-            <div className="rounded-lg bg-amber-50 p-2.5">
-              <DollarSign className="h-5 w-5 text-amber-600" />
-            </div>
-            <div>
-              <p className="font-serif text-2xl font-bold text-ink-black">
-                {stats.activeEscrows}
-              </p>
-              <p className="text-xs text-ink-mid">Active Escrows</p>
-            </div>
-          </CardContent>
-        </Card>
+          );
+        })}
       </div>
 
       {/* Recent audit log */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-base">
-            <Clock className="h-4 w-4" />
-            Recent Activity
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {stats.recentAuditLog.length === 0 ? (
+      <section>
+        <SectionHeading title="Recent Activity" />
+        {activityItems.length === 0 ? (
+          <div className="mt-2 rounded-lg bg-paper-cream p-8 text-center shadow-flat">
             <p className="text-sm text-ink-mid">No recent admin activity.</p>
-          ) : (
-            <div className="space-y-3">
-              {stats.recentAuditLog.map(
-                (entry: {
-                  id: string;
-                  action: string;
-                  target_type: string;
-                  target_id: string;
-                  created_at: string;
-                }) => (
-                  <div
-                    key={entry.id}
-                    className="flex items-center justify-between border-b border-crease-light pb-3 last:border-0 last:pb-0"
-                  >
-                    <div className="flex items-center gap-3">
-                      <Badge variant="outline" className="text-xs">
-                        {entry.target_type}
-                      </Badge>
-                      <span className="text-sm text-ink-black">
-                        {actionLabels[entry.action] || entry.action}
-                      </span>
-                    </div>
-                    <span className="text-xs text-ink-light">
-                      {timeAgo(entry.created_at)}
-                    </span>
-                  </div>
-                )
-              )}
-            </div>
-          )}
-        </CardContent>
-      </Card>
+          </div>
+        ) : (
+          <div className="mt-2 rounded-lg bg-paper-cream p-5 shadow-flat">
+            <ActivityFeed items={activityItems} />
+          </div>
+        )}
+      </section>
     </div>
   );
 }

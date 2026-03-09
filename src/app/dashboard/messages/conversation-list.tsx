@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 import { MessageSquare } from "lucide-react";
+import { StackedList, StatusBadge, EmptyState, type StackedListItem } from "@/components/tailwind-plus";
 
 type ConversationItem = {
   id: string;
@@ -18,84 +17,6 @@ type ConversationItem = {
   unreadCount: number;
 };
 
-export function ConversationList({
-  conversations,
-}: {
-  conversations: ConversationItem[];
-}) {
-  if (conversations.length === 0) {
-    return (
-      <div className="flex flex-col items-center gap-3 rounded-lg border-0 bg-paper-cream p-12 text-center shadow-flat">
-        <MessageSquare className="h-10 w-10 text-ink-faint" />
-        <div>
-          <p className="font-medium text-ink-black">No messages yet</p>
-          <p className="mt-1 text-sm text-ink-mid">
-            When you contact a seller or receive an inquiry, conversations will appear here.
-          </p>
-        </div>
-        <Link
-          href="/browse"
-          className="mt-2 text-sm font-medium text-primary hover:underline"
-        >
-          Browse horses
-        </Link>
-      </div>
-    );
-  }
-
-  return (
-    <div className="divide-y divide-crease-light rounded-lg border-0 bg-paper-cream shadow-flat">
-      {conversations.map((c) => {
-        const name =
-          c.otherParticipant?.display_name ||
-          c.otherParticipant?.full_name ||
-          "Unknown";
-        const timeAgo = c.lastMessageAt ? formatTimeAgo(c.lastMessageAt) : "";
-
-        return (
-          <Link
-            key={c.id}
-            href={`/dashboard/messages/${c.id}`}
-            className="flex items-center gap-4 p-4 transition-colors hover:bg-paper-warm"
-          >
-            {/* Avatar */}
-            <div className="h-10 w-10 shrink-0 rounded-full bg-paper-warm" />
-
-            {/* Content */}
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center justify-between">
-                <p
-                  className={`text-sm font-medium ${c.unreadCount > 0 ? "text-ink-black" : "text-ink-dark"}`}
-                >
-                  {name}
-                </p>
-                <span className="text-xs text-ink-light">{timeAgo}</span>
-              </div>
-              {c.listing && (
-                <p className="text-xs text-ink-light">Re: {c.listing.name}</p>
-              )}
-              {c.lastMessagePreview && (
-                <p
-                  className={`mt-0.5 truncate text-sm ${c.unreadCount > 0 ? "font-medium text-ink-dark" : "text-ink-mid"}`}
-                >
-                  {c.lastMessagePreview}
-                </p>
-              )}
-            </div>
-
-            {/* Unread badge */}
-            {c.unreadCount > 0 && (
-              <Badge className="shrink-0 bg-primary text-primary-foreground">
-                {c.unreadCount}
-              </Badge>
-            )}
-          </Link>
-        );
-      })}
-    </div>
-  );
-}
-
 function formatTimeAgo(dateStr: string): string {
   const now = new Date();
   const date = new Date(dateStr);
@@ -108,4 +29,54 @@ function formatTimeAgo(dateStr: string): string {
   const diffDays = Math.floor(diffHours / 24);
   if (diffDays < 7) return `${diffDays}d`;
   return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+
+export function ConversationList({
+  conversations,
+}: {
+  conversations: ConversationItem[];
+}) {
+  if (conversations.length === 0) {
+    return (
+      <div className="rounded-lg bg-paper-cream shadow-flat">
+        <EmptyState
+          icon={<MessageSquare className="h-10 w-10" />}
+          title="No messages yet"
+          description="When you contact a seller or receive an inquiry, conversations will appear here."
+          actionLabel="Browse horses"
+          actionHref="/browse"
+        />
+      </div>
+    );
+  }
+
+  const items: StackedListItem[] = conversations.map((c) => {
+    const name =
+      c.otherParticipant?.display_name ||
+      c.otherParticipant?.full_name ||
+      "Unknown";
+    const timeStr = c.lastMessageAt ? formatTimeAgo(c.lastMessageAt) : "";
+    const horseName = c.listing?.name;
+
+    return {
+      id: c.id,
+      href: `/dashboard/messages/${c.id}`,
+      imageUrl: c.otherParticipant?.avatar_url || undefined,
+      initials: name.charAt(0).toUpperCase(),
+      title: name,
+      subtitle: horseName
+        ? `Re: ${horseName} · ${c.lastMessagePreview?.slice(0, 50) || ""}`
+        : c.lastMessagePreview?.slice(0, 70) || "No messages",
+      meta: <span className="text-xs text-ink-faint">{timeStr}</span>,
+      badge: c.unreadCount > 0 ? (
+        <StatusBadge variant="oxblood">{c.unreadCount}</StatusBadge>
+      ) : undefined,
+    };
+  });
+
+  return (
+    <div className="rounded-lg bg-paper-cream px-4 shadow-flat">
+      <StackedList items={items} />
+    </div>
+  );
 }

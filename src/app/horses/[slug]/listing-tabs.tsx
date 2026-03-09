@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -34,7 +33,7 @@ import {
   Star,
   ExternalLink,
   User,
-  type LucideIcon,
+
 } from "lucide-react";
 import Image from "next/image";
 import type { HorseListing } from "@/types/listings";
@@ -45,7 +44,17 @@ import { ListingGallery } from "@/components/marketplace/listing-gallery";
 import { HennekeScoreDisplay } from "@/components/marketplace/henneke-score";
 import { RegistryBadges, type RegistryRecord, type RegistryType } from "@/components/marketplace/registry-lookup";
 import type { ListingRegistryRecord } from "@/types/listings";
-import { DetailGrid, type DetailField } from "@/components/tailwind-plus";
+import {
+  DetailGrid,
+  type DetailField,
+  IconDetailList,
+  type IconDetailItem,
+  SectionHeading,
+  StatusBadge,
+  AlertBanner,
+  AvatarCircle,
+  EmptyState,
+} from "@/components/tailwind-plus";
 
 type MediaItem = {
   id: string;
@@ -258,50 +267,20 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
               {/* DETAILS section (barn name removed — lives in Seller tab) */}
               <section>
                 <p className="overline mb-4 text-[11px] tracking-widest text-ink-light">DETAILS</p>
-                <div className="space-y-0 divide-y divide-crease-light">
-                  {l.age_years != null && (
-                    <IconDetailRow
-                      icon={Calendar}
-                      label="Age / YOB"
-                      value={`${l.age_years} years`}
-                    />
-                  )}
-                  {l.breed && (
-                    <IconDetailRow icon={Award} label="Breed" value={l.breed} />
-                  )}
-                  {l.gender && (
-                    <IconDetailRow
-                      icon={Heart}
-                      label="Sex"
-                      value={l.gender.charAt(0).toUpperCase() + l.gender.slice(1)}
-                    />
-                  )}
-                  {l.color && (
-                    <IconDetailRow icon={Palette} label="Color" value={l.color} />
-                  )}
-                  {l.height_hands && (
-                    <IconDetailRow icon={Ruler} label="Height" value={`${l.height_hands}hh`} />
-                  )}
-                  {l.location_state && (
-                    <IconDetailRow
-                      icon={MapPin}
-                      label="Location"
-                      value={l.location_city ? `${l.location_city}, ${l.location_state}` : l.location_state}
-                    />
-                  )}
-                  {l.registered_name && (
-                    <IconDetailRow icon={FileText} label="Registered Name" value={l.registered_name} />
-                  )}
-                  {l.registry && (
-                    <IconDetailRow icon={FileText} label="Registry" value={l.registry} />
-                  )}
-                  {l.sire && (
-                    <IconDetailRow icon={Award} label="Sire" value={l.sire} />
-                  )}
-                  {l.dam && (
-                    <IconDetailRow icon={Award} label="Dam" value={l.dam} />
-                  )}
-                </div>
+                <IconDetailList
+                  items={[
+                    l.age_years != null && { icon: <Calendar className="h-4 w-4" />, label: "Age / YOB", value: `${l.age_years} years` },
+                    l.breed && { icon: <Award className="h-4 w-4" />, label: "Breed", value: l.breed },
+                    l.gender && { icon: <Heart className="h-4 w-4" />, label: "Sex", value: l.gender.charAt(0).toUpperCase() + l.gender.slice(1) },
+                    l.color && { icon: <Palette className="h-4 w-4" />, label: "Color", value: l.color },
+                    l.height_hands && { icon: <Ruler className="h-4 w-4" />, label: "Height", value: `${l.height_hands}hh` },
+                    l.location_state && { icon: <MapPin className="h-4 w-4" />, label: "Location", value: l.location_city ? `${l.location_city}, ${l.location_state}` : l.location_state },
+                    l.registered_name && { icon: <FileText className="h-4 w-4" />, label: "Registered Name", value: l.registered_name },
+                    l.registry && { icon: <FileText className="h-4 w-4" />, label: "Registry", value: l.registry },
+                    l.sire && { icon: <Award className="h-4 w-4" />, label: "Sire", value: l.sire },
+                    l.dam && { icon: <Award className="h-4 w-4" />, label: "Dam", value: l.dam },
+                  ].filter(Boolean) as IconDetailItem[]}
+                />
                 {l.registry_records && l.registry_records.length > 0 && (
                   <div className="mt-3">
                     <RegistryBadges records={l.registry_records.map(mapDbToRegistryRecord)} />
@@ -312,17 +291,12 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
               {/* PRICING section */}
               <section>
                 <p className="overline mb-4 text-[11px] tracking-widest text-ink-light">PRICING</p>
-                <div className="divide-y divide-crease-light">
-                  <IconDetailRow
-                    icon={DollarSign}
-                    label="Asking Price"
-                    value={priceStr}
-                    bold
-                  />
-                  {l.price_negotiable && (
-                    <IconDetailRow icon={TrendingUp} label="Negotiable" value="Yes" />
-                  )}
-                </div>
+                <IconDetailList
+                  items={[
+                    { icon: <DollarSign className="h-4 w-4" />, label: "Asking Price", value: priceStr, bold: true },
+                    l.price_negotiable && { icon: <TrendingUp className="h-4 w-4" />, label: "Negotiable", value: "Yes" },
+                  ].filter(Boolean) as IconDetailItem[]}
+                />
               </section>
 
               {/* Reason for sale */}
@@ -336,15 +310,14 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
               {/* ── Lifestyle (merged from former tab) ── */}
 
               {/* Behavior & temperament */}
-              {(l.vices || l.good_with) && (
-                <section>
-                  <p className="overline mb-4 text-[11px] tracking-widest text-ink-light">BEHAVIOR</p>
-                  <div className="space-y-3">
-                    {l.vices && <DetailRow label="Known Vices" value={l.vices} />}
-                    {l.good_with && <DetailRow label="Good With" value={l.good_with} />}
-                  </div>
-                </section>
-              )}
+              {(() => {
+                const behaviorFields: DetailField[] = [];
+                if (l.vices) behaviorFields.push({ label: "Known Vices", value: l.vices });
+                if (l.good_with) behaviorFields.push({ label: "Good With", value: l.good_with });
+                return behaviorFields.length > 0 ? (
+                  <DetailGrid title="Behavior" fields={behaviorFields} />
+                ) : null;
+              })()}
 
               {/* Daily Life — grid description list */}
               {(() => {
@@ -394,12 +367,14 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
               </section>
 
               {/* Platform disclaimer */}
-              <div className="rounded-md bg-paper-warm p-4 text-xs text-ink-light">
-                All representations are made by the seller. ManeExchange does
-                not warrant listing accuracy. Mane Score reflects listing
-                completeness and documentation, not the quality, soundness, or
-                value of any horse.
-              </div>
+              <AlertBanner variant="info" title="Listing Disclaimer">
+                <p>
+                  All representations are made by the seller. ManeExchange does
+                  not warrant listing accuracy. Mane Score reflects listing
+                  completeness and documentation, not the quality, soundness, or
+                  value of any horse.
+                </p>
+              </AlertBanner>
             </div>
           </TabsContent>
 
@@ -408,9 +383,7 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
             <div className="space-y-8">
               {l.show_experience ? (
                 <section>
-                  <h2 className="mb-3 text-lg font-semibold text-ink-black">
-                    Show Experience
-                  </h2>
+                  <SectionHeading title="Show Experience" />
                   <p className="whitespace-pre-line text-ink-mid">
                     {l.show_experience}
                   </p>
@@ -426,32 +399,30 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
                   )}
                 </section>
               ) : (
-                <EmptyTabMessage message="No show experience listed for this horse." />
+                <EmptyState
+                  icon={<Award className="h-8 w-8" />}
+                  title="No Show Experience"
+                  description="No show experience listed for this horse."
+                />
               )}
 
               {l.competition_divisions && (
                 <section>
-                  <h2 className="mb-3 text-lg font-semibold text-ink-black">
-                    Competition Divisions
-                  </h2>
+                  <h2 className="mb-2 text-sm font-semibold text-ink-dark">Competition Divisions</h2>
                   <p className="text-ink-mid">{l.competition_divisions}</p>
                 </section>
               )}
 
               {l.level && (
                 <section>
-                  <h2 className="mb-3 text-lg font-semibold text-ink-black">
-                    Level
-                  </h2>
+                  <h2 className="mb-2 text-sm font-semibold text-ink-dark">Level</h2>
                   <p className="text-ink-mid">{l.level}</p>
                 </section>
               )}
 
               {l.training_history && (
                 <section>
-                  <h2 className="mb-3 text-lg font-semibold text-ink-black">
-                    Training History
-                  </h2>
+                  <SectionHeading title="Training History" />
                   <p className="whitespace-pre-line text-ink-mid">
                     {l.training_history}
                   </p>
@@ -459,33 +430,15 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
               )}
 
               {/* Registration numbers */}
-              {(l.usef_number || l.usdf_number || l.fei_id) && (
-                <section>
-                  <h2 className="mb-3 text-lg font-semibold text-ink-black">
-                    Competition IDs
-                  </h2>
-                  <div className="space-y-2">
-                    {l.usef_number && (
-                      <p className="text-sm text-ink-mid">
-                        <span className="font-medium text-ink-dark">USEF:</span>{" "}
-                        {l.usef_number}
-                      </p>
-                    )}
-                    {l.usdf_number && (
-                      <p className="text-sm text-ink-mid">
-                        <span className="font-medium text-ink-dark">USDF:</span>{" "}
-                        {l.usdf_number}
-                      </p>
-                    )}
-                    {l.fei_id && (
-                      <p className="text-sm text-ink-mid">
-                        <span className="font-medium text-ink-dark">FEI:</span>{" "}
-                        {l.fei_id}
-                      </p>
-                    )}
-                  </div>
-                </section>
-              )}
+              {(() => {
+                const idFields: DetailField[] = [];
+                if (l.usef_number) idFields.push({ label: "USEF", value: l.usef_number });
+                if (l.usdf_number) idFields.push({ label: "USDF", value: l.usdf_number });
+                if (l.fei_id) idFields.push({ label: "FEI", value: l.fei_id });
+                return idFields.length > 0 ? (
+                  <DetailGrid title="Competition IDs" fields={idFields} />
+                ) : null;
+              })()}
             </div>
           </TabsContent>
 
@@ -504,9 +457,7 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
                 l.dental_date ||
                 l.last_vet_check) ? (
                 <section>
-                  <h2 className="mb-4 text-lg font-semibold text-ink-black">
-                    Veterinary Information
-                  </h2>
+                  <SectionHeading title="Veterinary Information" />
 
                   {/* Henneke BCS + Soundness badges */}
                   {(() => {
@@ -520,122 +471,88 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
                           <HennekeScoreDisplay score={henneke} />
                         )}
                         {soundness && (
-                          <div className="rounded-lg border border-crease-light bg-paper-cream p-3">
-                            <p className="text-xs text-ink-light">Soundness</p>
-                            <p className="text-sm font-medium text-ink-black">
-                              {soundness === "vet_confirmed_sound"
-                                ? "Vet-confirmed sound"
-                                : soundness === "minor_findings"
-                                  ? "Minor findings (described)"
-                                  : soundness === "managed_condition"
-                                    ? "Managed condition"
-                                    : "Not recently assessed"}
-                            </p>
-                          </div>
+                          <StatusBadge
+                            variant={soundness === "vet_confirmed_sound" ? "forest" : soundness === "minor_findings" ? "gold" : "gray"}
+                            dot
+                          >
+                            {soundness === "vet_confirmed_sound"
+                              ? "Vet-confirmed sound"
+                              : soundness === "minor_findings"
+                                ? "Minor findings (described)"
+                                : soundness === "managed_condition"
+                                  ? "Managed condition"
+                                  : "Not recently assessed"}
+                          </StatusBadge>
                         )}
                       </div>
                     );
                   })()}
 
-                  <div className="space-y-3">
-                    {l.vet_name && (
-                      <DetailRow label="Veterinarian" value={l.vet_name} />
-                    )}
-                    {l.vet_phone && (
-                      <DetailRow label="Vet Phone" value={l.vet_phone} />
-                    )}
-                    {l.coggins_date && (
-                      <DetailRow
-                        label="Coggins"
-                        value={new Date(l.coggins_date).toLocaleDateString()}
-                      />
-                    )}
-                    {l.coggins_expiry && (
-                      <DetailRow
-                        label="Coggins Expiry"
-                        value={new Date(l.coggins_expiry).toLocaleDateString()}
-                      />
-                    )}
-                    {l.last_vet_check && (
-                      <DetailRow
-                        label="Last Vet Check"
-                        value={new Date(l.last_vet_check).toLocaleDateString()}
-                      />
-                    )}
-                    {l.vaccination_status && (
-                      <DetailRow label="Vaccinations" value={l.vaccination_status} />
-                    )}
-                    {l.dental_date && (
-                      <DetailRow
-                        label="Last Dental"
-                        value={new Date(l.dental_date).toLocaleDateString()}
-                      />
-                    )}
-                    {l.known_health_issues && (
-                      <DetailRow label="Known Health Issues" value={l.known_health_issues} />
-                    )}
-                    {l.lameness_history && (
-                      <DetailRow label="Lameness History" value={l.lameness_history} />
-                    )}
-                    {l.surgical_history && (
-                      <DetailRow label="Surgical History" value={l.surgical_history} />
-                    )}
-                    {l.allergies && (
-                      <DetailRow label="Allergies" value={l.allergies} />
-                    )}
-                    {l.medications && (
-                      <DetailRow label="Current Medications" value={l.medications} />
-                    )}
-                    {l.recent_medical_treatments && (
-                      <DetailRow
-                        label="Recent Treatments"
-                        value={l.recent_medical_treatments}
-                      />
-                    )}
-                  </div>
+                  {(() => {
+                    const vetFields: DetailField[] = [];
+                    if (l.vet_name) vetFields.push({ label: "Veterinarian", value: l.vet_name });
+                    if (l.vet_phone) vetFields.push({ label: "Vet Phone", value: l.vet_phone });
+                    if (l.coggins_date) vetFields.push({ label: "Coggins", value: new Date(l.coggins_date).toLocaleDateString() });
+                    if (l.coggins_expiry) vetFields.push({ label: "Coggins Expiry", value: new Date(l.coggins_expiry).toLocaleDateString() });
+                    if (l.last_vet_check) vetFields.push({ label: "Last Vet Check", value: new Date(l.last_vet_check).toLocaleDateString() });
+                    if (l.vaccination_status) vetFields.push({ label: "Vaccinations", value: l.vaccination_status });
+                    if (l.dental_date) vetFields.push({ label: "Last Dental", value: new Date(l.dental_date).toLocaleDateString() });
+                    if (l.known_health_issues) vetFields.push({ label: "Known Health Issues", value: l.known_health_issues });
+                    if (l.lameness_history) vetFields.push({ label: "Lameness History", value: l.lameness_history });
+                    if (l.surgical_history) vetFields.push({ label: "Surgical History", value: l.surgical_history });
+                    if (l.allergies) vetFields.push({ label: "Allergies", value: l.allergies });
+                    if (l.medications) vetFields.push({ label: "Current Medications", value: l.medications });
+                    if (l.recent_medical_treatments) vetFields.push({ label: "Recent Treatments", value: l.recent_medical_treatments });
+                    return vetFields.length > 0 ? <DetailGrid fields={vetFields} /> : null;
+                  })()}
                 </section>
               ) : (
-                <EmptyTabMessage message="No veterinary information listed for this horse." />
+                <EmptyState
+                  icon={<FileText className="h-8 w-8" />}
+                  title="No Veterinary Information"
+                  description="No veterinary information listed for this horse."
+                />
               )}
 
               {/* Warranty */}
               <section>
-                <h2 className="mb-3 text-lg font-semibold text-ink-black">
-                  Warranty
-                </h2>
-                <div className="rounded-md border border-border bg-paper-warm p-4">
-                  <p className="text-sm font-bold uppercase tracking-wide text-ink-black">
+                <SectionHeading title="Warranty" />
+                <div className="flex items-center gap-3">
+                  <StatusBadge
+                    variant={l.warranty === "as_is" ? "red" : l.warranty === "sound_at_sale" ? "gold" : "forest"}
+                    dot
+                  >
                     {l.warranty === "as_is"
-                      ? "SOLD AS IS"
+                      ? "Sold As Is"
                       : l.warranty === "sound_at_sale"
-                        ? "SOUND AT TIME OF SALE"
-                        : "SOUND FOR INTENDED USE"}
-                  </p>
-                  {l.warranty === "as_is" && (
-                    <p className="mt-1 text-xs text-ink-mid">
-                      This horse is sold without any warranties, express or
-                      implied. Buyer assumes all risk.
-                    </p>
-                  )}
+                        ? "Sound at Time of Sale"
+                        : "Sound for Intended Use"}
+                  </StatusBadge>
                 </div>
+                {l.warranty === "as_is" && (
+                  <p className="mt-2 text-xs text-ink-mid">
+                    This horse is sold without any warranties, express or
+                    implied. Buyer assumes all risk.
+                  </p>
+                )}
               </section>
 
               {/* Document disclaimer */}
-              <div className="rounded-md bg-paper-warm p-4 text-xs text-ink-light">
-                Documents provided by seller. ManeExchange has not
-                independently verified accuracy, completeness, or
-                authenticity. A pre-purchase exam (PPE) by your own
-                veterinarian is strongly recommended before any purchase.
-              </div>
+              <AlertBanner variant="warning" title="Buyer Advisory">
+                <p>
+                  Documents provided by seller. ManeExchange has not
+                  independently verified accuracy, completeness, or
+                  authenticity. A pre-purchase exam (PPE) by your own
+                  veterinarian is strongly recommended before any purchase.
+                </p>
+              </AlertBanner>
             </div>
           </TabsContent>
 
           {/* ─── Tab 5: Media ─── */}
           <TabsContent value="media" className="mt-6 bg-paper-white">
             <div className="space-y-4">
-              <h2 className="text-lg font-semibold text-ink-black">
-                Photos &amp; Videos
-              </h2>
+              <SectionHeading title="Photos & Videos" />
               <ListingGallery media={l.media || []} />
             </div>
           </TabsContent>
@@ -655,61 +572,71 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
       <div className="hidden lg:col-span-1 lg:block">
         <div className="sticky top-20 space-y-4">
           {/* Price card */}
-          <div className="rounded-lg border border-border bg-paper-cream p-6 shadow-folded">
+          <div className="rounded-lg border border-crease-light bg-paper-cream p-6 shadow-folded">
             <p className="font-serif text-4xl font-bold tracking-tight text-ink-black">{priceStr}</p>
             {l.price_negotiable && (
-              <p className="mt-1 text-xs text-ink-light">
-                Price negotiable
-              </p>
+              <div className="mt-1.5">
+                <StatusBadge variant="forest" dot>Negotiable</StatusBadge>
+              </div>
             )}
 
-            <div className="mt-4 space-y-2">
-              <MessageSellerModal
-                sellerId={l.seller_id}
-                sellerName={l.seller?.display_name || "Seller"}
-                listingId={l.id}
-                listingName={l.name}
-              />
-              {l.status === "active" && (
-                <>
-                  <Button
-                    variant="outline"
-                    className="w-full"
-                    size="lg"
-                    asChild
-                  >
+            {l.status === "active" && (
+              <div className="mt-5 space-y-2.5">
+                {/* Primary CTA: Contact Seller */}
+                <MessageSellerModal
+                  sellerId={l.seller_id}
+                  sellerName={l.seller?.display_name || "Seller"}
+                  listingId={l.id}
+                  listingName={l.name}
+                />
+
+                {/* Secondary CTAs in 2-col grid */}
+                <div className="grid grid-cols-2 gap-2">
+                  <Button variant="outline" size="sm" className="w-full">
+                    <Heart className="mr-1.5 h-3.5 w-3.5" />
+                    Save
+                  </Button>
+                  <Button variant="outline" size="sm" className="w-full" asChild>
                     <Link href="/dashboard/trials">
-                      <CalendarCheck className="mr-2 h-4 w-4" />
-                      Request a Trial
+                      <CalendarCheck className="mr-1.5 h-3.5 w-3.5" />
+                      Trial
                     </Link>
                   </Button>
-                  <OfferModal
-                    listingId={l.id}
-                    listingName={l.name}
-                    listingPrice={l.price}
-                    completenessScore={l.completeness_score}
-                  />
-                </>
-              )}
-              {l.status === "under_offer" && (
-                <Badge
-                  variant="secondary"
-                  className="w-full justify-center py-2 text-gold bg-gold/10"
-                >
-                  Under Offer
-                </Badge>
-              )}
-              {l.status === "sold" && (
-                <Badge
-                  variant="secondary"
-                  className="w-full justify-center py-2 text-ink-light bg-ink-faint/10"
-                >
-                  Sold
-                </Badge>
-              )}
-            </div>
+                </div>
 
-            <Separator className="my-4" />
+                {/* Make Offer — tertiary */}
+                <OfferModal
+                  listingId={l.id}
+                  listingName={l.name}
+                  listingPrice={l.price}
+                  completenessScore={l.completeness_score}
+                />
+              </div>
+            )}
+
+            {l.status === "under_offer" && (
+              <div className="mt-5">
+                <div className="flex items-center justify-center gap-2 rounded-lg bg-gold/10 py-3">
+                  <StatusBadge variant="gold" dot>Under Offer</StatusBadge>
+                </div>
+                <MessageSellerModal
+                  sellerId={l.seller_id}
+                  sellerName={l.seller?.display_name || "Seller"}
+                  listingId={l.id}
+                  listingName={l.name}
+                />
+              </div>
+            )}
+
+            {l.status === "sold" && (
+              <div className="mt-5">
+                <div className="flex items-center justify-center gap-2 rounded-lg bg-ink-black/5 py-3">
+                  <StatusBadge variant="gray">Sold</StatusBadge>
+                </div>
+              </div>
+            )}
+
+            <Separator className="my-5" />
 
             {/* Completeness score */}
             <div className="flex items-center justify-between">
@@ -771,9 +698,8 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
       </div>
 
       {/* Equine purchase disclaimer */}
-      <div className="mt-8 rounded-md bg-paper-warm px-4 py-3">
-        <p className="text-[11px] leading-relaxed text-ink-faint">
-          <span className="font-medium text-ink-light">Important:</span>{" "}
+      <AlertBanner variant="info" title="Equine Purchase Notice" className="mt-8">
+        <p>
           ManeExchange is a marketplace platform and is not a party to any
           transaction between buyers and sellers. All listing information is
           provided by the seller and has not been independently verified.
@@ -787,59 +713,13 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
           </a>{" "}
           for full details.
         </p>
-      </div>
+      </AlertBanner>
     </div>
   );
 }
 
 /* ── Helper Components ── */
 
-function IconDetailRow({
-  icon: Icon,
-  label,
-  value,
-  bold,
-}: {
-  icon: LucideIcon;
-  label: string;
-  value: string;
-  bold?: boolean;
-}) {
-  return (
-    <div className="flex items-center gap-4 py-3">
-      <Icon className="h-4 w-4 shrink-0 text-ink-faint" />
-      <span className="w-28 shrink-0 text-sm text-ink-light">{label}</span>
-      <span className={`text-sm ${bold ? "font-semibold text-ink-black" : "font-medium text-ink-dark"}`}>
-        {value}
-      </span>
-    </div>
-  );
-}
-
-function QuickFact({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-md bg-paper-warm px-3 py-2.5">
-      <p className="text-xs text-ink-light">{label}</p>
-      <p className="text-sm font-medium text-ink-dark">{value}</p>
-    </div>
-  );
-}
-
-function DetailRow({ label, value }: { label: string; value: string }) {
-  return (
-    <p className="text-sm text-ink-mid">
-      <span className="font-medium text-ink-dark">{label}:</span> {value}
-    </p>
-  );
-}
-
-function EmptyTabMessage({ message }: { message: string }) {
-  return (
-    <div className="flex items-center justify-center rounded-md bg-paper-warm px-6 py-12 text-sm text-ink-light">
-      {message}
-    </div>
-  );
-}
 
 /* ── Seller / Barn Tab ── */
 
@@ -852,90 +732,19 @@ function SellerBarnTab({ listing }: { listing: ListingTabsData }) {
 
   return (
     <div className="space-y-8">
-      {/* Seller details */}
-      <div>
-        <p className="overline mb-3 text-[11px] tracking-widest text-ink-light">SELLER</p>
-        <div className="divide-y divide-crease-light">
-          <IconDetailRow icon={User} label="Seller" value={sellerName} bold />
-          {l.barn_name && (
-            <IconDetailRow icon={Home} label="Barn" value={l.barn_name} />
-          )}
-          {location && (
-            <IconDetailRow icon={MapPin} label="Barn Location" value={location} />
-          )}
-          <IconDetailRow
-            icon={ShieldCheck}
-            label="Verification"
-            value={seller.identity_verified ? "Verified" : "Unverified"}
-          />
-        </div>
-      </div>
-
-      {/* Reputation */}
-      <div>
-        <p className="overline mb-3 text-[11px] tracking-widest text-ink-light">REPUTATION</p>
-        <div className="divide-y divide-crease-light">
-          {l.seller_score && l.seller_score.mane_score > 0 && (
-            <IconDetailRow
-              icon={Star}
-              label="Seller Rating"
-              value={`${(l.seller_score.mane_score / 200).toFixed(1)}/5`}
-            />
-          )}
-          <IconDetailRow icon={Clock} label="Response Time" value="Within 24 hours" />
-          {otherListings.length > 0 && (
-            <IconDetailRow
-              icon={FileText}
-              label="Horses for Sale"
-              value={`${otherListings.length + 1} horses`}
-            />
-          )}
-        </div>
-      </div>
-
-      {/* Contact */}
-      <div>
-        <p className="overline mb-3 text-[11px] tracking-widest text-ink-light">CONTACT</p>
-        <div className="divide-y divide-crease-light">
-          <div className="flex items-center gap-4 py-3">
-            <ExternalLink className="h-4 w-4 shrink-0 text-ink-faint" />
-            <span className="w-28 shrink-0 text-sm text-ink-light">View Seller</span>
-            <Link
-              href={`/sellers/${seller.id}`}
-              className="text-sm font-medium text-oxblood hover:underline"
-            >
-              View Profile <ExternalLink className="ml-0.5 inline h-3 w-3" />
-            </Link>
-          </div>
-          <IconDetailRow icon={MessageCircle} label="Messaging" value="Available" />
-          <IconDetailRow
-            icon={CalendarCheck}
-            label="Trial Requests"
-            value={l.trial_available ? "Available" : "Not available"}
-          />
-        </div>
-      </div>
-
-      {/* Seller avatar card */}
+      {/* Seller card — introduces the seller visually first */}
       <div className="flex items-center gap-3">
-        {seller.avatar_url ? (
-          <Image
-            src={seller.avatar_url}
-            alt={sellerName}
-            width={48}
-            height={48}
-            className="h-12 w-12 rounded-full object-cover"
-          />
-        ) : (
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-paper-warm text-ink-faint">
-            <User className="h-5 w-5" />
-          </div>
-        )}
+        <AvatarCircle
+          src={seller.avatar_url}
+          initials={sellerName.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2)}
+          alt={sellerName}
+          size={48}
+        />
         <div>
           <div className="flex items-center gap-1.5">
             <span className="text-sm font-semibold text-ink-black">{sellerName}</span>
             {seller.identity_verified && (
-              <ShieldCheck className="h-4 w-4 text-forest" />
+              <StatusBadge variant="forest" dot>Verified</StatusBadge>
             )}
           </div>
           {l.barn_name && (
@@ -945,6 +754,43 @@ function SellerBarnTab({ listing }: { listing: ListingTabsData }) {
             <p className="text-xs text-ink-light">{location}</p>
           )}
         </div>
+      </div>
+
+      {/* Seller details */}
+      <div>
+        <p className="overline mb-3 text-[11px] tracking-widest text-ink-light">SELLER</p>
+        <IconDetailList
+          items={[
+            { icon: <User className="h-4 w-4" />, label: "Seller", value: sellerName, bold: true },
+            l.barn_name && { icon: <Home className="h-4 w-4" />, label: "Barn", value: l.barn_name },
+            location && { icon: <MapPin className="h-4 w-4" />, label: "Barn Location", value: location },
+            { icon: <ShieldCheck className="h-4 w-4" />, label: "Verification", value: seller.identity_verified ? "Verified" : "Unverified" },
+          ].filter(Boolean) as IconDetailItem[]}
+        />
+      </div>
+
+      {/* Reputation */}
+      <div>
+        <p className="overline mb-3 text-[11px] tracking-widest text-ink-light">REPUTATION</p>
+        <IconDetailList
+          items={[
+            l.seller_score && l.seller_score.mane_score > 0 && { icon: <Star className="h-4 w-4" />, label: "Seller Rating", value: `${(l.seller_score.mane_score / 200).toFixed(1)}/5` },
+            { icon: <Clock className="h-4 w-4" />, label: "Response Time", value: "Within 24 hours" },
+            otherListings.length > 0 && { icon: <FileText className="h-4 w-4" />, label: "Horses for Sale", value: `${otherListings.length + 1} horses` },
+          ].filter(Boolean) as IconDetailItem[]}
+        />
+      </div>
+
+      {/* Contact */}
+      <div>
+        <p className="overline mb-3 text-[11px] tracking-widest text-ink-light">CONTACT</p>
+        <IconDetailList
+          items={[
+            { icon: <ExternalLink className="h-4 w-4" />, label: "View Seller", value: <Link href={`/sellers/${seller.id}`} className="text-sm font-medium text-oxblood hover:underline">View Profile <ExternalLink className="ml-0.5 inline h-3 w-3" /></Link> },
+            { icon: <MessageCircle className="h-4 w-4" />, label: "Messaging", value: "Available" },
+            { icon: <CalendarCheck className="h-4 w-4" />, label: "Trial Requests", value: l.trial_available ? "Available" : "Not available" },
+          ]}
+        />
       </div>
 
       {/* Other horses by this seller */}

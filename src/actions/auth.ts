@@ -57,7 +57,7 @@ export async function signUp(
   // Send welcome email (fire-and-forget)
   (async () => {
     const tmpl = welcomeEmail(parsed.data.full_name);
-    await sendEmail({ to: parsed.data.email, ...tmpl });
+    await sendEmail({ to: parsed.data.email, ...tmpl, idempotencyKey: `welcome-${parsed.data.email}` });
   })().catch(() => {});
 
   return { success: true };

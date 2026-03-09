@@ -14,7 +14,7 @@ import {
   ArrowRight,
   Phone,
 } from "lucide-react";
-import { SmartEscrowDashboard } from "@/components/offers/smart-escrow";
+import { FeaturePreview } from "@/components/feature-preview";
 
 export const metadata: Metadata = {
   title: "Trust & Safety",
@@ -157,9 +157,9 @@ export default function TrustPage() {
           </div>
         </section>
 
-        {/* Smart Escrow Showcase */}
+        {/* Smart Escrow Preview */}
         <section className="bg-paper-white section-premium">
-          <div className="mx-auto max-w-[1200px]">
+          <div className="mx-auto max-w-[800px]">
             <div className="mb-8 text-center">
               <p className="overline mb-3 text-forest">SMART ESCROW</p>
               <h2 className="text-3xl tracking-tight text-ink-black">
@@ -171,7 +171,19 @@ export default function TrustPage() {
                 at every step.
               </p>
             </div>
-            <SmartEscrowDashboard />
+            <FeaturePreview
+              icon={<Lock className="size-8" />}
+              title="Smart Escrow is coming soon"
+              description="Milestone-based escrow that protects both buyers and sellers at every step of the transaction."
+              capabilities={[
+                "Deposit held securely until PPE is completed",
+                "Partial release after successful trial period",
+                "Final release on ownership transfer confirmation",
+                "Automated dispute resolution with mediation support",
+              ]}
+              actionLabel="Browse Horses"
+              actionHref="/browse"
+            />
           </div>
         </section>
 
@@ -194,10 +206,10 @@ export default function TrustPage() {
                 </Link>
               </Button>
               <Button variant="outline" size="lg" className="text-paper-white" asChild>
-                <a href="tel:+15615550123">
+                <Link href="/contact">
                   <Phone className="mr-2 h-4 w-4" />
-                  Emergency: (561) 555-0123
-                </a>
+                  Contact Support
+                </Link>
               </Button>
             </div>
           </div>

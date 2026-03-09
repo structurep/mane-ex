@@ -3,6 +3,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/admin";
 import { revalidatePath } from "next/cache";
+import { getUserEmail } from "@/lib/supabase/admin";
+import { sendEmail } from "@/lib/email/resend";
 
 export type AdminActionState = {
   error?: string;
@@ -87,6 +89,20 @@ export async function approveListing(
   const admin = await requireAdmin();
   const supabase = await createClient();
 
+  // Fetch listing details before updating
+  const { data: listing } = await supabase
+    .from("horse_listings")
+    .select("name, seller_id, slug, status")
+    .eq("id", listingId)
+    .single();
+
+  if (!listing) return { error: "Listing not found." };
+
+  // State transition guard: only pending_review listings can be approved
+  if (listing.status !== "pending_review") {
+    return { error: `Cannot approve a listing with status "${listing.status}". Only pending_review listings can be approved.` };
+  }
+
   const { error } = await supabase
     .from("horse_listings")
     .update({
@@ -95,11 +111,36 @@ export async function approveListing(
       moderated_at: new Date().toISOString(),
       moderation_note: null,
     })
-    .eq("id", listingId);
+    .eq("id", listingId)
+    .eq("status", "pending_review"); // Double-check with WHERE clause for race safety
 
   if (error) return { error: error.message };
 
   await auditLog(admin.id, "approve_listing", "listing", listingId);
+
+  // Notify seller (in-app + email)
+  if (listing) {
+    await supabase.from("notifications").insert({
+      user_id: listing.seller_id,
+      type: "listing_status",
+      title: "Listing approved!",
+      body: `"${listing.name}" is now live on ManeExchange.`,
+      link: `/horses/${listing.slug}`,
+      metadata: { listing_id: listingId, status: "active" },
+    });
+
+    // Email notification (fire-and-forget, idempotent per listing approval)
+    getUserEmail(listing.seller_id).then(async (email) => {
+      if (!email) return;
+      await sendEmail({
+        to: email,
+        subject: `Your listing "${listing.name}" is now live`,
+        html: `<p>Great news! Your listing <strong>${listing.name}</strong> has been approved and is now live on ManeExchange.</p><p><a href="${process.env.NEXT_PUBLIC_APP_URL}/horses/${listing.slug}">View your listing</a></p>`,
+        idempotencyKey: `listing-approved-${listingId}`,
+      });
+    }).catch(() => {});
+  }
+
   revalidatePath("/admin/listings");
   return { success: true };
 }
@@ -111,6 +152,20 @@ export async function rejectListing(
   const admin = await requireAdmin();
   const supabase = await createClient();
 
+  // Fetch listing details before updating
+  const { data: listing } = await supabase
+    .from("horse_listings")
+    .select("name, seller_id, slug, status")
+    .eq("id", listingId)
+    .single();
+
+  if (!listing) return { error: "Listing not found." };
+
+  // State transition guard: only pending_review listings can be rejected
+  if (listing.status !== "pending_review") {
+    return { error: `Cannot reject a listing with status "${listing.status}". Only pending_review listings can be rejected.` };
+  }
+
   const { error } = await supabase
     .from("horse_listings")
     .update({
@@ -119,11 +174,35 @@ export async function rejectListing(
       moderated_at: new Date().toISOString(),
       moderation_note: reason,
     })
-    .eq("id", listingId);
+    .eq("id", listingId)
+    .eq("status", "pending_review"); // Double-check with WHERE clause for race safety
 
   if (error) return { error: error.message };
 
   await auditLog(admin.id, "reject_listing", "listing", listingId, { reason });
+
+  // Notify seller (in-app + email)
+  if (listing) {
+    await supabase.from("notifications").insert({
+      user_id: listing.seller_id,
+      type: "listing_status",
+      title: "Listing needs changes",
+      body: `"${listing.name}" was not approved: ${reason}`,
+      link: `/dashboard`,
+      metadata: { listing_id: listingId, status: "rejected", reason },
+    });
+
+    getUserEmail(listing.seller_id).then(async (email) => {
+      if (!email) return;
+      await sendEmail({
+        to: email,
+        subject: `Action needed: "${listing.name}" listing`,
+        html: `<p>Your listing <strong>${listing.name}</strong> needs changes before it can go live.</p><p><strong>Reason:</strong> ${reason}</p><p><a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard">Edit your listing</a></p>`,
+        idempotencyKey: `listing-rejected-${listingId}`,
+      });
+    }).catch(() => {});
+  }
+
   revalidatePath("/admin/listings");
   return { success: true };
 }
@@ -166,7 +245,7 @@ export async function getAdminStats() {
   await requireAdmin();
   const supabase = await createClient();
 
-  const [users, listings, reports, escrows, auditLog] = await Promise.all([
+  const [users, listings, reports, escrows, pendingReview, auditLog] = await Promise.all([
     supabase
       .from("profiles")
       .select("id", { count: "exact", head: true }),
@@ -183,6 +262,10 @@ export async function getAdminStats() {
       .select("id", { count: "exact", head: true })
       .in("status", ["funded", "shipping", "delivered"]),
     supabase
+      .from("horse_listings")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "pending_review"),
+    supabase
       .from("admin_audit_log")
       .select("id, admin_id, action, target_type, target_id, metadata, created_at")
       .order("created_at", { ascending: false })
@@ -194,6 +277,7 @@ export async function getAdminStats() {
     activeListings: listings.count || 0,
     openReports: reports.count || 0,
     activeEscrows: escrows.count || 0,
+    pendingReview: pendingReview.count || 0,
     recentAuditLog: auditLog.data || [],
   };
 }
@@ -221,7 +305,7 @@ export async function getAdminUsers(search?: string) {
   return data;
 }
 
-export async function getAdminListings(filter: "all" | "reported" = "all") {
+export async function getAdminListings(filter: "all" | "reported" | "pending_review" = "all") {
   await requireAdmin();
   const supabase = await createClient();
 
@@ -232,6 +316,13 @@ export async function getAdminListings(filter: "all" | "reported" = "all") {
     )
     .order("created_at", { ascending: false })
     .limit(50);
+
+  if (filter === "pending_review") {
+    query = query.eq("status", "pending_review");
+    const { data, error } = await query;
+    if (error) return [];
+    return data;
+  }
 
   if (filter === "reported") {
     // Get listing IDs that have open reports

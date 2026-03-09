@@ -139,6 +139,7 @@ async function main() {
       bio: 'Professional hunter/jumper trainer with 20+ years experience. Specializing in quality sport horses for competitive riders.',
       disciplines: ['Hunter', 'Jumper', 'Equitation'],
       profile_complete: true,
+      onboarding_complete: true,
       instagram_handle: '@sarahmitchellequestrian',
     },
     {
@@ -153,6 +154,7 @@ async function main() {
       min_budget: 2000000,
       max_budget: 10000000,
       profile_complete: true,
+      onboarding_complete: true,
     },
     {
       id: userIds.trainer,

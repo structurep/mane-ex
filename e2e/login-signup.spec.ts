@@ -5,7 +5,7 @@ test.describe("Login page", () => {
     await page.goto("/login");
 
     await expect(page.getByRole("heading", { name: /welcome back/i })).toBeVisible();
-    await expect(page.getByText(/encrypted/i)).toBeVisible();
+    await expect(page.getByText(/encrypted/i).first()).toBeVisible();
   });
 
   test("shows link to signup", async ({ page }) => {

@@ -140,7 +140,7 @@ export async function createOffer(
         formatCentsToDollars(parsed.data.amount_cents),
         offer.id
       );
-      await sendEmail({ to: sellerEmail, ...tmpl });
+      await sendEmail({ to: sellerEmail, ...tmpl, idempotencyKey: `offer-received-${offer.id}` });
     }
   })().catch(() => {});
 
@@ -252,7 +252,7 @@ export async function acceptOffer(
     if (buyerEmail) {
       const { data: buyerProfile } = await supabase.from("profiles").select("display_name").eq("id", offer.buyer_id).single();
       const tmpl = offerStatusEmail(buyerProfile?.display_name || "Buyer", listing?.name ?? "a listing", "accepted", offerId);
-      await sendEmail({ to: buyerEmail, ...tmpl });
+      await sendEmail({ to: buyerEmail, ...tmpl, idempotencyKey: `offer-accepted-${offerId}` });
     }
   })().catch(() => {});
 
@@ -332,7 +332,7 @@ export async function rejectOffer(
     if (buyerEmail) {
       const { data: buyerProfile } = await supabase.from("profiles").select("display_name").eq("id", offer.buyer_id).single();
       const tmpl = offerStatusEmail(buyerProfile?.display_name || "Buyer", listing?.name ?? "a listing", "rejected", offerId);
-      await sendEmail({ to: buyerEmail, ...tmpl });
+      await sendEmail({ to: buyerEmail, ...tmpl, idempotencyKey: `offer-rejected-${offerId}` });
     }
   })().catch(() => {});
 
@@ -458,7 +458,7 @@ export async function counterOffer(
         newOffer.id,
         formatCentsToDollars(parsed.data.counter_amount_cents)
       );
-      await sendEmail({ to: buyerEmail, ...tmpl });
+      await sendEmail({ to: buyerEmail, ...tmpl, idempotencyKey: `offer-countered-${newOffer.id}` });
     }
   })().catch(() => {});
 

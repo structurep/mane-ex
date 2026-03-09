@@ -1,6 +1,9 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { getUserEmail } from "@/lib/supabase/admin";
+import { sendEmail } from "@/lib/email/resend";
+import { priceDropEmail } from "@/lib/email/templates";
 import { fullListingSchema } from "@/lib/validators/listing";
 import { redirect } from "next/navigation";
 
@@ -191,10 +194,10 @@ export async function updateListing(
     return { error: "Missing listing ID." };
   }
 
-  // Verify ownership
+  // Verify ownership (also fetch price/name/slug for price-drop notifications)
   const { data: existing } = await supabase
     .from("horse_listings")
-    .select("id, seller_id, status")
+    .select("id, seller_id, status, price, name, slug")
     .eq("id", listingId)
     .single();
 
@@ -204,6 +207,10 @@ export async function updateListing(
 
   if (existing.status === "removed") {
     return { error: "Archived listings cannot be edited." };
+  }
+
+  if (existing.status === "pending_review") {
+    return { error: "This listing is under review and cannot be edited. Please wait for moderation to complete." };
   }
 
   const registryRecords = extractRegistryRecords(formData);
@@ -230,6 +237,42 @@ export async function updateListing(
     return { error: error.message };
   }
 
+  // Notify users who saved this listing if price dropped (fire-and-forget)
+  const oldPrice = existing.price as number | null;
+  const newPrice = parsed.data.price as number | undefined;
+  if (oldPrice && newPrice && newPrice < oldPrice && existing.status === "active") {
+    (async () => {
+      const { data: savedByUsers } = await supabase
+        .from("listing_favorites")
+        .select("user_id")
+        .eq("listing_id", listingId);
+      if (!savedByUsers || savedByUsers.length === 0) return;
+
+      for (const fav of savedByUsers) {
+        const email = await getUserEmail(fav.user_id);
+        if (!email) continue;
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("display_name")
+          .eq("id", fav.user_id)
+          .single();
+        const fmt = (cents: number) => `$${(cents / 100).toLocaleString()}`;
+        const tmpl = priceDropEmail(
+          profile?.display_name || "there",
+          existing.name,
+          fmt(oldPrice),
+          fmt(newPrice),
+          existing.slug
+        );
+        await sendEmail({
+          to: email,
+          ...tmpl,
+          idempotencyKey: `price-drop-${listingId}-${fav.user_id}-${newPrice}`,
+        });
+      }
+    })().catch(() => {});
+  }
+
   // Save registry records
   const regErr = await saveRegistryRecords(supabase, listingId, registryRecords);
   if (regErr) {
@@ -252,13 +295,18 @@ export async function publishListing(listingId: string): Promise<ListingActionSt
   // Pre-publish validation: require minimum listing quality
   const { data: listing } = await supabase
     .from("horse_listings")
-    .select("name, breed, description, location_state, price")
+    .select("name, breed, description, location_state, price, status")
     .eq("id", listingId)
     .eq("seller_id", user.id)
     .single();
 
   if (!listing) {
     return { error: "Listing not found." };
+  }
+
+  // State transition guard: only drafts can be submitted for review
+  if (listing.status !== "draft") {
+    return { error: `This listing is "${listing.status}" and cannot be submitted for review. Only draft listings can be published.` };
   }
 
   const missing: string[] = [];
@@ -280,7 +328,7 @@ export async function publishListing(listingId: string): Promise<ListingActionSt
   const { error } = await supabase
     .from("horse_listings")
     .update({
-      status: "active",
+      status: "pending_review",
       published_at: new Date().toISOString(),
     })
     .eq("id", listingId)
@@ -288,6 +336,28 @@ export async function publishListing(listingId: string): Promise<ListingActionSt
 
   if (error) {
     return { error: error.message };
+  }
+
+  // Deduplicated notification: check for existing unread notification for this listing submission
+  const { data: existingNotif } = await supabase
+    .from("notifications")
+    .select("id")
+    .eq("user_id", user.id)
+    .eq("type", "listing_status")
+    .is("read_at", null)
+    .contains("metadata", { listing_id: listingId })
+    .limit(1)
+    .maybeSingle();
+
+  if (!existingNotif) {
+    await supabase.from("notifications").insert({
+      user_id: user.id,
+      type: "listing_status",
+      title: "Listing submitted for review",
+      body: `"${listing.name}" is now under review. You'll be notified once approved.`,
+      link: `/dashboard`,
+      metadata: { listing_id: listingId },
+    });
   }
 
   return { listingId };
@@ -303,6 +373,22 @@ export async function archiveListing(
 
   if (!user) {
     return { error: "You must be logged in." };
+  }
+
+  // State transition guard: verify listing exists and isn't already removed
+  const { data: listing } = await supabase
+    .from("horse_listings")
+    .select("status")
+    .eq("id", listingId)
+    .eq("seller_id", user.id)
+    .single();
+
+  if (!listing) {
+    return { error: "Listing not found." };
+  }
+
+  if (listing.status === "removed") {
+    return { error: "This listing is already archived." };
   }
 
   const { error } = await supabase

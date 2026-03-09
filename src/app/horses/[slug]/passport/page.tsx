@@ -18,19 +18,15 @@ import {
   FileText,
   Scissors,
   BarChart3,
+  Dna,
 } from "lucide-react";
 import type { HorseListing } from "@/types/listings";
 import {
   VerificationBadge,
-  DocumentVault,
   PassportQRCode,
   PassportShareControls,
-  HennekeBCSHistory,
-  FarrierLog,
-  type PassportDocument,
   type VerificationLevel,
 } from "@/components/marketplace/passport-enhancements";
-import { BloodlineExplorer } from "@/components/marketplace/bloodline-explorer";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -146,81 +142,6 @@ function PassportSection({
   );
 }
 
-/* ────────────────────────────────────────────
-   Sample enhancement data (static until DB)
-   ──────────────────────────────────────────── */
-
-const sampleDocuments: PassportDocument[] = [
-  {
-    id: "d1",
-    name: "Pre-Purchase Exam Report",
-    type: "ppe_report",
-    uploadedAt: "2026-01-15",
-    uploadedBy: "Dr. Sarah Miller, DVM",
-    fileSize: "2.4 MB",
-    verified: true,
-  },
-  {
-    id: "d2",
-    name: "Coggins Test - Negative",
-    type: "coggins",
-    uploadedAt: "2026-02-01",
-    uploadedBy: "Seller",
-    fileSize: "340 KB",
-    verified: true,
-  },
-  {
-    id: "d3",
-    name: "Front Limb X-Rays (4 views)",
-    type: "xray",
-    uploadedAt: "2026-01-15",
-    uploadedBy: "Dr. Sarah Miller, DVM",
-    fileSize: "8.1 MB",
-    verified: true,
-  },
-  {
-    id: "d4",
-    name: "AQHA Registration Certificate",
-    type: "registration",
-    uploadedAt: "2025-09-20",
-    uploadedBy: "Seller",
-    fileSize: "1.1 MB",
-    verified: false,
-  },
-];
-
-const sampleBCSHistory = [
-  { date: "2026-02-15", score: 5, assessedBy: "Dr. Miller, DVM" },
-  { date: "2025-11-10", score: 5, assessedBy: "Dr. Miller, DVM" },
-  { date: "2025-08-20", score: 6, assessedBy: "Dr. Torres, DVM" },
-  { date: "2025-05-01", score: 4, assessedBy: "Self-assessed" },
-];
-
-const sampleFarrierEntries = [
-  {
-    date: "2026-02-10",
-    type: "full_shoe" as const,
-    farrier: "Jake Henderson, CJF",
-    notes: "Reset fronts, new hinds. Good hoof growth.",
-  },
-  {
-    date: "2026-01-05",
-    type: "trim" as const,
-    farrier: "Jake Henderson, CJF",
-    notes: "Barefoot trim for turnout period.",
-  },
-  {
-    date: "2025-11-28",
-    type: "full_shoe" as const,
-    farrier: "Jake Henderson, CJF",
-  },
-  {
-    date: "2025-10-15",
-    type: "corrective" as const,
-    farrier: "Jake Henderson, CJF",
-    notes: "Slight medial deviation in LF — corrective shoe applied.",
-  },
-];
 
 /* ════════════════════════════════════════════
    Main Passport Page
@@ -526,7 +447,11 @@ export default async function HorsePassportPage({ params }: Props) {
                   title="Bloodline Explorer"
                   verificationLevel={l.registration_number ? "registry_verified" : "self_reported"}
                 >
-                  <BloodlineExplorer horseName={l.name} />
+                  <div className="rounded-md bg-paper-warm p-6 text-center">
+                    <Dna className="mx-auto h-8 w-8 text-ink-faint" />
+                    <p className="mt-3 text-sm font-medium text-ink-dark">Interactive bloodline analysis coming soon</p>
+                    <p className="mt-1 text-xs text-ink-mid">Pedigree tree, sibling finder, and progeny records will be available once registry integrations are live.</p>
+                  </div>
                 </PassportSection>
               )}
 
@@ -737,12 +662,11 @@ export default async function HorsePassportPage({ params }: Props) {
               <PassportSection
                 icon={<BarChart3 className="h-4 w-4" />}
                 title="Body Condition History"
-                verificationLevel="vet_verified"
+                verificationLevel="self_reported"
               >
-                <HennekeBCSHistory
-                  entries={sampleBCSHistory}
-                  currentScore={5}
-                />
+                <p className="text-sm text-ink-mid">
+                  Body condition scoring and tracking is coming soon. Sellers will be able to log Henneke BCS assessments over time.
+                </p>
               </PassportSection>
 
               {/* ─── SECTION 8: Farrier & Hoof Care ─── */}
@@ -751,19 +675,20 @@ export default async function HorsePassportPage({ params }: Props) {
                 title="Farrier & Hoof Care"
                 verificationLevel="self_reported"
               >
-                <FarrierLog
-                  entries={sampleFarrierEntries}
-                  nextDue="2026-03-15"
-                />
+                <p className="text-sm text-ink-mid">
+                  Farrier and hoof care logging is coming soon. Sellers will be able to track trim and shoeing schedules.
+                </p>
               </PassportSection>
 
               {/* ─── SECTION 9: Document Vault ─── */}
               <PassportSection
                 icon={<FileText className="h-4 w-4" />}
                 title="Document Vault"
-                verificationLevel="document_verified"
+                verificationLevel="self_reported"
               >
-                <DocumentVault documents={sampleDocuments} isOwner={false} />
+                <p className="text-sm text-ink-mid">
+                  Document storage is coming soon. Sellers will be able to upload PPE reports, Coggins tests, X-rays, and registration certificates.
+                </p>
               </PassportSection>
 
               {/* ─── QR CODE + SHARE CONTROLS ─── */}

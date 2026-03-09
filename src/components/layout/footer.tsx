@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Instagram, Facebook, Youtube } from "lucide-react";
+import { Instagram } from "lucide-react";
 
 const footerLinks = {
   marketplace: [
@@ -36,8 +36,6 @@ const footerLinks = {
 
 const socialLinks = [
   { href: "https://instagram.com/maneexchange", label: "Instagram", icon: Instagram },
-  { href: "https://facebook.com/maneexchange", label: "Facebook", icon: Facebook },
-  { href: "https://youtube.com/@maneexchange", label: "YouTube", icon: Youtube },
 ];
 
 export function Footer() {

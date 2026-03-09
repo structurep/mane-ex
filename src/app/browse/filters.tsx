@@ -12,7 +12,14 @@ import {
   SheetDescription,
   SheetFooter,
 } from "@/components/ui/sheet";
-import { Search, X, SlidersHorizontal, ChevronDown } from "lucide-react";
+import { Search, X, SlidersHorizontal } from "lucide-react";
+import {
+  SelectMenu,
+  InputGroup,
+  FormSection,
+  RadioCardGroup,
+  ToggleGroup,
+} from "@/components/tailwind-plus";
 
 type Props = {
   params: Record<string, string | undefined>;
@@ -83,34 +90,6 @@ function FilterPill({
     >
       {label}
     </button>
-  );
-}
-
-// ─── Dropdown Filter ────────────────────────────
-
-function FilterDropdown({
-  label,
-  value,
-  onChange,
-  children,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="relative">
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="h-9 cursor-pointer appearance-none rounded-full border border-crease-light bg-paper-white py-1.5 pr-8 pl-3.5 text-[13px] font-medium text-ink-dark transition-colors hover:border-ink-light focus:border-ink-black focus:outline-none"
-      >
-        <option value="">{label}</option>
-        {children}
-      </select>
-      <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-faint" />
-    </div>
   );
 }
 
@@ -245,7 +224,7 @@ export function BrowseFilters({ params }: Props) {
         </Button>
 
         {/* Desktop: Discipline */}
-        <FilterDropdown
+        <SelectMenu
           label="Discipline"
           value={params.discipline || ""}
           onChange={(v) => updateFilter("discipline", v)}
@@ -253,29 +232,31 @@ export function BrowseFilters({ params }: Props) {
           {disciplines.map((d) => (
             <option key={d} value={d}>{d}</option>
           ))}
-        </FilterDropdown>
+        </SelectMenu>
 
         {/* Desktop: Price */}
         <div className="hidden items-center gap-1.5 md:flex">
-          <Input
+          <InputGroup
             type="number"
             placeholder="Min $"
+            prefix="$"
+            variant="pill"
             defaultValue={params.minPrice || ""}
-            className="h-9 w-[88px] rounded-full border-crease-light text-[13px] text-center placeholder:text-ink-faint"
-            onBlur={(e) => updateFilter("minPrice", e.target.value)}
+            onBlur={(e) => updateFilter("minPrice", e.currentTarget.value)}
           />
           <span className="text-[11px] text-ink-faint">to</span>
-          <Input
+          <InputGroup
             type="number"
             placeholder="Max $"
+            prefix="$"
+            variant="pill"
             defaultValue={params.maxPrice || ""}
-            className="h-9 w-[88px] rounded-full border-crease-light text-[13px] text-center placeholder:text-ink-faint"
-            onBlur={(e) => updateFilter("maxPrice", e.target.value)}
+            onBlur={(e) => updateFilter("maxPrice", e.currentTarget.value)}
           />
         </div>
 
         {/* Desktop: Location */}
-        <FilterDropdown
+        <SelectMenu
           label="Location"
           value={params.state || ""}
           onChange={(v) => updateFilter("state", v)}
@@ -287,7 +268,7 @@ export function BrowseFilters({ params }: Props) {
               ))}
             </optgroup>
           ))}
-        </FilterDropdown>
+        </SelectMenu>
 
         {/* Desktop: More filters */}
         <button
@@ -310,7 +291,7 @@ export function BrowseFilters({ params }: Props) {
         {/* Sort */}
         <div className="flex items-center gap-1.5">
           <span className="hidden text-[12px] text-ink-faint md:inline">Sort</span>
-          <FilterDropdown
+          <SelectMenu
             label="Newest"
             value={params.sort || "newest"}
             onChange={(v) => updateFilter("sort", v)}
@@ -318,7 +299,7 @@ export function BrowseFilters({ params }: Props) {
             {sortOptions.map((opt) => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
             ))}
-          </FilterDropdown>
+          </SelectMenu>
         </div>
       </div>
 
@@ -348,87 +329,138 @@ export function BrowseFilters({ params }: Props) {
 
       {/* ─── Filter Sheet (mobile + advanced) ─── */}
       <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-        <SheetContent side="right" className="overflow-y-auto sm:max-w-sm">
-          <SheetHeader className="pb-2">
-            <SheetTitle className="font-serif text-xl">Refine Search</SheetTitle>
-            <SheetDescription className="text-[13px]">
+        <SheetContent side="right" className="flex flex-col overflow-hidden sm:max-w-sm">
+          {/* Sticky header */}
+          <SheetHeader className="border-b border-crease-light bg-paper-white px-5 pb-4">
+            <div className="flex items-center justify-between">
+              <SheetTitle className="font-serif text-xl text-ink-black">Filters</SheetTitle>
+              {totalFilterCount > 0 && (
+                <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-oxblood px-1.5 text-[10px] font-bold text-paper-white">
+                  {totalFilterCount}
+                </span>
+              )}
+            </div>
+            <SheetDescription className="text-[13px] text-ink-faint">
               {totalFilterCount > 0
-                ? `${totalFilterCount} filter${totalFilterCount !== 1 ? "s" : ""} active`
-                : "Narrow your results"}
+                ? `${totalFilterCount} filter${totalFilterCount !== 1 ? "s" : ""} applied`
+                : "Refine your search results"}
             </SheetDescription>
           </SheetHeader>
 
-          <div key={searchParams.toString()} className="flex-1 space-y-6 px-4 pb-8">
-            {/* Search */}
-            <div>
-              <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
-                Search
-              </label>
-              <div className="relative mt-2">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-faint" />
-                <Input
-                  placeholder="Name, breed, keyword..."
-                  defaultValue={params.q || ""}
-                  className="pl-9"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      updateFilter("q", (e.target as HTMLInputElement).value);
-                    }
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* Discipline */}
-            <div>
-              <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
-                Discipline
-              </label>
-              <div className="mt-2 flex flex-wrap gap-1.5">
-                {disciplines.map((d) => (
-                  <FilterPill
-                    key={d}
-                    label={d}
-                    active={params.discipline === d}
-                    onClick={() => updateFilter("discipline", params.discipline === d ? "" : d)}
+          {/* Scrollable filter body */}
+          <div key={searchParams.toString()} className="flex-1 overflow-y-auto px-5 py-6">
+            <div className="space-y-7">
+              {/* ── Search ── */}
+              <FormSection label="Search">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-faint" />
+                  <Input
+                    placeholder="Name, breed, keyword..."
+                    defaultValue={params.q || ""}
+                    className="h-10 rounded-lg border-crease-light bg-paper-cream pl-9 text-sm focus:border-oxblood focus:ring-1 focus:ring-oxblood/20"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        updateFilter("q", (e.target as HTMLInputElement).value);
+                      }
+                    }}
                   />
-                ))}
-              </div>
-            </div>
+                </div>
+              </FormSection>
 
-            {/* Price Range */}
-            <div>
-              <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
-                Price
-              </label>
-              <div className="mt-2 grid grid-cols-2 gap-2">
-                <Input
-                  type="number"
-                  placeholder="Min $"
-                  defaultValue={params.minPrice || ""}
-                  onBlur={(e) => updateFilter("minPrice", e.target.value)}
-                />
-                <Input
-                  type="number"
-                  placeholder="Max $"
-                  defaultValue={params.maxPrice || ""}
-                  onBlur={(e) => updateFilter("maxPrice", e.target.value)}
-                />
-              </div>
-            </div>
+              {/* ── Discipline ── */}
+              <FormSection label="Discipline">
+                <div className="flex flex-wrap gap-1.5">
+                  {disciplines.map((d) => (
+                    <FilterPill
+                      key={d}
+                      label={d}
+                      active={params.discipline === d}
+                      onClick={() => updateFilter("discipline", params.discipline === d ? "" : d)}
+                    />
+                  ))}
+                </div>
+              </FormSection>
 
-            {/* Location */}
-            <div>
-              <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
-                Location
-              </label>
-              <div className="relative mt-2">
-                <select
-                  value={params.state || ""}
-                  onChange={(e) => updateFilter("state", e.target.value)}
-                  className="h-9 w-full cursor-pointer appearance-none rounded-md border border-border bg-paper-white px-3 pr-8 text-sm text-ink-dark"
+              {/* ── Price Range ── */}
+              <FormSection label="Price Range">
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-ink-faint">$</span>
+                    <Input
+                      type="number"
+                      placeholder="Min"
+                      defaultValue={params.minPrice || ""}
+                      className="h-10 rounded-lg border-crease-light bg-paper-cream pl-7 text-sm"
+                      onBlur={(e) => updateFilter("minPrice", e.target.value)}
+                    />
+                  </div>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-ink-faint">$</span>
+                    <Input
+                      type="number"
+                      placeholder="Max"
+                      defaultValue={params.maxPrice || ""}
+                      className="h-10 rounded-lg border-crease-light bg-paper-cream pl-7 text-sm"
+                      onBlur={(e) => updateFilter("maxPrice", e.target.value)}
+                    />
+                  </div>
+                </div>
+              </FormSection>
+
+              <div className="border-t border-crease-light" />
+
+              {/* ── Gender — radio cards ── */}
+              <FormSection label="Gender">
+                <RadioCardGroup
+                  options={genders.map((g) => ({ value: g.value, label: g.label }))}
+                  value={params.gender || ""}
+                  onChange={(v) => updateFilter("gender", v)}
+                  columns={3}
+                />
+              </FormSection>
+
+              {/* ── Breed ── */}
+              <FormSection label="Breed">
+                <SelectMenu
+                  label="All Breeds"
+                  value={params.breed || ""}
+                  onChange={(v) => updateFilter("breed", v)}
+                  variant="field"
+                  icon={<Search className="h-3.5 w-3.5" />}
                 >
-                  <option value="">All States</option>
+                  {breeds.map((b) => (
+                    <option key={b} value={b}>{b}</option>
+                  ))}
+                </SelectMenu>
+              </FormSection>
+
+              {/* ── Location ── */}
+              <FormSection label="Region">
+                <RadioCardGroup
+                  options={US_REGIONS.map((r) => ({ value: r.value, label: r.label }))}
+                  value={params.region || ""}
+                  onChange={(v) => {
+                    const sp = new URLSearchParams(searchParams.toString());
+                    if (params.region === v || !v) {
+                      sp.delete("region");
+                    } else {
+                      sp.set("region", v);
+                      sp.delete("state");
+                    }
+                    sp.delete("page");
+                    router.push(`/browse?${sp.toString()}`);
+                  }}
+                  columns={3}
+                />
+              </FormSection>
+
+              <FormSection label="State">
+                <SelectMenu
+                  label="All States"
+                  value={params.state || ""}
+                  onChange={(v) => updateFilter("state", v)}
+                  variant="field"
+                >
                   {US_REGIONS.map((region) => (
                     <optgroup key={region.label} label={region.label}>
                       {region.states.map((s) => (
@@ -436,206 +468,115 @@ export function BrowseFilters({ params }: Props) {
                       ))}
                     </optgroup>
                   ))}
-                </select>
-                <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-faint" />
-              </div>
-              <div className="mt-2 flex flex-wrap gap-1">
-                {US_REGIONS.map((region) => (
-                  <FilterPill
-                    key={region.value}
-                    label={region.label}
-                    active={params.region === region.value}
-                    onClick={() => {
-                      const sp = new URLSearchParams(searchParams.toString());
-                      if (params.region === region.value) {
-                        sp.delete("region");
-                      } else {
-                        sp.set("region", region.value);
-                        sp.delete("state");
-                      }
-                      sp.delete("page");
-                      router.push(`/browse?${sp.toString()}`);
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
+                </SelectMenu>
+              </FormSection>
 
-            {/* Divider */}
-            <div className="border-t border-crease-light" />
+              <div className="border-t border-crease-light" />
 
-            {/* Gender */}
-            <div>
-              <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
-                Gender
-              </label>
-              <div className="mt-2 flex gap-1.5">
-                {genders.map((g) => (
-                  <FilterPill
-                    key={g.value}
-                    label={g.label}
-                    active={params.gender === g.value}
-                    onClick={() => updateFilter("gender", params.gender === g.value ? "" : g.value)}
-                  />
-                ))}
+              {/* ── Height + Age ── */}
+              <div className="grid grid-cols-2 gap-4">
+                <FormSection label="Height (hh)">
+                  <div className="grid grid-cols-2 gap-1.5">
+                    <InputGroup type="number" step="0.1" placeholder="Min" variant="field" defaultValue={params.minHeight || ""} onBlur={(e) => updateFilter("minHeight", e.currentTarget.value)} className="text-center" />
+                    <InputGroup type="number" step="0.1" placeholder="Max" variant="field" defaultValue={params.maxHeight || ""} onBlur={(e) => updateFilter("maxHeight", e.currentTarget.value)} className="text-center" />
+                  </div>
+                </FormSection>
+                <FormSection label="Age (yrs)">
+                  <div className="grid grid-cols-2 gap-1.5">
+                    <InputGroup type="number" placeholder="Min" variant="field" defaultValue={params.minAge || ""} onBlur={(e) => updateFilter("minAge", e.currentTarget.value)} className="text-center" />
+                    <InputGroup type="number" placeholder="Max" variant="field" defaultValue={params.maxAge || ""} onBlur={(e) => updateFilter("maxAge", e.currentTarget.value)} className="text-center" />
+                  </div>
+                </FormSection>
               </div>
-            </div>
 
-            {/* Breed */}
-            <div>
-              <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
-                Breed
-              </label>
-              <div className="relative mt-2">
-                <select
-                  value={params.breed || ""}
-                  onChange={(e) => updateFilter("breed", e.target.value)}
-                  className="h-9 w-full cursor-pointer appearance-none rounded-md border border-border bg-paper-white px-3 pr-8 text-sm text-ink-dark"
-                >
-                  <option value="">All Breeds</option>
-                  {breeds.map((b) => (
-                    <option key={b} value={b}>{b}</option>
-                  ))}
-                </select>
-                <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-faint" />
-              </div>
-            </div>
+              {/* ── Body Condition ── */}
+              <FormSection label="Body Condition Score" hint="4–6 ideal · Henneke scale">
+                <ToggleGroup
+                  options={[1, 2, 3, 4, 5, 6, 7, 8, 9].map((s) => ({
+                    value: String(s),
+                    label: String(s),
+                  }))}
+                  value={params.henneke || ""}
+                  onChange={(v) => updateFilter("henneke", v)}
+                  selectedStyle="solid"
+                  optionClassName={(val, selected) => {
+                    if (selected) return "bg-oxblood text-paper-white shadow-sm";
+                    const n = parseInt(val);
+                    return n >= 4 && n <= 6
+                      ? "bg-forest/8 text-forest hover:bg-forest/15"
+                      : "bg-paper-cream text-ink-light hover:bg-paper-warm hover:text-ink-mid";
+                  }}
+                  className="gap-0.5"
+                />
+              </FormSection>
 
-            {/* Height + Age side by side */}
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
-                  Height (hh)
-                </label>
-                <div className="mt-2 grid grid-cols-2 gap-1.5">
-                  <Input
-                    type="number"
-                    step="0.1"
-                    placeholder="Min"
-                    defaultValue={params.minHeight || ""}
-                    className="text-center text-sm"
-                    onBlur={(e) => updateFilter("minHeight", e.target.value)}
-                  />
-                  <Input
-                    type="number"
-                    step="0.1"
-                    placeholder="Max"
-                    defaultValue={params.maxHeight || ""}
-                    className="text-center text-sm"
-                    onBlur={(e) => updateFilter("maxHeight", e.target.value)}
-                  />
+              {/* ── Soundness — radio list ── */}
+              <FormSection label="Soundness">
+                <div className="space-y-1">
+                  {[{ value: "", label: "Any level" }, ...soundnessOptions].map((opt) => {
+                    const selected = (params.soundness || "") === opt.value;
+                    return (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => updateFilter("soundness", opt.value)}
+                        className={`flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left text-sm transition-colors ${
+                          selected
+                            ? "bg-oxblood/5 text-oxblood"
+                            : "text-ink-mid hover:bg-paper-cream"
+                        }`}
+                      >
+                        <span className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 transition-colors ${
+                          selected ? "border-oxblood" : "border-crease-mid"
+                        }`}>
+                          {selected && <span className="h-2 w-2 rounded-full bg-oxblood" />}
+                        </span>
+                        {opt.label}
+                      </button>
+                    );
+                  })}
                 </div>
-              </div>
-              <div>
-                <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
-                  Age (yrs)
-                </label>
-                <div className="mt-2 grid grid-cols-2 gap-1.5">
-                  <Input
-                    type="number"
-                    placeholder="Min"
-                    defaultValue={params.minAge || ""}
-                    className="text-center text-sm"
-                    onBlur={(e) => updateFilter("minAge", e.target.value)}
-                  />
-                  <Input
-                    type="number"
-                    placeholder="Max"
-                    defaultValue={params.maxAge || ""}
-                    className="text-center text-sm"
-                    onBlur={(e) => updateFilter("maxAge", e.target.value)}
-                  />
-                </div>
-              </div>
-            </div>
+              </FormSection>
 
-            {/* Henneke */}
-            <div>
-              <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
-                Body Condition
-              </label>
-              <div className="mt-2 flex gap-0.5">
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((score) => {
-                  const isSelected = params.henneke === String(score);
-                  const isIdeal = score >= 4 && score <= 6;
-                  return (
-                    <button
-                      key={score}
-                      type="button"
-                      onClick={() => updateFilter("henneke", isSelected ? "" : String(score))}
-                      className={`flex h-8 flex-1 items-center justify-center rounded text-[13px] font-medium transition-all ${
-                        isSelected
-                          ? "bg-ink-black text-paper-white shadow-sm"
-                          : isIdeal
-                            ? "bg-forest/8 text-forest hover:bg-forest/15"
-                            : "bg-paper-warm text-ink-light hover:bg-washi hover:text-ink-mid"
-                      }`}
-                      title={`BCS ${score}`}
-                    >
-                      {score}
-                    </button>
-                  );
-                })}
-              </div>
-              <p className="mt-1.5 text-[11px] text-ink-faint">
-                4–6 ideal <span className="mx-1 text-crease-mid">·</span> Henneke scale
-              </p>
-            </div>
+              <div className="border-t border-crease-light" />
 
-            {/* Soundness */}
-            <div>
-              <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
-                Soundness
-              </label>
-              <div className="relative mt-2">
-                <select
-                  value={params.soundness || ""}
-                  onChange={(e) => updateFilter("soundness", e.target.value)}
-                  className="h-9 w-full cursor-pointer appearance-none rounded-md border border-border bg-paper-white px-3 pr-8 text-sm text-ink-dark"
-                >
-                  <option value="">Any level</option>
-                  {soundnessOptions.map((opt) => (
-                    <option key={opt.value} value={opt.value}>{opt.label}</option>
-                  ))}
-                </select>
-                <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-faint" />
-              </div>
-            </div>
-
-            {/* Sort */}
-            <div>
-              <label className="text-[12px] font-medium uppercase tracking-wider text-ink-faint">
-                Sort By
-              </label>
-              <div className="mt-2 flex flex-wrap gap-1.5">
-                {sortOptions.map((opt) => (
-                  <FilterPill
-                    key={opt.value}
-                    label={opt.label}
-                    active={(params.sort || "newest") === opt.value}
-                    onClick={() => updateFilter("sort", opt.value)}
-                  />
-                ))}
-              </div>
+              {/* ── Sort ── */}
+              <FormSection label="Sort By">
+                <RadioCardGroup
+                  options={sortOptions.map((o) => ({ value: o.value, label: o.label }))}
+                  value={params.sort || "newest"}
+                  onChange={(v) => updateFilter("sort", v || "newest")}
+                  columns={3}
+                />
+              </FormSection>
             </div>
           </div>
 
-          {/* Footer */}
-          {hasFilters && (
-            <SheetFooter className="border-t border-crease-light px-4 pt-3">
+          {/* Sticky footer with apply/reset */}
+          <SheetFooter className="border-t border-crease-light bg-paper-white px-5 py-4">
+            <div className="flex w-full gap-3">
+              {hasFilters && (
+                <Button
+                  variant="outline"
+                  className="flex-1 border-crease-light text-ink-mid hover:text-ink-dark"
+                  onClick={() => {
+                    clearFilters();
+                    setSheetOpen(false);
+                  }}
+                >
+                  Reset
+                </Button>
+              )}
               <Button
-                variant="ghost"
-                className="w-full text-ink-faint hover:text-ink-dark"
-                onClick={() => {
-                  clearFilters();
-                  setSheetOpen(false);
-                }}
+                className="flex-1"
+                onClick={() => setSheetOpen(false)}
               >
-                <X className="mr-1.5 h-3.5 w-3.5" />
-                Clear all filters
+                {totalFilterCount > 0
+                  ? `Show Results (${totalFilterCount})`
+                  : "Show All Results"}
               </Button>
-            </SheetFooter>
-          )}
+            </div>
+          </SheetFooter>
         </SheetContent>
       </Sheet>
     </div>

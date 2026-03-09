@@ -1,8 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { LoginForm } from "./login-form";
-import { Lock, Shield, CheckCircle2 } from "lucide-react";
+import { AuthLayout } from "@/components/tailwind-plus";
 
 export const metadata: Metadata = {
   title: "Log In",
@@ -11,59 +10,34 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <div className="with-grain flex min-h-screen flex-col items-center justify-center bg-gradient-hero px-4 py-12">
-      <div className="w-full max-w-sm">
-        {/* Logo + heading */}
-        <div className="mb-8 text-center">
-          <Link href="/" className="inline-block">
-            <Image
-              src="/icon.svg"
-              alt="ManeExchange"
-              width={48}
-              height={48}
-              className="mx-auto mb-4"
-            />
-          </Link>
-          <h1 className="font-serif text-3xl tracking-tight text-ink-black md:text-4xl">
-            Welcome back
-          </h1>
-          <p className="mt-2 text-sm text-ink-mid">
-            Sign in to your ManeExchange account
-          </p>
-        </div>
-
-        {/* Card */}
-        <div className="rounded-lg bg-paper-cream p-6 shadow-folded md:p-8">
-          <LoginForm />
-        </div>
-
-        {/* Switch to signup */}
-        <p className="mt-6 text-center text-sm text-ink-mid">
+    <AuthLayout
+      headline={
+        <>
+          Where serious
+          <br />horse people trade.
+        </>
+      }
+      subContent={
+        <p className="text-sm leading-relaxed text-paper-white/60">
+          Bank-grade escrow. Verified sellers. Pre-purchase exams.
+          ManeExchange is the safest way to buy and sell horses online.
+        </p>
+      }
+      title="Welcome back"
+      subtitle="Sign in to your ManeExchange account"
+      footer={
+        <p className="mt-6 text-center text-sm text-ink-mid lg:text-left">
           Don&apos;t have an account?{" "}
           <Link
             href="/signup"
-            className="font-medium text-primary hover:underline"
+            className="font-medium text-oxblood hover:underline"
           >
             Sign up
           </Link>
         </p>
-
-        {/* Trust badges */}
-        <div className="mt-8 flex items-center justify-center gap-6 text-xs text-ink-light">
-          <span className="flex items-center gap-1.5">
-            <Lock className="h-3.5 w-3.5 text-gold" />
-            Encrypted
-          </span>
-          <span className="flex items-center gap-1.5">
-            <Shield className="h-3.5 w-3.5 text-forest" />
-            Stripe KYC
-          </span>
-          <span className="flex items-center gap-1.5">
-            <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
-            Verified
-          </span>
-        </div>
-      </div>
-    </div>
+      }
+    >
+      <LoginForm />
+    </AuthLayout>
   );
 }

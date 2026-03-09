@@ -8,6 +8,7 @@ import { ProfileSetupStep } from "./steps/profile-setup";
 import { LocationStep } from "./steps/location";
 import { BarnConnectStep } from "./steps/barn-connect";
 import { CompleteStep } from "./steps/complete";
+import { StepPanels, type Step as PanelStep } from "@/components/tailwind-plus";
 
 const STEPS = ["welcome", "profile", "location", "barn", "complete"] as const;
 type Step = (typeof STEPS)[number];
@@ -71,20 +72,15 @@ export function OnboardingFlow({
 
   return (
     <div>
-      {/* Progress bar */}
+      {/* Step progress panels */}
       <div className="mb-8">
-        <div className="flex items-center justify-between text-xs text-ink-light">
-          <span>Step {currentIndex + 1} of {STEPS.length} &mdash; {
-            ["Pick your role", "Set up your profile", "Add your location", "Connect your barn", "You\u2019re all set!"][currentIndex]
-          }</span>
-          <span>{Math.round(progress)}%</span>
-        </div>
-        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-paper-warm">
-          <div
-            className="h-full rounded-full bg-primary transition-all duration-500"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
+        <StepPanels
+          steps={["Role", "Profile", "Location", "Barn", "Done"].map((name, i): PanelStep => ({
+            id: String(i + 1),
+            name,
+            status: i < currentIndex ? "complete" : i === currentIndex ? "current" : "upcoming",
+          }))}
+        />
       </div>
 
       {/* Step content */}

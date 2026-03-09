@@ -3,7 +3,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { getUserEmail } from "@/lib/supabase/admin";
 import { sendEmail } from "@/lib/email/resend";
-import { newMessageEmail } from "@/lib/email/templates";
+import { newMessageEmail, inquirySentEmail } from "@/lib/email/templates";
 
 export type MessageActionState = {
   error?: string;
@@ -134,6 +134,25 @@ export async function startConversation(
     metadata: { conversation_id: conversation.id, sender_id: user.id },
   });
 
+  // Send inquiry confirmation email to buyer (fire-and-forget)
+  if (listingId) {
+    (async () => {
+      const [buyerEmail, { data: sellerProfile }, { data: listing }] = await Promise.all([
+        getUserEmail(user.id),
+        supabase.from("profiles").select("display_name").eq("id", sellerId).single(),
+        supabase.from("horse_listings").select("name").eq("id", listingId).single(),
+      ]);
+      if (!buyerEmail) return;
+      const tmpl = inquirySentEmail(
+        senderProfile?.display_name || "there",
+        listing?.name || "a horse",
+        sellerProfile?.display_name || "the seller",
+        conversation.id
+      );
+      await sendEmail({ to: buyerEmail, ...tmpl, idempotencyKey: `inquiry-sent-${conversation.id}` });
+    })().catch(() => {});
+  }
+
   return { conversationId: conversation.id };
 }
 
@@ -162,7 +181,11 @@ async function notifyRecipient(
     conversationId
   );
 
-  await sendEmail({ to: recipientEmail, ...email });
+  await sendEmail({
+    to: recipientEmail,
+    ...email,
+    idempotencyKey: `msg-notify-${conversationId}-${senderId}-${Date.now().toString(36)}`,
+  });
 }
 
 /**
@@ -229,6 +252,40 @@ export async function sendMessage(
   if (msgError) {
     return { error: msgError.message };
   }
+
+  // Notify the other participant (email + in-app) — fire-and-forget
+  (async () => {
+    const { data: conv } = await supabase
+      .from("conversations")
+      .select("participant_1_id, participant_2_id")
+      .eq("id", conversationId)
+      .single();
+    if (!conv) return;
+
+    const recipientId =
+      conv.participant_1_id === user.id
+        ? conv.participant_2_id
+        : conv.participant_1_id;
+
+    // Email notification
+    notifyRecipient(supabase, recipientId, user.id, trimmed, conversationId).catch(() => {});
+
+    // In-app notification
+    const { data: senderProfile } = await supabase
+      .from("profiles")
+      .select("display_name")
+      .eq("id", user.id)
+      .single();
+
+    await supabase.from("notifications").insert({
+      user_id: recipientId,
+      type: "message",
+      title: `New message from ${senderProfile?.display_name || "someone"}`,
+      body: trimmed.slice(0, 100),
+      link: `/dashboard/messages/${conversationId}`,
+      metadata: { conversation_id: conversationId, sender_id: user.id },
+    });
+  })().catch(() => {});
 
   return { conversationId, messageId: msg.id };
 }

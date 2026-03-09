@@ -21,8 +21,9 @@ import {
   Search,
   MessageCircle,
   Heart,
-  Bell,
 } from "lucide-react";
+import { NotificationBell } from "@/components/notification-bell";
+import { AvatarCircle } from "@/components/tailwind-plus";
 
 /* ─── Nav link sets ─── */
 
@@ -213,13 +214,7 @@ export function Header() {
               >
                 <Heart className="h-5 w-5" />
               </Link>
-              <Link
-                href="/dashboard/notifications"
-                className="rounded-full p-2.5 text-ink-mid transition-colors hover:bg-gold-light hover:text-gold"
-                aria-label="Notifications"
-              >
-                <Bell className="h-5 w-5" />
-              </Link>
+              <NotificationBell />
 
               {/* Avatar dropdown */}
               <div className="relative ml-1" ref={menuRef}>
@@ -229,9 +224,7 @@ export function Header() {
                   aria-haspopup="true"
                   className="flex items-center gap-1.5 rounded-full border border-crease-light py-1 pl-1 pr-2.5 text-sm font-medium text-ink-dark transition-colors hover:bg-paper-warm focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                 >
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground">
-                    {initials}
-                  </span>
+                  <AvatarCircle initials={initials} size={32} />
                   <ChevronDown
                     className={`h-3.5 w-3.5 text-ink-light transition-transform ${
                       menuOpen ? "rotate-180" : ""
