@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getUserEmail } from "@/lib/supabase/admin";
 import { sendEmail } from "@/lib/email/resend";
 import { newMessageEmail, inquirySentEmail } from "@/lib/email/templates";
+import { checkProfanity } from "@/lib/moderation";
 
 export type MessageActionState = {
   error?: string;
@@ -41,6 +42,10 @@ export async function startConversation(
   }
   if (body.length > 5000) {
     return { error: "Message cannot exceed 5,000 characters." };
+  }
+
+  if (!checkProfanity(body).clean) {
+    return { error: "Your message contains inappropriate language. Please revise." };
   }
 
   // Rate limit: max 5 new conversations per hour
@@ -211,6 +216,10 @@ export async function sendMessage(
   }
   if (trimmed.length > 5000) {
     return { error: "Message cannot exceed 5,000 characters." };
+  }
+
+  if (!checkProfanity(trimmed).clean) {
+    return { error: "Your message contains inappropriate language. Please revise." };
   }
 
   // Rate limit: max 20 messages per conversation per 10 minutes

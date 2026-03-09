@@ -3,6 +3,8 @@ import { stripe } from "@/lib/stripe/server";
 import { createClient } from "@supabase/supabase-js";
 
 import { tierFromPriceId } from "@/types/subscriptions";
+import { sendEmail } from "@/lib/email/resend";
+import { escrowFundedEmail, escrowReleasedEmail, reviewRequestEmail } from "@/lib/email/templates";
 import type Stripe from "stripe";
 
 // Use service role client to bypass RLS for webhook processing
@@ -164,6 +166,26 @@ async function handlePaymentSucceeded(
     link: `/dashboard/offers/${escrow.id}`,
     metadata: { escrow_id: escrowId },
   });
+
+  // Send escrow funded emails (fire-and-forget)
+  const amountStr = `$${(escrow.amount_cents / 100).toLocaleString()}`;
+  const [buyerEmail, sellerEmail] = await Promise.all([
+    getUserEmailFromAuth(supabase, escrow.buyer_id),
+    getUserEmailFromAuth(supabase, escrow.seller_id),
+  ]);
+  const [buyerName, sellerName] = await Promise.all([
+    getDisplayName(supabase, escrow.buyer_id),
+    getDisplayName(supabase, escrow.seller_id),
+  ]);
+
+  if (buyerEmail) {
+    const email = escrowFundedEmail(buyerName, listingName, amountStr, escrowId);
+    sendEmail({ to: buyerEmail, ...email, idempotencyKey: `escrow-funded-buyer-${escrowId}` }).catch(() => {});
+  }
+  if (sellerEmail) {
+    const email = escrowFundedEmail(sellerName, listingName, amountStr, escrowId);
+    sendEmail({ to: sellerEmail, ...email, idempotencyKey: `escrow-funded-seller-${escrowId}` }).catch(() => {});
+  }
 }
 
 /**
@@ -210,6 +232,17 @@ async function handlePaymentFailed(
     link: `/dashboard/offers/${escrow.offer_id}`,
     metadata: { escrow_id: escrowId },
   });
+
+  // Email buyer about failed payment (fire-and-forget)
+  const buyerEmail = await getUserEmailFromAuth(supabase, escrow.buyer_id);
+  if (buyerEmail) {
+    sendEmail({
+      to: buyerEmail,
+      subject: "Payment failed — action required",
+      html: `<p>Your payment could not be processed. Please visit your dashboard to retry or use a different payment method.</p>`,
+      idempotencyKey: `payment-failed-${escrowId}`,
+    }).catch(() => {});
+  }
 }
 
 /**
@@ -246,18 +279,46 @@ async function handleTransferCreated(
 
   const { data: listing } = await supabase
     .from("horse_listings")
-    .select("name")
+    .select("name, slug")
     .eq("id", escrow.listing_id)
     .single();
+
+  const listingName = listing?.name ?? "your horse";
 
   await supabase.from("notifications").insert({
     user_id: escrow.seller_id,
     type: "offer" as const,
-    title: `Funds released for ${listing?.name ?? "your horse"}`,
+    title: `Funds released for ${listingName}`,
     body: "Payment has been transferred to your account. Congratulations on the sale!",
     link: `/dashboard/offers/${escrowId}`,
     metadata: { escrow_id: escrowId },
   });
+
+  // Email seller: funds released (fire-and-forget)
+  const sellerEmail = await getUserEmailFromAuth(supabase, escrow.seller_id);
+  const sellerName = await getDisplayName(supabase, escrow.seller_id);
+  if (sellerEmail) {
+    // Get amount from escrow
+    const { data: fullEscrow } = await supabase
+      .from("escrow_transactions")
+      .select("amount_cents, buyer_id")
+      .eq("id", escrowId)
+      .single();
+
+    const amountStr = fullEscrow ? `$${(fullEscrow.amount_cents / 100).toLocaleString()}` : "";
+    const email = escrowReleasedEmail(sellerName, listingName, amountStr);
+    sendEmail({ to: sellerEmail, ...email, idempotencyKey: `escrow-released-${escrowId}` }).catch(() => {});
+
+    // Email buyer: review request (fire-and-forget)
+    if (fullEscrow?.buyer_id) {
+      const buyerEmail = await getUserEmailFromAuth(supabase, fullEscrow.buyer_id);
+      const buyerName = await getDisplayName(supabase, fullEscrow.buyer_id);
+      if (buyerEmail && listing?.slug) {
+        const reviewEmail = reviewRequestEmail(buyerName, listingName, sellerName, listing.slug);
+        sendEmail({ to: buyerEmail, ...reviewEmail, idempotencyKey: `review-request-${escrowId}` }).catch(() => {});
+      }
+    }
+  }
 }
 
 /**
@@ -386,4 +447,34 @@ async function handleCheckoutCompleted(
       })
       .eq("id", userId);
   }
+}
+
+// ============================================================
+// Helpers
+// ============================================================
+
+/** Look up a user's email via Supabase Auth admin API. */
+async function getUserEmailFromAuth(
+  supabase: ReturnType<typeof getServiceClient>,
+  userId: string
+): Promise<string | null> {
+  try {
+    const { data } = await supabase.auth.admin.getUserById(userId);
+    return data?.user?.email ?? null;
+  } catch {
+    return null;
+  }
+}
+
+/** Look up a user's display name from their profile. */
+async function getDisplayName(
+  supabase: ReturnType<typeof getServiceClient>,
+  userId: string
+): Promise<string> {
+  const { data } = await supabase
+    .from("profiles")
+    .select("display_name")
+    .eq("id", userId)
+    .maybeSingle();
+  return (data?.display_name as string) || "there";
 }

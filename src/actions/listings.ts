@@ -5,6 +5,7 @@ import { getUserEmail } from "@/lib/supabase/admin";
 import { sendEmail } from "@/lib/email/resend";
 import { priceDropEmail } from "@/lib/email/templates";
 import { fullListingSchema } from "@/lib/validators/listing";
+import { checkFieldsProfanity } from "@/lib/moderation";
 import { redirect } from "next/navigation";
 
 export type ListingActionState = {
@@ -150,6 +151,17 @@ export async function createListing(
     return { fieldErrors, error: "Please fix the errors below." };
   }
 
+  const profanityField = checkFieldsProfanity({
+    name: parsed.data.name,
+    description: parsed.data.description,
+    temperament: parsed.data.temperament,
+    reason_for_sale: parsed.data.reason_for_sale,
+    show_experience: parsed.data.show_experience,
+  });
+  if (profanityField) {
+    return { error: `The "${profanityField}" field contains inappropriate language. Please revise.` };
+  }
+
   const { data, error } = await supabase
     .from("horse_listings")
     .insert({
@@ -225,6 +237,17 @@ export async function updateListing(
       fieldErrors[path] = issue.message;
     });
     return { fieldErrors, error: "Please fix the errors below." };
+  }
+
+  const profanityField = checkFieldsProfanity({
+    name: parsed.data.name,
+    description: parsed.data.description,
+    temperament: parsed.data.temperament,
+    reason_for_sale: parsed.data.reason_for_sale,
+    show_experience: parsed.data.show_experience,
+  });
+  if (profanityField) {
+    return { error: `The "${profanityField}" field contains inappropriate language. Please revise.` };
   }
 
   const { error } = await supabase
