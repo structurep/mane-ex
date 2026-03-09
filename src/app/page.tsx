@@ -39,6 +39,9 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen">
+      {/* Preload hero images — start download before body parses for faster LCP */}
+      <link rel="preload" as="image" href="/hero-mobile.webp" type="image/webp" media="(max-width: 768px)" />
+      <link rel="preload" as="image" href="/hero.webp" type="image/webp" media="(min-width: 769px)" />
       <Header />
 
       <main>
