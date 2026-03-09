@@ -45,6 +45,7 @@ import { ListingGallery } from "@/components/marketplace/listing-gallery";
 import { HennekeScoreDisplay } from "@/components/marketplace/henneke-score";
 import { RegistryBadges, type RegistryRecord, type RegistryType } from "@/components/marketplace/registry-lookup";
 import type { ListingRegistryRecord } from "@/types/listings";
+import { DetailGrid, type DetailField } from "@/components/tailwind-plus";
 
 type MediaItem = {
   id: string;
@@ -345,58 +346,31 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
                 </section>
               )}
 
-              {/* Daily Life — only show populated fields */}
-              {(l.current_rider ||
-                l.current_trainer ||
-                l.turnout_schedule ||
-                l.feeding_program ||
-                l.shoeing_schedule ||
-                l.supplements) && (
-                <section>
-                  <p className="overline mb-4 text-[11px] tracking-widest text-ink-light">DAILY LIFE</p>
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    {l.current_rider && (
-                      <QuickFact label="Current Rider" value={l.current_rider} />
-                    )}
-                    {l.current_trainer && (
-                      <QuickFact label="Current Trainer" value={l.current_trainer} />
-                    )}
-                    {l.turnout_schedule && (
-                      <QuickFact label="Turnout" value={l.turnout_schedule} />
-                    )}
-                    {l.feeding_program && (
-                      <QuickFact label="Feeding Program" value={l.feeding_program} />
-                    )}
-                    {l.shoeing_schedule && (
-                      <QuickFact label="Shoeing Schedule" value={l.shoeing_schedule} />
-                    )}
-                    {l.supplements && (
-                      <QuickFact label="Supplements" value={l.supplements} />
-                    )}
-                  </div>
-                </section>
-              )}
+              {/* Daily Life — grid description list */}
+              {(() => {
+                const dailyFields: DetailField[] = [];
+                if (l.current_rider) dailyFields.push({ label: "Current Rider", value: l.current_rider });
+                if (l.current_trainer) dailyFields.push({ label: "Current Trainer", value: l.current_trainer });
+                if (l.turnout_schedule) dailyFields.push({ label: "Turnout", value: l.turnout_schedule });
+                if (l.feeding_program) dailyFields.push({ label: "Feeding Program", value: l.feeding_program });
+                if (l.shoeing_schedule) dailyFields.push({ label: "Shoeing Schedule", value: l.shoeing_schedule });
+                if (l.supplements) dailyFields.push({ label: "Supplements", value: l.supplements });
+
+                return dailyFields.length > 0 ? (
+                  <DetailGrid title="Daily Life" fields={dailyFields} />
+                ) : null;
+              })()}
 
               {/* Ownership history */}
-              {(l.years_with_current_owner != null || l.number_of_previous_owners != null) && (
-                <section>
-                  <p className="overline mb-4 text-[11px] tracking-widest text-ink-light">OWNERSHIP HISTORY</p>
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    {l.years_with_current_owner != null && (
-                      <QuickFact
-                        label="Years with Current Owner"
-                        value={`${l.years_with_current_owner} year${l.years_with_current_owner !== 1 ? "s" : ""}`}
-                      />
-                    )}
-                    {l.number_of_previous_owners != null && (
-                      <QuickFact
-                        label="Previous Owners"
-                        value={String(l.number_of_previous_owners)}
-                      />
-                    )}
-                  </div>
-                </section>
-              )}
+              {(() => {
+                const ownerFields: DetailField[] = [];
+                if (l.years_with_current_owner != null) ownerFields.push({ label: "Years with Current Owner", value: `${l.years_with_current_owner} year${l.years_with_current_owner !== 1 ? "s" : ""}` });
+                if (l.number_of_previous_owners != null) ownerFields.push({ label: "Previous Owners", value: String(l.number_of_previous_owners) });
+
+                return ownerFields.length > 0 ? (
+                  <DetailGrid title="Ownership History" fields={ownerFields} />
+                ) : null;
+              })()}
 
               {/* Digital Passport link */}
               <section>

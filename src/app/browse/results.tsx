@@ -16,6 +16,7 @@ import type { HorseListing } from "@/types/listings";
 import { SaveSearchButton } from "./save-search-button";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "@/components/marketplace/scroll-reveal";
+import { EmptyState } from "@/components/tailwind-plus";
 
 type Props = {
   params: {
@@ -125,20 +126,22 @@ export async function BrowseResults({ params }: Props) {
       (k) => k !== "page" && params[k as keyof typeof params]
     );
     return (
-      <div className="rounded-lg border border-dashed border-crease-mid bg-paper-cream px-8 py-16 text-center">
-        <p className="font-serif text-xl font-semibold text-ink-dark">
-          No horses found
-        </p>
-        <p className="mx-auto mt-2 max-w-sm text-sm text-ink-mid">
-          {hasFilters
-            ? "No listings match your current filters. Try broadening your search or removing some filters."
-            : "Check back soon — new listings are added regularly."}
-        </p>
-        {hasFilters && (
-          <Button variant="outline" size="sm" className="mt-5" asChild>
-            <Link href="/browse">Reset All Filters</Link>
-          </Button>
-        )}
+      <div className="rounded-lg border border-dashed border-crease-mid bg-paper-cream">
+        <EmptyState
+          icon={
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="size-10">
+              <path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          }
+          title="No horses found"
+          description={
+            hasFilters
+              ? "No listings match your current filters. Try broadening your search or removing some filters."
+              : "Check back soon — new listings are added regularly."
+          }
+          actionLabel={hasFilters ? "Reset All Filters" : undefined}
+          actionHref={hasFilters ? "/browse" : undefined}
+        />
       </div>
     );
   }

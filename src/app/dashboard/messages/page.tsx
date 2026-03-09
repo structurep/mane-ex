@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { MessageCircle } from "lucide-react";
 import { ConversationList } from "./conversation-list";
+import { EmptyState } from "@/components/tailwind-plus";
 
 export const metadata: Metadata = { title: "Messages" };
 
@@ -66,13 +67,14 @@ export default async function MessagesPage() {
       </div>
 
       {enriched.length === 0 ? (
-        <div className="rounded-lg border-0 bg-paper-cream p-12 text-center shadow-flat">
-          <MessageCircle className="mx-auto h-10 w-10 text-ink-faint" />
-          <h3 className="mt-4 font-medium text-ink-dark">No messages yet</h3>
-          <p className="mt-1 text-sm text-ink-mid">
-            When you message a seller or receive an inquiry, it will appear
-            here.
-          </p>
+        <div className="rounded-lg border-0 bg-paper-cream shadow-flat">
+          <EmptyState
+            icon={<MessageCircle className="size-10" />}
+            title="No messages yet"
+            description="When you message a seller or receive an inquiry, it will appear here."
+            actionLabel="Browse Listings"
+            actionHref="/browse"
+          />
         </div>
       ) : (
         <ConversationList conversations={enriched} />

@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { Badge } from "@/components/ui/badge";
 import { formatCentsToDollars } from "@/lib/stripe/config";
 import {
   HandCoins,
@@ -11,44 +10,23 @@ import {
   ArrowLeftRight,
   Shield,
 } from "lucide-react";
+import { StatusBadge, EmptyState } from "@/components/tailwind-plus";
 
 export const metadata: Metadata = { title: "Offers" };
 
+type BadgeVariant = "gray" | "green" | "red" | "yellow" | "blue" | "forest";
+
 const STATUS_CONFIG: Record<
   string,
-  { label: string; color: string; icon: React.ElementType }
+  { label: string; variant: BadgeVariant; icon: React.ElementType }
 > = {
-  pending: { label: "Pending", color: "bg-gold/10 text-gold", icon: Clock },
-  accepted: {
-    label: "Accepted",
-    color: "bg-forest/10 text-forest",
-    icon: CheckCircle,
-  },
-  rejected: {
-    label: "Declined",
-    color: "bg-red/10 text-red",
-    icon: XCircle,
-  },
-  countered: {
-    label: "Countered",
-    color: "bg-blue/10 text-blue",
-    icon: ArrowLeftRight,
-  },
-  expired: {
-    label: "Expired",
-    color: "bg-ink-faint/10 text-ink-light",
-    icon: Clock,
-  },
-  withdrawn: {
-    label: "Withdrawn",
-    color: "bg-ink-faint/10 text-ink-light",
-    icon: XCircle,
-  },
-  in_escrow: {
-    label: "In Escrow",
-    color: "bg-forest/10 text-forest",
-    icon: Shield,
-  },
+  pending: { label: "Pending", variant: "yellow", icon: Clock },
+  accepted: { label: "Accepted", variant: "green", icon: CheckCircle },
+  rejected: { label: "Declined", variant: "red", icon: XCircle },
+  countered: { label: "Countered", variant: "blue", icon: ArrowLeftRight },
+  expired: { label: "Expired", variant: "gray", icon: Clock },
+  withdrawn: { label: "Withdrawn", variant: "gray", icon: XCircle },
+  in_escrow: { label: "In Escrow", variant: "forest", icon: Shield },
 };
 
 export default async function OffersPage() {
@@ -101,12 +79,14 @@ export default async function OffersPage() {
       </div>
 
       {isEmpty ? (
-        <div className="rounded-lg border-0 bg-paper-cream p-12 text-center shadow-flat">
-          <HandCoins className="mx-auto h-10 w-10 text-ink-faint" />
-          <h3 className="mt-4 font-medium text-ink-dark">No offers yet</h3>
-          <p className="mt-1 text-sm text-ink-mid">
-            When you make or receive an offer on a listing, it will appear here.
-          </p>
+        <div className="rounded-lg border-0 bg-paper-cream shadow-flat">
+          <EmptyState
+            icon={<HandCoins className="size-10" />}
+            title="No offers yet"
+            description="When you make or receive an offer on a listing, it will appear here."
+            actionLabel="Browse Listings"
+            actionHref="/browse"
+          />
         </div>
       ) : (
         <div className="space-y-8">
@@ -169,7 +149,6 @@ function OfferCard({
   otherPartyLabel: string;
 }) {
   const config = STATUS_CONFIG[offer.status] ?? STATUS_CONFIG.pending;
-  const StatusIcon = config.icon;
 
   return (
     <Link
@@ -182,10 +161,7 @@ function OfferCard({
             <p className="truncate font-medium text-ink-black">
               {offer.listing?.name ?? "Unknown listing"}
             </p>
-            <Badge variant="secondary" className={`shrink-0 text-xs ${config.color}`}>
-              <StatusIcon className="mr-1 h-3 w-3" />
-              {config.label}
-            </Badge>
+            <StatusBadge label={config.label} variant={config.variant} />
           </div>
           <p className="mt-1 text-sm text-ink-mid">
             {otherPartyLabel}{" "}

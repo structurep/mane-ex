@@ -4,8 +4,8 @@ import { useReducer, useActionState, useEffect, useRef, useCallback } from "reac
 import { createListing, updateListing, type ListingActionState } from "@/actions/listings";
 import { useAutosave, type SaveStatus } from "@/hooks/use-autosave";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { WIZARD_STEPS } from "@/types/listings";
+import { StepPanels, type Step, AlertBanner } from "@/components/tailwind-plus";
 import { ChevronLeft, ChevronRight, Send, Save } from "lucide-react";
 import { toast } from "sonner";
 import { StepBasicInfo } from "./steps/basic-info";
@@ -129,27 +129,18 @@ export function ListingWizard({ mode = "create", listingId, initialData, onDirty
 
   return (
     <div className="rounded-lg border-0 bg-paper-cream shadow-folded">
-      {/* Step navigation */}
-      <div className="border-b border-crease-light px-6 pt-4 pb-3">
-        <div className="mb-3 flex items-center gap-2 overflow-x-auto">
-          {WIZARD_STEPS.map((ws, i) => (
-            <button
-              key={ws.key}
-              type="button"
-              onClick={() => dispatch({ type: "SET_STEP", step: i })}
-              className={`whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium transition-colors ${
-                i === state.step
-                  ? "bg-primary text-primary-foreground"
-                  : i < state.step
-                    ? "bg-forest/10 text-forest"
-                    : "bg-paper-warm text-ink-light"
-              }`}
-            >
-              {ws.number}. {ws.label}
-            </button>
-          ))}
-        </div>
-        <Progress value={progress} className="h-1" aria-label={`Step ${state.step + 1} of ${WIZARD_STEPS.length}`} />
+      {/* Step navigation — panel-style progress indicator */}
+      <div className="border-b border-crease-light px-4 py-3 md:px-6">
+        <StepPanels
+          steps={WIZARD_STEPS.map((ws, i): Step => ({
+            id: String(ws.number),
+            name: ws.label,
+            status: i < state.step ? "complete" : i === state.step ? "current" : "upcoming",
+          }))}
+          onStepClick={(stepId) =>
+            dispatch({ type: "SET_STEP", step: parseInt(stepId) - 1 })
+          }
+        />
       </div>
 
       {/* Step content */}
@@ -191,9 +182,9 @@ export function ListingWizard({ mode = "create", listingId, initialData, onDirty
 
         {/* Error display */}
         {actionState.error && state.step === WIZARD_STEPS.length - 1 && (
-          <div className="mb-4 rounded-md bg-red-light p-3 text-sm text-red">
-            {actionState.error}
-          </div>
+          <AlertBanner variant="error" title="Something went wrong" className="mb-4">
+            <p>{actionState.error}</p>
+          </AlertBanner>
         )}
 
         {/* Current step */}
