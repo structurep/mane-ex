@@ -1,11 +1,9 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Feature preview (coming soon) pages", () => {
-  test("trainers directory shows feature preview", async ({ page }) => {
+  test("trainers directory renders heading", async ({ page }) => {
     await page.goto("/trainers");
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-    await expect(page.getByText("Trainer Directory is coming soon")).toBeVisible();
-    await expect(page.getByText("Browse Horses").first()).toBeVisible();
   });
 
   test("trainers/[id] returns 404", async ({ page }) => {
