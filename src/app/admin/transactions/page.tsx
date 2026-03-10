@@ -1,16 +1,16 @@
 import { getAdminTransactions } from "@/actions/admin";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge, type BadgeVariant } from "@/components/tailwind-plus";
 
-const statusColors: Record<string, string> = {
-  pending: "bg-gray-100 text-gray-600",
-  funded: "bg-paper-warm text-ink-mid",
-  shipping: "bg-yellow-100 text-yellow-700",
-  delivered: "bg-purple-100 text-purple-700",
-  completed: "bg-green-100 text-green-700",
-  disputed: "bg-red-light text-red",
-  refunded: "bg-orange-100 text-orange-700",
-  cancelled: "bg-gray-100 text-gray-600",
+const statusVariants: Record<string, BadgeVariant> = {
+  pending: "yellow",
+  funded: "blue",
+  shipping: "indigo",
+  delivered: "purple",
+  completed: "forest",
+  disputed: "red",
+  refunded: "yellow",
+  cancelled: "gray",
 };
 
 export default async function AdminTransactionsPage() {
@@ -48,9 +48,9 @@ export default async function AdminTransactionsPage() {
                 <div className="flex items-center justify-between">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <Badge className={statusColors[tx.status] || ""}>
+                      <StatusBadge variant={statusVariants[tx.status] || "gray"}>
                         {tx.status}
-                      </Badge>
+                      </StatusBadge>
                       <span className="text-sm font-medium text-ink-black">
                         ${(tx.amount / 100).toLocaleString()}
                       </span>

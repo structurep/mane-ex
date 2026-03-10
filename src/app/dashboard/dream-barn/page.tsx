@@ -1,6 +1,6 @@
 import { getMyCollections } from "@/actions/collections";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/tailwind-plus";
 import Link from "next/link";
 import { Heart, Lock, Globe, Link2 } from "lucide-react";
 import { CreateCollectionForm } from "./create-form";
@@ -62,10 +62,9 @@ export default async function DreamBarnPage() {
                       <h3 className="font-heading font-medium text-ink-black group-hover:text-primary">
                         {collection.name}
                       </h3>
-                      <Badge variant="secondary" className="gap-1 text-xs">
-                        <VisIcon className="h-3 w-3" />
+                      <StatusBadge variant="blue" dot={false}>
                         {vis.label}
-                      </Badge>
+                      </StatusBadge>
                     </div>
 
                     {typeof collection.description === "string" ? (

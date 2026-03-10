@@ -3,6 +3,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { SelectMenu } from "@/components/tailwind-plus";
 
 type StepProps = {
   data: Record<string, unknown>;
@@ -33,17 +34,17 @@ export function StepFarmLife({ data, setField }: StepProps) {
         </div>
         <div>
           <Label htmlFor="location_state">State</Label>
-          <select
-            id="location_state"
+          <SelectMenu
+            label="Select..."
             value={(data.location_state as string) || ""}
-            onChange={(e) => setField("location_state", e.target.value)}
-            className="mt-1.5 w-full rounded-md border-0 bg-paper-white px-3 py-2 text-sm text-ink-black shadow-flat focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
+            onChange={(val) => setField("location_state", val)}
+            variant="field"
+            className="mt-1.5"
           >
-            <option value="">Select...</option>
             {US_STATES.map((s) => (
               <option key={s} value={s}>{s}</option>
             ))}
-          </select>
+          </SelectMenu>
         </div>
         <div>
           <Label htmlFor="location_zip">ZIP</Label>

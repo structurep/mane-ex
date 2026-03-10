@@ -1,7 +1,7 @@
 import { getDiscoveryFeed } from "@/actions/discovery";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/tailwind-plus";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -74,12 +74,12 @@ export default async function DiscoverPage() {
                 <h2 className="font-serif text-2xl text-ink-black md:text-3xl">
                   {section.title}
                 </h2>
-                <Badge
-                  variant="secondary"
-                  className={`ml-1 text-xs ${SECTION_ACCENTS[section.type] ?? ""}`}
+                <StatusBadge
+                  variant={section.type === "just_sold" ? "forest" : section.type === "new_this_week" ? "blue" : "gold"}
+                  className="ml-1"
                 >
                   {section.listings.length}
-                </Badge>
+                </StatusBadge>
               </div>
 
               {section.listings.length === 0 ? (

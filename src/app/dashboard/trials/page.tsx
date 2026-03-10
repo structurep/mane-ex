@@ -1,6 +1,6 @@
 import { getMyTrials, getMyTours } from "@/actions/trials";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/tailwind-plus";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
@@ -8,24 +8,23 @@ import {
   Calendar,
   MapPin,
   Clock,
-  CheckCircle2,
-  XCircle,
-  AlertCircle,
   Route,
 } from "lucide-react";
 import { TrialActions } from "./trial-actions";
 import { TourCard } from "./tour-card";
 
+import type { BadgeVariant } from "@/components/tailwind-plus";
+
 const STATUS_CONFIG: Record<
   string,
-  { label: string; color: string; icon: React.ElementType }
+  { label: string; variant: BadgeVariant }
 > = {
-  requested: { label: "Requested", color: "bg-amber-100 text-amber-800", icon: Clock },
-  confirmed: { label: "Confirmed", color: "bg-forest/10 text-forest", icon: CheckCircle2 },
-  rescheduled: { label: "Rescheduled", color: "bg-paper-warm text-ink-mid", icon: AlertCircle },
-  completed: { label: "Completed", color: "bg-ink-light/10 text-ink-mid", icon: CheckCircle2 },
-  cancelled: { label: "Cancelled", color: "bg-red-light text-red", icon: XCircle },
-  no_show: { label: "No Show", color: "bg-red-light text-red", icon: XCircle },
+  requested: { label: "Requested", variant: "yellow" },
+  confirmed: { label: "Confirmed", variant: "forest" },
+  rescheduled: { label: "Rescheduled", variant: "gray" },
+  completed: { label: "Completed", variant: "gray" },
+  cancelled: { label: "Cancelled", variant: "red" },
+  no_show: { label: "No Show", variant: "red" },
 };
 
 function formatDate(dateStr: string) {
@@ -160,7 +159,6 @@ function TrialCard({
   const seller = trial.seller as Record<string, unknown> | null;
   const status = trial.status as string;
   const config = STATUS_CONFIG[status] ?? STATUS_CONFIG.requested;
-  const StatusIcon = config.icon;
 
   const displayDate =
     (trial.confirmed_date as string) || (trial.preferred_date as string);
@@ -171,10 +169,9 @@ function TrialCard({
         {/* Left: listing + date info */}
         <div className="flex-1 space-y-3">
           <div className="flex items-center gap-2">
-            <Badge className={config.color} variant="secondary">
-              <StatusIcon className="mr-1 h-3 w-3" />
+            <StatusBadge variant={config.variant}>
               {config.label}
-            </Badge>
+            </StatusBadge>
             {listing && (
               <Link
                 href={`/horses/${listing.slug}`}

@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
 import { ReviewCard } from "@/components/marketplace/review-card";
+import { SelectMenu } from "@/components/tailwind-plus";
 
 type ReviewData = {
   id: string;
@@ -81,15 +82,15 @@ export function ReviewsFeed({ reviews }: { reviews: ReviewData[] }) {
               className="w-full rounded-lg bg-paper-white py-3 pl-11 pr-4 text-sm text-ink-black shadow-flat placeholder:text-ink-light focus:shadow-folded focus:outline-none"
             />
           </div>
-          <select
+          <SelectMenu
+            label="Sort by"
             value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="rounded-lg bg-paper-white px-3 py-3 text-sm text-ink-black shadow-flat"
+            onChange={setSortBy}
           >
             <option value="recent">Most Recent</option>
             <option value="highest">Highest Rated</option>
             <option value="lowest">Lowest Rated</option>
-          </select>
+          </SelectMenu>
         </div>
 
         {/* Filter pills */}

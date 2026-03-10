@@ -1,6 +1,6 @@
 import { getCollectionWithItems } from "@/actions/collections";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/tailwind-plus";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -64,10 +64,9 @@ export default async function CollectionDetailPage({
             <h1 className="font-serif text-2xl font-semibold text-ink-black">
               {collection.name}
             </h1>
-            <Badge variant="secondary" className="gap-1">
-              <VisIcon className="h-3 w-3" />
+            <StatusBadge variant="blue" dot={false}>
               {vis.label}
-            </Badge>
+            </StatusBadge>
           </div>
           {typeof collection.description === "string" ? (
             <p className="mt-1 text-ink-mid">{collection.description}</p>
@@ -167,9 +166,9 @@ export default async function CollectionDetailPage({
                   </div>
 
                   {listing.status === "sold" && (
-                    <Badge variant="secondary" className="bg-ink-light/10 text-ink-mid">
+                    <StatusBadge variant="gray">
                       Sold
-                    </Badge>
+                    </StatusBadge>
                   )}
                 </div>
               </Card>

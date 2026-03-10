@@ -6,7 +6,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { BottomCTA } from "@/components/marketing/bottom-cta";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/tailwind-plus";
 import { CheckCircle2, ArrowRight } from "lucide-react";
 
 const sellerTiers = [
@@ -221,16 +221,16 @@ export function PricingContent() {
                     >
                       {isHighlighted && (
                         <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                          <Badge className="bg-primary text-primary-foreground">
+                          <StatusBadge variant="oxblood">
                             Most Popular
-                          </Badge>
+                          </StatusBadge>
                         </div>
                       )}
                       {isElite && (
                         <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                          <Badge className="bg-gold text-paddock">
+                          <StatusBadge variant="gold">
                             Best Value
-                          </Badge>
+                          </StatusBadge>
                         </div>
                       )}
 
@@ -382,9 +382,9 @@ export function PricingContent() {
                 {/* Buyer Pro */}
                 <div className="relative rounded-2xl border-2 border-primary bg-paper-white p-6 shadow-lifted">
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <Badge className="bg-primary text-primary-foreground">
+                    <StatusBadge variant="oxblood">
                       Most Popular
-                    </Badge>
+                    </StatusBadge>
                   </div>
                   <p className="text-xs font-semibold uppercase tracking-wider text-primary">
                     Find Your Horse

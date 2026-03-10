@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/tailwind-plus";
 import { Button } from "@/components/ui/button";
 import { deleteTour } from "@/actions/trials";
 import Link from "next/link";
@@ -15,12 +15,14 @@ import {
   Trash2,
 } from "lucide-react";
 
-const TOUR_STATUS_COLORS: Record<string, string> = {
-  planning: "bg-amber-100 text-amber-800",
-  confirmed: "bg-forest/10 text-forest",
-  in_progress: "bg-paper-warm text-ink-mid",
-  completed: "bg-ink-light/10 text-ink-mid",
-  cancelled: "bg-red-light text-red",
+import type { BadgeVariant } from "@/components/tailwind-plus";
+
+const TOUR_STATUS_VARIANTS: Record<string, BadgeVariant> = {
+  planning: "yellow",
+  confirmed: "forest",
+  in_progress: "blue",
+  completed: "gray",
+  cancelled: "red",
 };
 
 export function TourCard({ tour }: { tour: Record<string, unknown> }) {
@@ -48,9 +50,9 @@ export function TourCard({ tour }: { tour: Record<string, unknown> }) {
               <h3 className="font-heading text-lg font-medium text-ink-black">
                 {tour.name as string}
               </h3>
-              <Badge className={TOUR_STATUS_COLORS[status]} variant="secondary">
+              <StatusBadge variant={TOUR_STATUS_VARIANTS[status] ?? "gray"}>
                 {status}
-              </Badge>
+              </StatusBadge>
             </div>
             <div className="flex items-center gap-3 text-sm text-ink-mid">
               <span className="flex items-center gap-1">

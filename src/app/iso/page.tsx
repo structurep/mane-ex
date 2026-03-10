@@ -1,8 +1,8 @@
 import { getIsos } from "@/actions/isos";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/tailwind-plus";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Search, MapPin, Plus, Users, Send } from "lucide-react";
+import { Search, MapPin, Plus, Send } from "lucide-react";
 import { IsoMatchModal } from "@/components/iso-match-modal";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -137,13 +137,12 @@ export default async function IsoBrowsePage() {
                           {criteria.length > 0 && (
                             <div className="flex flex-wrap gap-1.5">
                               {criteria.map((c, i) => (
-                                <Badge
+                                <StatusBadge
                                   key={i}
-                                  variant="secondary"
-                                  className="bg-paper-warm text-xs text-ink-dark"
+                                  variant="gray"
                                 >
                                   {c}
-                                </Badge>
+                                </StatusBadge>
                               ))}
                             </div>
                           )}
@@ -166,10 +165,9 @@ export default async function IsoBrowsePage() {
 
                         <div className="ml-4 flex flex-col items-end gap-2">
                           {iso.match_count > 0 && (
-                            <Badge variant="secondary" className="gap-1 bg-forest-light text-forest">
-                              <Users className="h-3 w-3" />
+                            <StatusBadge variant="forest" dot>
                               {iso.match_count} match{iso.match_count !== 1 ? "es" : ""}
-                            </Badge>
+                            </StatusBadge>
                           )}
                           <IsoMatchModal isoId={iso.id} isoTitle={iso.title}>
                             <Button size="sm" variant="outline" className="gap-1.5">

@@ -5,13 +5,12 @@ import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/tailwind-plus";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
   MapPin,
   Calendar,
-  Shield,
   MessageCircle,
   ChevronRight,
   Store,
@@ -164,10 +163,9 @@ export default async function SellerProfilePage({ params }: Props) {
                 </div>
 
                 {profile.identity_verified === true && (
-                  <Badge variant="secondary" className="mt-3 text-xs">
-                    <Shield className="mr-1 h-3 w-3 text-forest" />
+                  <StatusBadge variant="forest" dot className="mt-3">
                     Identity Verified
-                  </Badge>
+                  </StatusBadge>
                 )}
 
                 {/* Mane Score + Badges */}
@@ -242,13 +240,12 @@ export default async function SellerProfilePage({ params }: Props) {
                 {farm.disciplines && farm.disciplines.length > 0 && (
                   <div className="mt-3 flex flex-wrap gap-1.5">
                     {farm.disciplines.map((d: string) => (
-                      <Badge
+                      <StatusBadge
                         key={d}
-                        variant="secondary"
-                        className="text-xs"
+                        variant="blue"
                       >
                         {d}
-                      </Badge>
+                      </StatusBadge>
                     ))}
                   </div>
                 )}

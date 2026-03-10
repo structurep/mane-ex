@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/tailwind-plus";
 import Link from "next/link";
 import { MapPin, Calendar, TrendingUp } from "lucide-react";
 import { Header } from "@/components/layout/header";
@@ -103,12 +103,12 @@ export default async function JustSoldPage() {
                               {listing.name}
                             </Link>
                             {disciplines.length > 0 && (
-                              <Badge
-                                variant="secondary"
-                                className="shrink-0 bg-paper-warm text-xs text-ink-dark"
+                              <StatusBadge
+                                variant="blue"
+                                className="shrink-0"
                               >
                                 {disciplines[0].name}
-                              </Badge>
+                              </StatusBadge>
                             )}
                           </div>
 

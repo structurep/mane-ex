@@ -2,6 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SelectMenu } from "@/components/tailwind-plus";
 
 type StepProps = {
   data: Record<string, unknown>;
@@ -68,35 +69,31 @@ export function StepBasicInfo({ data, setField }: StepProps) {
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <Label htmlFor="breed">Breed</Label>
-          <select
-            id="breed"
+          <SelectMenu
+            label="Select breed"
             value={(data.breed as string) || ""}
-            onChange={(e) => setField("breed", e.target.value)}
-            className="mt-1.5 w-full rounded-md border-0 bg-paper-white px-3 py-2 text-sm text-ink-black shadow-flat focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
+            onChange={(val) => setField("breed", val)}
+            variant="field"
+            className="mt-1.5"
           >
-            <option value="">Select breed</option>
             {breeds.map((b) => (
-              <option key={b} value={b}>
-                {b}
-              </option>
+              <option key={b} value={b}>{b}</option>
             ))}
-          </select>
+          </SelectMenu>
         </div>
         <div>
           <Label htmlFor="color">Color</Label>
-          <select
-            id="color"
+          <SelectMenu
+            label="Select color"
             value={(data.color as string) || ""}
-            onChange={(e) => setField("color", e.target.value)}
-            className="mt-1.5 w-full rounded-md border-0 bg-paper-white px-3 py-2 text-sm text-ink-black shadow-flat focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
+            onChange={(val) => setField("color", val)}
+            variant="field"
+            className="mt-1.5"
           >
-            <option value="">Select color</option>
             {colors.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
+              <option key={c} value={c}>{c}</option>
             ))}
-          </select>
+          </SelectMenu>
         </div>
       </div>
 
@@ -176,19 +173,17 @@ export function StepBasicInfo({ data, setField }: StepProps) {
       {/* Registry */}
       <div>
         <Label htmlFor="registry">Registry</Label>
-        <select
-          id="registry"
+        <SelectMenu
+          label="Select registry..."
           value={(data.registry as string) || ""}
-          onChange={(e) => setField("registry", e.target.value)}
-          className="mt-1.5 w-full rounded-md border-0 bg-paper-white px-3 py-2 text-sm text-ink-black shadow-flat focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
+          onChange={(val) => setField("registry", val)}
+          variant="field"
+          className="mt-1.5"
         >
-          <option value="">Select registry...</option>
           {registries.map((r) => (
-            <option key={r} value={r}>
-              {r}
-            </option>
+            <option key={r} value={r}>{r}</option>
           ))}
-        </select>
+        </SelectMenu>
       </div>
 
       {/* Sire & Dam */}

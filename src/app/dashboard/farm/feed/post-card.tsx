@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { deletePost, pinPost } from "@/actions/barn-posts";
 import { PostMediaGrid } from "./post-media-grid";
 import { PostComments } from "./post-comments";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/tailwind-plus";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -94,16 +94,14 @@ export function PostCard({
               {author?.display_name ?? "Member"}
             </span>
             {type === "announcement" && (
-              <Badge variant="secondary" className="text-xs">
-                <Megaphone className="mr-1 h-3 w-3" />
+              <StatusBadge variant="gold" dot={false}>
                 Announcement
-              </Badge>
+              </StatusBadge>
             )}
             {isPinned && (
-              <Badge variant="outline" className="text-xs">
-                <Pin className="mr-1 h-3 w-3" />
+              <StatusBadge variant="blue" dot={false}>
                 Pinned
-              </Badge>
+              </StatusBadge>
             )}
           </div>
           <span className="text-xs text-ink-light">{timeAgo(createdAt)}</span>

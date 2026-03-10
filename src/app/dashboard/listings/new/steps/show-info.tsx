@@ -3,6 +3,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { SelectMenu } from "@/components/tailwind-plus";
 
 type StepProps = {
   data: Record<string, unknown>;
@@ -59,17 +60,17 @@ export function StepShowInfo({ data, setField }: StepProps) {
       {/* Level */}
       <div>
         <Label htmlFor="level">Level</Label>
-        <select
-          id="level"
+        <SelectMenu
+          label="Select level..."
           value={(data.level as string) || ""}
-          onChange={(e) => setField("level", e.target.value)}
-          className="mt-1.5 w-full rounded-md border-0 bg-paper-white px-3 py-2 text-sm text-ink-black shadow-flat"
+          onChange={(val) => setField("level", val)}
+          variant="field"
+          className="mt-1.5"
         >
-          <option value="">Select level...</option>
           {levels.map((l) => (
             <option key={l} value={l}>{l}</option>
           ))}
-        </select>
+        </SelectMenu>
       </div>
 
       {/* Show Experience */}

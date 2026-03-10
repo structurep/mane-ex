@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { removeMember, updateMemberRole } from "@/actions/barn";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/tailwind-plus";
 import {
   Select,
   SelectContent,
@@ -12,14 +12,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { User, Shield, Crown, Trash2 } from "lucide-react";
+import { User, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-const ROLE_LABELS: Record<string, { label: string; icon: typeof Shield }> = {
-  owner: { label: "Owner", icon: Crown },
-  manager: { label: "Manager", icon: Shield },
-  trainer: { label: "Trainer", icon: User },
-  staff: { label: "Staff", icon: User },
+const ROLE_LABELS: Record<string, string> = {
+  owner: "Owner",
+  manager: "Manager",
+  trainer: "Trainer",
+  staff: "Staff",
 };
 
 export function MemberList({
@@ -69,7 +69,6 @@ export function MemberList({
         const userId = member.user_id as string;
         const role = member.role as string;
         const title = member.title as string | null;
-        const RoleIcon = ROLE_LABELS[role]?.icon ?? User;
         const isMemberOwner = userId === ownerId;
 
         return (
@@ -98,10 +97,9 @@ export function MemberList({
                 <span className="text-sm font-medium text-ink-black">
                   {profile?.display_name ?? profile?.email ?? "Unknown"}
                 </span>
-                <Badge variant="secondary" className="text-xs">
-                  <RoleIcon className="mr-1 h-3 w-3" />
-                  {ROLE_LABELS[role]?.label ?? role}
-                </Badge>
+                <StatusBadge variant="indigo" dot={false}>
+                  {ROLE_LABELS[role] ?? role}
+                </StatusBadge>
               </div>
               {title && (
                 <p className="text-xs text-ink-light">{title}</p>

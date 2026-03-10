@@ -1,21 +1,23 @@
 import { getMyIsos, getIsoMatches } from "@/actions/isos";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/tailwind-plus";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Search, Plus, Users, Clock, CheckCircle, XCircle } from "lucide-react";
+import { Search, Plus, Clock, CheckCircle, XCircle } from "lucide-react";
 import { CloseIsoButton } from "./close-iso-button";
 
 function formatPriceCents(cents: number): string {
   return `$${(cents / 100).toLocaleString()}`;
 }
 
-const STATUS_STYLES: Record<string, { label: string; className: string }> = {
-  active: { label: "Active", className: "bg-forest/10 text-forest" },
-  paused: { label: "Paused", className: "bg-gold/10 text-gold" },
-  fulfilled: { label: "Fulfilled", className: "bg-blue/10 text-blue" },
-  expired: { label: "Expired", className: "bg-ink-light/10 text-ink-light" },
-  closed: { label: "Closed", className: "bg-ink-faint/10 text-ink-mid" },
+import type { BadgeVariant } from "@/components/tailwind-plus";
+
+const STATUS_STYLES: Record<string, { label: string; variant: BadgeVariant }> = {
+  active: { label: "Active", variant: "forest" },
+  paused: { label: "Paused", variant: "yellow" },
+  fulfilled: { label: "Fulfilled", variant: "blue" },
+  expired: { label: "Expired", variant: "gray" },
+  closed: { label: "Closed", variant: "gray" },
 };
 
 export default async function DashboardIsosPage() {
@@ -116,7 +118,7 @@ export default async function DashboardIsosPage() {
                         <h3 className="font-heading text-lg font-medium text-ink-black">
                           {iso.title}
                         </h3>
-                        <Badge className={style.className}>{style.label}</Badge>
+                        <StatusBadge variant={style.variant}>{style.label}</StatusBadge>
                       </div>
                       <p className="line-clamp-2 text-sm text-ink-mid">
                         {iso.description}
@@ -125,41 +127,40 @@ export default async function DashboardIsosPage() {
                       {/* Criteria summary */}
                       <div className="flex flex-wrap gap-1.5 pt-1">
                         {(iso.min_price !== null || iso.max_price !== null) && (
-                          <Badge variant="secondary" className="text-xs">
+                          <StatusBadge variant="gold" dot={false}>
                             {iso.min_price ? formatPriceCents(iso.min_price) : "Any"}
                             {" – "}
                             {iso.max_price ? formatPriceCents(iso.max_price) : "Any"}
-                          </Badge>
+                          </StatusBadge>
                         )}
                         {iso.gender.length > 0 && (
-                          <Badge variant="secondary" className="text-xs">
+                          <StatusBadge variant="blue" dot={false}>
                             {iso.gender.map((g) => g.charAt(0).toUpperCase() + g.slice(1)).join(", ")}
-                          </Badge>
+                          </StatusBadge>
                         )}
                         {iso.breeds.length > 0 && (
-                          <Badge variant="secondary" className="text-xs">
+                          <StatusBadge variant="blue" dot={false}>
                             {iso.breeds.join(", ")}
-                          </Badge>
+                          </StatusBadge>
                         )}
                         {iso.preferred_states.length > 0 && (
-                          <Badge variant="secondary" className="text-xs">
+                          <StatusBadge variant="blue" dot={false}>
                             {iso.preferred_states.join(", ")}
-                          </Badge>
+                          </StatusBadge>
                         )}
                         {typeof iso.level === "string" && (
-                          <Badge variant="secondary" className="text-xs">
+                          <StatusBadge variant="blue" dot={false}>
                             {iso.level}
-                          </Badge>
+                          </StatusBadge>
                         )}
                       </div>
                     </div>
 
                     <div className="ml-4 flex flex-col items-end gap-2">
                       {iso.match_count > 0 && (
-                        <Badge variant="secondary" className="gap-1">
-                          <Users className="h-3 w-3" />
+                        <StatusBadge variant="indigo" dot={false}>
                           {iso.match_count} match{iso.match_count !== 1 ? "es" : ""}
-                        </Badge>
+                        </StatusBadge>
                       )}
                       {iso.status === "active" && (
                         <CloseIsoButton isoId={iso.id} />

@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { HennekeScoreSelector } from "@/components/marketplace/henneke-score";
+import { SelectMenu, AlertBanner } from "@/components/tailwind-plus";
 
 type StepProps = {
   data: Record<string, unknown>;
@@ -13,11 +14,10 @@ type StepProps = {
 export function StepVetInfo({ data, setField }: StepProps) {
   return (
     <div className="space-y-6">
-      {/* Notice */}
-      <div className="rounded-md bg-blue/5 p-4 text-sm text-blue">
+      <AlertBanner variant="info" title="Boost your Mane Score">
         Complete vet information significantly increases your listing
         completeness score and buyer trust. Buyers filter by documentation level.
-      </div>
+      </AlertBanner>
 
       {/* Vet Contact */}
       <div className="grid gap-4 sm:grid-cols-2">
@@ -85,24 +85,18 @@ export function StepVetInfo({ data, setField }: StepProps) {
       {/* Soundness Attestation */}
       <div>
         <Label htmlFor="soundness_level">Soundness Confidence</Label>
-        <select
-          id="soundness_level"
+        <SelectMenu
+          label="Select soundness level..."
           value={(data.soundness_level as string) || ""}
-          onChange={(e) => setField("soundness_level", e.target.value)}
-          className="mt-1.5 w-full rounded-md border border-crease-light bg-paper-white px-3 py-2 text-sm text-ink-black focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+          onChange={(val) => setField("soundness_level", val)}
+          variant="field"
+          className="mt-1.5"
         >
-          <option value="">Select soundness level...</option>
-          <option value="vet_confirmed_sound">
-            Vet-confirmed sound (recent PPE)
-          </option>
-          <option value="minor_findings">
-            Minor findings described in listing
-          </option>
-          <option value="managed_condition">
-            Managed condition — details in health history
-          </option>
+          <option value="vet_confirmed_sound">Vet-confirmed sound (recent PPE)</option>
+          <option value="minor_findings">Minor findings described in listing</option>
+          <option value="managed_condition">Managed condition — details in health history</option>
           <option value="not_assessed">Not recently assessed</option>
-        </select>
+        </SelectMenu>
         <p className="mt-1 text-xs text-ink-light">
           Buyers filter by soundness level. Honesty builds trust and reduces
           disputes.

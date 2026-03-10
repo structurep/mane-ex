@@ -1,15 +1,15 @@
 import { getAdminListings } from "@/actions/admin";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge, type BadgeVariant } from "@/components/tailwind-plus";
 import Link from "next/link";
 import { ModerationButtons } from "./moderation-buttons";
 
-const statusColors: Record<string, string> = {
-  active: "bg-green-100 text-green-700",
-  draft: "bg-yellow-100 text-yellow-700",
-  pending_review: "bg-gold/10 text-gold",
-  sold: "bg-paper-warm text-ink-mid",
-  archived: "bg-gray-100 text-gray-600",
+const statusVariants: Record<string, BadgeVariant> = {
+  active: "forest",
+  draft: "yellow",
+  pending_review: "gold",
+  sold: "gray",
+  archived: "gray",
 };
 
 export default async function AdminListingsPage({
@@ -89,9 +89,9 @@ export default async function AdminListingsPage({
                     >
                       {listing.name}
                     </Link>
-                    <Badge className={statusColors[listing.status] || ""}>
+                    <StatusBadge variant={statusVariants[listing.status] || "gray"}>
                       {listing.status}
-                    </Badge>
+                    </StatusBadge>
                   </div>
                   <p className="mt-0.5 text-xs text-ink-light">
                     {listing.price

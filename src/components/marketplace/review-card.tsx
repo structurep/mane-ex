@@ -1,4 +1,4 @@
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge, type BadgeVariant } from "@/components/tailwind-plus";
 import { StarRating } from "@/components/marketplace/star-rating";
 import { CheckCircle2, MessageSquare } from "lucide-react";
 
@@ -22,11 +22,11 @@ interface ReviewCardProps {
   };
 }
 
-const STAGE_CONFIG: Record<string, { label: string; className: string }> = {
-  inquiry: { label: "After Inquiry", className: "bg-ink-light/10 text-ink-mid" },
-  trial: { label: "After Trial", className: "bg-gold/10 text-gold" },
-  offer: { label: "After Offer", className: "bg-accent-blue/10 text-accent-blue" },
-  completion: { label: "After Purchase", className: "bg-forest/10 text-forest" },
+const STAGE_CONFIG: Record<string, { label: string; variant: BadgeVariant }> = {
+  inquiry: { label: "After Inquiry", variant: "gray" },
+  trial: { label: "After Trial", variant: "gold" },
+  offer: { label: "After Offer", variant: "blue" },
+  completion: { label: "After Purchase", variant: "forest" },
 };
 
 function timeAgo(dateStr: string): string {
@@ -62,10 +62,9 @@ export function ReviewCard({ review }: ReviewCardProps) {
                 {reviewer?.display_name ?? "Anonymous"}
               </span>
               {review.is_verified_purchase && (
-                <Badge variant="secondary" className="gap-1 bg-forest/10 text-forest text-xs">
-                  <CheckCircle2 className="h-3 w-3" />
+                <StatusBadge variant="forest" dot>
                   Verified Purchase
-                </Badge>
+                </StatusBadge>
               )}
             </div>
             <div className="flex items-center gap-2 text-xs text-ink-light">
@@ -78,9 +77,9 @@ export function ReviewCard({ review }: ReviewCardProps) {
             </div>
           </div>
         </div>
-        <Badge className={stageConfig.className} variant="secondary">
+        <StatusBadge variant={stageConfig.variant}>
           {stageConfig.label}
-        </Badge>
+        </StatusBadge>
       </div>
 
       {/* Rating + content */}

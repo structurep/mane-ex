@@ -1,13 +1,13 @@
 import { getAdminReports } from "@/actions/admin";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/tailwind-plus";
 import Link from "next/link";
 import { ResolveReportButton } from "./resolve-button";
 
-const statusColors: Record<string, string> = {
-  pending: "bg-yellow-100 text-yellow-700",
-  resolved: "bg-green-100 text-green-700",
-  dismissed: "bg-gray-100 text-gray-600",
+const statusVariants: Record<string, "yellow" | "forest" | "gray"> = {
+  pending: "yellow",
+  resolved: "forest",
+  dismissed: "gray",
 };
 
 export default async function AdminReportsPage({
@@ -66,10 +66,10 @@ export default async function AdminReportsPage({
                 <div className="flex items-start justify-between">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <Badge className={statusColors[report.status] || ""}>
+                      <StatusBadge variant={statusVariants[report.status] || "gray"}>
                         {report.status}
-                      </Badge>
-                      <Badge variant="outline">{report.target_type}</Badge>
+                      </StatusBadge>
+                      <StatusBadge variant="blue" dot={false}>{report.target_type}</StatusBadge>
                       <span className="text-xs text-ink-light">
                         {new Date(report.created_at).toLocaleDateString()}
                       </span>

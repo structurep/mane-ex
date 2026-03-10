@@ -1,6 +1,6 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/tailwind-plus";
 import { Clock, Mail } from "lucide-react";
 
 export function PendingInvites({
@@ -28,9 +28,9 @@ export function PendingInvites({
               <Mail className="h-4 w-4 text-ink-light" />
               <div className="min-w-0 flex-1">
                 <span className="text-sm text-ink-black">{email}</span>
-                <Badge variant="outline" className="ml-2 text-xs">
+                <StatusBadge variant="indigo" dot={false} className="ml-2">
                   {role}
-                </Badge>
+                </StatusBadge>
               </div>
               <span className="text-xs text-ink-light">
                 {daysLeft > 0 ? `${daysLeft}d left` : "Expiring"}

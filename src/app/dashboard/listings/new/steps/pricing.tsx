@@ -3,7 +3,8 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { AlertTriangle, DollarSign, Heart, CalendarDays, Gavel } from "lucide-react";
+import { AlertBanner } from "@/components/tailwind-plus";
+import { DollarSign, Heart, CalendarDays, Gavel } from "lucide-react";
 
 type StepProps = {
   data: Record<string, unknown>;
@@ -221,19 +222,11 @@ export function StepPricing({ data, setField }: StepProps) {
         </div>
 
         {(data.warranty || "as_is") === "as_is" && (
-          <div className="mt-3 rounded-md border border-gold/30 bg-gold/5 p-3">
-            <div className="flex gap-2">
-              <AlertTriangle className="h-4 w-4 shrink-0 text-gold" />
-              <p className="text-xs text-ink-dark">
-                <strong className="uppercase">
-                  THIS HORSE IS SOLD &ldquo;AS IS&rdquo; WITHOUT ANY WARRANTIES,
-                  EXPRESS OR IMPLIED.
-                </strong>{" "}
-                Buyer assumes all risk. Even &ldquo;as is&rdquo; does not protect
-                against intentional fraud or misrepresentation.
-              </p>
-            </div>
-          </div>
+          <AlertBanner variant="warning" title="AS IS — NO WARRANTIES" className="mt-3">
+            This horse is sold without any warranties, express or implied.
+            Buyer assumes all risk. Even &ldquo;as is&rdquo; does not protect
+            against intentional fraud or misrepresentation.
+          </AlertBanner>
         )}
       </div>
 

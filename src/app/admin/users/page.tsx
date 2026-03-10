@@ -1,6 +1,6 @@
 import { getAdminUsers } from "@/actions/admin";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/tailwind-plus";
 import { Shield, AlertTriangle } from "lucide-react";
 import { SuspendUserButton } from "./suspend-button";
 
@@ -67,16 +67,16 @@ export default async function AdminUsersPage({
                         {user.display_name || "No name"}
                       </span>
                       {user.is_admin && (
-                        <Badge className="bg-gold-light text-gold">
+                        <StatusBadge variant="gold">
                           <Shield className="mr-1 h-3 w-3" />
                           Admin
-                        </Badge>
+                        </StatusBadge>
                       )}
                       {user.suspended_at && (
-                        <Badge variant="destructive">
+                        <StatusBadge variant="red">
                           <AlertTriangle className="mr-1 h-3 w-3" />
                           Suspended
-                        </Badge>
+                        </StatusBadge>
                       )}
                     </div>
                     <p className="text-xs text-ink-light">

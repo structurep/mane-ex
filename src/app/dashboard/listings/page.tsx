@@ -2,7 +2,8 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/tailwind-plus";
+import type { BadgeVariant } from "@/components/tailwind-plus";
 import { Plus, Eye, Heart, ClipboardList, TrendingUp, Pencil } from "lucide-react";
 import type { ListingStatus } from "@/types/listings";
 import { DeleteListingButton } from "@/components/marketplace/delete-listing-button";
@@ -14,15 +15,15 @@ export const metadata: Metadata = {
 
 const statusConfig: Record<
   ListingStatus,
-  { label: string; variant: "default" | "secondary" | "outline" | "destructive" }
+  { label: string; variant: BadgeVariant }
 > = {
-  active: { label: "Active", variant: "default" },
-  draft: { label: "Draft", variant: "secondary" },
-  pending_review: { label: "Pending Review", variant: "outline" },
-  under_offer: { label: "Under Offer", variant: "outline" },
-  sold: { label: "Sold", variant: "secondary" },
-  expired: { label: "Expired", variant: "destructive" },
-  removed: { label: "Removed", variant: "destructive" },
+  active: { label: "Active", variant: "forest" },
+  draft: { label: "Draft", variant: "yellow" },
+  pending_review: { label: "Pending Review", variant: "yellow" },
+  under_offer: { label: "Under Offer", variant: "gold" },
+  sold: { label: "Sold", variant: "gray" },
+  expired: { label: "Expired", variant: "red" },
+  removed: { label: "Removed", variant: "red" },
 };
 
 type BucketKey = "basics" | "details" | "trust" | "media";
@@ -181,9 +182,9 @@ export default async function MyListingsPage() {
                     {score != null && (
                       <span className="font-medium text-ink-dark">{score}/1000</span>
                     )}
-                    <Badge variant={config?.variant || "secondary"}>
+                    <StatusBadge variant={config?.variant || "gray"}>
                       {config?.label || String(listing.status)}
-                    </Badge>
+                    </StatusBadge>
                     {listing.status !== "removed" && (
                       <Link
                         href={getEditListingUrl(String(listing.id))}

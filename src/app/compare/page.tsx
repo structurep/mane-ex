@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/tailwind-plus";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink } from "lucide-react";
@@ -192,9 +192,9 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
                     <ExternalLink className="h-3.5 w-3.5 opacity-0 transition-opacity group-hover:opacity-100" />
                   </Link>
                   {horse.status === "sold" && (
-                    <Badge variant="secondary" className="mt-1 bg-red-light text-red text-xs">
+                    <StatusBadge variant="gray" className="mt-1">
                       Sold
-                    </Badge>
+                    </StatusBadge>
                   )}
                 </div>
               ))}

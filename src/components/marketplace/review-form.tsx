@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/tailwind-plus";
 import { StarRating } from "@/components/marketplace/star-rating";
 import { toast } from "sonner";
 
@@ -82,7 +82,7 @@ export function ReviewForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="flex items-center gap-2">
-        <Badge variant="secondary">{STAGE_LABELS[stage]}</Badge>
+        <StatusBadge variant="blue">{STAGE_LABELS[stage]}</StatusBadge>
       </div>
 
       <div className="space-y-2">

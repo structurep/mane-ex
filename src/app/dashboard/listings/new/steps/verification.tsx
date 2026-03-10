@@ -2,7 +2,7 @@
 
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/tailwind-plus";
 
 type StepProps = {
   data: Record<string, unknown>;
@@ -38,12 +38,7 @@ export function StepVerification({ data, setField }: StepProps) {
                 <span className="text-sm font-semibold text-ink-black">
                   Current Coggins
                 </span>
-                <Badge
-                  variant="secondary"
-                  className="bg-paper-warm text-[10px] text-ink-mid"
-                >
-                  Recommended
-                </Badge>
+                <StatusBadge variant="gold">Recommended</StatusBadge>
               </div>
               <p id="coggins-help" className="mt-0.5 text-xs text-ink-mid">
                 Confirm that this horse has a negative Coggins test within the

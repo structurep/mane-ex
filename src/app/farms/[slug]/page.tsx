@@ -5,7 +5,7 @@ import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/tailwind-plus";
 import { Separator } from "@/components/ui/separator";
 import {
   MapPin,
@@ -17,7 +17,6 @@ import {
   Mail,
   Globe,
   Instagram,
-  Shield,
   ExternalLink,
   Newspaper,
   Lock,
@@ -231,9 +230,9 @@ export default async function FarmPage({ params }: Props) {
             {farm.disciplines && farm.disciplines.length > 0 && (
               <div className="mt-3 flex flex-wrap gap-2">
                 {farm.disciplines.map((discipline: string) => (
-                  <Badge key={discipline} variant="secondary">
+                  <StatusBadge key={discipline} variant="blue">
                     {discipline}
-                  </Badge>
+                  </StatusBadge>
                 ))}
               </div>
             )}
@@ -377,10 +376,9 @@ export default async function FarmPage({ params }: Props) {
                   </p>
                   <p className="text-xs text-ink-light">Barn Owner</p>
                   {owner.identity_verified === true && (
-                    <Badge variant="secondary" className="mt-1 text-xs">
-                      <Shield className="mr-1 h-3 w-3" />
+                    <StatusBadge variant="forest" dot className="mt-1">
                       Identity Verified
-                    </Badge>
+                    </StatusBadge>
                   )}
                 </div>
                 <ChevronRight className="ml-2 h-4 w-4 text-ink-light" />

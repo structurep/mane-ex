@@ -2,7 +2,8 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/tailwind-plus";
+import type { BadgeVariant } from "@/components/tailwind-plus";
 import { formatCentsToDollars, calculatePlatformFee, calculateSellerNet, DISPUTE_WINDOW_DAYS } from "@/lib/stripe/config";
 import {
   ChevronLeft,
@@ -309,20 +310,20 @@ export default async function OfferDetailPage({ params }: Props) {
 }
 
 function OfferStatusBadge({ status }: { status: string }) {
-  const configs: Record<string, { label: string; className: string }> = {
-    pending: { label: "Pending", className: "bg-gold/10 text-gold" },
-    accepted: { label: "Accepted", className: "bg-forest/10 text-forest" },
-    rejected: { label: "Declined", className: "bg-red/10 text-red" },
-    countered: { label: "Countered", className: "bg-blue/10 text-blue" },
-    expired: { label: "Expired", className: "bg-ink-faint/10 text-ink-light" },
-    withdrawn: { label: "Withdrawn", className: "bg-ink-faint/10 text-ink-light" },
-    in_escrow: { label: "In Escrow", className: "bg-forest/10 text-forest" },
+  const configs: Record<string, { label: string; variant: BadgeVariant }> = {
+    pending: { label: "Pending", variant: "yellow" },
+    accepted: { label: "Accepted", variant: "forest" },
+    rejected: { label: "Declined", variant: "red" },
+    countered: { label: "Countered", variant: "blue" },
+    expired: { label: "Expired", variant: "gray" },
+    withdrawn: { label: "Withdrawn", variant: "gray" },
+    in_escrow: { label: "In Escrow", variant: "gold" },
   };
   const c = configs[status] ?? configs.pending;
   return (
-    <Badge variant="secondary" className={c.className}>
+    <StatusBadge variant={c.variant}>
       {c.label}
-    </Badge>
+    </StatusBadge>
   );
 }
 
