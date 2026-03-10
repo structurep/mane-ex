@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { Header } from "@/components/layout/header";
@@ -292,9 +293,11 @@ export default async function HorsePassportPage({ params }: Props) {
                   <div className="flex-shrink-0">
                     <div className="h-40 w-40 overflow-hidden rounded-md border border-crease-light bg-paper-warm">
                       {primaryImage ? (
-                        <img
+                        <Image
                           src={primaryImage.url}
                           alt={primaryImage.alt_text || l.name}
+                          width={160}
+                          height={160}
                           className="h-full w-full object-cover"
                         />
                       ) : (

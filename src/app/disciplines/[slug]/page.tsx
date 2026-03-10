@@ -332,11 +332,12 @@ export default async function DisciplinePage({ params }: Props) {
                         {(() => {
                           const primary = l.media?.find((m) => m.is_primary) || l.media?.[0];
                           return primary ? (
-                            <img
+                            <Image
                               src={primary.url}
                               alt={l.name}
-                              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-                              loading="lazy"
+                              fill
+                              sizes="(max-width: 768px) 100vw, 33vw"
+                              className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                             />
                           ) : null;
                         })()}
