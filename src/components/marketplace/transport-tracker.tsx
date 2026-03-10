@@ -72,6 +72,7 @@ export function TransportQuoteForm({
           <button
             onClick={onClose}
             className="rounded-full p-1.5 text-ink-light transition-colors hover:bg-paper-warm hover:text-ink-black"
+            aria-label="Close"
           >
             <X className="h-4 w-4" />
           </button>

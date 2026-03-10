@@ -465,7 +465,7 @@ export default async function FarmPage({ params }: Props) {
                         {postAuthor?.avatar_url ? (
                           <Image
                             src={postAuthor.avatar_url}
-                            alt=""
+                            alt={postAuthor.display_name || "Member"}
                             width={28}
                             height={28}
                             className="h-7 w-7 rounded-full object-cover"

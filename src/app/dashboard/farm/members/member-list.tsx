@@ -129,6 +129,7 @@ export function MemberList({
                   className="h-8 w-8 text-ink-light hover:text-red"
                   onClick={() => handleRemove(userId)}
                   disabled={removing === userId}
+                  aria-label="Remove member"
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>

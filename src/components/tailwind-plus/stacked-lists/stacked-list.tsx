@@ -34,7 +34,7 @@ export function StackedList({ items, className }: StackedListProps) {
               {item.imageUrl ? (
                 <Image
                   src={item.imageUrl}
-                  alt=""
+                  alt={item.title}
                   width={40}
                   height={40}
                   className="size-10 flex-none rounded-full bg-paper-warm object-cover"

@@ -35,7 +35,7 @@ export function CompleteStep({
             <div className="flex items-center gap-3">
               <Image
                 src={data.avatar_url}
-                alt=""
+                alt="Your profile photo"
                 width={40}
                 height={40}
                 className="h-10 w-10 rounded-full object-cover"

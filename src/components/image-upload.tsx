@@ -127,6 +127,7 @@ export function ImagePreview({
           type="button"
           onClick={onRemove}
           className="absolute right-1.5 top-1.5 rounded-full bg-ink-black/60 p-1 text-paper-white opacity-0 transition-opacity group-hover:opacity-100"
+          aria-label="Remove image"
         >
           <X className="h-3.5 w-3.5" />
         </button>

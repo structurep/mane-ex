@@ -196,6 +196,7 @@ export function StoriesViewer() {
         onClick={goPrev}
         disabled={currentIndex === 0}
         className="absolute left-1/2 top-16 -translate-x-1/2 rounded-full bg-black/30 p-2 text-white/70 backdrop-blur-sm transition-colors hover:bg-black/50 hover:text-white disabled:opacity-30"
+        aria-label="Previous story"
       >
         <ChevronUp className="h-6 w-6" />
       </button>
@@ -203,6 +204,7 @@ export function StoriesViewer() {
         onClick={goNext}
         disabled={currentIndex === listings.length - 1 && !hasMore}
         className="absolute bottom-36 left-1/2 -translate-x-1/2 rounded-full bg-black/30 p-2 text-white/70 backdrop-blur-sm transition-colors hover:bg-black/50 hover:text-white disabled:opacity-30"
+        aria-label="Next story"
       >
         <ChevronDown className="h-6 w-6" />
       </button>

@@ -114,7 +114,7 @@ export function PostComments({
                 {author?.avatar_url ? (
                   <Image
                     src={author.avatar_url}
-                    alt=""
+                    alt={author.display_name || "Member"}
                     width={28}
                     height={28}
                     className="h-7 w-7 rounded-full object-cover"
@@ -165,7 +165,7 @@ export function PostComments({
                             {replyAuthor?.avatar_url ? (
                               <Image
                                 src={replyAuthor.avatar_url}
-                                alt=""
+                                alt={replyAuthor.display_name || "Member"}
                                 width={20}
                                 height={20}
                                 className="h-5 w-5 rounded-full object-cover"
@@ -227,6 +227,7 @@ export function PostComments({
           variant="ghost"
           disabled={submitting || !body.trim()}
           className="h-8 w-8"
+          aria-label="Post comment"
         >
           {submitting ? (
             <Loader2 className="h-4 w-4 animate-spin" />
