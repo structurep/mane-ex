@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { FileText } from "lucide-react";
-import { EmptyState } from "@/components/tailwind-plus/empty-states/empty-state";
+import { EmptyState } from "@/components/tailwind-plus";
 
 export const metadata: Metadata = { title: "Lease Management" };
 
