@@ -1,8 +1,15 @@
+import { Metadata } from "next";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { BottomCTA } from "@/components/marketing/bottom-cta";
 import { EmptyState } from "@/components/tailwind-plus";
 import { Sparkles } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Personalized Recommendations — ManeExchange",
+  description:
+    "Get AI-powered horse recommendations tailored to your preferences, discipline, and budget on ManeExchange.",
+};
 
 export default function RecommendationsPage() {
   return (

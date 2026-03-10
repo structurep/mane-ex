@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -11,6 +12,12 @@ import { HeroSearch } from "@/components/marketing/hero-search";
 import { createClient } from "@/lib/supabase/server";
 import { ArrowRight } from "lucide-react";
 import { ListingCard, SectionHeading } from "@/components/tailwind-plus";
+
+export const metadata: Metadata = {
+  title: "ManeExchange — Buy & Sell Horses with Confidence",
+  description:
+    "The trusted equine marketplace with escrow protection, verified sellers, and Mane Score transparency. Browse horses for sale, compare listings, and transact securely.",
+};
 
 export default async function Home() {
   const supabase = await createClient();

@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { StatusBadge } from "@/components/tailwind-plus";
 import { Button } from "@/components/ui/button";
@@ -82,6 +83,12 @@ function CompareRow({
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Compare Horses — ManeExchange",
+  description:
+    "Compare horses side-by-side on ManeExchange. Evaluate breed, age, height, price, Mane Score, and more to find the perfect match.",
+};
 
 export default async function ComparePage({ searchParams }: ComparePageProps) {
   const params = await searchParams;
