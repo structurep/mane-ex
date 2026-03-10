@@ -118,7 +118,7 @@ function ServiceCard({
         size="sm"
         onClick={handleDelete}
         disabled={deleting}
-        className="shrink-0 text-ink-faint hover:text-red-600"
+        className="shrink-0 text-ink-faint hover:text-red"
       >
         <Trash2 className="h-4 w-4" />
       </Button>
@@ -161,7 +161,7 @@ function AddServiceForm({
             placeholder="e.g., Pre-Purchase Evaluation"
           />
           {state.fieldErrors?.name && (
-            <p className="mt-1 text-xs text-red-600">{state.fieldErrors.name}</p>
+            <p className="mt-1 text-xs text-red">{state.fieldErrors.name}</p>
           )}
         </div>
         <div>

@@ -5,6 +5,7 @@ import { createCollection } from "@/actions/collections";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { AlertBanner } from "@/components/tailwind-plus";
 import {
   Dialog,
   DialogContent,
@@ -77,7 +78,7 @@ export function CreateCollectionForm() {
           </div>
           <input type="hidden" name="visibility" value="private" />
 
-          {error && <p className="text-sm text-red">{error}</p>}
+          {error && <AlertBanner variant="error">{error}</AlertBanner>}
 
           <Button type="submit" className="w-full" disabled={loading}>
             {loading ? "Creating..." : "Create Collection"}

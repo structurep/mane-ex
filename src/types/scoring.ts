@@ -164,9 +164,9 @@ export const MANE_SCORE_DISCLAIMER =
 
 // Grade display labels
 export const GRADE_LABELS: Record<ScoreGrade, { label: string; color: string }> = {
-  elite: { label: "Elite", color: "text-amber-600" },
-  excellent: { label: "Excellent", color: "text-emerald-600" },
-  strong: { label: "Strong", color: "text-blue-600" },
-  building: { label: "Building", color: "text-orange-600" },
-  new: { label: "New", color: "text-gray-500" },
+  elite: { label: "Elite", color: "text-gold" },
+  excellent: { label: "Excellent", color: "text-forest" },
+  strong: { label: "Strong", color: "text-blue" },
+  building: { label: "Building", color: "text-gold" },
+  new: { label: "New", color: "text-ink-faint" },
 };

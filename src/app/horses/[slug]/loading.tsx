@@ -4,7 +4,7 @@ export default function ListingLoading() {
   return (
     <div className="min-h-screen bg-paper-white">
       {/* Header skeleton */}
-      <div className="h-[4.5rem] border-b border-border bg-paper-white" />
+      <div className="h-[4.5rem] border-b border-crease-light bg-paper-white" />
 
       <div className="mx-auto max-w-[1200px] px-4 py-8 md:px-8">
         {/* Breadcrumb */}
@@ -57,7 +57,7 @@ export default function ListingLoading() {
               <Skeleton className="mt-4 h-11 w-full rounded-md" />
               <Skeleton className="mt-2 h-11 w-full rounded-md" />
               <Skeleton className="mt-2 h-11 w-full rounded-md" />
-              <div className="mt-4 border-t border-border pt-4">
+              <div className="mt-4 border-t border-crease-light pt-4">
                 <div className="flex items-center gap-3">
                   <Skeleton className="h-10 w-10 rounded-full" />
                   <div className="space-y-1">

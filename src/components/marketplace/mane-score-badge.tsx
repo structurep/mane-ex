@@ -32,7 +32,7 @@ export function ManeScoreBadge({
             <p className="text-xs font-medium">
               Mane Score: {score}/1,000 ({gradeInfo.label})
             </p>
-            <p className="mt-1 text-xs text-muted-foreground">
+            <p className="mt-1 text-xs text-ink-light">
               {MANE_SCORE_DISCLAIMER}
             </p>
           </TooltipContent>
@@ -45,7 +45,7 @@ export function ManeScoreBadge({
   const percentage = Math.min((score / 1000) * 100, 100);
 
   return (
-    <div className="rounded-lg border border-border bg-paper-cream p-4 shadow-flat">
+    <div className="rounded-lg border border-crease-light bg-paper-cream p-4 shadow-flat">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <BarChart3 className="h-5 w-5 text-gold" />

@@ -109,7 +109,7 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b border-border bg-paper-white/95 backdrop-blur-sm transition-[height,box-shadow] duration-300 ease-out ${
+      className={`sticky top-0 z-50 border-b border-crease-light bg-paper-white/95 backdrop-blur-sm transition-[height,box-shadow] duration-300 ease-out ${
         scrolled ? "shadow-flat" : ""
       }`}
     >
@@ -222,7 +222,7 @@ export function Header() {
                   onClick={() => setMenuOpen(!menuOpen)}
                   aria-expanded={menuOpen}
                   aria-haspopup="true"
-                  className="flex items-center gap-1.5 rounded-full border border-crease-light py-1 pl-1 pr-2.5 text-sm font-medium text-ink-dark transition-colors hover:bg-paper-warm focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                  className="flex items-center gap-1.5 rounded-full border border-crease-light py-1 pl-1 pr-2.5 text-sm font-medium text-ink-dark transition-colors hover:bg-paper-warm focus-visible:ring-2 focus-visible:ring-oxblood/20 focus-visible:outline-none"
                 >
                   <AvatarCircle initials={initials} size={32} />
                   <ChevronDown
@@ -233,7 +233,7 @@ export function Header() {
                 </button>
 
                 {menuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 rounded-lg border border-border bg-paper-cream p-1 shadow-lifted">
+                  <div className="absolute right-0 mt-2 w-48 rounded-lg border border-crease-light bg-paper-cream p-1 shadow-lifted">
                     <Link
                       href="/dashboard"
                       className="flex items-center gap-2.5 rounded-md px-3 py-2 text-sm text-ink-dark transition-colors hover:bg-paper-warm"

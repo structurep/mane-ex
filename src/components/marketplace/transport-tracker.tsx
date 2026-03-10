@@ -172,7 +172,7 @@ export function TransportQuoteForm({
               id="notes"
               rows={2}
               placeholder="Gate code, special loading needs, health cert details..."
-              className="mt-1 w-full rounded-md border border-border bg-paper-white px-3 py-2 text-sm placeholder:text-ink-light focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className="mt-1 w-full rounded-md border border-crease-light bg-paper-white px-3 py-2 text-sm placeholder:text-ink-light focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             />
           </div>
 

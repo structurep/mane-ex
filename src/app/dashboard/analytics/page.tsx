@@ -82,15 +82,13 @@ export default async function AnalyticsPage() {
               variant="full"
             />
           ) : (
-            <div className="rounded-lg border border-dashed border-crease-mid bg-paper-cream p-8 text-center">
-              <BarChart3 className="mx-auto h-10 w-10 text-ink-faint" />
-              <h3 className="mt-4 font-medium text-ink-dark">
-                No Mane Score yet
-              </h3>
-              <p className="mt-1 text-sm text-ink-mid">
-                Create your first listing to start building your score.
-              </p>
-            </div>
+            <EmptyState
+              icon={<BarChart3 className="size-10" />}
+              title="No Mane Score yet"
+              description="Create your first listing to start building your score."
+              actionLabel="Create Listing"
+              actionHref="/dashboard/listings/new"
+            />
           )}
 
           {/* Component Breakdown */}
@@ -255,11 +253,11 @@ export default async function AnalyticsPage() {
             </div>
           </div>
         ) : (
-          <div className="rounded-lg border border-dashed border-crease-mid bg-paper-cream p-10 text-center shadow-flat">
-            <Eye className="mx-auto h-8 w-8 text-ink-faint" />
-            <p className="mt-3 text-sm font-medium text-ink-dark">No views yet</p>
-            <p className="mt-1 text-xs text-ink-mid">View data will appear here once your listings get traffic.</p>
-          </div>
+          <EmptyState
+            icon={<Eye className="size-10" />}
+            title="No views yet"
+            description="View data will appear here once your listings get traffic."
+          />
         )}
       </section>
 

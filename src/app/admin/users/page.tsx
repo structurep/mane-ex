@@ -1,7 +1,7 @@
 import { getAdminUsers } from "@/actions/admin";
 import { Card, CardContent } from "@/components/ui/card";
-import { StatusBadge } from "@/components/tailwind-plus";
-import { Shield, AlertTriangle } from "lucide-react";
+import { StatusBadge, EmptyState } from "@/components/tailwind-plus";
+import { Shield, AlertTriangle, Users } from "lucide-react";
 import { SuspendUserButton } from "./suspend-button";
 
 export default async function AdminUsersPage({
@@ -88,7 +88,7 @@ export default async function AdminUsersPage({
                         )}
                     </p>
                     {user.suspended_at && user.suspension_reason && (
-                      <p className="mt-1 text-xs text-destructive">
+                      <p className="mt-1 text-xs text-red">
                         Reason: {user.suspension_reason}
                       </p>
                     )}
@@ -107,9 +107,7 @@ export default async function AdminUsersPage({
         )}
 
         {users.length === 0 && (
-          <p className="py-8 text-center text-sm text-ink-mid">
-            No users found.
-          </p>
+          <EmptyState icon={<Users className="size-10" />} title="No users found" description={search ? `No results for "${search}".` : "No users in the system yet."} />
         )}
       </div>
     </div>

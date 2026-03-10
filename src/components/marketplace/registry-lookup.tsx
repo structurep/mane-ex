@@ -170,7 +170,7 @@ export function RegistryLookup({ records, onChange }: RegistryLookupProps) {
                 <button
                   type="button"
                   onClick={() => removeRecord(i)}
-                  className="text-xs text-ink-light hover:text-red-600"
+                  className="text-xs text-ink-light hover:text-red"
                 >
                   Remove
                 </button>
@@ -260,7 +260,7 @@ export function RegistryLookup({ records, onChange }: RegistryLookupProps) {
         )}
 
         {lookupResult === "not_found" && (
-          <div className="mt-3 flex items-center gap-2 rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-700">
+          <div className="mt-3 flex items-center gap-2 rounded-md bg-gold/10 px-3 py-2 text-sm text-gold">
             <AlertCircle className="h-4 w-4 shrink-0" />
             <span>
               Could not verify automatically. You can still add it — we&apos;ll
@@ -326,8 +326,8 @@ function VerificationBadge({
       );
     case "not_found":
       return (
-        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-red-50">
-          <AlertCircle className="h-4 w-4 text-red-600" />
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-red-light">
+          <AlertCircle className="h-4 w-4 text-red" />
         </span>
       );
     default:

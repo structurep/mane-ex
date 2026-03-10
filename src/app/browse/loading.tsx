@@ -4,7 +4,7 @@ export default function BrowseLoading() {
   return (
     <div className="min-h-screen bg-paper-white">
       {/* Header skeleton */}
-      <div className="h-[4.5rem] border-b border-border bg-paper-white" />
+      <div className="h-[4.5rem] border-b border-crease-light bg-paper-white" />
 
       <div className="mx-auto max-w-[1200px] px-4 py-8 md:px-8">
         {/* Title */}

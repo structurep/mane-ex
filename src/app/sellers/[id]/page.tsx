@@ -219,7 +219,7 @@ export default async function SellerProfilePage({ params }: Props) {
               </h2>
               <Link
                 href={`/farms/${farm.slug}`}
-                className="group block rounded-lg border border-border bg-paper-cream p-5 shadow-flat transition-elevation hover-lift hover:shadow-folded"
+                className="group block rounded-lg border border-crease-light bg-paper-cream p-5 shadow-flat transition-elevation hover-lift hover:shadow-folded"
               >
                 <div className="flex items-center gap-3">
                   <Store className="h-5 w-5 text-ink-mid group-hover:text-primary" />
@@ -294,7 +294,7 @@ export default async function SellerProfilePage({ params }: Props) {
                       <Link
                         key={listing.id}
                         href={`/horses/${listing.slug}`}
-                        className="group rounded-lg border border-border bg-paper-cream p-4 shadow-flat transition-elevation hover-lift hover:shadow-folded"
+                        className="group rounded-lg border border-crease-light bg-paper-cream p-4 shadow-flat transition-elevation hover-lift hover:shadow-folded"
                       >
                         {/* Image placeholder */}
                         <div className="mb-3 aspect-[3/2] rounded-md bg-paper-warm" />
@@ -330,7 +330,7 @@ export default async function SellerProfilePage({ params }: Props) {
                 )}
               </div>
             ) : (
-              <div className="rounded-lg border border-border bg-paper-warm px-6 py-10 text-center">
+              <div className="rounded-lg border border-crease-light bg-paper-warm px-6 py-10 text-center">
                 <p className="text-ink-mid">No active listings</p>
               </div>
             )}
@@ -343,7 +343,7 @@ export default async function SellerProfilePage({ params }: Props) {
             <h2 className="mb-3 font-heading text-lg font-semibold text-ink-black">
               Contact
             </h2>
-            <div className="rounded-lg border border-border bg-paper-cream p-5 shadow-flat">
+            <div className="rounded-lg border border-crease-light bg-paper-cream p-5 shadow-flat">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="overline mb-2 text-ink-light">

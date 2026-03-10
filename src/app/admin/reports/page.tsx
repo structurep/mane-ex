@@ -1,6 +1,7 @@
 import { getAdminReports } from "@/actions/admin";
 import { Card, CardContent } from "@/components/ui/card";
-import { StatusBadge } from "@/components/tailwind-plus";
+import { StatusBadge, EmptyState } from "@/components/tailwind-plus";
+import { Flag } from "lucide-react";
 import Link from "next/link";
 import { ResolveReportButton } from "./resolve-button";
 
@@ -81,7 +82,7 @@ export default async function AdminReportsPage({
                       <p className="text-xs text-ink-mid">{report.details}</p>
                     )}
                     {report.resolution_note && (
-                      <p className="text-xs text-green-600">
+                      <p className="text-xs text-forest">
                         Resolution: {report.resolution_note}
                       </p>
                     )}
@@ -97,9 +98,7 @@ export default async function AdminReportsPage({
         )}
 
         {reports.length === 0 && (
-          <p className="py-8 text-center text-sm text-ink-mid">
-            No reports found.
-          </p>
+          <EmptyState icon={<Flag className="size-10" />} title="No reports found" description="All clear — no reports to review." />
         )}
       </div>
     </div>

@@ -41,7 +41,7 @@ const socialLinks = [
 export function Footer() {
   return (
     <footer>
-      <div className="border-t border-border bg-washi">
+      <div className="border-t border-crease-light bg-washi">
         <div className="mx-auto max-w-[1200px] px-4 py-16 md:px-8">
           {/* Link grid */}
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4">

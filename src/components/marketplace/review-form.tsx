@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { StatusBadge } from "@/components/tailwind-plus";
+import { StatusBadge, AlertBanner } from "@/components/tailwind-plus";
 import { StarRating } from "@/components/marketplace/star-rating";
 import { toast } from "sonner";
 
@@ -118,7 +118,7 @@ export function ReviewForm({
         <p className="text-xs text-ink-light">Minimum 10 characters</p>
       </div>
 
-      {error && <p className="text-sm text-red">{error}</p>}
+      {error && <AlertBanner variant="error">{error}</AlertBanner>}
 
       <Button type="submit" className="w-full" disabled={loading}>
         {loading ? "Submitting..." : "Submit Review"}

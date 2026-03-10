@@ -26,7 +26,7 @@ export function ResolveReportButton({ reportId }: { reportId: string }) {
       size="sm"
       onClick={handleResolve}
       disabled={loading}
-      className="text-green-600 hover:bg-green-50"
+      className="text-forest hover:bg-forest/10"
     >
       <CheckCircle className="mr-1 h-3 w-3" />
       {loading ? "..." : "Resolve"}

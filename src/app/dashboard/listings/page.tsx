@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
-import { StatusBadge } from "@/components/tailwind-plus";
+import { StatusBadge, EmptyState } from "@/components/tailwind-plus";
 import type { BadgeVariant } from "@/components/tailwind-plus";
 import { Plus, Eye, Heart, ClipboardList, TrendingUp, Pencil } from "lucide-react";
 import type { ListingStatus } from "@/types/listings";
@@ -108,21 +108,13 @@ export default async function MyListingsPage() {
       </div>
 
       {allListings.length === 0 ? (
-        <div className="flex flex-col items-center gap-3 rounded-lg border-0 bg-paper-cream p-12 text-center shadow-flat">
-          <ClipboardList className="h-10 w-10 text-ink-faint" />
-          <div>
-            <p className="font-medium text-ink-black">Your stable is empty</p>
-            <p className="mt-1 text-sm text-ink-mid">
-              List your first horse and start reaching thousands of qualified buyers.
-            </p>
-          </div>
-          <Button className="mt-2" asChild>
-            <Link href={getCreateListingUrl()}>
-              <Plus className="mr-2 h-4 w-4" />
-              Create Your First Listing
-            </Link>
-          </Button>
-        </div>
+        <EmptyState
+          icon={<ClipboardList className="size-10" />}
+          title="Your stable is empty"
+          description="List your first horse and start reaching thousands of qualified buyers."
+          actionLabel="Create Your First Listing"
+          actionHref={getCreateListingUrl()}
+        />
       ) : (
         <div className="divide-y divide-crease-light rounded-lg border-0 bg-paper-cream shadow-flat">
           {allListings.map((listing) => {

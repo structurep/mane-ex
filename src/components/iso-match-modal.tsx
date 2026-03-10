@@ -5,6 +5,7 @@ import { matchIso } from "@/actions/isos";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { AlertBanner } from "@/components/tailwind-plus";
 import {
   Dialog,
   DialogContent,
@@ -181,7 +182,7 @@ export function IsoMatchModal({
               />
             </div>
 
-            {error && <p className="text-sm text-red">{error}</p>}
+            {error && <AlertBanner variant="error">{error}</AlertBanner>}
 
             <Button
               type="submit"

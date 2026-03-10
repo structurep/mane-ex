@@ -3,6 +3,7 @@
 import { useActionState, use } from "react";
 import { signUp, signInWithGoogle, type AuthState } from "@/actions/auth";
 import { Button } from "@/components/ui/button";
+import { AlertBanner } from "@/components/tailwind-plus";
 
 export function SignupForm({
   searchParams,
@@ -46,9 +47,7 @@ export function SignupForm({
 
       {/* Error */}
       {state.error && (
-        <p className="rounded-md bg-red-light p-3 text-sm text-red">
-          {state.error}
-        </p>
+        <AlertBanner variant="error">{state.error}</AlertBanner>
       )}
 
       <form action={action} className="space-y-4">

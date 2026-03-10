@@ -266,7 +266,7 @@ export function ServiceRequestForm({
               id="message"
               rows={3}
               placeholder="Tell the trainer about your goals, experience level, and what you're looking for..."
-              className="mt-1 w-full rounded-md border border-border bg-paper-white px-3 py-2 text-sm placeholder:text-ink-light focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className="mt-1 w-full rounded-md border border-crease-light bg-paper-white px-3 py-2 text-sm placeholder:text-ink-light focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             />
           </div>
 

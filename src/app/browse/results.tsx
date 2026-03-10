@@ -3,6 +3,7 @@ import type { HorseListing } from "@/types/listings";
 import { SaveSearchButton } from "./save-search-button";
 import { ScrollReveal } from "@/components/marketplace/scroll-reveal";
 import {
+  AlertBanner,
   EmptyState,
   Pagination,
   ListingCard,
@@ -109,11 +110,9 @@ export async function BrowseResults({ params }: Props) {
 
   if (error) {
     return (
-      <div className="rounded-lg border border-crease-light bg-paper-cream p-10 text-center">
-        <p className="text-ink-mid">
-          Something went wrong loading listings. Please try again.
-        </p>
-      </div>
+      <AlertBanner variant="error">
+        Something went wrong loading listings. Please try again.
+      </AlertBanner>
     );
   }
 

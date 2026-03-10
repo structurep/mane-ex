@@ -2,6 +2,7 @@ import { getMyReviews } from "@/actions/reviews";
 import { Card } from "@/components/ui/card";
 import { ReviewCard } from "@/components/marketplace/review-card";
 import { StarRating } from "@/components/marketplace/star-rating";
+import { EmptyState } from "@/components/tailwind-plus";
 import { Star } from "lucide-react";
 import { RespondForm } from "./respond-form";
 
@@ -58,15 +59,11 @@ export default async function DashboardReviewsPage() {
       </div>
 
       {totalReviews === 0 ? (
-        <Card className="flex flex-col items-center gap-3 border-0 p-12 text-center shadow-flat">
-          <Star className="h-10 w-10 text-ink-faint" />
-          <div>
-            <p className="font-medium text-ink-black">No reviews yet</p>
-            <p className="mt-1 text-sm text-ink-mid">
-              Reviews will appear here as buyers interact with your listings.
-            </p>
-          </div>
-        </Card>
+        <EmptyState
+          icon={<Star className="size-10" />}
+          title="No reviews yet"
+          description="Reviews will appear here as buyers interact with your listings."
+        />
       ) : (
         <>
           {/* Stats */}

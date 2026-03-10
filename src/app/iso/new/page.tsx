@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { AlertBanner } from "@/components/tailwind-plus";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
@@ -258,9 +259,7 @@ export default function NewIsoPage() {
                 </div>
 
                 {error && (
-                  <p className="rounded-md bg-red-light p-3 text-sm text-red">
-                    {error}
-                  </p>
+                  <AlertBanner variant="error">{error}</AlertBanner>
                 )}
 
                 <Button type="submit" className="w-full" size="lg" disabled={loading}>

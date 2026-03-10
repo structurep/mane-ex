@@ -16,7 +16,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Flag, AlertTriangle, CheckCircle } from "lucide-react";
+import { Flag, CheckCircle } from "lucide-react";
+import { AlertBanner } from "@/components/tailwind-plus";
 
 type ReportModalProps = {
   targetType: "listing" | "user" | "message";
@@ -122,10 +123,7 @@ export function ReportModal({
             </DialogHeader>
 
             {state.error && (
-              <div className="flex items-start gap-2 rounded-md border border-red/20 bg-red-light px-3 py-2.5 text-sm text-red">
-                <AlertTriangle className="mt-0.5 size-4 shrink-0" />
-                <span>{state.error}</span>
-              </div>
+              <AlertBanner variant="error">{state.error}</AlertBanner>
             )}
 
             <form action={formAction} className="space-y-5">

@@ -11,6 +11,7 @@ import {
   Check,
 } from "lucide-react";
 import { signUp, signInWithGoogle, type AuthState } from "@/actions/auth";
+import { AlertBanner } from "@/components/tailwind-plus";
 
 const accountTypes = [
   {
@@ -67,7 +68,7 @@ const primaryDisciplines = [
 ];
 
 const inputClassName =
-  "w-full rounded-lg border border-border bg-paper-white px-4 py-3 text-sm text-ink-black placeholder:text-ink-light focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none";
+  "w-full rounded-lg border border-crease-light bg-paper-white px-4 py-3 text-sm text-ink-black placeholder:text-ink-light focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none";
 
 const labelClassName = "mb-1.5 block text-sm font-medium text-ink-black";
 
@@ -193,9 +194,7 @@ export function SignupWizard() {
 
       {/* Error display */}
       {authState.error && (
-        <div className="mb-6 rounded-md bg-red-light p-3 text-sm text-red">
-          {authState.error}
-        </div>
+        <AlertBanner variant="error" className="mb-6">{authState.error}</AlertBanner>
       )}
 
       {/* Step 1: Account Type */}
@@ -220,7 +219,7 @@ export function SignupWizard() {
                   className={`flex w-full items-start gap-4 rounded-lg border p-4 text-left transition-all ${
                     isSelected
                       ? "border-primary shadow-folded"
-                      : "border-border shadow-flat hover:shadow-folded"
+                      : "border-crease-light shadow-flat hover:shadow-folded"
                   }`}
                 >
                   <div
@@ -433,7 +432,7 @@ export function SignupWizard() {
                         className={`rounded-full border px-3 py-1.5 text-sm font-medium transition-all ${
                           isSelected
                             ? "border-primary bg-primary/10 text-primary"
-                            : "border-border bg-paper-white text-ink-mid hover:border-ink-light"
+                            : "border-crease-light bg-paper-white text-ink-mid hover:border-ink-light"
                         }`}
                       >
                         {d}
@@ -543,7 +542,7 @@ export function SignupWizard() {
                       className={`flex-1 rounded-lg border px-3 py-2.5 text-sm font-medium transition-all ${
                         formData.horseCount === count
                           ? "border-primary bg-primary/10 text-primary"
-                          : "border-border bg-paper-white text-ink-mid hover:border-ink-light"
+                          : "border-crease-light bg-paper-white text-ink-mid hover:border-ink-light"
                       }`}
                     >
                       {count}

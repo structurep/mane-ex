@@ -1,5 +1,6 @@
 import { getNotifications } from "@/actions/notifications";
 import { Bell } from "lucide-react";
+import { EmptyState } from "@/components/tailwind-plus";
 import { MarkAllReadButton } from "./mark-all-read-button";
 import { NotificationCard } from "./notification-card";
 
@@ -34,15 +35,11 @@ export default async function NotificationsPage() {
       </div>
 
       {allNotifications.length === 0 ? (
-        <div className="flex flex-col items-center gap-3 rounded-lg bg-paper-cream p-12 text-center shadow-flat">
-          <Bell className="h-10 w-10 text-ink-faint" />
-          <div>
-            <p className="font-medium text-ink-black">No notifications</p>
-            <p className="mt-1 text-sm text-ink-mid">
-              You&apos;ll be notified about offers, messages, and listing updates.
-            </p>
-          </div>
-        </div>
+        <EmptyState
+          icon={<Bell className="size-10" />}
+          title="No notifications"
+          description="You'll be notified about offers, messages, and listing updates."
+        />
       ) : (
         <div className="divide-y divide-crease-light rounded-lg bg-paper-white shadow-flat overflow-hidden">
           {allNotifications.map((n) => (

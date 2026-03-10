@@ -28,7 +28,7 @@ export function MobileCTA({
     : "Contact for Price";
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-border bg-paper-white p-3 md:hidden">
+    <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-crease-light bg-paper-white p-3 md:hidden">
       <div className="flex items-center gap-3">
         <div className="flex-1">
           <p className="font-serif text-lg font-bold text-ink-black">

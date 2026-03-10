@@ -252,7 +252,7 @@ export async function BasedOnSearches({
               <Link
                 key={l.id}
                 href={`/horses/${l.slug}`}
-                className="group flex-none w-[220px] overflow-hidden rounded-lg border border-border bg-paper-cream shadow-flat transition-elevation hover-lift hover:shadow-lifted md:w-[240px]"
+                className="group flex-none w-[220px] overflow-hidden rounded-lg border border-crease-light bg-paper-cream shadow-flat transition-elevation hover-lift hover:shadow-lifted md:w-[240px]"
               >
                 {/* Image */}
                 <div className="relative aspect-[3/2] overflow-hidden bg-paper-warm">

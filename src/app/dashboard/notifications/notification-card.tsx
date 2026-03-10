@@ -27,7 +27,7 @@ const typeConfig: Record<string, { icon: typeof Bell; bg: string; iconClass: str
   message: { icon: MessageCircle, bg: "bg-blue/10", iconClass: "text-blue" },
   offer: { icon: DollarSign, bg: "bg-gold/10", iconClass: "text-gold" },
   listing_status: { icon: CheckCircle2, bg: "bg-forest/10", iconClass: "text-forest" },
-  listing_rejected: { icon: XCircle, bg: "bg-red-100", iconClass: "text-red" },
+  listing_rejected: { icon: XCircle, bg: "bg-red-light", iconClass: "text-red" },
   favorite: { icon: Heart, bg: "bg-oxblood/5", iconClass: "text-oxblood" },
   saved_search: { icon: Search, bg: "bg-forest/10", iconClass: "text-forest" },
 };

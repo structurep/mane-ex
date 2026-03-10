@@ -1,7 +1,8 @@
 import { getAdminListings } from "@/actions/admin";
 import { Card, CardContent } from "@/components/ui/card";
-import { StatusBadge, type BadgeVariant } from "@/components/tailwind-plus";
+import { StatusBadge, EmptyState, type BadgeVariant } from "@/components/tailwind-plus";
 import Link from "next/link";
+import { List } from "lucide-react";
 import { ModerationButtons } from "./moderation-buttons";
 
 const statusVariants: Record<string, BadgeVariant> = {
@@ -101,7 +102,7 @@ export default async function AdminListingsPage({
                     {new Date(listing.created_at).toLocaleDateString()}
                   </p>
                   {listing.moderation_note && (
-                    <p className="mt-1 text-xs text-amber-600">
+                    <p className="mt-1 text-xs text-gold">
                       Note: {listing.moderation_note}
                     </p>
                   )}
@@ -117,14 +118,11 @@ export default async function AdminListingsPage({
         )}
 
         {listings.length === 0 && (
-          <div className="flex flex-col items-center gap-2 rounded-lg border border-dashed border-crease-mid bg-paper-cream p-12 text-center">
-            <p className="font-medium text-ink-black">No listings found</p>
-            <p className="text-sm text-ink-mid">
-              {activeFilter === "reported"
-                ? "No reported listings to review."
-                : "There are no listings in the system yet."}
-            </p>
-          </div>
+          <EmptyState
+            icon={<List className="size-10" />}
+            title="No listings found"
+            description={activeFilter === "reported" ? "No reported listings to review." : "There are no listings in the system yet."}
+          />
         )}
       </div>
     </div>

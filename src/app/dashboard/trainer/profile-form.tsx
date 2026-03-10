@@ -51,7 +51,7 @@ export function TrainerProfileForm({ profile }: { profile: TrainerProfile | null
             maxLength={200}
           />
           {state.fieldErrors?.headline && (
-            <p className="mt-1 text-xs text-red-600">{state.fieldErrors.headline}</p>
+            <p className="mt-1 text-xs text-red">{state.fieldErrors.headline}</p>
           )}
         </div>
 

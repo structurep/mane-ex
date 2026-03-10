@@ -58,7 +58,7 @@ export function BadgeShowcase({
                 </TooltipTrigger>
                 <TooltipContent>
                   <p className="text-xs font-medium">{badge.label}</p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-ink-light">
                     {badge.description}
                   </p>
                 </TooltipContent>
@@ -85,7 +85,7 @@ export function BadgeShowcase({
                   className={`flex flex-col items-center gap-2 rounded-lg border p-3 text-center transition-colors ${
                     isEarned
                       ? "border-gold/30 bg-gold/5"
-                      : "border-border bg-paper-warm opacity-50"
+                      : "border-crease-light bg-paper-warm opacity-50"
                   }`}
                 >
                   {Icon && (
@@ -104,10 +104,10 @@ export function BadgeShowcase({
               </TooltipTrigger>
               <TooltipContent side="bottom" className="max-w-[200px]">
                 <p className="text-xs font-medium">{badge.label}</p>
-                <p className="mt-0.5 text-xs text-muted-foreground">
+                <p className="mt-0.5 text-xs text-ink-light">
                   {badge.description}
                 </p>
-                <p className="mt-1 text-xs text-muted-foreground italic">
+                <p className="mt-1 text-xs text-ink-light italic">
                   {isEarned ? "Earned" : badge.criteria}
                 </p>
               </TooltipContent>

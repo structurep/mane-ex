@@ -30,7 +30,7 @@ export function UpgradePrompt({
     const percent = Math.min((usage.current / usage.max) * 100, 100);
     const isNearLimit = percent >= 80;
     return (
-      <div className="rounded-lg border border-border bg-paper-cream p-4">
+      <div className="rounded-lg border border-crease-light bg-paper-cream p-4">
         <div className="flex items-center justify-between text-sm mb-2">
           <span className="text-ink-mid">{usage.label}</span>
           <span className={`font-medium ${isNearLimit ? "text-red" : "text-ink-black"}`}>
@@ -72,7 +72,7 @@ export function UpgradePrompt({
   // Variant: Overlay (for blurred/gated content)
   if (variant === "overlay") {
     return (
-      <div className="relative rounded-lg border border-border bg-paper-cream p-6 text-center">
+      <div className="relative rounded-lg border border-crease-light bg-paper-cream p-6 text-center">
         {/* Blurred background placeholder */}
         <div className="pointer-events-none absolute inset-0 rounded-lg bg-paper-warm/80 backdrop-blur-sm" />
         <div className="relative z-10">

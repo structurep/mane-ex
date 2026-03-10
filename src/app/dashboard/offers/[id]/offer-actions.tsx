@@ -20,9 +20,10 @@ import {
   ArrowLeftRight,
   DollarSign,
   Truck,
-  AlertTriangle,
   Shield,
+  AlertTriangle,
 } from "lucide-react";
+import { AlertBanner } from "@/components/tailwind-plus";
 import { toast } from "sonner";
 import { celebrateSuccess } from "@/lib/confetti";
 
@@ -90,10 +91,7 @@ export function OfferActions({
   return (
     <div className="space-y-4">
       {error && (
-        <div className="flex items-start gap-2 rounded-md border border-red/20 bg-red-light px-3 py-2.5 text-sm text-red">
-          <AlertTriangle className="mt-0.5 size-4 shrink-0" />
-          <span>{error}</span>
-        </div>
+        <AlertBanner variant="error">{error}</AlertBanner>
       )}
 
       {/* Seller actions on pending offer */}
@@ -341,7 +339,7 @@ function CounterOfferForm({
       <input type="hidden" name="counter_amount_cents" value={amountCents} />
 
       {state.error && (
-        <p className="text-sm text-red">{state.error}</p>
+        <AlertBanner variant="error">{state.error}</AlertBanner>
       )}
 
       <div>

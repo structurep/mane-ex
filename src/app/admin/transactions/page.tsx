@@ -1,6 +1,7 @@
 import { getAdminTransactions } from "@/actions/admin";
 import { Card, CardContent } from "@/components/ui/card";
-import { StatusBadge, type BadgeVariant } from "@/components/tailwind-plus";
+import { StatusBadge, EmptyState, type BadgeVariant } from "@/components/tailwind-plus";
+import { Receipt } from "lucide-react";
 
 const statusVariants: Record<string, BadgeVariant> = {
   pending: "yellow",
@@ -88,9 +89,7 @@ export default async function AdminTransactionsPage() {
         )}
 
         {transactions.length === 0 && (
-          <p className="py-8 text-center text-sm text-ink-mid">
-            No transactions found.
-          </p>
+          <EmptyState icon={<Receipt className="size-10" />} title="No transactions" description="Escrow transactions will appear here." />
         )}
       </div>
     </div>

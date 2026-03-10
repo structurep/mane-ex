@@ -16,7 +16,7 @@ export function BillOfSale({ data, escrowId }: BillOfSaleProps) {
   const isFullyAccepted = data.accepted_by_buyer_at && data.accepted_by_seller_at;
 
   return (
-    <div className="mx-auto max-w-3xl rounded-lg border border-border bg-paper-white p-8 shadow-folded print:shadow-none print:border-none">
+    <div className="mx-auto max-w-3xl rounded-lg border border-crease-light bg-paper-white p-8 shadow-folded print:shadow-none print:border-none">
       {/* Header */}
       <div className="text-center">
         <h1 className="text-2xl font-bold tracking-tight text-ink-black">
@@ -113,7 +113,7 @@ export function BillOfSale({ data, escrowId }: BillOfSaleProps) {
           className={`rounded-md border-2 p-4 ${
             data.warranty_type === "as_is"
               ? "border-red bg-red-light"
-              : "border-border bg-paper-warm"
+              : "border-crease-light bg-paper-warm"
           }`}
         >
           {/* UCC 2-316: "As Is" must be CONSPICUOUS — bold, caps, larger font */}
@@ -271,7 +271,7 @@ function SignatureBlock({
   acceptedAt: string | null;
 }) {
   return (
-    <div className="rounded-md border border-border bg-paper-cream p-4">
+    <div className="rounded-md border border-crease-light bg-paper-cream p-4">
       <p className="overline text-ink-light">{role.toUpperCase()}</p>
       <p className="mt-1 font-medium text-ink-dark">{name}</p>
       {acceptedAt ? (

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { StatusBadge } from "@/components/tailwind-plus";
+import { StatusBadge, EmptyState } from "@/components/tailwind-plus";
 import { Separator } from "@/components/ui/separator";
 import {
   MapPin,
@@ -584,15 +584,11 @@ export default async function FarmPage({ params }: Props) {
                 )}
               </div>
             ) : (
-              <div className="rounded-lg border-0 bg-paper-warm p-12 text-center">
-                <Store className="mx-auto mb-3 h-8 w-8 text-ink-light" />
-                <p className="text-sm font-medium text-ink-mid">
-                  No horses currently listed
-                </p>
-                <p className="mt-1 text-xs text-ink-light">
-                  Check back soon for new listings from {farm.name}.
-                </p>
-              </div>
+              <EmptyState
+                icon={<Store className="size-10" />}
+                title="No horses currently listed"
+                description={`Check back soon for new listings from ${farm.name}.`}
+              />
             )}
           </section>
         </div>

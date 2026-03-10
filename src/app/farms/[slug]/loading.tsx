@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function FarmLoading() {
   return (
     <div className="min-h-screen bg-paper-white">
-      <div className="h-[4.5rem] border-b border-border bg-paper-white" />
+      <div className="h-[4.5rem] border-b border-crease-light bg-paper-white" />
       <div className="mx-auto max-w-4xl px-4 py-8 md:px-8">
         {/* Farm header */}
         <div className="space-y-3">

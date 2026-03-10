@@ -15,7 +15,8 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { MessageCircle, AlertTriangle, Shield } from "lucide-react";
+import { MessageCircle, Shield } from "lucide-react";
+import { AlertBanner } from "@/components/tailwind-plus";
 import { toast } from "sonner";
 
 type Props = {
@@ -94,10 +95,7 @@ export function MessageSellerModal({
         </DialogHeader>
 
         {error && (
-          <div className="flex items-start gap-2 rounded-md border border-red/20 bg-red-light px-3 py-2.5 text-sm text-red">
-            <AlertTriangle className="mt-0.5 size-4 shrink-0" />
-            <span>{error}</span>
-          </div>
+          <AlertBanner variant="error">{error}</AlertBanner>
         )}
 
         <div className="space-y-4">

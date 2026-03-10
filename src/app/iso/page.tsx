@@ -1,5 +1,5 @@
 import { getIsos } from "@/actions/isos";
-import { StatusBadge } from "@/components/tailwind-plus";
+import { StatusBadge, EmptyState } from "@/components/tailwind-plus";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Search, MapPin, Plus, Send } from "lucide-react";
@@ -79,18 +79,13 @@ export default async function IsoBrowsePage() {
         <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-4xl">
             {allIsos.length === 0 ? (
-              <div className="rounded-lg bg-paper-white p-12 text-center shadow-flat">
-                <Search className="mx-auto mb-4 h-10 w-10 text-ink-faint" />
-                <p className="font-heading text-lg font-medium text-ink-black">
-                  No active requests
-                </p>
-                <p className="mt-1 text-sm text-ink-mid">
-                  Be the first to post what you&apos;re looking for.
-                </p>
-                <Button asChild className="mt-6">
-                  <Link href="/iso/new">Post an ISO</Link>
-                </Button>
-              </div>
+              <EmptyState
+                icon={<Search className="size-10" />}
+                title="No active requests"
+                description="Be the first to post what you're looking for."
+                actionLabel="Post an ISO"
+                actionHref="/iso/new"
+              />
             ) : (
               <div className="stagger-children space-y-4">
                 {allIsos.map((iso) => {

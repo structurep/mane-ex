@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { StatusBadge } from "@/components/tailwind-plus";
+import { StatusBadge, EmptyState } from "@/components/tailwind-plus";
 import Link from "next/link";
 import { MapPin, Calendar, TrendingUp } from "lucide-react";
 import { Header } from "@/components/layout/header";
@@ -67,13 +67,11 @@ export default async function JustSoldPage() {
         <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-4xl">
             {listings.length === 0 ? (
-              <div className="rounded-lg bg-paper-white p-12 text-center shadow-flat">
-                <TrendingUp className="mx-auto mb-4 h-10 w-10 text-ink-faint" />
-                <p className="font-heading text-lg font-medium text-ink-black">
-                  No completed sales yet
-                </p>
-                <p className="mt-1 text-sm text-ink-mid">Stay tuned!</p>
-              </div>
+              <EmptyState
+                icon={<TrendingUp className="size-10" />}
+                title="No completed sales yet"
+                description="Stay tuned — completed transactions will appear here."
+              />
             ) : (
               <div className="stagger-children space-y-4">
                 {listings.map((listing) => {

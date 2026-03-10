@@ -43,9 +43,9 @@ const variantConfig: Record<
   },
 };
 
-interface AlertBannerProps {
+export interface AlertBannerProps {
   variant: AlertVariant;
-  title: string;
+  title?: string;
   children?: ReactNode;
   actions?: ReactNode;
   onDismiss?: () => void;
@@ -76,11 +76,13 @@ export function AlertBanner({
           <Icon className={cn("size-5", config.iconColor)} aria-hidden="true" />
         </div>
         <div className="ml-3 flex-1">
-          <h3 className={cn("text-sm font-medium", config.titleColor)}>
-            {title}
-          </h3>
+          {title && (
+            <h3 className={cn("text-sm font-medium", config.titleColor)}>
+              {title}
+            </h3>
+          )}
           {children && (
-            <div className={cn("mt-2 text-sm", config.textColor)}>
+            <div className={cn(title ? "mt-2" : "", "text-sm", title ? config.textColor : config.titleColor)}>
               {children}
             </div>
           )}

@@ -38,8 +38,8 @@ export function Leaderboard({ currentUserId }: LeaderboardProps) {
   }, [activeCategory]);
 
   return (
-    <div className="rounded-lg border border-border bg-paper-cream shadow-flat">
-      <div className="flex items-center gap-2 border-b border-border px-6 py-4">
+    <div className="rounded-lg border border-crease-light bg-paper-cream shadow-flat">
+      <div className="flex items-center gap-2 border-b border-crease-light px-6 py-4">
         <Trophy className="h-5 w-5 text-gold" />
         <h2 className="font-medium text-ink-dark">Leaderboard</h2>
       </div>
@@ -125,7 +125,7 @@ export function Leaderboard({ currentUserId }: LeaderboardProps) {
         ))}
       </Tabs>
 
-      <div className="border-t border-border px-6 py-3">
+      <div className="border-t border-crease-light px-6 py-3">
         <p className="text-xs text-ink-light">{MANE_SCORE_DISCLAIMER}</p>
       </div>
     </div>

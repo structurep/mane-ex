@@ -208,7 +208,7 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
         <Tabs defaultValue={defaultTab === "overview" ? "basics" : defaultTab === "lifestyle" ? "basics" : defaultTab === "pricing" ? "seller" : defaultTab} className="w-full">
           <TabsList
             variant="line"
-            className="w-full flex-wrap justify-start gap-0 border-b border-border pb-0"
+            className="w-full flex-wrap justify-start gap-0 border-b border-crease-light pb-0"
           >
             <TabsTrigger value="basics" className="text-sm">
               Basics
@@ -869,7 +869,7 @@ function EstimatesTab({ listing }: { listing: ListingTabsData }) {
           Estimated ranges for shipping from {location || "seller location"} based on market averages. Actual quotes may vary by route, season, and availability.
         </p>
         <div className="grid gap-4 sm:grid-cols-2">
-          <div className="rounded-lg border border-border p-4">
+          <div className="rounded-lg border border-crease-light p-4">
             <div className="flex items-center gap-2">
               <Truck className="h-4 w-4 text-blue" />
               <p className="font-semibold text-ink-black">Commercial Van (Direct)</p>
@@ -880,7 +880,7 @@ function EstimatesTab({ listing }: { listing: ListingTabsData }) {
             </div>
             <p className="mt-2 text-xs text-ink-light">Door-to-door, single or small group</p>
           </div>
-          <div className="rounded-lg border border-border p-4">
+          <div className="rounded-lg border border-crease-light p-4">
             <div className="flex items-center gap-2">
               <Truck className="h-4 w-4 text-blue" />
               <p className="font-semibold text-ink-black">Commercial Carrier</p>
@@ -905,7 +905,7 @@ function EstimatesTab({ listing }: { listing: ListingTabsData }) {
             Estimated monthly premiums based on the listing price of ${priceValue.toLocaleString()}. Actual rates depend on age, use, location, and claims history.
           </p>
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-lg border border-border p-4">
+            <div className="rounded-lg border border-crease-light p-4">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="h-4 w-4 text-forest" />
                 <p className="font-semibold text-ink-black">Mortality + Major Medical</p>
@@ -916,7 +916,7 @@ function EstimatesTab({ listing }: { listing: ListingTabsData }) {
                 <span className="font-medium text-ink-dark">~${fullCoverageMonthly}/mo</span>
               </div>
             </div>
-            <div className="rounded-lg border border-border p-4">
+            <div className="rounded-lg border border-crease-light p-4">
               <div className="flex items-center gap-2">
                 <Shield className="h-4 w-4 text-gold" />
                 <p className="font-semibold text-ink-black">Mortality Only</p>

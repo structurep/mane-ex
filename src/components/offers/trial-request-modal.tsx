@@ -14,6 +14,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Calendar } from "lucide-react";
+import { AlertBanner } from "@/components/tailwind-plus";
 
 export function TrialRequestModal({
   listingId,
@@ -122,7 +123,7 @@ export function TrialRequestModal({
             </div>
 
             {error && (
-              <p className="text-sm text-red">{error}</p>
+              <AlertBanner variant="error">{error}</AlertBanner>
             )}
 
             <Button type="submit" className="w-full" disabled={loading}>
