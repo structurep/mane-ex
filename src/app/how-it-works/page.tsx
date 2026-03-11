@@ -59,7 +59,7 @@ export default function HowItWorksPage() {
         <section className="relative flex min-h-[50vh] items-center overflow-hidden bg-paddock">
           <div className="absolute inset-0">
             <Image
-              src="https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=1920&q=80&auto=format&fit=crop"
+              src="/placeholders/horses/hero-2.jpg"
               alt=""
               fill
               className="object-cover opacity-10"

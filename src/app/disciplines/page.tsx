@@ -17,43 +17,37 @@ const disciplines = [
     slug: "hunter-jumper",
     name: "Hunter/Jumper",
     tagline: "Find your next partner over fences.",
-    image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&q=80&auto=format&fit=crop",
+    image: "/placeholders/horses/horse-1.jpg",
   },
   {
     slug: "dressage",
     name: "Dressage",
     tagline: "Harmony in motion.",
-    image:
-      "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800&q=80&auto=format&fit=crop",
+    image: "/placeholders/horses/horse-2.jpg",
   },
   {
     slug: "eventing",
     name: "Eventing",
     tagline: "The ultimate all-around athlete.",
-    image:
-      "https://images.unsplash.com/photo-1508335885186-b279e0274f4c?w=800&q=80&auto=format&fit=crop",
+    image: "/placeholders/horses/horse-3.jpg",
   },
   {
     slug: "western",
     name: "Western",
     tagline: "Bred for the ride.",
-    image:
-      "https://images.unsplash.com/photo-1496185106368-308ed96f204b?w=800&q=80&auto=format&fit=crop",
+    image: "/placeholders/horses/horse-4.jpg",
   },
   {
     slug: "trail",
     name: "Trail & Pleasure",
     tagline: "Your next adventure starts in the saddle.",
-    image:
-      "https://images.unsplash.com/photo-1516550893923-42d28e5677af?w=800&q=80&auto=format&fit=crop",
+    image: "/placeholders/horses/horse-5.jpg",
   },
   {
     slug: "breeding",
     name: "Breeding Stock",
     tagline: "The foundation of your program.",
-    image:
-      "https://images.unsplash.com/photo-1550421079-68e3cf0b0e5c?w=800&q=80&auto=format&fit=crop",
+    image: "/placeholders/horses/horse-6.jpg",
   },
 ];
 

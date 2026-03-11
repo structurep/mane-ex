@@ -48,7 +48,7 @@ export default function AboutPage() {
         >
           <div className="absolute inset-0">
             <Image
-              src="https://images.unsplash.com/photo-1534307671554-9a6d81f4d629?w=1920&q=80&auto=format&fit=crop"
+              src="/placeholders/horses/hero-1.jpg"
               alt=""
               fill
               className="object-cover opacity-20"

@@ -153,7 +153,7 @@ export default function SellPage() {
         <section className="relative overflow-hidden bg-paddock">
           <div className="absolute inset-0">
             <Image
-              src="https://images.unsplash.com/photo-1534307671554-9a6d81f4d629?w=1920&q=80&auto=format&fit=crop"
+              src="/placeholders/horses/hero-1.jpg"
               alt=""
               fill
               className="object-cover opacity-10"

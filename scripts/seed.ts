@@ -824,8 +824,14 @@ async function main() {
 
   console.log('  6. Adding listing media...');
 
-  const img = (id: string, w = 1200, h = 800) =>
-    `https://images.unsplash.com/${id}?w=${w}&h=${h}&fit=crop`;
+  // Local placeholder images — cycle through 8 variants
+  const placeholders = Array.from({ length: 8 }, (_, i) => `/placeholders/horses/horse-${i + 1}.jpg`);
+  const img = (_id: string) => placeholders[Math.abs(hashCode(_id)) % placeholders.length];
+  function hashCode(s: string): number {
+    let h = 0;
+    for (let i = 0; i < s.length; i++) h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
+    return h;
+  }
 
   // Verified Unsplash photo IDs + Mixkit horse video URLs
   const listingMedia: { listing: number; type: 'photo' | 'video'; url: string; alt: string; primary?: boolean; w?: number; h?: number }[] = [

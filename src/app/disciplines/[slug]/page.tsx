@@ -44,7 +44,7 @@ const DISCIPLINES: Record<string, DisciplineConfig> = {
     description:
       "Browse hunter, jumper, and equitation horses — from schoolmasters to Grand Prix prospects. Every listing includes show records, movement video, and verified documentation.",
     heroImage:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1920&q=80&auto=format&fit=crop",
+      "/placeholders/horses/horse-1.jpg",
     searchTerms: ["Hunter", "Jumper", "Equitation", "Hunter/Jumper", "Show Jumping"],
     relatedDisciplines: ["eventing", "equitation"],
     priceRange: "$15,000 – $250,000+",
@@ -62,7 +62,7 @@ const DISCIPLINES: Record<string, DisciplineConfig> = {
     description:
       "From Training Level schoolmasters to FEI Grand Prix prospects. Filter by training level, movement quality, and USDF competition records.",
     heroImage:
-      "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=1920&q=80&auto=format&fit=crop",
+      "/placeholders/horses/horse-2.jpg",
     searchTerms: ["Dressage"],
     relatedDisciplines: ["eventing"],
     priceRange: "$20,000 – $500,000+",
@@ -80,7 +80,7 @@ const DISCIPLINES: Record<string, DisciplineConfig> = {
     description:
       "Three-phase horses for every level — Beginner Novice through Advanced. Bravery, fitness, and versatility in one listing.",
     heroImage:
-      "https://images.unsplash.com/photo-1508335885186-b279e0274f4c?w=1920&q=80&auto=format&fit=crop",
+      "/placeholders/horses/horse-3.jpg",
     searchTerms: ["Eventing"],
     relatedDisciplines: ["hunter-jumper", "dressage"],
     priceRange: "$10,000 – $150,000+",
@@ -98,7 +98,7 @@ const DISCIPLINES: Record<string, DisciplineConfig> = {
     description:
       "Quarter Horses, Paints, and Appaloosas for western pleasure, reining, cutting, barrel racing, and ranch work. AQHA records and bloodline verification available.",
     heroImage:
-      "https://images.unsplash.com/photo-1496185106368-308ed96f204b?w=1920&q=80&auto=format&fit=crop",
+      "/placeholders/horses/horse-4.jpg",
     searchTerms: ["Western Pleasure", "Reining", "Western"],
     relatedDisciplines: ["trail"],
     priceRange: "$5,000 – $100,000+",
@@ -116,7 +116,7 @@ const DISCIPLINES: Record<string, DisciplineConfig> = {
     description:
       "Experienced, sure-footed, sensible trail horses and pleasure mounts. These are the dependable partners that make every ride enjoyable.",
     heroImage:
-      "https://images.unsplash.com/photo-1516550893923-42d28e5677af?w=1920&q=80&auto=format&fit=crop",
+      "/placeholders/horses/horse-5.jpg",
     searchTerms: ["Trail"],
     relatedDisciplines: ["western"],
     priceRange: "$3,000 – $25,000",
@@ -134,7 +134,7 @@ const DISCIPLINES: Record<string, DisciplineConfig> = {
     description:
       "Broodmares, stallions, and young stock with proven bloodlines. Registry verification, reproductive history, and progeny records.",
     heroImage:
-      "https://images.unsplash.com/photo-1550421079-68e3cf0b0e5c?w=1920&q=80&auto=format&fit=crop",
+      "/placeholders/horses/horse-6.jpg",
     searchTerms: ["Breeding"],
     relatedDisciplines: ["western", "dressage"],
     priceRange: "$5,000 – $200,000+",
