@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useTransition } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -44,6 +45,7 @@ import { ListingGallery } from "@/components/marketplace/listing-gallery";
 import { HennekeScoreDisplay } from "@/components/marketplace/henneke-score";
 import { RegistryBadges, type RegistryRecord, type RegistryType } from "@/components/marketplace/registry-lookup";
 import type { ListingRegistryRecord } from "@/types/listings";
+import { toggleFavorite } from "@/actions/listings";
 import {
   DetailGrid,
   type DetailField,
@@ -122,6 +124,16 @@ function getCompletenessColor(grade: string | null) {
 
 export function ListingTabs({ listing, defaultTab = "overview" }: { listing: ListingTabsData; defaultTab?: string }) {
   const l = listing;
+  const [saved, setSaved] = useState(false);
+  const [isPending, startTransition] = useTransition();
+
+  function handleSave() {
+    startTransition(async () => {
+      const result = await toggleFavorite(l.id);
+      if (result.error) return;
+      setSaved(result.favorited);
+    });
+  }
 
   const priceStr = l.price
     ? `$${(l.price / 100).toLocaleString()}`
@@ -144,8 +156,14 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
               </p>
             </div>
             <div className="flex gap-2">
-              <Button variant="ghost" size="icon" aria-label="Save to Dream Barn">
-                <Heart className="h-5 w-5" />
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label={saved ? "Remove from Dream Barn" : "Save to Dream Barn"}
+                onClick={handleSave}
+                disabled={isPending}
+              >
+                <Heart className={`h-5 w-5 ${saved ? "fill-coral text-coral" : ""}`} />
               </Button>
               <Button variant="ghost" size="icon" aria-label="Share listing">
                 <Share2 className="h-5 w-5" />
@@ -592,16 +610,28 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
 
                 {/* Secondary CTAs in 2-col grid */}
                 <div className="grid grid-cols-2 gap-2">
-                  <Button variant="outline" size="sm" className="w-full">
-                    <Heart className="mr-1.5 h-3.5 w-3.5" />
-                    Save
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className={`w-full ${saved ? "border-coral/30 bg-coral/5 text-coral" : ""}`}
+                    onClick={handleSave}
+                    disabled={isPending}
+                  >
+                    <Heart className={`mr-1.5 h-3.5 w-3.5 ${saved ? "fill-coral" : ""}`} />
+                    {saved ? "Saved" : "Save"}
                   </Button>
-                  <Button variant="outline" size="sm" className="w-full" asChild>
-                    <Link href="/dashboard/trials">
-                      <CalendarCheck className="mr-1.5 h-3.5 w-3.5" />
-                      Trial
-                    </Link>
-                  </Button>
+                  <MessageSellerModal
+                    sellerId={l.seller_id}
+                    sellerName={l.seller?.display_name || "Seller"}
+                    listingId={l.id}
+                    listingName={l.name}
+                    trigger={
+                      <Button variant="outline" size="sm" className="w-full">
+                        <CalendarCheck className="mr-1.5 h-3.5 w-3.5" />
+                        Request Trial
+                      </Button>
+                    }
+                  />
                 </div>
 
                 {/* Make Offer — tertiary */}
@@ -775,7 +805,6 @@ function SellerBarnTab({ listing }: { listing: ListingTabsData }) {
         <IconDetailList
           items={[
             l.seller_score && l.seller_score.mane_score > 0 && { icon: <Star className="h-4 w-4" />, label: "Seller Rating", value: `${(l.seller_score.mane_score / 200).toFixed(1)}/5` },
-            { icon: <Clock className="h-4 w-4" />, label: "Response Time", value: "Within 24 hours" },
             otherListings.length > 0 && { icon: <FileText className="h-4 w-4" />, label: "Horses for Sale", value: `${otherListings.length + 1} horses` },
           ].filter(Boolean) as IconDetailItem[]}
         />
