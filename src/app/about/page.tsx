@@ -13,13 +13,6 @@ export const metadata: Metadata = {
     "ManeExchange was born from the same frustration every equestrian knows — the horse market deserves better.",
 };
 
-const platformStats = [
-  { value: "500+", label: "Verified Sellers" },
-  { value: "10,000+", label: "Active Riders" },
-  { value: "2,500+", label: "Horses Matched" },
-  { value: "98%", label: "Happy Matches" },
-];
-
 const values = [
   {
     icon: Eye,
@@ -102,15 +95,17 @@ export default function AboutPage() {
                   deserved — where trust comes standard, not as an afterthought.
                 </p>
               </div>
-              <div className="grid grid-cols-2 gap-8">
-                {platformStats.map((stat) => (
-                  <div key={stat.label} className="text-center">
-                    <p className="font-serif text-4xl font-bold text-ink-black">
-                      {stat.value}
-                    </p>
-                    <p className="mt-1 text-sm text-ink-mid">{stat.label}</p>
-                  </div>
-                ))}
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <div className="rounded-xl border border-crease-light bg-paper-cream p-5 text-center">
+                  <Shield className="mx-auto mb-2 h-6 w-6 text-forest" />
+                  <p className="font-heading text-sm font-semibold text-ink-black">Escrow-Protected</p>
+                  <p className="mt-1 text-xs text-ink-mid">Every transaction secured by ManeVault</p>
+                </div>
+                <div className="rounded-xl border border-crease-light bg-paper-cream p-5 text-center">
+                  <Eye className="mx-auto mb-2 h-6 w-6 text-gold" />
+                  <p className="font-heading text-sm font-semibold text-ink-black">Verified Listings</p>
+                  <p className="mt-1 text-xs text-ink-mid">Vet records, show history, and real pricing</p>
+                </div>
               </div>
             </div>
           </div>
@@ -157,8 +152,8 @@ export default function AboutPage() {
               Your next chapter starts here.
             </h2>
             <p className="mx-auto mb-8 max-w-xl text-ink-mid">
-              Join thousands of equestrians who&apos;ve found their perfect
-              match on ManeExchange.
+              The equestrian marketplace built on transparency, verified
+              records, and escrow-protected transactions.
             </p>
             <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <Button size="lg" asChild>

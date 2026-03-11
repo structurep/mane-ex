@@ -16,9 +16,9 @@ test.describe("Sell page", () => {
     await expect(page.getByText("Create Your Account")).toBeVisible();
     await expect(page.getByText("Hit Publish")).toBeVisible();
 
-    // Stats bar
+    // Differentiators bar
     await expect(
-      page.getByText("Faster sales", { exact: true })
+      page.getByText("Escrow protection", { exact: true })
     ).toBeVisible();
   });
 

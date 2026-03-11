@@ -111,7 +111,7 @@ export default async function MyListingsPage() {
         <EmptyState
           icon={<ClipboardList className="size-10" />}
           title="Your stable is empty"
-          description="List your first horse and start reaching thousands of qualified buyers."
+          description="List your first horse and start reaching verified buyers on ManeExchange."
           actionLabel="Create Your First Listing"
           actionHref={getCreateListingUrl()}
         />

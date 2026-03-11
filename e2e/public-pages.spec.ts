@@ -22,7 +22,7 @@ test.describe("Public pages smoke tests", () => {
   test("just-sold renders heading", async ({ page }) => {
     await page.goto("/just-sold");
     await expect(
-      page.getByRole("heading", { name: /just sold/i })
+      page.getByRole("heading", { name: /success stories|just sold/i })
     ).toBeVisible();
   });
 

@@ -140,7 +140,7 @@ export function RegistryLookup({ records, onChange }: RegistryLookupProps) {
           Registry Verification
         </Label>
         <span className="text-[10px] text-ink-light">
-          Verified listings get 3x more views
+          Verified listings attract more serious inquiries
         </span>
       </div>
 

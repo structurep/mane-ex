@@ -14,7 +14,6 @@ import {
   ArrowRight,
   Phone,
 } from "lucide-react";
-import { FeaturePreview } from "@/components/feature-preview";
 
 export const metadata: Metadata = {
   title: "Trust & Safety",
@@ -157,33 +156,57 @@ export default function TrustPage() {
           </div>
         </section>
 
-        {/* Smart Escrow Preview */}
+        {/* How ManeVault Escrow Works */}
         <section className="bg-paper-white section-premium">
           <div className="mx-auto max-w-[800px]">
             <div className="mb-8 text-center">
-              <p className="overline mb-3 text-forest">SMART ESCROW</p>
+              <p className="overline mb-3 text-forest">MANEVAULT ESCROW</p>
               <h2 className="text-3xl tracking-tight text-ink-black">
-                Milestone-based protection.
+                How your money is protected.
               </h2>
               <p className="text-lead mx-auto mt-3 max-w-2xl text-ink-mid">
-                Funds are released in stages as each milestone is completed —
-                PPE, trial period, and final transfer. Both parties are protected
-                at every step.
+                ManeVault holds buyer funds in escrow through Stripe until the
+                horse is delivered and the buyer confirms receipt. Neither party
+                is exposed.
               </p>
             </div>
-            <FeaturePreview
-              icon={<Lock className="size-8" />}
-              title="Smart Escrow is coming soon"
-              description="Milestone-based escrow that protects both buyers and sellers at every step of the transaction."
-              capabilities={[
-                "Deposit held securely until PPE is completed",
-                "Partial release after successful trial period",
-                "Final release on ownership transfer confirmation",
-                "Automated dispute resolution with mediation support",
-              ]}
-              actionLabel="Browse Horses"
-              actionHref="/browse"
-            />
+            <div className="space-y-4">
+              {[
+                {
+                  step: "1",
+                  title: "Buyer deposits funds",
+                  desc: "When an offer is accepted, the buyer's payment is held securely in ManeVault escrow — not sent to the seller.",
+                },
+                {
+                  step: "2",
+                  title: "Horse is delivered and inspected",
+                  desc: "The seller arranges delivery. The buyer has an inspection window to confirm the horse matches the listing.",
+                },
+                {
+                  step: "3",
+                  title: "Funds released to seller",
+                  desc: "Once the buyer confirms receipt, ManeVault releases payment to the seller. If there's a dispute, our team mediates.",
+                },
+              ].map((item) => (
+                <div
+                  key={item.step}
+                  className="flex gap-4 rounded-lg border border-crease-light bg-paper-cream p-5"
+                >
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-forest text-sm font-bold text-white">
+                    {item.step}
+                  </span>
+                  <div>
+                    <p className="font-heading text-sm font-semibold text-ink-black">
+                      {item.title}
+                    </p>
+                    <p className="mt-1 text-sm text-ink-mid">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 text-center text-xs text-ink-light">
+              ManeVault escrow fee: 5% standard, 4% for Elite members. No sale, no fee.
+            </p>
           </div>
         </section>
 

@@ -25,9 +25,9 @@ const authedTabs = [
 
 const publicTabs = [
   { href: "/browse", label: "Horses", icon: Search },
-  { href: "/just-sold", label: "Just Sold", icon: Gavel },
-  { href: "/learn", label: "Learn", icon: BookOpen },
-  { href: "/discover", label: "Discover", icon: Compass },
+  { href: "/disciplines", label: "Disciplines", icon: Compass },
+  { href: "/how-it-works", label: "How It Works", icon: BookOpen },
+  { href: "/sell", label: "Sell", icon: Gavel },
   { href: "/login", label: "Log In", icon: LogIn },
 ];
 

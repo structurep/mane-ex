@@ -10,8 +10,8 @@ export function BottomCTA() {
           Your next horse is waiting.
         </h2>
         <p className="mx-auto mb-8 max-w-xl text-white/85">
-          Join thousands of riders who&apos;ve found their perfect partner on
-          ManeExchange.
+          Browse verified listings with escrow protection, transparent pricing,
+          and real documentation.
         </p>
         <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
           <Button

@@ -130,8 +130,8 @@ export function StepMedia({ data, setField }: StepProps) {
     <div className="space-y-6">
       {/* Impact banner */}
       <div className="rounded-lg bg-gold/5 p-4 text-sm text-ink-dark">
-        <strong>Listings with 5+ photos and video get 3x more views</strong> and
-        sell 67% faster. Complete conformation photos build buyer confidence
+        <strong>Listings with 5+ photos and video perform significantly better.</strong>{" "}
+        Complete conformation photos build buyer confidence
         before they ever message you.
       </div>
 

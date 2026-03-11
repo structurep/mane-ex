@@ -67,14 +67,14 @@ const steps = [
   },
 ];
 
-const stats = [
+const differentiators = [
   {
-    value: "2,400+",
-    label: "Active members",
-    sub: "buyers & sellers",
+    value: "Mane Score",
+    label: "Transparency built in",
+    sub: "every listing scored on completeness",
   },
-  { value: "67%", label: "Faster sales", sub: "vs. traditional listings" },
-  { value: "3x", label: "More views", sub: "for verified listings" },
+  { value: "ManeVault", label: "Escrow protection", sub: "funds held until delivery confirmed" },
+  { value: "Verified", label: "Buyer profiles included", sub: "see who's inquiring before you respond" },
   { value: "$0", label: "To get started", sub: "list your first horse free" },
 ];
 
@@ -194,37 +194,37 @@ export default function SellPage() {
                 </p>
               </div>
 
-              {/* Right: Glass stats card */}
+              {/* Right: Glass value card */}
               <div className="rounded-2xl border border-white/10 bg-white/10 p-8 backdrop-blur-sm">
                 <div className="mb-6 flex items-center gap-2 text-sm text-white/60">
                   <Timer className="h-4 w-4" />
-                  60-Second Overview
+                  Why sellers switch to ManeExchange
                 </div>
                 <div className="space-y-6">
                   <div>
                     <p className="font-serif text-3xl font-bold text-white">
-                      67% faster sales
+                      Verified buyers only
                     </p>
                     <p className="text-sm text-white/50">
-                      vs. traditional listings
+                      every inquiry includes a buyer profile
                     </p>
                   </div>
                   <div className="border-t border-white/10" />
                   <div>
                     <p className="font-serif text-3xl font-bold text-white">
-                      3x more views
+                      Escrow-protected
                     </p>
                     <p className="text-sm text-white/50">
-                      for verified listings
+                      ManeVault holds funds until delivery
                     </p>
                   </div>
                   <div className="border-t border-white/10" />
                   <div>
                     <p className="font-serif text-3xl font-bold text-white">
-                      Qualified inquiries only
+                      No more tire-kickers
                     </p>
                     <p className="text-sm text-white/50">
-                      buyer profiles included
+                      Mane Score filters serious from casual
                     </p>
                   </div>
                 </div>
@@ -287,19 +287,19 @@ export default function SellPage() {
                 The ManeExchange difference
               </h2>
               <p className="mt-3 text-white/50">
-                Real results from real sellers
+                Built for serious equestrian transactions
               </p>
             </div>
             <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
-              {stats.map((stat) => (
-                <div key={stat.label} className="text-center">
+              {differentiators.map((d) => (
+                <div key={d.label} className="text-center">
                   <p className="font-serif text-4xl font-bold text-white">
-                    {stat.value}
+                    {d.value}
                   </p>
                   <p className="mt-1 text-sm font-medium text-white/80">
-                    {stat.label}
+                    {d.label}
                   </p>
-                  <p className="text-xs text-white/40">{stat.sub}</p>
+                  <p className="text-xs text-white/40">{d.sub}</p>
                 </div>
               ))}
             </div>

@@ -1,15 +1,16 @@
 import { createClient } from "@/lib/supabase/server";
-import { StatusBadge, EmptyState } from "@/components/tailwind-plus";
+import { StatusBadge } from "@/components/tailwind-plus";
 import Link from "next/link";
-import { MapPin, Calendar, TrendingUp } from "lucide-react";
+import { MapPin, Calendar, TrendingUp, ArrowRight } from "lucide-react";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { Button } from "@/components/ui/button";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Just Sold — ManeExchange",
   description:
-    "See horses recently sold on ManeExchange. Real transactions, real trust.",
+    "See horses recently sold on ManeExchange. Completed transactions with escrow-protected payments.",
   openGraph: {
     title: "Just Sold — ManeExchange",
     description: "See horses recently sold on ManeExchange.",
@@ -46,6 +47,88 @@ export default async function JustSoldPage() {
 
   const listings = soldListings ?? [];
 
+  if (listings.length === 0) {
+    return (
+      <div className="min-h-screen">
+        <Header />
+        <main>
+          {/* ── Hero ── */}
+          <section className="with-grain bg-gradient-hero px-4 pt-24 pb-12 md:px-8 md:pt-36 md:pb-16">
+            <div className="mx-auto max-w-4xl">
+              <p className="overline mb-4 text-gold">JUST SOLD</p>
+              <h1 className="mb-4 text-3xl tracking-tight text-ink-black md:text-5xl">
+                The first success stories are coming.
+              </h1>
+              <p className="text-lead max-w-xl text-ink-mid">
+                When horses sell through ManeExchange with escrow-protected
+                payments, they&apos;ll appear here. Every sale is a real,
+                verified transaction.
+              </p>
+            </div>
+          </section>
+
+          {/* ── How it works ── */}
+          <section className="bg-paper-cream section-premium">
+            <div className="mx-auto max-w-2xl">
+              <h2 className="mb-8 text-center font-serif text-2xl text-ink-black">
+                How ManeExchange transactions work
+              </h2>
+              <div className="space-y-4">
+                {[
+                  "Buyer and seller agree on terms through the platform",
+                  "Buyer deposits funds into ManeVault escrow",
+                  "Horse is delivered and inspected by the buyer",
+                  "Funds are released to the seller upon confirmation",
+                  "Both parties can leave verified reviews",
+                ].map((step, i) => (
+                  <div
+                    key={step}
+                    className="flex gap-4 rounded-lg bg-paper-white p-4 shadow-flat"
+                  >
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+                      {i + 1}
+                    </span>
+                    <p className="text-sm text-ink-mid">{step}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* ── CTA ── */}
+          <section className="bg-paddock section-premium">
+            <div className="mx-auto max-w-[1200px] text-center">
+              <h2 className="mb-4 font-serif text-3xl text-paper-white md:text-4xl">
+                Ready to buy or sell?
+              </h2>
+              <p className="text-lead mx-auto mb-8 max-w-xl text-ink-light">
+                Browse verified listings or list your horse today.
+              </p>
+              <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+                <Button size="lg" asChild>
+                  <Link href="/browse">
+                    Browse Horses
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="!bg-transparent border-crease-dark text-paper-cream hover:!bg-ink-dark"
+                  asChild
+                >
+                  <Link href="/sell">List Your Horse</Link>
+                </Button>
+              </div>
+            </div>
+          </section>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // ── Has sold listings: show the feed ──
   return (
     <div className="min-h-screen">
       <Header />
@@ -53,12 +136,13 @@ export default async function JustSoldPage() {
         {/* ── Hero ── */}
         <section className="with-grain bg-gradient-hero px-4 pt-24 pb-12 md:px-8 md:pt-36 md:pb-16">
           <div className="mx-auto max-w-4xl">
-            <p className="overline mb-4 text-gold">SOCIAL PROOF</p>
+            <p className="overline mb-4 text-gold">JUST SOLD</p>
             <h1 className="mb-4 text-3xl tracking-tight text-ink-black md:text-5xl">
               Just Sold
             </h1>
             <p className="text-lead max-w-xl text-ink-mid">
-              Recent sales on ManeExchange. Real transactions, real trust.
+              Recent sales on ManeExchange — every transaction escrow-protected
+              through ManeVault.
             </p>
           </div>
         </section>
@@ -66,94 +150,86 @@ export default async function JustSoldPage() {
         {/* ── Sold Feed ── */}
         <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-4xl">
-            {listings.length === 0 ? (
-              <EmptyState
-                icon={<TrendingUp className="size-10" />}
-                title="No completed sales yet"
-                description="Stay tuned — completed transactions will appear here."
-              />
-            ) : (
-              <div className="stagger-children space-y-4">
-                {listings.map((listing) => {
-                  const seller = listing.seller as unknown as Record<string, unknown> | null;
-                  const disciplines = (listing.disciplines as { name: string }[]) ?? [];
+            <div className="stagger-children space-y-4">
+              {listings.map((listing) => {
+                const seller = listing.seller as unknown as Record<string, unknown> | null;
+                const disciplines = (listing.disciplines as { name: string }[]) ?? [];
 
-                  return (
-                    <div
-                      key={listing.id}
-                      className="animate-fade-up rounded-lg bg-paper-white shadow-flat transition-elevation hover-lift hover:shadow-lifted"
-                    >
-                      <div className="flex items-center gap-4 p-5">
-                        {/* Sold badge */}
-                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-light">
-                          <span className="font-serif text-sm font-bold text-red">
-                            SOLD
-                          </span>
+                return (
+                  <div
+                    key={listing.id}
+                    className="animate-fade-up rounded-lg bg-paper-white shadow-flat transition-elevation hover-lift hover:shadow-lifted"
+                  >
+                    <div className="flex items-center gap-4 p-5">
+                      {/* Sold badge */}
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-light">
+                        <span className="font-serif text-sm font-bold text-red">
+                          SOLD
+                        </span>
+                      </div>
+
+                      {/* Details */}
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2">
+                          <Link
+                            href={`/horses/${listing.slug}`}
+                            className="truncate font-heading text-lg font-medium text-ink-black hover:text-blue"
+                          >
+                            {listing.name}
+                          </Link>
+                          {disciplines.length > 0 && (
+                            <StatusBadge
+                              variant="blue"
+                              className="shrink-0"
+                            >
+                              {disciplines[0].name}
+                            </StatusBadge>
+                          )}
                         </div>
 
-                        {/* Details */}
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center gap-2">
-                            <Link
-                              href={`/horses/${listing.slug}`}
-                              className="truncate font-heading text-lg font-medium text-ink-black hover:text-blue"
-                            >
-                              {listing.name}
-                            </Link>
-                            {disciplines.length > 0 && (
-                              <StatusBadge
-                                variant="blue"
-                                className="shrink-0"
-                              >
-                                {disciplines[0].name}
-                              </StatusBadge>
-                            )}
-                          </div>
-
-                          <div className="mt-1 flex flex-wrap items-center gap-3 text-sm text-ink-mid">
-                            {typeof listing.breed === "string" ? (
-                              <span>{listing.breed}</span>
-                            ) : null}
-                            {typeof listing.age_years === "number" ? (
-                              <span>{listing.age_years}yo</span>
-                            ) : null}
-                            {typeof listing.height_hands === "number" ? (
-                              <span>{listing.height_hands}hh</span>
-                            ) : null}
-                            {typeof listing.gender === "string" ? (
-                              <span className="capitalize">{listing.gender}</span>
-                            ) : null}
-                            {typeof listing.location_state === "string" ? (
-                              <span className="flex items-center gap-1">
-                                <MapPin className="h-3 w-3" />
-                                {typeof listing.location_city === "string"
-                                  ? `${listing.location_city}, `
-                                  : ""}
-                                {listing.location_state}
-                              </span>
-                            ) : null}
-                          </div>
-
-                          {seller && typeof seller.display_name === "string" ? (
-                            <p className="mt-1 text-xs text-ink-light">
-                              Sold by {String(seller.display_name)}
-                            </p>
+                        <div className="mt-1 flex flex-wrap items-center gap-3 text-sm text-ink-mid">
+                          {typeof listing.breed === "string" ? (
+                            <span>{listing.breed}</span>
+                          ) : null}
+                          {typeof listing.age_years === "number" ? (
+                            <span>{listing.age_years}yo</span>
+                          ) : null}
+                          {typeof listing.height_hands === "number" ? (
+                            <span>{listing.height_hands}hh</span>
+                          ) : null}
+                          {typeof listing.gender === "string" ? (
+                            <span className="capitalize">{listing.gender}</span>
+                          ) : null}
+                          {typeof listing.location_state === "string" ? (
+                            <span className="flex items-center gap-1">
+                              <MapPin className="h-3 w-3" />
+                              {typeof listing.location_city === "string"
+                                ? `${listing.location_city}, `
+                                : ""}
+                              {listing.location_state}
+                            </span>
                           ) : null}
                         </div>
 
-                        {/* Time */}
-                        <div className="shrink-0 text-right">
-                          <p className="flex items-center gap-1 text-xs text-ink-light">
-                            <Calendar className="h-3 w-3" />
-                            {timeAgo(listing.updated_at)}
+                        {seller && typeof seller.display_name === "string" ? (
+                          <p className="mt-1 text-xs text-ink-light">
+                            Sold by {String(seller.display_name)}
                           </p>
-                        </div>
+                        ) : null}
+                      </div>
+
+                      {/* Time */}
+                      <div className="shrink-0 text-right">
+                        <p className="flex items-center gap-1 text-xs text-ink-light">
+                          <Calendar className="h-3 w-3" />
+                          {timeAgo(listing.updated_at)}
+                        </p>
                       </div>
                     </div>
-                  );
-                })}
-              </div>
-            )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </section>
 
