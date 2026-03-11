@@ -190,7 +190,7 @@ export default async function ListingDetailPage({ params, searchParams }: Props)
       />
       <Header />
 
-      <main className="px-4 py-8 md:px-8">
+      <main className="px-4 pb-24 pt-8 md:px-8 lg:pb-8">
         <div className="mx-auto max-w-[1200px]">
           {/* Breadcrumb */}
           <Breadcrumb className="mb-4">

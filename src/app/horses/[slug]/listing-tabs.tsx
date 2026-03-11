@@ -135,6 +135,20 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
     });
   }
 
+  async function handleShare() {
+    const url = window.location.href;
+    const title = l.name;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, url });
+      } catch {
+        // User cancelled or share failed — fall through to clipboard
+      }
+      return;
+    }
+    await navigator.clipboard.writeText(url);
+  }
+
   const priceStr = l.price
     ? `$${(l.price / 100).toLocaleString()}`
     : "Contact for price";
@@ -165,11 +179,19 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
               >
                 <Heart className={`h-5 w-5 ${saved ? "fill-coral text-coral" : ""}`} />
               </Button>
-              <Button variant="ghost" size="icon" aria-label="Share listing">
+              <Button variant="ghost" size="icon" aria-label="Share listing" onClick={handleShare}>
                 <Share2 className="h-5 w-5" />
               </Button>
             </div>
           </div>
+
+          {/* Price — visible on mobile/tablet where sidebar is hidden */}
+          <p className="mt-3 font-serif text-3xl font-bold tracking-tight text-ink-black lg:hidden">
+            {priceStr}
+            {l.price_negotiable && (
+              <span className="ml-2 align-middle text-sm font-normal text-forest">Negotiable</span>
+            )}
+          </p>
 
           {/* Quick stats bar */}
           <div className="mt-4 flex flex-wrap gap-4 text-sm text-ink-mid">
