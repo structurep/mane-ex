@@ -16,10 +16,6 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "images.unsplash.com", // Legacy: existing DB media rows still reference Unsplash
-      },
-      {
-        protocol: "https",
         hostname: "*.supabase.co",
         pathname: "/storage/v1/object/public/**",
       },

@@ -833,7 +833,7 @@ async function main() {
     return h;
   }
 
-  // Verified Unsplash photo IDs + Mixkit horse video URLs
+  // Local placeholder photos + Mixkit horse video URLs
   const listingMedia: { listing: number; type: 'photo' | 'video'; url: string; alt: string; primary?: boolean; w?: number; h?: number }[] = [
     // ── Bellissimo's Legacy (4 photos + 1 video) ──
     { listing: 0, type: 'photo', url: img('photo-1553284965-83fd3e82fa5a'), alt: 'Conformation shot — bay warmblood mare', primary: true },
