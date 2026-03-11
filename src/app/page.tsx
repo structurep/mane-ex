@@ -201,7 +201,7 @@ export default async function Home() {
         <ComparisonSection />
 
         {/* ══════════════════════════════════════════════
-            SECTION 6 — TESTIMONIALS
+            SECTION 6 — VALUE PROPOSITIONS
             ══════════════════════════════════════════════ */}
         <TestimonialSection />
 

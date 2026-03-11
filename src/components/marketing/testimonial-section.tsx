@@ -21,7 +21,10 @@ const valueProps = [
   },
 ];
 
-export function TestimonialSection() {
+/** @deprecated Use ValuePropsSection — renamed for accuracy (no actual testimonials). */
+export const TestimonialSection = ValuePropsSection;
+
+export function ValuePropsSection() {
   return (
     <section className="bg-paper-cream px-4 py-12 md:px-8">
       <div className="mx-auto max-w-6xl">
