@@ -186,8 +186,18 @@
   * {
     @apply border-border outline-ring/50;
   }
+
+  /* ── Global overflow guard: prevent horizontal scroll on all viewports ── */
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
   body {
     @apply bg-background text-foreground font-sans;
+    word-break: break-word;
+    overflow-wrap: anywhere;
   }
 
   /* Typography hierarchy: serif editorial (h1-h2) + Swiss precision (h3+) */

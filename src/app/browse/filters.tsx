@@ -190,9 +190,9 @@ export function BrowseFilters({ params }: Props) {
 
   return (
     <div className="space-y-3">
-      {/* ─── Desktop filter bar ─── */}
-      <div className="flex items-center gap-2">
-        {/* Search */}
+      {/* ─── Filter bar ─── */}
+      <div className="flex flex-wrap items-center gap-2">
+        {/* Search (desktop only) */}
         <div className="relative hidden md:block">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-faint" />
           <Input
@@ -207,7 +207,7 @@ export function BrowseFilters({ params }: Props) {
           />
         </div>
 
-        {/* Mobile: open sheet */}
+        {/* Mobile: open filter sheet */}
         <Button
           variant="outline"
           size="sm"
@@ -228,6 +228,7 @@ export function BrowseFilters({ params }: Props) {
           label="Discipline"
           value={params.discipline || ""}
           onChange={(v) => updateFilter("discipline", v)}
+          className="hidden md:block"
         >
           {disciplines.map((d) => (
             <option key={d} value={d}>{d}</option>
@@ -260,6 +261,7 @@ export function BrowseFilters({ params }: Props) {
           label="Location"
           value={params.state || ""}
           onChange={(v) => updateFilter("state", v)}
+          className="hidden md:block"
         >
           {US_REGIONS.map((region) => (
             <optgroup key={region.label} label={region.label}>
@@ -285,7 +287,7 @@ export function BrowseFilters({ params }: Props) {
           )}
         </button>
 
-        {/* Spacer */}
+        {/* Spacer — pushes sort to right edge */}
         <div className="flex-1" />
 
         {/* Sort */}

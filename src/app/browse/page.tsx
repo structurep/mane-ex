@@ -52,7 +52,7 @@ export default async function BrowsePage({ searchParams }: Props) {
 
           {/* Filters + Match Mode toggle */}
           <div className="flex items-center gap-2">
-            <div className="flex-1">
+            <div className="min-w-0 flex-1">
               <BrowseFilters params={params} />
             </div>
             <MatchMode />
