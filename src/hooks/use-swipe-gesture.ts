@@ -1,14 +1,24 @@
 "use client";
 
 import { useRef, useCallback, type PointerEvent } from "react";
+import {
+  SWIPE_THRESHOLD_PX,
+  SWIPE_VELOCITY_THRESHOLD,
+  MAX_ROTATION_DEG,
+  DRAG_OPACITY_DROP,
+  FLYOUT_DURATION_MS,
+  FLYOUT_TRANSITION,
+  FLYOUT_ROTATION_MULT,
+  SNAPBACK_TRANSITION,
+  BADGE_SCALE_MIN,
+  BADGE_ROTATION_DEG,
+} from "@/lib/match/motion";
 
 export type SwipeDirection = "left" | "right";
 
 type UseSwipeGestureOptions = {
   onSwipe: (direction: SwipeDirection) => void;
   onTap?: () => void;
-  threshold?: number;
-  maxRotation?: number;
 };
 
 type SwipeState = {
@@ -19,20 +29,24 @@ type SwipeState = {
   hasMoved: boolean;
   pointerId: number | null;
   lockedAxis: "horizontal" | "vertical" | null;
+  /** Timestamp of last pointer move (for velocity calc) */
+  lastMoveTime: number;
+  /** X position at last pointer move */
+  lastMoveX: number;
+  /** Computed velocity at release (px/ms) */
+  velocityX: number;
 };
 
 /**
  * Pointer-based swipe gesture engine.
+ * - Velocity tracking for decisive flicks
  * - Tap detection (< 5px movement)
- * - Axis locking: once horizontal intent is detected, vertical scroll is blocked
- * - Real-time transform on the cardRef element (no React re-renders)
- * - Badge refs updated via direct DOM access (likeBadgeRef / passBadgeRef)
+ * - Axis locking: horizontal intent blocks vertical scroll
+ * - Ref-driven transforms (zero React re-renders during drag)
  */
 export function useSwipeGesture({
   onSwipe,
   onTap,
-  threshold = 80,
-  maxRotation = 15,
 }: UseSwipeGestureOptions) {
   const cardRef = useRef<HTMLDivElement>(null);
   const likeBadgeRef = useRef<HTMLDivElement>(null);
@@ -45,46 +59,47 @@ export function useSwipeGesture({
     hasMoved: false,
     pointerId: null,
     lockedAxis: null,
+    lastMoveTime: 0,
+    lastMoveX: 0,
+    velocityX: 0,
   });
 
-  const updateTransform = useCallback(
-    (dx: number) => {
-      const el = cardRef.current;
-      if (!el) return;
-      const progress = Math.min(Math.abs(dx) / threshold, 1);
-      const rotation = (dx / threshold) * maxRotation;
-      el.style.transition = "none";
-      el.style.transform = `translateX(${dx}px) rotate(${rotation}deg)`;
-      el.style.opacity = String(1 - progress * 0.15);
+  const updateTransform = useCallback((dx: number) => {
+    const el = cardRef.current;
+    if (!el) return;
+    const progress = Math.min(Math.abs(dx) / SWIPE_THRESHOLD_PX, 1);
+    const rotation = (dx / SWIPE_THRESHOLD_PX) * MAX_ROTATION_DEG;
+    el.style.transition = "none";
+    el.style.transform = `translate3d(${dx}px, 0, 0) rotate(${rotation}deg)`;
+    el.style.opacity = String(1 - progress * DRAG_OPACITY_DROP);
 
-      // Update badge opacity via DOM — no React re-render
-      const likeOp = dx > 10 ? progress : 0;
-      const passOp = dx < -10 ? progress : 0;
-      if (likeBadgeRef.current) {
-        likeBadgeRef.current.style.opacity = String(likeOp);
-        likeBadgeRef.current.style.transform = `rotate(-12deg) scale(${0.8 + likeOp * 0.2})`;
-      }
-      if (passBadgeRef.current) {
-        passBadgeRef.current.style.opacity = String(passOp);
-        passBadgeRef.current.style.transform = `rotate(12deg) scale(${0.8 + passOp * 0.2})`;
-      }
-    },
-    [threshold, maxRotation]
-  );
+    // Update badge opacity via DOM — no React re-render
+    const likeOp = dx > 10 ? progress : 0;
+    const passOp = dx < -10 ? progress : 0;
+    const scaleRange = 1 - BADGE_SCALE_MIN;
+    if (likeBadgeRef.current) {
+      likeBadgeRef.current.style.opacity = String(likeOp);
+      likeBadgeRef.current.style.transform = `rotate(-${BADGE_ROTATION_DEG}deg) scale(${BADGE_SCALE_MIN + likeOp * scaleRange})`;
+    }
+    if (passBadgeRef.current) {
+      passBadgeRef.current.style.opacity = String(passOp);
+      passBadgeRef.current.style.transform = `rotate(${BADGE_ROTATION_DEG}deg) scale(${BADGE_SCALE_MIN + passOp * scaleRange})`;
+    }
+  }, []);
 
   const resetTransform = useCallback(() => {
     const el = cardRef.current;
     if (!el) return;
-    el.style.transition = "transform 0.3s ease-out, opacity 0.3s ease-out";
-    el.style.transform = "translateX(0) rotate(0deg)";
+    el.style.transition = SNAPBACK_TRANSITION;
+    el.style.transform = "translate3d(0, 0, 0) rotate(0deg)";
     el.style.opacity = "1";
     if (likeBadgeRef.current) {
       likeBadgeRef.current.style.opacity = "0";
-      likeBadgeRef.current.style.transform = "rotate(-12deg) scale(0.8)";
+      likeBadgeRef.current.style.transform = `rotate(-${BADGE_ROTATION_DEG}deg) scale(${BADGE_SCALE_MIN})`;
     }
     if (passBadgeRef.current) {
       passBadgeRef.current.style.opacity = "0";
-      passBadgeRef.current.style.transform = "rotate(12deg) scale(0.8)";
+      passBadgeRef.current.style.transform = `rotate(${BADGE_ROTATION_DEG}deg) scale(${BADGE_SCALE_MIN})`;
     }
   }, []);
 
@@ -94,18 +109,21 @@ export function useSwipeGesture({
         const el = cardRef.current;
         if (!el) { resolve(); return; }
         const x = direction === "right" ? window.innerWidth * 1.2 : -window.innerWidth * 1.2;
-        const rot = direction === "right" ? maxRotation * 1.5 : -maxRotation * 1.5;
-        el.style.transition = "transform 0.35s ease-in, opacity 0.35s ease-in";
-        el.style.transform = `translateX(${x}px) rotate(${rot}deg)`;
+        const rot = direction === "right"
+          ? MAX_ROTATION_DEG * FLYOUT_ROTATION_MULT
+          : -MAX_ROTATION_DEG * FLYOUT_ROTATION_MULT;
+        el.style.transition = FLYOUT_TRANSITION;
+        el.style.transform = `translate3d(${x}px, 0, 0) rotate(${rot}deg)`;
         el.style.opacity = "0";
-        setTimeout(resolve, 350);
+        setTimeout(resolve, FLYOUT_DURATION_MS);
       });
     },
-    [maxRotation]
+    []
   );
 
   const onPointerDown = useCallback((e: PointerEvent<HTMLDivElement>) => {
     if (e.button !== 0) return;
+    const now = performance.now();
     state.current = {
       startX: e.clientX,
       startY: e.clientY,
@@ -114,6 +132,9 @@ export function useSwipeGesture({
       hasMoved: false,
       pointerId: e.pointerId,
       lockedAxis: null,
+      lastMoveTime: now,
+      lastMoveX: e.clientX,
+      velocityX: 0,
     };
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   }, []);
@@ -146,6 +167,17 @@ export function useSwipeGesture({
       // Horizontal drag — prevent scroll and update card transform
       e.preventDefault();
       s.currentX = dx;
+
+      // Track velocity (exponential moving average for smoothness)
+      const now = performance.now();
+      const dt = now - s.lastMoveTime;
+      if (dt > 0) {
+        const instantVelocity = (e.clientX - s.lastMoveX) / dt;
+        s.velocityX = s.velocityX * 0.3 + instantVelocity * 0.7;
+      }
+      s.lastMoveTime = now;
+      s.lastMoveX = e.clientX;
+
       updateTransform(dx);
     },
     [updateTransform]
@@ -169,14 +201,23 @@ export function useSwipeGesture({
       }
 
       const dx = s.currentX;
-      if (Math.abs(dx) >= threshold) {
-        const direction: SwipeDirection = dx > 0 ? "right" : "left";
+      const absV = Math.abs(s.velocityX);
+
+      // Commit if displacement OR velocity exceeds threshold
+      const committed = Math.abs(dx) >= SWIPE_THRESHOLD_PX || absV >= SWIPE_VELOCITY_THRESHOLD;
+
+      if (committed) {
+        // Direction from displacement, but if displacement is small, use velocity
+        const direction: SwipeDirection =
+          Math.abs(dx) >= SWIPE_THRESHOLD_PX
+            ? (dx > 0 ? "right" : "left")
+            : (s.velocityX > 0 ? "right" : "left");
         flyOut(direction).then(() => onSwipe(direction));
       } else {
         resetTransform();
       }
     },
-    [threshold, flyOut, onSwipe, onTap, resetTransform]
+    [flyOut, onSwipe, onTap, resetTransform]
   );
 
   return {

@@ -148,20 +148,22 @@ export function useMatchListings(filters: BrowseFilters = {}, debug = false) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /**
+   * Advance the stack immediately. Persistence (favorite/pass DB writes)
+   * happens fire-and-forget — the UI never waits for the network.
+   */
   const advance = useCallback(
-    async (action: MatchAction) => {
+    (action: MatchAction) => {
       const current = stack[0];
-      if (!current) return { needsAuth: false };
+      if (!current) return;
 
       setLastAction({ action, listing: current });
       const newTotalSeen = totalSeen + 1;
       setTotalSeen(newTotalSeen);
 
+      // Fire-and-forget persistence — UI advances immediately
       if (action === "favorite") {
-        const result = await toggleFavorite(current.id);
-        if (result.error) {
-          return { needsAuth: true };
-        }
+        toggleFavorite(current.id).catch(() => { /* silent */ });
       } else {
         passListing(current.id);
       }
@@ -176,8 +178,6 @@ export function useMatchListings(filters: BrowseFilters = {}, debug = false) {
       if (stack.length - 1 <= REFETCH_THRESHOLD && !fetchingRef.current) {
         fetchBatch();
       }
-
-      return { needsAuth: false };
     },
     [stack, fetchBatch, totalSeen]
   );

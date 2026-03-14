@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useCallback, useEffect } from "react";
-import Image from "next/image";
 import { Heart, X, RotateCcw, Grid, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SwipeCard, type SwipeCardHandle } from "./swipe-card";
@@ -105,14 +104,15 @@ export function MatchStack({ onExit, filters = {}, onAnalytics, onProgress, debu
   );
 
   const handleSwipe = useCallback(
-    async (direction: SwipeDirection) => {
+    (direction: SwipeDirection) => {
       if (processingRef.current) return;
       processingRef.current = true;
       haptic();
       const action: MatchAction = direction === "right" ? "favorite" : "pass";
       if (current) trackInteraction(current, action === "favorite" ? "favorite" : "pass", "swipe");
-      await advance(action);
-      processingRef.current = false;
+      advance(action);
+      // Release lock after stack promotion settles (~160ms)
+      setTimeout(() => { processingRef.current = false; }, 180);
     },
     [advance, current, trackInteraction]
   );
@@ -125,8 +125,9 @@ export function MatchStack({ onExit, filters = {}, onAnalytics, onProgress, debu
       const direction: SwipeDirection = action === "favorite" ? "right" : "left";
       if (current) trackInteraction(current, action === "favorite" ? "favorite" : "pass", "button");
       await cardRef.current.flyOut(direction);
-      await advance(action);
-      processingRef.current = false;
+      advance(action);
+      // Release lock after stack promotion settles
+      setTimeout(() => { processingRef.current = false; }, 180);
     },
     [advance, current, trackInteraction]
   );
@@ -200,15 +201,13 @@ export function MatchStack({ onExit, filters = {}, onAnalytics, onProgress, debu
 
   return (
     <div className="flex flex-col items-center px-4" role="region" aria-label="Match Mode card stack">
-      {/* Preload upcoming card images */}
-      <div className="hidden" aria-hidden="true">
-        {upcoming.map((l) => {
-          const img = l.media?.find((m) => m.is_primary) ?? l.media?.[0];
-          return img ? (
-            <Image key={l.id} src={img.url} alt="" width={1} height={1} unoptimized />
-          ) : null;
-        })}
-      </div>
+      {/* Preload upcoming card images via link preload (faster than hidden <Image>) */}
+      {upcoming.map((l) => {
+        const img = l.media?.find((m) => m.is_primary) ?? l.media?.[0];
+        return img ? (
+          <link key={l.id} rel="preload" as="image" href={img.url} />
+        ) : null;
+      })}
 
       {/* Card stack — 3 cards deep */}
       <div className="relative mx-auto aspect-[3/4] w-full max-w-sm">
