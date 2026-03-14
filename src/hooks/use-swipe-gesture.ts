@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useCallback, type PointerEvent } from "react";
+import { useRef, useCallback, useEffect, type PointerEvent } from "react";
 import {
   SWIPE_THRESHOLD_PX,
   SWIPE_VELOCITY_THRESHOLD,
@@ -20,6 +20,8 @@ export type SwipeDirection = "left" | "right";
 type UseSwipeGestureOptions = {
   onSwipe: (direction: SwipeDirection) => void;
   onTap?: () => void;
+  /** Current listing ID — attached to swipe metrics */
+  listingId?: string;
 };
 
 type SwipeState = {
@@ -52,7 +54,10 @@ type SwipeState = {
 export function useSwipeGesture({
   onSwipe,
   onTap,
+  listingId,
 }: UseSwipeGestureOptions) {
+  const listingIdRef = useRef(listingId);
+  useEffect(() => { listingIdRef.current = listingId; }, [listingId]);
   const cardRef = useRef<HTMLDivElement>(null);
   const likeBadgeRef = useRef<HTMLDivElement>(null);
   const passBadgeRef = useRef<HTMLDivElement>(null);
@@ -229,6 +234,7 @@ export function useSwipeGesture({
 
         // Log swipe metric (fires only on commit, never during drag)
         logSwipeMetric({
+          listing_id: listingIdRef.current ?? "",
           swipe_duration_ms: Math.round(performance.now() - s.startTime),
           drag_distance_px: Math.round(Math.abs(dx)),
           velocity_x: Math.round(s.velocityX * 1000) / 1000,

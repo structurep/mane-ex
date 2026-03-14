@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useCallback, useEffect } from "react";
+import { useRef, useCallback, useEffect, useState } from "react";
 import { Heart, X, RotateCcw, Grid, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SwipeCard, type SwipeCardHandle } from "./swipe-card";
@@ -9,6 +9,8 @@ import type { SwipeDirection } from "@/hooks/use-swipe-gesture";
 import type { MatchListing, ScoredMatchListing } from "@/actions/match";
 import { logInteraction, type InteractionType, type InteractionMethod } from "@/actions/interactions";
 import { recordMetric } from "@/lib/match/matchMetrics";
+import { flushSwipeMetrics } from "@/lib/match/swipeMetrics";
+import { recordSwipe, getSessionStats, resetSession, type SessionStats } from "@/lib/match/sessionStats";
 
 /** Client-side throttle: block duplicate (listingId + type) within 2s */
 const recentInteractions = new Map<string, number>();
@@ -66,11 +68,20 @@ export function MatchStack({ onExit, filters = {}, onAnalytics, onProgress, debu
 
   const cardRef = useRef<SwipeCardHandle>(null);
   const processingRef = useRef(false);
+  const [sessionStats, setSessionStats] = useState<SessionStats | null>(null);
 
   // Report progress to parent
   useEffect(() => {
     onProgress?.(totalSeen, remaining);
   }, [totalSeen, remaining, onProgress]);
+
+  // Flush telemetry + reset session on unmount
+  useEffect(() => {
+    return () => {
+      flushSwipeMetrics();
+      resetSession();
+    };
+  }, []);
 
   const logEvent = useCallback(
     (event: string, data?: Record<string, string>) => {
@@ -103,18 +114,35 @@ export function MatchStack({ onExit, filters = {}, onAnalytics, onProgress, debu
     [logEvent, totalSeen]
   );
 
+  const updateSessionStats = useCallback(
+    (result: "favorite" | "pass", listing: MatchListing) => {
+      recordSwipe({
+        result,
+        swipe_duration_ms: 0, // actual duration tracked in gesture hook
+        drag_distance_px: 0,
+        discipline: listing.discipline_ids?.[0] ?? null,
+        price: listing.price,
+      });
+      if (debug) setSessionStats(getSessionStats());
+    },
+    [debug]
+  );
+
   const handleSwipe = useCallback(
     (direction: SwipeDirection) => {
       if (processingRef.current) return;
       processingRef.current = true;
       haptic();
       const action: MatchAction = direction === "right" ? "favorite" : "pass";
-      if (current) trackInteraction(current, action === "favorite" ? "favorite" : "pass", "swipe");
+      if (current) {
+        trackInteraction(current, action === "favorite" ? "favorite" : "pass", "swipe");
+        updateSessionStats(action, current);
+      }
       advance(action);
       // Release lock after stack promotion settles (~160ms)
       setTimeout(() => { processingRef.current = false; }, 180);
     },
-    [advance, current, trackInteraction]
+    [advance, current, trackInteraction, updateSessionStats]
   );
 
   const handleButton = useCallback(
@@ -123,13 +151,16 @@ export function MatchStack({ onExit, filters = {}, onAnalytics, onProgress, debu
       processingRef.current = true;
       haptic();
       const direction: SwipeDirection = action === "favorite" ? "right" : "left";
-      if (current) trackInteraction(current, action === "favorite" ? "favorite" : "pass", "button");
+      if (current) {
+        trackInteraction(current, action === "favorite" ? "favorite" : "pass", "button");
+        updateSessionStats(action === "favorite" ? "favorite" : "pass", current);
+      }
       await cardRef.current.flyOut(direction);
       advance(action);
       // Release lock after stack promotion settles
       setTimeout(() => { processingRef.current = false; }, 180);
     },
-    [advance, current, trackInteraction]
+    [advance, current, trackInteraction, updateSessionStats]
   );
 
   // Keyboard: left arrow = pass, right arrow = favorite
@@ -235,27 +266,46 @@ export function MatchStack({ onExit, filters = {}, onAnalytics, onProgress, debu
         )}
       </div>
 
-      {/* Debug scoring overlay */}
-      {debug && current && (current as ScoredMatchListing)._debug && (() => {
-        const d = (current as ScoredMatchListing)._debug!;
-        return (
-          <div className="mt-2 rounded-lg bg-ink-black/80 px-3 py-2 font-mono text-[10px] text-paper-white/80">
-            <div className="flex justify-between">
-              <span>final_score</span><span className="font-bold">{d.finalScore}</span>
+      {/* Debug overlay — scoring + session stats */}
+      {debug && (
+        <div className="mt-2 flex gap-2">
+          {/* Scoring debug */}
+          {current && (current as ScoredMatchListing)._debug && (() => {
+            const d = (current as ScoredMatchListing)._debug!;
+            return (
+              <div className="flex-1 rounded-lg bg-ink-black/80 px-3 py-2 font-mono text-[10px] text-paper-white/80">
+                <div className="mb-1 text-[9px] font-bold uppercase tracking-wider text-ink-faint">Score</div>
+                <div className="flex justify-between">
+                  <span>final</span><span className="font-bold">{d.finalScore}</span>
+                </div>
+                <div className="flex justify-between"><span>rank</span><span>#{d.rankPosition}</span></div>
+                <div className="flex justify-between"><span>recency</span><span>{d.recency}</span></div>
+                <div className="flex justify-between"><span>complete</span><span>{d.completeness}</span></div>
+                <div className="flex justify-between"><span>disc</span><span>{d.discipline}</span></div>
+                <div className="flex justify-between"><span>price</span><span>{d.price}</span></div>
+                <div className="flex justify-between"><span>location</span><span>{d.location}</span></div>
+                {d.sellerPenalty < 1 && (
+                  <div className="flex justify-between text-coral"><span>seller</span><span>×{d.sellerPenalty}</span></div>
+                )}
+                {d.exploration && <div className="mt-1 text-center text-gold">exploration</div>}
+              </div>
+            );
+          })()}
+
+          {/* Session stats debug */}
+          {sessionStats && (
+            <div className="flex-1 rounded-lg bg-ink-black/80 px-3 py-2 font-mono text-[10px] text-paper-white/80">
+              <div className="mb-1 text-[9px] font-bold uppercase tracking-wider text-ink-faint">Session</div>
+              <div className="flex justify-between"><span>seen</span><span>{sessionStats.cards_seen}</span></div>
+              <div className="flex justify-between"><span>fav_rate</span><span className="font-bold">{sessionStats.favorite_rate}%</span></div>
+              <div className="flex justify-between"><span>avg_time</span><span>{sessionStats.avg_swipe_time}ms</span></div>
+              <div className="flex justify-between"><span>avg_dist</span><span>{sessionStats.avg_drag_distance}px</span></div>
+              <div className="flex justify-between"><span>favs</span><span className="text-forest">{sessionStats.favorites}</span></div>
+              <div className="flex justify-between"><span>passes</span><span className="text-coral">{sessionStats.passes}</span></div>
             </div>
-            <div className="flex justify-between"><span>rank</span><span>#{d.rankPosition}</span></div>
-            <div className="flex justify-between"><span>recency</span><span>{d.recency}</span></div>
-            <div className="flex justify-between"><span>completeness</span><span>{d.completeness}</span></div>
-            <div className="flex justify-between"><span>discipline</span><span>{d.discipline}</span></div>
-            <div className="flex justify-between"><span>price</span><span>{d.price}</span></div>
-            <div className="flex justify-between"><span>location</span><span>{d.location}</span></div>
-            {d.sellerPenalty < 1 && (
-              <div className="flex justify-between text-coral"><span>seller_penalty</span><span>×{d.sellerPenalty}</span></div>
-            )}
-            {d.exploration && <div className="mt-1 text-center text-gold">exploration pick</div>}
-          </div>
-        );
-      })()}
+          )}
+        </div>
+      )}
 
       {/* Action buttons */}
       <div className="mt-6 flex items-center gap-8">

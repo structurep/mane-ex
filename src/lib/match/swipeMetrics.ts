@@ -1,10 +1,13 @@
 /**
- * Lightweight client-side swipe telemetry.
- * Fires once per committed swipe — never during drag.
- * Console-only for now; swap to analytics endpoint later.
+ * Client-side swipe telemetry with batched persistence.
+ * Events queue in memory → flush to Supabase every 5s.
+ * Queue capped at 50; drops silently on failure.
  */
 
+import { insertSwipeEvents, type SwipeEventInput } from "@/actions/swipe-events";
+
 export type SwipeMetric = {
+  listing_id: string;
   swipe_duration_ms: number;
   drag_distance_px: number;
   velocity_x: number;
@@ -12,17 +15,62 @@ export type SwipeMetric = {
   result: "pass" | "favorite";
 };
 
-let frameDropLogged = false;
+// ── Event queue ───────────────────────────────
+const MAX_QUEUE = 50;
+const FLUSH_INTERVAL_MS = 5000;
+let queue: SwipeEventInput[] = [];
+let flushTimer: ReturnType<typeof setInterval> | null = null;
+
+function ensureTimer() {
+  if (flushTimer) return;
+  flushTimer = setInterval(flushQueue, FLUSH_INTERVAL_MS);
+  // Also flush on page hide (tab close / navigate away)
+  if (typeof document !== "undefined") {
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") flushQueue();
+    });
+  }
+}
+
+function flushQueue() {
+  if (queue.length === 0) return;
+  const batch = queue.splice(0, MAX_QUEUE);
+  // Fire-and-forget — never await, never throw
+  insertSwipeEvents(batch).catch(() => { /* silent */ });
+}
 
 /**
- * Log a committed swipe metric to console.
+ * Log a committed swipe metric. Queues for batch persistence.
  */
 export function logSwipeMetric(metric: SwipeMetric) {
   if (process.env.NODE_ENV === "development") {
     console.debug("match_swipe_metric", metric);
   }
-  // Future: POST to /api/vitals or analytics endpoint
+
+  queue.push({
+    listing_id: metric.listing_id,
+    direction: metric.result,
+    commit_reason: metric.commit_reason,
+    drag_distance_px: metric.drag_distance_px,
+    velocity_x: metric.velocity_x,
+    swipe_duration_ms: metric.swipe_duration_ms,
+  });
+
+  // Drop oldest if queue overflows
+  if (queue.length > MAX_QUEUE) {
+    queue = queue.slice(-MAX_QUEUE);
+  }
+
+  ensureTimer();
 }
+
+/** Force flush (call on Match Mode close) */
+export function flushSwipeMetrics() {
+  flushQueue();
+}
+
+// ── Frame-drop detection ──────────────────────
+let frameDropLogged = false;
 
 /**
  * Detect frame drops during drag. Call on every pointer move.

@@ -43,6 +43,7 @@ export const SwipeCard = forwardRef<SwipeCardHandle, SwipeCardProps>(
     const { cardRef, likeBadgeRef, passBadgeRef, handlers, flyOut } = useSwipeGesture({
       onSwipe,
       onTap: handleTap,
+      listingId: l.id,
     });
 
     useImperativeHandle(ref, () => ({ flyOut }), [flyOut]);
