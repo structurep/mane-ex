@@ -34,6 +34,8 @@ interface ListingCardProps {
   listing: ListingCardData;
   /** Prioritize image loading (for above-fold cards) */
   priority?: boolean;
+  /** Show 🔥 Hot badge (top trending listings) */
+  trending?: boolean;
   className?: string;
 }
 
@@ -48,6 +50,7 @@ function daysSince(dateStr: string): number {
 export function ListingCard({
   listing: l,
   priority = false,
+  trending = false,
   className,
 }: ListingCardProps) {
   const priceStr = l.price
@@ -55,8 +58,9 @@ export function ListingCard({
     : "Contact for Price";
 
   const daysListed = l.published_at ? daysSince(l.published_at) : 999;
-  const badge =
-    daysListed < 3
+  const badge = trending
+    ? { label: "Hot", Icon: Flame, bg: "bg-oxblood/90" }
+    : daysListed < 3
       ? { label: "Just Listed", Icon: Sparkles, bg: "bg-blue/90" }
       : (l.favorite_count ?? 0) > 5
         ? { label: "Popular", Icon: Flame, bg: "bg-oxblood/90" }

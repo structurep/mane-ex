@@ -9,6 +9,7 @@ import {
   ListingCard,
   type ListingCardData,
 } from "@/components/tailwind-plus";
+import { getTrendingIds } from "@/actions/trending-listings";
 
 type Props = {
   params: {
@@ -106,7 +107,8 @@ export async function BrowseResults({ params }: Props) {
       query = query.order("published_at", { ascending: false, nullsFirst: false });
   }
 
-  const { data: listings, count, error } = await query;
+  const [queryResult, trendingIds] = await Promise.all([query, getTrendingIds()]);
+  const { data: listings, count, error } = queryResult;
 
   if (error) {
     return (
@@ -170,6 +172,7 @@ export async function BrowseResults({ params }: Props) {
               key={l.id}
               listing={l}
               priority={listingIndex === 0}
+              trending={trendingIds.has(l.id)}
               className="animate-fade-up"
             />
           );

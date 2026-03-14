@@ -20,8 +20,12 @@ export type SwipeDirection = "left" | "right";
 type UseSwipeGestureOptions = {
   onSwipe: (direction: SwipeDirection) => void;
   onTap?: () => void;
-  /** Current listing ID — attached to swipe metrics */
+  /** Current listing context — attached to swipe metrics */
   listingId?: string;
+  discipline?: string | null;
+  price?: number | null;
+  location?: string | null;
+  sellerId?: string | null;
 };
 
 type SwipeState = {
@@ -55,9 +59,15 @@ export function useSwipeGesture({
   onSwipe,
   onTap,
   listingId,
+  discipline,
+  price,
+  location,
+  sellerId,
 }: UseSwipeGestureOptions) {
-  const listingIdRef = useRef(listingId);
-  useEffect(() => { listingIdRef.current = listingId; }, [listingId]);
+  const contextRef = useRef({ listingId, discipline, price, location, sellerId });
+  useEffect(() => {
+    contextRef.current = { listingId, discipline, price, location, sellerId };
+  }, [listingId, discipline, price, location, sellerId]);
   const cardRef = useRef<HTMLDivElement>(null);
   const likeBadgeRef = useRef<HTMLDivElement>(null);
   const passBadgeRef = useRef<HTMLDivElement>(null);
@@ -233,13 +243,18 @@ export function useSwipeGesture({
             : (s.velocityX > 0 ? "right" : "left");
 
         // Log swipe metric (fires only on commit, never during drag)
+        const ctx = contextRef.current;
         logSwipeMetric({
-          listing_id: listingIdRef.current ?? "",
+          listing_id: ctx.listingId ?? "",
           swipe_duration_ms: Math.round(performance.now() - s.startTime),
           drag_distance_px: Math.round(Math.abs(dx)),
           velocity_x: Math.round(s.velocityX * 1000) / 1000,
           commit_reason: commitReason,
           result: direction === "right" ? "favorite" : "pass",
+          discipline: ctx.discipline,
+          price: ctx.price,
+          location: ctx.location,
+          seller_id: ctx.sellerId,
         });
 
         flyOut(direction).then(() => onSwipe(direction));

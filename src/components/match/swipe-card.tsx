@@ -44,6 +44,10 @@ export const SwipeCard = forwardRef<SwipeCardHandle, SwipeCardProps>(
       onSwipe,
       onTap: handleTap,
       listingId: l.id,
+      discipline: l.discipline_ids?.[0] ?? null,
+      price: l.price,
+      location: l.location_state,
+      sellerId: l.seller_id,
     });
 
     useImperativeHandle(ref, () => ({ flyOut }), [flyOut]);

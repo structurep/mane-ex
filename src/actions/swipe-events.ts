@@ -9,6 +9,10 @@ export type SwipeEventInput = {
   drag_distance_px: number;
   velocity_x: number;
   swipe_duration_ms: number;
+  discipline?: string | null;
+  price?: number | null;
+  location?: string | null;
+  seller_id?: string | null;
 };
 
 /**
@@ -29,6 +33,10 @@ export async function insertSwipeEvents(events: SwipeEventInput[]) {
     drag_distance_px: e.drag_distance_px,
     velocity_x: e.velocity_x,
     swipe_duration_ms: e.swipe_duration_ms,
+    discipline: e.discipline ?? null,
+    price: e.price ?? null,
+    location: e.location ?? null,
+    seller_id: e.seller_id ?? null,
   }));
 
   await supabase.from("swipe_events").insert(rows);

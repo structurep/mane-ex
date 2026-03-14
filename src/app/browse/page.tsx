@@ -6,6 +6,7 @@ import { BrowseFilters } from "./filters";
 import { BrowseResults } from "./results";
 import { BasedOnSearches } from "./based-on-searches";
 import { MatchMode } from "@/components/match/match-mode";
+import { TrendingSection } from "./trending-section";
 
 export const metadata: Metadata = {
   title: "Current Offerings",
@@ -49,6 +50,11 @@ export default async function BrowsePage({ searchParams }: Props) {
               Current Offerings
             </h1>
           </div>
+
+          {/* Trending */}
+          <Suspense fallback={null}>
+            <TrendingSection />
+          </Suspense>
 
           {/* Filters + Match Mode toggle */}
           <div className="flex items-center gap-2">

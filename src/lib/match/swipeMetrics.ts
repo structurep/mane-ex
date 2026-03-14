@@ -13,6 +13,10 @@ export type SwipeMetric = {
   velocity_x: number;
   commit_reason: "distance" | "velocity";
   result: "pass" | "favorite";
+  discipline?: string | null;
+  price?: number | null;
+  location?: string | null;
+  seller_id?: string | null;
 };
 
 // ── Event queue ───────────────────────────────
@@ -54,6 +58,10 @@ export function logSwipeMetric(metric: SwipeMetric) {
     drag_distance_px: metric.drag_distance_px,
     velocity_x: metric.velocity_x,
     swipe_duration_ms: metric.swipe_duration_ms,
+    discipline: metric.discipline,
+    price: metric.price,
+    location: metric.location,
+    seller_id: metric.seller_id,
   });
 
   // Drop oldest if queue overflows
