@@ -250,7 +250,7 @@ export async function searchTrainers(opts?: {
 
   // Fetch services for all trainers
   const trainerIds = (data ?? []).map((t) => t.id);
-  let serviceMap = new Map<string, TrainerService[]>();
+  const serviceMap = new Map<string, TrainerService[]>();
 
   if (trainerIds.length > 0) {
     let serviceQuery = supabase

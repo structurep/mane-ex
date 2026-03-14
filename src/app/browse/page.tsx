@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/footer";
 import { BrowseFilters } from "./filters";
 import { BrowseResults } from "./results";
 import { BasedOnSearches } from "./based-on-searches";
+import { MatchMode } from "@/components/match/match-mode";
 
 export const metadata: Metadata = {
   title: "Current Offerings",
@@ -49,8 +50,13 @@ export default async function BrowsePage({ searchParams }: Props) {
             </h1>
           </div>
 
-          {/* Filters */}
-          <BrowseFilters params={params} />
+          {/* Filters + Match Mode toggle */}
+          <div className="flex items-center gap-2">
+            <div className="flex-1">
+              <BrowseFilters params={params} />
+            </div>
+            <MatchMode />
+          </div>
 
           {/* Results */}
           <div className="mt-6">

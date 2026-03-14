@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
@@ -9,9 +10,8 @@ import { ComparisonSection } from "@/components/marketing/comparison-section";
 import { TestimonialSection } from "@/components/marketing/testimonial-section";
 import { BottomCTA } from "@/components/marketing/bottom-cta";
 import { HeroSearch } from "@/components/marketing/hero-search";
-import { createClient } from "@/lib/supabase/server";
 import { ArrowRight } from "lucide-react";
-import { ListingCard, SectionHeading } from "@/components/tailwind-plus";
+import { FeaturedListings } from "./featured-listings";
 
 export const metadata: Metadata = {
   title: "ManeExchange — Buy & Sell Horses with Confidence",
@@ -19,41 +19,45 @@ export const metadata: Metadata = {
     "The trusted equine marketplace with escrow protection, verified sellers, and Mane Score transparency. Browse horses for sale, compare listings, and transact securely.",
 };
 
-export default async function Home() {
-  const supabase = await createClient();
+/* ISR: revalidate cached page every 5 minutes */
+export const revalidate = 300;
 
-  // Featured horses: highest Mane Score active listings
-  const { data: featured } = await supabase
-    .from("horse_listings")
-    .select(
-      "id, name, slug, breed, price, height_hands, age, gender, location_city, location_state, view_count, favorite_count, completeness_score, discipline_ids, media:listing_media(url, is_primary)"
-    )
-    .eq("status", "active")
-    .order("completeness_score", { ascending: false })
-    .limit(6);
+function FeaturedListingsSkeleton() {
+  return (
+    <section aria-label="Featured listings" className="bg-paper-white px-4 py-16 md:px-8 md:py-20">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-8">
+          <div className="h-8 w-48 animate-shimmer rounded" />
+          <div className="mt-2 h-4 w-32 animate-shimmer rounded" />
+        </div>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i}>
+              <div className="aspect-[4/3] animate-shimmer rounded-lg" />
+              <div className="space-y-2 pt-3">
+                <div className="h-5 w-24 animate-shimmer rounded" />
+                <div className="h-4 w-3/4 animate-shimmer rounded" />
+                <div className="h-3 w-1/2 animate-shimmer rounded" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
-  // Active listing count for stats
-  const { count: activeCount } = await supabase
-    .from("horse_listings")
-    .select("id", { count: "exact", head: true })
-    .eq("status", "active");
-
-  const featuredListings = (featured ?? []) as Array<
-    Record<string, unknown> & {
-      media?: Array<{ url: string; is_primary: boolean }>;
-    }
-  >;
-
+export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Preload hero images — start download before body parses for faster LCP */}
-      <link rel="preload" as="image" href="/hero-mobile.webp" type="image/webp" media="(max-width: 768px)" />
-      <link rel="preload" as="image" href="/hero.webp" type="image/webp" media="(min-width: 769px)" />
+      <link rel="preload" as="image" href="/hero-mobile.webp" type="image/webp" media="(max-width: 768px)" fetchPriority="high" />
+      <link rel="preload" as="image" href="/hero.webp" type="image/webp" media="(min-width: 769px)" fetchPriority="high" />
       <Header />
 
       <main>
         {/* ══════════════════════════════════════════════
-            SECTION 1 — HERO
+            SECTION 1 — HERO (fully static, no data dependency)
             ══════════════════════════════════════════════ */}
         <section
           aria-label="Hero search"
@@ -72,7 +76,6 @@ export default async function Home() {
                 alt=""
                 className="absolute inset-0 h-full w-full object-cover opacity-30"
                 fetchPriority="high"
-                decoding="async"
               />
             </picture>
             <div className="absolute inset-0 bg-gradient-to-r from-[#0F1A12]/90 via-[#0F1A12]/60 to-transparent" />
@@ -100,7 +103,7 @@ export default async function Home() {
                 </div>
 
                 <p className="animate-fade-up mt-4 text-sm text-white/80">
-                  {activeCount ?? 0} horses listed &middot; Join free
+                  Browse verified listings &middot; Join free
                 </p>
 
                 <div className="animate-fade-up mt-5 flex flex-col gap-3 sm:flex-row">
@@ -139,61 +142,11 @@ export default async function Home() {
         <PlatformFeatures />
 
         {/* ══════════════════════════════════════════════
-            SECTION 4 — FEATURED LISTINGS
+            SECTION 4 — FEATURED LISTINGS (streamed via Suspense)
             ══════════════════════════════════════════════ */}
-        {featuredListings.length > 0 && (
-          <section aria-label="Featured listings" className="bg-paper-white px-4 py-16 md:px-8 md:py-20">
-            <div className="mx-auto max-w-7xl">
-              <SectionHeading
-                title="Featured Listings"
-                description={`${activeCount ?? 0} horses listed right now`}
-                actions={
-                  <Link
-                    href="/browse"
-                    className="hidden items-center gap-1 text-sm font-medium text-ink-dark hover:text-ink-black md:flex"
-                  >
-                    View All
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                }
-                className="mb-8"
-              />
-              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {featuredListings.map((l, i) => (
-                  <ListingCard
-                    key={String(l.id)}
-                    listing={{
-                      id: String(l.id),
-                      name: String(l.name),
-                      slug: String(l.slug),
-                      breed: typeof l.breed === "string" ? l.breed : null,
-                      gender: typeof l.gender === "string" ? l.gender : null,
-                      color: null,
-                      age_years: typeof l.age === "number" ? l.age : null,
-                      height_hands: typeof l.height_hands === "number" ? l.height_hands : null,
-                      price: typeof l.price === "number" ? l.price : null,
-                      location_city: typeof l.location_city === "string" ? l.location_city : null,
-                      location_state: typeof l.location_state === "string" ? l.location_state : null,
-                      completeness_score: typeof l.completeness_score === "number" ? l.completeness_score : null,
-                      favorite_count: typeof l.favorite_count === "number" ? l.favorite_count : null,
-                      media: l.media,
-                    }}
-                    priority={i < 3}
-                  />
-                ))}
-              </div>
-              <div className="mt-6 text-center md:hidden">
-                <Link
-                  href="/browse"
-                  className="text-sm font-medium text-coral"
-                >
-                  View All Horses
-                  <ArrowRight className="ml-1 inline h-4 w-4" />
-                </Link>
-              </div>
-            </div>
-          </section>
-        )}
+        <Suspense fallback={<FeaturedListingsSkeleton />}>
+          <FeaturedListings />
+        </Suspense>
 
         {/* ══════════════════════════════════════════════
             SECTION 5 — COMPARISON (old way vs ManeExchange)

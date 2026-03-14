@@ -38,14 +38,17 @@ export function useAutosave({
 }: AutosaveOptions) {
   // --- Refs for stable access inside async callbacks ---
   const dataRef = useRef(data);
-  dataRef.current = data;
-
   const onStatusChangeRef = useRef(onStatusChange);
-  onStatusChangeRef.current = onStatusChange;
   const onSaveCompleteRef = useRef(onSaveComplete);
-  onSaveCompleteRef.current = onSaveComplete;
   const onSaveErrorRef = useRef(onSaveError);
-  onSaveErrorRef.current = onSaveError;
+
+  // Sync refs after render (React 19 forbids ref writes during render)
+  useEffect(() => { dataRef.current = data; }, [data]);
+  useEffect(() => {
+    onStatusChangeRef.current = onStatusChange;
+    onSaveCompleteRef.current = onSaveComplete;
+    onSaveErrorRef.current = onSaveError;
+  }, [onStatusChange, onSaveComplete, onSaveError]);
 
   // Monotonically increasing counter. Incremented on every data change
   // and on flush/retry. Used to detect stale save responses.
