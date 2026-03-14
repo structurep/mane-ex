@@ -13,6 +13,7 @@ import {
   BADGE_SCALE_MIN,
   BADGE_ROTATION_DEG,
 } from "@/lib/match/motion";
+import { logSwipeMetric, checkFrameDrop } from "@/lib/match/swipeMetrics";
 
 export type SwipeDirection = "left" | "right";
 
@@ -35,6 +36,10 @@ type SwipeState = {
   lastMoveX: number;
   /** Computed velocity at release (px/ms) */
   velocityX: number;
+  /** Timestamp of drag start (for duration metric) */
+  startTime: number;
+  /** Last frame timestamp (for frame-drop detection) */
+  lastFrameTime: number;
 };
 
 /**
@@ -62,6 +67,8 @@ export function useSwipeGesture({
     lastMoveTime: 0,
     lastMoveX: 0,
     velocityX: 0,
+    startTime: 0,
+    lastFrameTime: 0,
   });
 
   const updateTransform = useCallback((dx: number) => {
@@ -135,6 +142,8 @@ export function useSwipeGesture({
       lastMoveTime: now,
       lastMoveX: e.clientX,
       velocityX: 0,
+      startTime: now,
+      lastFrameTime: 0,
     };
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   }, []);
@@ -167,6 +176,9 @@ export function useSwipeGesture({
       // Horizontal drag — prevent scroll and update card transform
       e.preventDefault();
       s.currentX = dx;
+
+      // Frame-drop detection (logs once per session if delta > 32ms)
+      s.lastFrameTime = checkFrameDrop(s.lastFrameTime);
 
       // Track velocity (exponential moving average for smoothness)
       const now = performance.now();
@@ -208,10 +220,22 @@ export function useSwipeGesture({
 
       if (committed) {
         // Direction from displacement, but if displacement is small, use velocity
+        const commitReason: "distance" | "velocity" =
+          Math.abs(dx) >= SWIPE_THRESHOLD_PX ? "distance" : "velocity";
         const direction: SwipeDirection =
-          Math.abs(dx) >= SWIPE_THRESHOLD_PX
+          commitReason === "distance"
             ? (dx > 0 ? "right" : "left")
             : (s.velocityX > 0 ? "right" : "left");
+
+        // Log swipe metric (fires only on commit, never during drag)
+        logSwipeMetric({
+          swipe_duration_ms: Math.round(performance.now() - s.startTime),
+          drag_distance_px: Math.round(Math.abs(dx)),
+          velocity_x: Math.round(s.velocityX * 1000) / 1000,
+          commit_reason: commitReason,
+          result: direction === "right" ? "favorite" : "pass",
+        });
+
         flyOut(direction).then(() => onSwipe(direction));
       } else {
         resetTransform();
