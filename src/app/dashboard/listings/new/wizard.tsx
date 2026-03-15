@@ -157,6 +157,10 @@ export function ListingWizard({ mode = "create", listingId, initialData, onDirty
           if (key === "registry_records" && Array.isArray(value)) {
             return <input key={key} type="hidden" name={key} value={JSON.stringify(value)} />;
           }
+          // video_checklist is an object — serialize as JSON
+          if (key === "video_checklist" && typeof value === "object" && value !== null && !Array.isArray(value)) {
+            return <input key={key} type="hidden" name={key} value={JSON.stringify(value)} />;
+          }
           if (Array.isArray(value)) {
             return value.map((v, i) => (
               <input key={`${key}-${i}`} type="hidden" name={key} value={String(v)} />

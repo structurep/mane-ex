@@ -11,6 +11,8 @@ import {
   Star,
   TrendingUp,
 } from "lucide-react";
+import type { VerificationTier } from "@/lib/listings/verification-tier";
+import { VerificationBadge } from "@/components/listings/verification-badge";
 
 export interface ListingCardData {
   id: string;
@@ -28,6 +30,7 @@ export interface ListingCardData {
   completeness_grade?: string | null;
   favorite_count?: number | null;
   published_at?: string | null;
+  verification_tier?: VerificationTier | null;
   media?: { url: string; is_primary: boolean }[];
 }
 
@@ -137,6 +140,12 @@ export function ListingCard({
 
         {subtitle && (
           <p className="mt-0.5 truncate text-[13px] text-ink-mid">{subtitle}</p>
+        )}
+
+        {l.verification_tier && l.verification_tier !== "none" && (
+          <div className="mt-1.5">
+            <VerificationBadge tier={l.verification_tier} compact />
+          </div>
         )}
 
         {demandScore != null && demandScore >= 40 && (

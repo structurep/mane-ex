@@ -28,6 +28,7 @@ type Props = {
     henneke?: string;
     soundness?: string;
     region?: string;
+    verification?: string;
     sort?: string;
     page?: string;
   };
@@ -46,7 +47,7 @@ export async function BrowseResults({ params }: Props) {
       `
       id, name, slug, breed, gender, color, age_years, height_hands,
       price, price_display, location_city, location_state,
-      completeness_score, completeness_grade,
+      completeness_score, completeness_grade, verification_tier,
       view_count, favorite_count, published_at, status,
       media:listing_media!inner(url, is_primary)
     `,
@@ -78,6 +79,15 @@ export async function BrowseResults({ params }: Props) {
   if (params.henneke) query = query.eq("henneke_score", parseInt(params.henneke));
   if (params.soundness) query = query.eq("soundness_level", params.soundness);
   if (params.discipline) query = query.contains("discipline_ids", [params.discipline]);
+  if (params.verification) {
+    const tiers: Record<string, string[]> = {
+      bronze: ["bronze", "silver", "gold"],
+      silver: ["silver", "gold"],
+      gold: ["gold"],
+    };
+    const allowed = tiers[params.verification];
+    if (allowed) query = query.in("verification_tier", allowed);
+  }
   if (params.region) {
     const regionStates: Record<string, string[]> = {
       southeast: ["FL", "GA", "SC", "NC", "VA", "KY", "TN", "AL", "MS", "LA"],

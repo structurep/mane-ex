@@ -122,6 +122,20 @@ export interface HorseListing {
   has_current_coggins: boolean;
   has_vet_check_available: boolean;
 
+  // HorseProof verification
+  verification_tier: "none" | "bronze" | "silver" | "gold";
+  seller_identity_verified: boolean;
+  trainer_endorsed: boolean;
+  standardized_video_complete: boolean;
+  ppe_on_file: boolean;
+  show_record_linked: boolean;
+  hp_trainer_name: string | null;
+  hp_trainer_endorsement_note: string | null;
+  ppe_document_url: string | null;
+  show_record_url: string | null;
+  video_checklist: { walk: boolean; trot: boolean; canter: boolean; jumping: boolean; ground_manners: boolean } | null;
+  verified_at: string | null;
+
   // Pricing
   listing_type: "fixed_price" | "price_on_inquiry" | "for_lease" | "auction";
   price: number | null;

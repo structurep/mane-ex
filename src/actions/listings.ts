@@ -6,6 +6,7 @@ import { sendEmail } from "@/lib/email/resend";
 import { priceDropEmail } from "@/lib/email/templates";
 import { fullListingSchema } from "@/lib/validators/listing";
 import { checkFieldsProfanity } from "@/lib/moderation";
+import { computeVerificationTier } from "@/lib/listings/verification-tier";
 import { redirect } from "next/navigation";
 
 export type ListingActionState = {
@@ -43,6 +44,7 @@ function parseListingFormData(formData: FormData, skipKeys: string[] = []): Reco
     if (skipKeys.includes(key)) return;
     if (key === "registry_records") return; // handled separately
     if (key === "media_checklist") return; // handled below
+    if (key === "video_checklist") return; // handled below
     if (key === "discipline_ids") {
       const existing = raw[key] as string[] | undefined;
       raw[key] = existing ? [...existing, value as string] : [value as string];
@@ -82,6 +84,19 @@ function parseListingFormData(formData: FormData, skipKeys: string[] = []): Reco
     raw.media_checklist = { angles, videos };
   }
   // If neither key is present, media_checklist is NOT set → preserves existing DB value
+
+  // Parse video_checklist JSON
+  const rawVideoChecklist = formData.get("video_checklist") as string | null;
+  if (rawVideoChecklist) {
+    try {
+      const parsed = JSON.parse(rawVideoChecklist);
+      if (parsed && typeof parsed === "object") {
+        raw.video_checklist = parsed;
+      }
+    } catch {
+      // Invalid JSON — skip
+    }
+  }
 
   return raw;
 }
@@ -162,12 +177,29 @@ export async function createListing(
     return { error: `The "${profanityField}" field contains inappropriate language. Please revise.` };
   }
 
+  // Derive seller_identity_verified from profile
+  const { data: sellerProfile } = await supabase
+    .from("profiles")
+    .select("identity_verified")
+    .eq("id", user.id)
+    .single();
+  const seller_identity_verified = sellerProfile?.identity_verified === true;
+
+  // Auto-compute HorseProof verification tier
+  const { tier: verification_tier } = computeVerificationTier({
+    ...parsed.data,
+    seller_identity_verified,
+  });
+
   const { data, error } = await supabase
     .from("horse_listings")
     .insert({
       seller_id: user.id,
       status: "draft",
       ...parsed.data,
+      seller_identity_verified,
+      verification_tier,
+      ...(verification_tier !== "none" ? { verified_at: new Date().toISOString() } : {}),
     })
     .select("id, slug")
     .single();
@@ -250,9 +282,28 @@ export async function updateListing(
     return { error: `The "${profanityField}" field contains inappropriate language. Please revise.` };
   }
 
+  // Derive seller_identity_verified from profile
+  const { data: updateSellerProfile } = await supabase
+    .from("profiles")
+    .select("identity_verified")
+    .eq("id", user.id)
+    .single();
+  const updateSellerIdentity = updateSellerProfile?.identity_verified === true;
+
+  // Auto-compute HorseProof verification tier
+  const { tier: updateTier } = computeVerificationTier({
+    ...parsed.data,
+    seller_identity_verified: updateSellerIdentity,
+  });
+  const verificationUpdate = {
+    seller_identity_verified: updateSellerIdentity,
+    verification_tier: updateTier,
+    ...(updateTier !== "none" ? { verified_at: new Date().toISOString() } : { verified_at: null }),
+  };
+
   const { error } = await supabase
     .from("horse_listings")
-    .update(parsed.data)
+    .update({ ...parsed.data, ...verificationUpdate })
     .eq("id", listingId)
     .eq("seller_id", user.id);
 

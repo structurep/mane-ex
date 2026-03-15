@@ -67,6 +67,12 @@ const soundnessOptions = [
   { value: "not_assessed", label: "Not assessed" },
 ];
 
+const verificationOptions = [
+  { value: "bronze", label: "Bronze+" },
+  { value: "silver", label: "Silver+" },
+  { value: "gold", label: "Gold" },
+];
+
 // ─── Pill Component ─────────────────────────────
 
 function FilterPill({
@@ -138,6 +144,7 @@ export function BrowseFilters({ params }: Props) {
     params.henneke,
     params.soundness,
     params.region,
+    params.verification,
   ].filter(Boolean).length;
 
   const totalFilterCount = [
@@ -149,6 +156,7 @@ export function BrowseFilters({ params }: Props) {
     params.breed,
     params.minAge, params.maxAge,
     params.henneke, params.soundness,
+    params.verification,
   ].filter(Boolean).length;
 
   // ── Active filter chips ──
@@ -186,6 +194,10 @@ export function BrowseFilters({ params }: Props) {
   if (params.henneke) activeChips.push({ label: `BCS ${params.henneke}`, onClear: () => updateFilter("henneke", "") });
   if (params.soundness) {
     activeChips.push({ label: soundnessOptions.find((o) => o.value === params.soundness)?.label || params.soundness, onClear: () => updateFilter("soundness", "") });
+  }
+  if (params.verification) {
+    const vLabel = verificationOptions.find((o) => o.value === params.verification)?.label || params.verification;
+    activeChips.push({ label: `HorseProof ${vLabel}`, onClear: () => updateFilter("verification", "") });
   }
 
   return (
@@ -538,6 +550,16 @@ export function BrowseFilters({ params }: Props) {
                     );
                   })}
                 </div>
+              </FormSection>
+
+              {/* ── HorseProof Verification ── */}
+              <FormSection label="HorseProof Verified">
+                <RadioCardGroup
+                  options={[{ value: "", label: "Any" }, ...verificationOptions.map((o) => ({ value: o.value, label: o.label }))]}
+                  value={params.verification || ""}
+                  onChange={(v) => updateFilter("verification", v)}
+                  columns={4}
+                />
               </FormSection>
 
               <div className="border-t border-crease-light" />

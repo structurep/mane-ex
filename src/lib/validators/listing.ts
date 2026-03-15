@@ -69,6 +69,22 @@ export const vetInfoSchema = z.object({
 export const verificationSchema = z.object({
   has_current_coggins: z.boolean().default(false),
   has_vet_check_available: z.boolean().default(false),
+  // HorseProof fields
+  trainer_endorsed: z.boolean().default(false),
+  standardized_video_complete: z.boolean().default(false),
+  ppe_on_file: z.boolean().default(false),
+  show_record_linked: z.boolean().default(false),
+  hp_trainer_name: z.string().max(200).optional(),
+  hp_trainer_endorsement_note: z.string().max(1000).optional(),
+  ppe_document_url: z.string().url().or(z.literal("")).optional(),
+  show_record_url: z.string().url().or(z.literal("")).optional(),
+  video_checklist: z.object({
+    walk: z.boolean().default(false),
+    trot: z.boolean().default(false),
+    canter: z.boolean().default(false),
+    jumping: z.boolean().default(false),
+    ground_manners: z.boolean().default(false),
+  }).optional(),
 });
 
 // Step 7: History

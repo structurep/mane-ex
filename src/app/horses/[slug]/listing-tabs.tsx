@@ -44,6 +44,8 @@ import { MessageSellerModal } from "@/components/messaging/message-seller-modal"
 import { ListingGallery } from "@/components/marketplace/listing-gallery";
 import { HennekeScoreDisplay } from "@/components/marketplace/henneke-score";
 import { RegistryBadges, type RegistryRecord, type RegistryType } from "@/components/marketplace/registry-lookup";
+import { VerificationChecklist } from "@/components/listings/verification-checklist";
+import { VerificationBadge } from "@/components/listings/verification-badge";
 import type { ListingRegistryRecord } from "@/types/listings";
 import { toggleFavorite } from "@/actions/listings";
 import {
@@ -165,9 +167,12 @@ export function ListingTabs({ listing, defaultTab = "overview", demandScore, dem
           <div className="flex items-start justify-between">
             <div>
               <h1 className="text-4xl font-bold tracking-tight text-ink-black md:text-5xl">{l.name}</h1>
-              <p className="mt-1 text-ink-mid">
-                {[l.breed, l.color, l.gender].filter(Boolean).join(" · ")}
-              </p>
+              <div className="mt-1 flex flex-wrap items-center gap-2">
+                <p className="text-ink-mid">
+                  {[l.breed, l.color, l.gender].filter(Boolean).join(" · ")}
+                </p>
+                <VerificationBadge tier={l.verification_tier} />
+              </div>
             </div>
             <div className="flex gap-2">
               <Button
@@ -689,6 +694,26 @@ export function ListingTabs({ listing, defaultTab = "overview", demandScore, dem
             )}
 
             <Separator className="my-5" />
+
+            {/* HorseProof Verification */}
+            {l.verification_tier && l.verification_tier !== "none" && (
+              <>
+                <VerificationChecklist
+                  listing={{
+                    verification_tier: l.verification_tier,
+                    seller_identity_verified: l.seller_identity_verified,
+                    trainer_endorsed: l.trainer_endorsed,
+                    standardized_video_complete: l.standardized_video_complete,
+                    ppe_on_file: l.ppe_on_file,
+                    show_record_linked: l.show_record_linked,
+                    hp_trainer_name: l.hp_trainer_name,
+                    ppe_document_url: l.ppe_document_url,
+                    show_record_url: l.show_record_url,
+                  }}
+                />
+                <Separator className="my-5" />
+              </>
+            )}
 
             {/* Completeness score */}
             <div className="flex items-center justify-between">

@@ -30,6 +30,7 @@ type Props = {
     henneke?: string;
     soundness?: string;
     region?: string;
+    verification?: string;
     sort?: string;
     page?: string;
   }>;
