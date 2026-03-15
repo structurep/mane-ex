@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { updateProfileSchema } from "@/lib/validators/profiles";
+import { computeQualification } from "@/lib/buyer/qualification-score";
 
 export type ProfileActionState = {
   error?: string;
@@ -65,11 +66,19 @@ export async function updateProfile(
       parsed.data.state
   );
 
+  // Compute buyer qualification badge
+  const qual = computeQualification(parsed.data);
+  const buyer_qualification =
+    qual.badge === "Qualified Buyer" ? "qualified" as const
+    : qual.badge === "Verified Buyer" ? "basic" as const
+    : "unverified" as const;
+
   const { error } = await supabase
     .from("profiles")
     .update({
       ...parsed.data,
       profile_complete,
+      buyer_qualification,
     })
     .eq("id", user.id);
 

@@ -2,6 +2,8 @@
 
 import { MessageSquare } from "lucide-react";
 import { StackedList, StatusBadge, EmptyState, type StackedListItem } from "@/components/tailwind-plus";
+import { BuyerBadge } from "@/components/buyer/buyer-badge";
+import type { QualificationBadge } from "@/lib/buyer/qualification-score";
 
 type ConversationItem = {
   id: string;
@@ -15,6 +17,10 @@ type ConversationItem = {
   lastMessagePreview: string | null;
   lastMessageAt: string | null;
   unreadCount: number;
+  buyerBadge?: QualificationBadge | null;
+  buyerLevel?: string | null;
+  buyerBudgetMin?: number | null;
+  buyerBudgetMax?: number | null;
 };
 
 function formatTimeAgo(dateStr: string): string {
@@ -58,15 +64,27 @@ export function ConversationList({
     const timeStr = c.lastMessageAt ? formatTimeAgo(c.lastMessageAt) : "";
     const horseName = c.listing?.name;
 
+    // Build buyer summary line for sellers
+    const budgetStr = c.buyerBudgetMin != null || c.buyerBudgetMax != null
+      ? `$${((c.buyerBudgetMin ?? 0) / 100).toLocaleString()}–$${((c.buyerBudgetMax ?? 0) / 100).toLocaleString()}`
+      : null;
+    const buyerMeta = [c.buyerLevel, budgetStr].filter(Boolean).join(" · ");
+
+    const badgeLabel = c.buyerBadge && c.buyerBadge !== "Unverified" ? ` · ${c.buyerBadge}` : "";
+    const subtitleBase = horseName
+      ? `Re: ${horseName} · ${c.lastMessagePreview?.slice(0, 50) || ""}`
+      : c.lastMessagePreview?.slice(0, 70) || "No messages";
+    const subtitleFull = buyerMeta
+      ? `${subtitleBase} · ${buyerMeta}`
+      : subtitleBase;
+
     return {
       id: c.id,
       href: `/dashboard/messages/${c.id}`,
       imageUrl: c.otherParticipant?.avatar_url || undefined,
       initials: name.charAt(0).toUpperCase(),
-      title: name,
-      subtitle: horseName
-        ? `Re: ${horseName} · ${c.lastMessagePreview?.slice(0, 50) || ""}`
-        : c.lastMessagePreview?.slice(0, 70) || "No messages",
+      title: `${name}${badgeLabel}`,
+      subtitle: subtitleFull,
       meta: <span className="text-xs text-ink-faint">{timeStr}</span>,
       badge: c.unreadCount > 0 ? (
         <StatusBadge variant="oxblood">{c.unreadCount}</StatusBadge>

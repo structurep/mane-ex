@@ -20,6 +20,7 @@ import {
   Save,
   CheckCircle,
   Mail,
+  ShieldCheck,
 } from "lucide-react";
 
 const DISCIPLINES = [
@@ -33,6 +34,20 @@ const DISCIPLINES = [
   "Endurance",
   "Polo",
   "Other",
+];
+
+const RIDING_LEVELS = [
+  { value: "beginner", label: "Beginner" },
+  { value: "amateur", label: "Amateur" },
+  { value: "junior", label: "Junior" },
+  { value: "professional", label: "Professional" },
+];
+
+const FACILITY_TYPES = [
+  { value: "private_barn", label: "Private Barn" },
+  { value: "training_barn", label: "Training Barn" },
+  { value: "boarding_barn", label: "Boarding Barn" },
+  { value: "unknown", label: "Not Sure" },
 ];
 
 type Profile = {
@@ -52,6 +67,9 @@ type Profile = {
   disciplines: string[];
   min_budget: number | null;
   max_budget: number | null;
+  riding_level: string | null;
+  trainer_reference: string | null;
+  facility_type: string | null;
 };
 
 const initialState: ProfileActionState = {};
@@ -309,6 +327,66 @@ export function ProfileForm({
           </div>
         </div>
       </section>
+
+      {/* Section: Buyer Qualification (only for buyers) */}
+      {isBuyer && (
+        <section className="rounded-lg border-0 bg-paper-cream p-6 shadow-flat">
+          <div className="mb-4 flex items-center gap-2">
+            <ShieldCheck className="h-4 w-4 text-ink-light" />
+            <span className="overline text-ink-light">Buyer Profile</span>
+          </div>
+          <p className="mb-4 text-xs text-ink-mid">
+            Complete your buyer profile to earn a qualification badge. Sellers prioritize verified and qualified buyers.
+          </p>
+
+          <div className="space-y-4">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <Label htmlFor="riding_level">Riding Level</Label>
+                <select
+                  id="riding_level"
+                  name="riding_level"
+                  defaultValue={profile?.riding_level ?? ""}
+                  className="mt-1.5 flex h-9 w-full rounded-md border border-input bg-paper-white px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                >
+                  <option value="">Select level</option>
+                  {RIDING_LEVELS.map((l) => (
+                    <option key={l.value} value={l.value}>{l.label}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <Label htmlFor="facility_type">Facility Type</Label>
+                <select
+                  id="facility_type"
+                  name="facility_type"
+                  defaultValue={profile?.facility_type ?? ""}
+                  className="mt-1.5 flex h-9 w-full rounded-md border border-input bg-paper-white px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                >
+                  <option value="">Select type</option>
+                  {FACILITY_TYPES.map((f) => (
+                    <option key={f.value} value={f.value}>{f.label}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="trainer_reference">Trainer Reference</Label>
+              <Input
+                id="trainer_reference"
+                name="trainer_reference"
+                defaultValue={profile?.trainer_reference ?? ""}
+                placeholder="Trainer name and contact (optional)"
+                className="mt-1.5"
+              />
+              <p className="mt-1 text-[10px] text-ink-faint">
+                Providing a trainer reference helps verify your experience level.
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Section: Buyer Preferences (only for buyers) */}
       {isBuyer && (

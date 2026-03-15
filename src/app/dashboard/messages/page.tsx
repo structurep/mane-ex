@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { MessageCircle } from "lucide-react";
 import { ConversationList } from "./conversation-list";
 import { EmptyState } from "@/components/tailwind-plus";
+import { computeQualification } from "@/lib/buyer/qualification-score";
 
 export const metadata: Metadata = { title: "Messages" };
 
@@ -20,8 +21,8 @@ export default async function MessagesPage() {
     .select(
       `
       *,
-      participant_1:profiles!participant_1_id(id, display_name, full_name, avatar_url),
-      participant_2:profiles!participant_2_id(id, display_name, full_name, avatar_url),
+      participant_1:profiles!participant_1_id(id, display_name, full_name, avatar_url, riding_level, trainer_reference, min_budget, max_budget, facility_type, disciplines),
+      participant_2:profiles!participant_2_id(id, display_name, full_name, avatar_url, riding_level, trainer_reference, min_budget, max_budget, facility_type, disciplines),
       listing:horse_listings!listing_id(id, name, slug)
     `
     )
@@ -43,10 +44,11 @@ export default async function MessagesPage() {
     );
   });
 
-  // Enrich conversations with other participant and unread count
+  // Enrich conversations with other participant, unread count, and buyer badge
   const enriched = (conversations || []).map((c) => {
     const other =
       c.participant_1_id === user.id ? c.participant_2 : c.participant_1;
+    const qual = other ? computeQualification(other) : null;
     return {
       id: c.id,
       otherParticipant: other,
@@ -54,6 +56,10 @@ export default async function MessagesPage() {
       lastMessagePreview: c.last_message_preview,
       lastMessageAt: c.last_message_at,
       unreadCount: unreadMap.get(c.id) || 0,
+      buyerBadge: qual?.badge ?? null,
+      buyerLevel: other?.riding_level ?? null,
+      buyerBudgetMin: other?.min_budget ?? null,
+      buyerBudgetMax: other?.max_budget ?? null,
     };
   });
 

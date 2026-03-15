@@ -15,6 +15,9 @@ export const updateProfileSchema = z.object({
   disciplines: z.array(z.string()).optional(),
   min_budget: z.coerce.number().min(0).optional(),
   max_budget: z.coerce.number().min(0).optional(),
+  riding_level: z.enum(["beginner", "amateur", "junior", "professional"]).optional(),
+  trainer_reference: z.string().max(500).optional(),
+  facility_type: z.enum(["private_barn", "training_barn", "boarding_barn", "unknown"]).optional(),
 });
 
 export type UpdateProfileData = z.infer<typeof updateProfileSchema>;

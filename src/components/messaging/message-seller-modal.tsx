@@ -18,6 +18,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { MessageCircle, Shield } from "lucide-react";
 import { AlertBanner } from "@/components/tailwind-plus";
 import { toast } from "sonner";
+import { BuyerBadge } from "@/components/buyer/buyer-badge";
+import type { QualificationBadge } from "@/lib/buyer/qualification-score";
 
 type Props = {
   sellerId: string;
@@ -25,6 +27,8 @@ type Props = {
   listingId: string;
   listingName: string;
   trigger?: React.ReactNode;
+  /** Buyer's qualification badge (passed from server context) */
+  buyerBadge?: QualificationBadge | null;
 };
 
 export function MessageSellerModal({
@@ -33,6 +37,7 @@ export function MessageSellerModal({
   listingId,
   listingName,
   trigger,
+  buyerBadge,
 }: Props) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -90,7 +95,12 @@ export function MessageSellerModal({
             Message {sellerName}
           </DialogTitle>
           <DialogDescription className="text-ink-mid">
-            About: {listingName}
+            <span>About: {listingName}</span>
+            {buyerBadge && (
+              <span className="ml-2 inline-block align-middle">
+                <BuyerBadge badge={buyerBadge} />
+              </span>
+            )}
           </DialogDescription>
         </DialogHeader>
 

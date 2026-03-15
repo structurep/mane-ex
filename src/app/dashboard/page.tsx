@@ -66,6 +66,16 @@ export default async function DashboardPage() {
 
   const convoIds = convos?.map((c) => c.id) || [];
 
+  // Fetch profile for buyer qualification check
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role, buyer_qualification")
+    .eq("id", user.id)
+    .single();
+
+  const isBuyerUnverified =
+    profile?.role === "buyer" && (!profile?.buyer_qualification || profile.buyer_qualification === "unverified");
+
   // Parallel data fetches
   const [
     { count: listingCount },
@@ -289,6 +299,18 @@ export default async function DashboardPage() {
           </AlertBanner>
         );
       })()}
+
+      {/* ─── Buyer Qualification Prompt ─── */}
+      {isBuyerUnverified && (
+        <AlertBanner variant="info" title="Improve your buyer profile" className="mb-6">
+          <p className="text-sm">
+            Complete your buyer profile to increase seller response rates.{" "}
+            <Link href="/dashboard/settings" className="font-medium text-oxblood hover:underline">
+              Complete profile
+            </Link>
+          </p>
+        </AlertBanner>
+      )}
 
       {/* ─── KPI Row ─── */}
       <div className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
