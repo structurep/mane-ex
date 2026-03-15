@@ -29,7 +29,7 @@ npm run dev                   # starts on port 3002
 |----------|---------|
 | `NEXT_PUBLIC_SITE_URL` | Canonical URL for SEO |
 | `NEXT_PUBLIC_APP_URL` | App URL for emails |
-| `CRON_SECRET` | Auth for `/api/digest` cron |
+| `CRON_SECRET` | Auth for cron endpoints (digest + match alerts) |
 
 > Vercel-Supabase integration auto-injects Supabase vars at deploy time.
 
@@ -46,6 +46,24 @@ npx vercel --prod
 ```bash
 npx supabase db push          # applies pending migrations to production
 ```
+
+## Cron Jobs
+
+Configured in `vercel.json`. Both require `CRON_SECRET` set in Vercel env vars.
+
+| Endpoint | Schedule | Purpose |
+|----------|----------|---------|
+| `/api/cron/weekly-digest` | Mondays 1pm UTC | Weekly email digest |
+| `/api/match-alerts` | Every 30 minutes | Scan active users, score recent listings, create match alerts |
+
+The match alerts cron:
+- Protected by `Authorization: Bearer <CRON_SECRET>` header
+- Scans users with interactions in the last 3 days
+- Scores listings published in the last 3 days
+- Creates alerts for listings scoring >= 70% match
+- Idempotent (upsert with `ignoreDuplicates`)
+- Caps at 100 users per run, 50 listings scored
+- Returns JSON: `{ processed, alerts, duration_ms }`
 
 ## Match Mode Pages
 

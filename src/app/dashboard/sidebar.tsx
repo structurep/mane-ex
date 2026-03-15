@@ -22,6 +22,7 @@ import {
   FileText,
   Shield,
   CalendarDays,
+  Sparkles,
   GraduationCap,
   Users,
   Newspaper,
@@ -72,6 +73,7 @@ const navGroups: NavGroup[] = [
     id: "buying",
     label: "Buying",
     items: [
+      { href: "/dashboard/alerts", label: "Match Alerts", icon: Sparkles },
       { href: "/dashboard/buyer", label: "Buyer Portal", icon: ShoppingBag },
       { href: "/dashboard/dream-barn", label: "Dream Barn", icon: Heart },
       { href: "/dashboard/isos", label: "ISOs", icon: Search },

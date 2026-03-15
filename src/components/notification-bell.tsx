@@ -4,18 +4,24 @@ import { useEffect, useState } from "react";
 import { Bell } from "lucide-react";
 import Link from "next/link";
 import { getUnreadCount } from "@/actions/notifications";
+import { getUnreadMatchAlertCount } from "@/lib/match/match-alerts";
 
 export function NotificationBell() {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    getUnreadCount().then(({ count }) => setCount(count));
+    async function fetchCounts() {
+      const [notifs, matchAlerts] = await Promise.all([
+        getUnreadCount(),
+        getUnreadMatchAlertCount(),
+      ]);
+      setCount(notifs.count + matchAlerts);
+    }
+
+    fetchCounts();
 
     // Poll every 30 seconds for new notifications
-    const interval = setInterval(() => {
-      getUnreadCount().then(({ count }) => setCount(count));
-    }, 30_000);
-
+    const interval = setInterval(fetchCounts, 30_000);
     return () => clearInterval(interval);
   }, []);
 

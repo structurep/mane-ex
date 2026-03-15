@@ -19,6 +19,8 @@ import { ListingGallery } from "@/components/marketplace/listing-gallery";
 import { ListingTabs, type ListingTabsData } from "./listing-tabs";
 import { ViewTracker } from "@/components/marketplace/view-tracker";
 import { getListingDemand } from "@/lib/match/demand-score";
+import { Suspense } from "react";
+import { MatchBanner } from "./match-banner";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -226,6 +228,11 @@ export default async function ListingDetailPage({ params, searchParams }: Props)
             {/* Empty spacer to align with sidebar grid */}
             <div className="hidden lg:block" />
           </div>
+
+          {/* Match banner (personalized, async) */}
+          <Suspense fallback={null}>
+            <MatchBanner listingId={l.id} />
+          </Suspense>
 
           {/* Tabbed layout + sidebar */}
           <ListingTabs listing={l as unknown as ListingTabsData} defaultTab={tab} demandScore={demand?.score ?? null} demandLabel={demand?.label ?? null} />

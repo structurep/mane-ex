@@ -1,14 +1,20 @@
 import { Sparkles } from "lucide-react";
 import { getRecommendedHorses } from "@/actions/recommended-horses";
+import { checkForNewMatches } from "@/lib/match/match-alerts";
 import { ListingCard, type ListingCardData } from "@/components/tailwind-plus";
 
 /**
  * "Recommended For You" section on browse page.
  * Shows AI-matched listings with match percentage badges.
  * Renders null if user is anonymous or has insufficient interaction data.
+ * Also fires match alert check as a side effect.
  */
 export async function RecommendedSection() {
   const result = await getRecommendedHorses();
+
+  // Fire-and-forget: check for new match alerts while user is browsing
+  checkForNewMatches().catch(() => {});
+
   if (!result || result.listings.length === 0) return null;
 
   const { listings } = result;
