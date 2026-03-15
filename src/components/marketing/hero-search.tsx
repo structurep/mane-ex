@@ -35,7 +35,7 @@ export function HeroSearch() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search by breed, discipline, location..."
-            className="w-full rounded-full bg-white/95 py-4 pl-13 pr-6 text-lg text-ink-black shadow-lifted backdrop-blur-sm placeholder:text-ink-light focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full rounded-[var(--radius-card)] bg-white/95 py-4 pl-13 pr-6 text-lg text-[var(--ink-black)] shadow-lifted backdrop-blur-sm placeholder:text-[var(--ink-soft)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-gold)]"
           />
         </div>
       </form>
@@ -44,7 +44,7 @@ export function HeroSearch() {
           <Link
             key={d.value}
             href={`/browse?discipline=${d.value}`}
-            className="rounded-full border border-white/30 bg-white/20 px-4 py-2 text-sm text-white transition-colors hover:bg-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-ink-black"
+            className="rounded-[var(--radius-card)] border border-white/30 bg-white/20 px-4 py-2 text-sm text-white transition-colors hover:bg-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--ink-black)]"
           >
             {d.label}
           </Link>

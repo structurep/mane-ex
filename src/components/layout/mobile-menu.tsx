@@ -57,7 +57,7 @@ export function MobileMenu({
           <Menu className="h-5 w-5" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="w-72 bg-paper-white">
+      <SheetContent side="right" className="paper-flat w-72 border-l border-[var(--paper-border)]">
         <SheetTitle className="sr-only">Navigation</SheetTitle>
         <nav className="stagger-children mt-8 flex flex-col gap-1">
           {links.map((link) => (
@@ -65,7 +65,7 @@ export function MobileMenu({
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="animate-fade-up rounded-md px-4 py-3 font-serif text-lg font-medium text-ink-dark transition-colors hover:bg-paper-warm focus-visible:bg-paper-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crease-light"
+              className="animate-fade-up rounded-[var(--radius-card)] px-4 py-3 text-base font-medium text-[var(--ink-dark)] transition-colors hover:bg-[var(--paper-warm)] hover:text-[var(--accent-gold)] focus-visible:bg-[var(--paper-warm)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--paper-border)]"
             >
               {link.label}
             </Link>
@@ -73,14 +73,14 @@ export function MobileMenu({
           <div className="crease-divider my-4 animate-fade-up" />
           {loading ? (
             <div className="animate-fade-up px-4">
-              <div className="h-10 animate-shimmer rounded-md" />
+              <div className="h-10 animate-shimmer rounded-[var(--radius-card)]" />
             </div>
           ) : user ? (
             <form action={signOut} className="animate-fade-up px-4">
               <button
                 type="submit"
                 onClick={() => setOpen(false)}
-                className="w-full rounded-md border border-red/20 px-4 py-2.5 text-sm font-medium text-red transition-colors hover:bg-red-light"
+                className="w-full rounded-[var(--radius-card)] border border-[var(--accent-red)]/20 px-4 py-2.5 text-sm font-medium text-[var(--accent-red)] transition-colors hover:bg-[var(--accent-red-soft)]"
               >
                 Sign Out
               </button>
@@ -90,7 +90,7 @@ export function MobileMenu({
               <Link
                 href="/login"
                 onClick={() => setOpen(false)}
-                className="animate-fade-up rounded-md px-4 py-3 text-base font-medium text-ink-mid transition-colors hover:bg-paper-warm focus-visible:bg-paper-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crease-light"
+                className="animate-fade-up rounded-[var(--radius-card)] px-4 py-3 text-base font-medium text-[var(--ink-mid)] transition-colors hover:bg-[var(--paper-warm)] hover:text-[var(--accent-gold)] focus-visible:bg-[var(--paper-warm)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--paper-border)]"
               >
                 Log In
               </Link>

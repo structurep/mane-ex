@@ -225,17 +225,16 @@ export async function BasedOnSearches({
   return (
     <section className="mt-12">
         {/* Section header */}
-        <div className="mb-4 flex items-center gap-2">
+        <div className="mb-1 flex items-center gap-2">
           {isPersonalized ? (
-            <Sparkles className="h-5 w-5 text-gold" />
+            <Sparkles className="h-4 w-4 text-[var(--accent-gold)]" />
           ) : (
-            <TrendingUp className="h-5 w-5 text-primary" />
+            <TrendingUp className="h-4 w-4 text-[var(--ink-mid)]" />
           )}
-          <div>
-            <h2 className="text-xl font-bold text-ink-black">{sectionTitle}</h2>
-            <p className="text-sm text-ink-light">{sectionSubtitle}</p>
-          </div>
+          <p className="overline text-[var(--ink-faint)]">{sectionSubtitle}</p>
         </div>
+        <h2 className="display-md mb-4 text-[var(--ink-black)]">{sectionTitle}</h2>
+        <div className="crease-divider mb-4" />
 
         {/* Horizontal scrollable row */}
         <div className="scrollbar-hide -mx-4 flex gap-4 overflow-x-auto px-4 pb-2 md:mx-0 md:px-0">
@@ -252,7 +251,7 @@ export async function BasedOnSearches({
               <Link
                 key={l.id}
                 href={`/horses/${l.slug}`}
-                className="group flex-none w-[220px] overflow-hidden rounded-lg border border-crease-light bg-paper-cream shadow-flat transition-elevation hover-lift hover:shadow-lifted md:w-[240px]"
+                className="group paper-flat flex-none w-[220px] overflow-hidden transition-elevation hover-lift hover:shadow-lifted md:w-[240px]"
               >
                 {/* Image */}
                 <div className="relative aspect-[3/2] overflow-hidden bg-paper-warm">
@@ -272,12 +271,12 @@ export async function BasedOnSearches({
                   {/* Match reason tag */}
                   {l.match_reason && (
                     <span
-                      className={`absolute bottom-2 left-2 z-10 rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+                      className={`badge-flag ${
                         l.match_reason === "Similar breed"
-                          ? "bg-blue text-white"
+                          ? "bg-[var(--accent-blue)] text-white"
                           : l.match_reason === "Your price range"
-                            ? "bg-forest text-white"
-                            : "bg-red text-white"
+                            ? "bg-[var(--accent-green)] text-white"
+                            : "bg-[var(--accent-red)] text-white"
                       }`}
                     >
                       {l.match_reason}
@@ -287,19 +286,19 @@ export async function BasedOnSearches({
 
                 {/* Content */}
                 <div className="p-3">
-                  <h3 className="truncate font-medium text-ink-black group-hover:text-primary">
+                  <h3 className="truncate font-medium text-[var(--ink-black)] group-hover:text-[var(--ink-dark)]">
                     {l.name}
                   </h3>
-                  <p className="mt-0.5 truncate text-xs text-ink-mid">
+                  <p className="mt-0.5 truncate text-xs text-[var(--ink-mid)]">
                     {[l.breed, l.age_years != null ? `${l.age_years}yo` : null]
                       .filter(Boolean)
                       .join(" · ")}
                   </p>
                   <div className="mt-2 flex items-center justify-between">
-                    <span className="text-sm font-bold text-ink-black">
+                    <span className="text-sm font-bold text-[var(--ink-black)]">
                       {priceStr}
                     </span>
-                    <span className="flex items-center gap-1 text-xs text-ink-light">
+                    <span className="flex items-center gap-1 text-xs text-[var(--ink-faint)]">
                       <Heart className="h-3 w-3" />
                       {l.favorite_count ?? 0}
                     </span>

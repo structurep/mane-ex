@@ -164,11 +164,11 @@ export default async function DashboardPage() {
   const draftCount = statusCounts["draft"] || 0;
 
   const pipelineStages = [
-    { stage: "Draft", count: draftCount, color: "bg-blue/5", textColor: "text-blue" },
-    { stage: "In Review", count: pendingReviewCount, color: "bg-gold/10", textColor: "text-gold" },
-    { stage: "Active", count: statusCounts["active"] || 0, color: "bg-forest/8", textColor: "text-forest" },
-    { stage: "Offer", count: pendingOfferCount || 0, color: "bg-oxblood/5", textColor: "text-oxblood" },
-    { stage: "Sold", count: statusCounts["sold"] || 0, color: "bg-forest/15", textColor: "text-forest" },
+    { stage: "Draft", count: draftCount, textColor: "text-blue" },
+    { stage: "In Review", count: pendingReviewCount, textColor: "text-gold" },
+    { stage: "Active", count: statusCounts["active"] || 0, textColor: "text-forest" },
+    { stage: "Offer", count: pendingOfferCount || 0, textColor: "text-oxblood" },
+    { stage: "Sold", count: statusCounts["sold"] || 0, textColor: "text-forest" },
   ];
 
   // Mane Score
@@ -317,10 +317,10 @@ export default async function DashboardPage() {
         {kpis.map((kpi) => {
           const Icon = kpi.icon;
           const inner = (
-            <div className="rounded-lg bg-paper-cream p-4 shadow-flat transition-all hover:shadow-folded">
+            <div className="paper-raised p-4 transition-all hover:shadow-folded">
               <Icon className={`h-4 w-4 ${kpi.accent}`} />
-              <p className="mt-2 font-serif text-2xl font-bold text-ink-black">{kpi.value}</p>
-              <p className="mt-0.5 text-[11px] tracking-wide text-ink-faint">{kpi.label}</p>
+              <p className="mt-2 font-serif text-2xl font-bold text-[var(--ink-black)]">{kpi.value}</p>
+              <p className="overline mt-1 text-[var(--ink-faint)]">{kpi.label}</p>
             </div>
           );
           return kpi.href ? (
@@ -383,9 +383,9 @@ export default async function DashboardPage() {
         <div className="mt-2 flex gap-1.5 overflow-x-auto">
           {pipelineStages.map((item, i) => (
             <div key={item.stage} className="flex items-center gap-1.5">
-              <div className={`min-w-[100px] flex-1 rounded-lg ${item.color} px-4 py-3 text-center`}>
+              <div className="paper-flat min-w-[100px] flex-1 px-4 py-3 text-center">
                 <p className={`font-serif text-xl font-bold ${item.textColor}`}>{item.count}</p>
-                <p className="mt-0.5 text-[11px] text-ink-faint">{item.stage}</p>
+                <p className="overline mt-1 text-[var(--ink-faint)]">{item.stage}</p>
               </div>
               {i < pipelineStages.length - 1 && (
                 <ArrowRight className="h-3 w-3 shrink-0 text-crease-mid" />

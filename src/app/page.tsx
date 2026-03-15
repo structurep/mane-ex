@@ -88,7 +88,7 @@ export default function Home() {
                 <p className="animate-fade-up overline mb-4 text-coral">
                   THE EQUESTRIAN MARKETPLACE
                 </p>
-                <h1 className="animate-fade-up mb-6 font-serif text-4xl text-white sm:text-5xl md:text-6xl">
+                <h1 className="animate-fade-up display-xl mb-6 text-white">
                   Find your
                   <br />
                   next partner.

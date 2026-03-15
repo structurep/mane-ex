@@ -88,10 +88,10 @@ function FilterPill({
     <button
       type="button"
       onClick={onClick}
-      className={`rounded-full border px-3 py-1.5 text-[13px] font-medium transition-all duration-150 ${
+      className={`rounded-[var(--radius-card)] border px-3 py-1.5 text-[13px] font-medium transition-all duration-150 ${
         active
-          ? "border-ink-black bg-ink-black text-paper-white"
-          : "border-crease-light bg-paper-white text-ink-mid hover:border-ink-light hover:text-ink-dark"
+          ? "border-[var(--accent-gold)] bg-[var(--accent-gold)]/10 text-[var(--ink-black)]"
+          : "border-[var(--paper-border)] bg-[var(--paper-surface)] text-[var(--ink-mid)] hover:border-[var(--paper-border-strong)] hover:text-[var(--ink-dark)]"
       }`}
     >
       {label}
@@ -206,11 +206,11 @@ export function BrowseFilters({ params }: Props) {
       <div className="flex flex-wrap items-center gap-2">
         {/* Search (desktop only) */}
         <div className="relative hidden md:block">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-faint" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--ink-faint)]" />
           <Input
             placeholder="Search..."
             defaultValue={params.q || ""}
-            className="h-9 w-44 rounded-full border-crease-light bg-paper-white pl-9 text-[13px] placeholder:text-ink-faint focus-visible:ring-1 focus-visible:ring-ink-black/20"
+            className="input-paper h-9 w-44 pl-9 text-[13px] placeholder:text-[var(--ink-faint)]"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 updateFilter("q", (e.target as HTMLInputElement).value);
@@ -224,12 +224,12 @@ export function BrowseFilters({ params }: Props) {
           variant="outline"
           size="sm"
           onClick={() => setSheetOpen(true)}
-          className="rounded-full border-crease-light md:hidden"
+          className="rounded-[var(--radius-card)] border-[var(--paper-border)] md:hidden"
         >
           <SlidersHorizontal className="mr-1.5 h-3.5 w-3.5" />
           Filters
           {totalFilterCount > 0 && (
-            <span className="ml-1 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-ink-black px-1 text-[10px] font-bold text-paper-white">
+            <span className="ml-1 inline-flex h-4 min-w-4 items-center justify-center rounded-[var(--radius-badge)] bg-[var(--accent-gold)] px-1 text-[10px] font-bold text-[var(--paper-surface)]">
               {totalFilterCount}
             </span>
           )}
@@ -288,12 +288,12 @@ export function BrowseFilters({ params }: Props) {
         <button
           type="button"
           onClick={() => setSheetOpen(true)}
-          className="hidden items-center gap-1.5 rounded-full border border-crease-light px-3.5 py-1.5 text-[13px] font-medium text-ink-mid transition-colors hover:border-ink-light hover:text-ink-dark md:flex"
+          className="hidden items-center gap-1.5 rounded-[var(--radius-card)] border border-[var(--paper-border)] px-3.5 py-1.5 text-[13px] font-medium text-[var(--ink-mid)] transition-colors hover:border-[var(--paper-border-strong)] hover:text-[var(--ink-dark)] md:flex"
         >
           <SlidersHorizontal className="h-3.5 w-3.5" />
           More
           {advancedFilterCount > 0 && (
-            <span className="inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-ink-black px-1 text-[10px] font-bold text-paper-white">
+            <span className="inline-flex h-4 min-w-4 items-center justify-center rounded-[var(--radius-badge)] bg-[var(--accent-gold)] px-1 text-[10px] font-bold text-[var(--paper-surface)]">
               {advancedFilterCount}
             </span>
           )}
@@ -325,10 +325,10 @@ export function BrowseFilters({ params }: Props) {
               key={chip.label}
               type="button"
               onClick={chip.onClear}
-              className="group flex items-center gap-1 rounded-full border border-crease-light bg-paper-white px-2.5 py-1 text-[12px] font-medium text-ink-dark transition-all hover:border-red/30 hover:bg-red-light hover:text-red"
+              className="group flex items-center gap-1 rounded-[var(--radius-card)] border border-[var(--paper-border)] bg-[var(--paper-surface)] px-2.5 py-1 text-[12px] font-medium text-[var(--ink-dark)] transition-all hover:border-[var(--accent-red)]/30 hover:bg-[var(--accent-red-soft)] hover:text-[var(--accent-red)]"
             >
               {chip.label}
-              <X className="h-3 w-3 text-ink-faint transition-colors group-hover:text-red" />
+              <X className="h-3 w-3 text-[var(--ink-faint)] transition-colors group-hover:text-[var(--accent-red)]" />
             </button>
           ))}
           <button
@@ -343,18 +343,18 @@ export function BrowseFilters({ params }: Props) {
 
       {/* ─── Filter Sheet (mobile + advanced) ─── */}
       <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-        <SheetContent side="right" className="flex flex-col overflow-hidden sm:max-w-sm">
+        <SheetContent side="right" className="flex flex-col overflow-hidden bg-[var(--paper-bg)] sm:max-w-sm">
           {/* Sticky header */}
-          <SheetHeader className="border-b border-crease-light bg-paper-white px-5 pb-4">
+          <SheetHeader className="border-b border-[var(--paper-border)] bg-[var(--paper-surface)] px-5 pb-4">
             <div className="flex items-center justify-between">
-              <SheetTitle className="font-serif text-xl text-ink-black">Filters</SheetTitle>
+              <SheetTitle className="display-md text-[var(--ink-black)]">Filters</SheetTitle>
               {totalFilterCount > 0 && (
-                <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-oxblood px-1.5 text-[10px] font-bold text-paper-white">
+                <span className="badge-seal text-[var(--accent-gold)]">
                   {totalFilterCount}
                 </span>
               )}
             </div>
-            <SheetDescription className="text-[13px] text-ink-faint">
+            <SheetDescription className="text-[13px] text-[var(--ink-faint)]">
               {totalFilterCount > 0
                 ? `${totalFilterCount} filter${totalFilterCount !== 1 ? "s" : ""} applied`
                 : "Refine your search results"}
@@ -371,7 +371,7 @@ export function BrowseFilters({ params }: Props) {
                   <Input
                     placeholder="Name, breed, keyword..."
                     defaultValue={params.q || ""}
-                    className="h-10 rounded-lg border-crease-light bg-paper-cream pl-9 text-sm focus:border-oxblood focus:ring-1 focus:ring-oxblood/20"
+                    className="input-paper h-10 pl-9 text-sm"
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
                         updateFilter("q", (e.target as HTMLInputElement).value);
@@ -404,7 +404,7 @@ export function BrowseFilters({ params }: Props) {
                       type="number"
                       placeholder="Min"
                       defaultValue={params.minPrice || ""}
-                      className="h-10 rounded-lg border-crease-light bg-paper-cream pl-7 text-sm"
+                      className="input-paper h-10 pl-7 text-sm"
                       onBlur={(e) => updateFilter("minPrice", e.target.value)}
                     />
                   </div>
@@ -414,14 +414,14 @@ export function BrowseFilters({ params }: Props) {
                       type="number"
                       placeholder="Max"
                       defaultValue={params.maxPrice || ""}
-                      className="h-10 rounded-lg border-crease-light bg-paper-cream pl-7 text-sm"
+                      className="input-paper h-10 pl-7 text-sm"
                       onBlur={(e) => updateFilter("maxPrice", e.target.value)}
                     />
                   </div>
                 </div>
               </FormSection>
 
-              <div className="border-t border-crease-light" />
+              <div className="crease-divider-full" />
 
               {/* ── Gender — radio cards ── */}
               <FormSection label="Gender">
@@ -485,7 +485,7 @@ export function BrowseFilters({ params }: Props) {
                 </SelectMenu>
               </FormSection>
 
-              <div className="border-t border-crease-light" />
+              <div className="crease-divider-full" />
 
               {/* ── Height + Age ── */}
               <div className="grid grid-cols-2 gap-4">
@@ -534,16 +534,16 @@ export function BrowseFilters({ params }: Props) {
                         key={opt.value}
                         type="button"
                         onClick={() => updateFilter("soundness", opt.value)}
-                        className={`flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left text-sm transition-colors ${
+                        className={`flex w-full items-center gap-3 rounded-[var(--radius-card)] px-3 py-3 text-left text-sm transition-colors ${
                           selected
-                            ? "bg-oxblood/5 text-oxblood"
-                            : "text-ink-mid hover:bg-paper-cream"
+                            ? "bg-[var(--accent-gold)]/5 text-[var(--ink-black)]"
+                            : "text-[var(--ink-mid)] hover:bg-[var(--paper-warm)]"
                         }`}
                       >
                         <span className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 transition-colors ${
-                          selected ? "border-oxblood" : "border-crease-mid"
+                          selected ? "border-[var(--ink-black)]" : "border-[var(--paper-border-strong)]"
                         }`}>
-                          {selected && <span className="h-2 w-2 rounded-full bg-oxblood" />}
+                          {selected && <span className="h-2 w-2 rounded-full bg-[var(--ink-black)]" />}
                         </span>
                         {opt.label}
                       </button>
@@ -562,7 +562,7 @@ export function BrowseFilters({ params }: Props) {
                 />
               </FormSection>
 
-              <div className="border-t border-crease-light" />
+              <div className="crease-divider-full" />
 
               {/* ── Sort ── */}
               <FormSection label="Sort By">
@@ -577,12 +577,12 @@ export function BrowseFilters({ params }: Props) {
           </div>
 
           {/* Sticky footer with apply/reset */}
-          <SheetFooter className="border-t border-crease-light bg-paper-white px-5 py-4">
+          <SheetFooter className="border-t border-[var(--paper-border)] bg-[var(--paper-surface)] px-5 py-4">
             <div className="flex w-full gap-3">
               {hasFilters && (
                 <Button
                   variant="outline"
-                  className="flex-1 border-crease-light text-ink-mid hover:text-ink-dark"
+                  className="flex-1 border-[var(--paper-border)] text-[var(--ink-mid)] hover:text-[var(--ink-dark)]"
                   onClick={() => {
                     clearFilters();
                     setSheetOpen(false);

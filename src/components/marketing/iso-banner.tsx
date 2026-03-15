@@ -6,8 +6,8 @@ export function ISOBanner() {
     <section aria-label="In search of" className="bg-paper-white px-4 py-10 md:px-8 md:py-14">
       <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-2">
         {/* Looking for a horse */}
-        <div className="flex items-start gap-5 rounded-xl border border-crease-light bg-white p-6">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-coral/10">
+        <div className="paper-flat flex items-start gap-5 p-6">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[var(--radius-card)] bg-coral/10">
             <Search className="h-5 w-5 text-coral" />
           </div>
           <div>
@@ -29,8 +29,8 @@ export function ISOBanner() {
         </div>
 
         {/* Have a horse to sell */}
-        <div className="flex items-start gap-5 rounded-xl border border-crease-light bg-white p-6">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-ink-black/5">
+        <div className="paper-flat flex items-start gap-5 p-6">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[var(--radius-card)] bg-[var(--ink-black)]/5">
             <Send className="h-5 w-5 text-ink-dark" />
           </div>
           <div>

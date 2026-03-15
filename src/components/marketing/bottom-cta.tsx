@@ -6,7 +6,7 @@ export function BottomCTA() {
   return (
     <section aria-label="Get started" className="bg-paddock px-4 py-16 md:px-8 md:py-20">
       <div className="mx-auto max-w-[1200px] text-center">
-        <h2 className="mb-4 font-serif text-3xl text-white md:text-4xl">
+        <h2 className="display-lg mb-4 text-white">
           Your next horse is waiting.
         </h2>
         <p className="mx-auto mb-8 max-w-xl text-white/85">

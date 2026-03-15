@@ -48,13 +48,14 @@ const features = [
 
 export function PlatformFeatures() {
   return (
-    <section aria-label="Platform features" className="bg-white px-4 py-14 md:px-8 md:py-18">
+    <section aria-label="Platform features" className="bg-[var(--paper-surface)] px-4 py-14 md:px-8 md:py-18">
       <div className="mx-auto max-w-5xl">
         <div className="mb-10 text-center">
-          <h2 className="font-serif text-3xl text-ink-black md:text-4xl">
+          <p className="overline mb-2 text-[var(--ink-faint)]">PLATFORM</p>
+          <h2 className="display-lg text-[var(--ink-black)]">
             Everything you need. One platform.
           </h2>
-          <p className="mt-3 text-ink-mid">
+          <p className="mt-3 text-[var(--ink-mid)]">
             Search, compare, verify, pay, and ship &mdash; all without leaving
             ManeExchange.
           </p>
@@ -68,7 +69,7 @@ export function PlatformFeatures() {
                 className="flex flex-col items-center text-center"
               >
                 <div
-                  className={`mb-3 flex h-14 w-14 items-center justify-center rounded-xl ${f.color}`}
+                  className={`mb-3 flex h-14 w-14 items-center justify-center rounded-[var(--radius-card)] ${f.color}`}
                 >
                   <Icon className="h-6 w-6" />
                 </div>
