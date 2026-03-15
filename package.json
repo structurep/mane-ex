@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "seed": "tsx scripts/seed.ts",
+    "seed:swipes": "tsx scripts/seed-swipe-events.ts",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "perf:lighthouse:local": "node scripts/lighthouse-runner.mjs --target=local",
