@@ -42,6 +42,10 @@ interface ListingCardProps {
   trending?: boolean;
   /** Demand score 0–100 from swipe engagement */
   demandScore?: number | null;
+  /** AI match percentage 0–100 */
+  matchPercent?: number | null;
+  /** Show debug overlay with score breakdown */
+  debugScores?: { discipline: number; price: number; location: number; height: number; verification: number } | null;
   className?: string;
 }
 
@@ -58,6 +62,8 @@ export function ListingCard({
   priority = false,
   trending = false,
   demandScore,
+  matchPercent,
+  debugScores,
   className,
 }: ListingCardProps) {
   const priceStr = l.price
@@ -110,10 +116,26 @@ export function ListingCard({
             No photo
           </div>
         )}
-        {(l.favorite_count ?? 0) > 0 && (
+        {matchPercent != null && matchPercent >= 70 ? (
+          <div className="absolute right-2.5 top-2.5 z-10 flex items-center gap-1 rounded-full bg-gold/90 px-2.5 py-1 text-[11px] font-bold text-paper-white backdrop-blur-sm">
+            <Star className="h-3 w-3" />
+            {matchPercent}% Match
+          </div>
+        ) : (l.favorite_count ?? 0) > 0 ? (
           <div className="absolute right-2.5 top-2.5 z-10 flex items-center gap-1 rounded-full bg-ink-black/50 px-2 py-1 text-[11px] font-medium text-paper-white backdrop-blur-sm">
             <Heart className="h-3 w-3" />
             {l.favorite_count}
+          </div>
+        ) : null}
+        {debugScores && (
+          <div className="absolute bottom-0 left-0 right-0 z-10 bg-ink-black/80 px-2 py-1.5 text-[9px] font-mono text-paper-white">
+            <div className="grid grid-cols-3 gap-x-2">
+              <span>disc: {debugScores.discipline}</span>
+              <span>price: {debugScores.price}</span>
+              <span>loc: {debugScores.location}</span>
+              <span>ht: {debugScores.height}</span>
+              <span>ver: {debugScores.verification}</span>
+            </div>
           </div>
         )}
       </div>

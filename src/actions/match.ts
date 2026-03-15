@@ -18,6 +18,7 @@ export type MatchListing = {
   completeness_score: number | null;
   favorite_count: number | null;
   discipline_ids: string[] | null;
+  verification_tier?: string | null;
   seller_id?: string;
   media: { url: string; is_primary: boolean }[];
   created_at?: string;
@@ -25,12 +26,15 @@ export type MatchListing = {
 
 export type ScoredMatchListing = MatchListing & {
   _score?: number;
+  _matchPercent?: number;
   _debug?: {
     recency: number;
     completeness: number;
     discipline: number;
     price: number;
     location: number;
+    height: number;
+    verification: number;
     sellerPenalty: number;
     finalScore: number;
     rankPosition: number;
@@ -68,23 +72,32 @@ const SELLER_PENALTY = 0.85;
 
 /**
  * Score a listing against user preferences.
- * Returns 0–100 composite score.
+ * Returns 0–100 composite score with match percentage.
+ *
+ * Components (total 100):
+ *   discipline: 25, price: 20, height: 10, location: 10,
+ *   recency: 15, completeness: 10, verification: 10
  */
 function scoreListing(
   listing: MatchListing & { created_at?: string },
   profile: PreferenceProfile | null
-): { total: number; recency: number; completeness: number; discipline: number; price: number; location: number } {
+): { total: number; matchPercent: number; recency: number; completeness: number; discipline: number; price: number; location: number; height: number; verification: number } {
   let recency = 0;
   if (listing.created_at) {
     const ageMs = Date.now() - new Date(listing.created_at).getTime();
     const ageDays = ageMs / (1000 * 60 * 60 * 24);
-    recency = Math.max(0, 25 * (1 - ageDays / 30));
+    recency = Math.max(0, 15 * (1 - ageDays / 30));
   }
 
-  const completeness = Math.min(20, ((listing.completeness_score ?? 0) / 1000) * 20);
+  const completeness = Math.min(10, ((listing.completeness_score ?? 0) / 1000) * 10);
+
+  // Verification tier boost
+  const verificationBoosts: Record<string, number> = { gold: 10, silver: 7, bronze: 4, none: 0 };
+  const verification = verificationBoosts[listing.verification_tier ?? "none"] ?? 0;
 
   if (!profile) {
-    return { total: recency + completeness, recency, completeness, discipline: 0, price: 0, location: 0 };
+    const total = recency + completeness + verification;
+    return { total, matchPercent: 0, recency, completeness, discipline: 0, price: 0, location: 0, height: 0, verification };
   }
 
   let discipline = 0;
@@ -102,10 +115,10 @@ function scoreListing(
     const { min, max } = profile.preferredPriceRange;
     const range = max - min || 1;
     if (listing.price >= min && listing.price <= max) {
-      price = 15;
+      price = 20;
     } else {
       const distance = listing.price < min ? min - listing.price : listing.price - max;
-      price = Math.max(0, 15 * (1 - distance / range));
+      price = Math.max(0, 20 * (1 - distance / range));
     }
   }
 
@@ -113,12 +126,30 @@ function scoreListing(
   if (profile.preferredLocations.length > 0 && listing.location_state) {
     const rank = profile.preferredLocations.indexOf(listing.location_state);
     if (rank !== -1) {
-      location = 15 - rank * 3;
+      location = Math.max(0, 10 - rank * 2);
     }
   }
 
-  const total = recency + completeness + discipline + price + location;
-  return { total, recency, completeness, discipline, price, location };
+  let height = 0;
+  if (profile.preferredHeightRange && listing.height_hands != null) {
+    const { min, max } = profile.preferredHeightRange;
+    const range = max - min || 1;
+    if (listing.height_hands >= min && listing.height_hands <= max) {
+      height = 10;
+    } else {
+      const distance = listing.height_hands < min ? min - listing.height_hands : listing.height_hands - max;
+      height = Math.max(0, 10 * (1 - distance / range));
+    }
+  }
+
+  const total = recency + completeness + discipline + price + location + height + verification;
+
+  // Match percent: preference-based components only (exclude recency/completeness/verification)
+  // Max preference score = discipline(25) + price(20) + height(10) + location(10) = 65
+  const preferenceScore = discipline + price + height + location;
+  const matchPercent = Math.round((preferenceScore / 65) * 100);
+
+  return { total, matchPercent, recency, completeness, discipline, price, location, height, verification };
 }
 
 /**
@@ -182,7 +213,7 @@ export async function getMatchBatch(
     .select(
       `id, name, slug, breed, gender, color, age_years, height_hands,
        price, location_city, location_state, completeness_score, favorite_count,
-       discipline_ids, seller_id, created_at, media:listing_media(url, is_primary)`
+       discipline_ids, verification_tier, seller_id, created_at, media:listing_media(url, is_primary)`
     )
     .eq("status", "active")
     .order("created_at", { ascending: false })
@@ -238,6 +269,7 @@ export async function getMatchBatch(
     return {
       ...listing,
       _score: scores.total,
+      _matchPercent: scores.matchPercent,
       _rawScore: scores.total,
       _sellerPenalty: 1,
       _debug: debug ? {
@@ -246,6 +278,8 @@ export async function getMatchBatch(
         discipline: Math.round(scores.discipline * 10) / 10,
         price: Math.round(scores.price * 10) / 10,
         location: Math.round(scores.location * 10) / 10,
+        height: Math.round(scores.height * 10) / 10,
+        verification: Math.round(scores.verification * 10) / 10,
         sellerPenalty: 1,
         finalScore: scores.total,
         rankPosition: 0,
