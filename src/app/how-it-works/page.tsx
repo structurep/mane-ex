@@ -68,7 +68,7 @@ export default function HowItWorksPage() {
           <div className="relative px-4 py-24 md:px-8 md:py-32">
             <div className="mx-auto max-w-7xl">
               <div className="max-w-2xl">
-                <p className="overline mb-4 text-primary">HOW IT WORKS</p>
+                <p className="overline mb-4 text-gold">HOW IT WORKS</p>
                 <h1 className="font-serif text-4xl text-white sm:text-5xl md:text-6xl">
                   Everything you need to
                   <br />
@@ -170,7 +170,7 @@ export default function HowItWorksPage() {
           <div className="mx-auto max-w-7xl">
             <div className="grid items-center gap-12 md:grid-cols-2">
               <div>
-                <span className="inline-flex items-center gap-2 rounded-[var(--radius-card)] bg-primary/20 px-3 py-1 text-xs font-semibold text-primary">
+                <span className="inline-flex items-center gap-2 rounded-[var(--radius-card)] bg-gold/20 px-3 py-1 text-xs font-semibold text-gold">
                   MANEVAULT
                 </span>
                 <h2 className="mt-4 text-3xl text-white md:text-4xl">
@@ -192,7 +192,7 @@ export default function HowItWorksPage() {
                       key={item}
                       className="flex items-start gap-2 text-sm text-white/80"
                     >
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-forest" />
                       {item}
                     </li>
                   ))}

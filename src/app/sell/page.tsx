@@ -167,14 +167,14 @@ export default function SellPage() {
                 <h1 className="mb-6 font-serif text-4xl text-white sm:text-5xl md:text-6xl">
                   Sell smarter.
                   <br />
-                  <span className="text-primary">Not harder.</span>
+                  <span className="text-white/90">Not harder.</span>
                 </h1>
                 <p className="mb-8 max-w-lg text-lg text-white/70">
                   Your horse deserves better than a Facebook post. List in 5
                   minutes, reach serious buyers, skip the tire-kickers.
                 </p>
                 <div className="flex flex-col gap-3 sm:flex-row">
-                  <Button size="lg" asChild>
+                  <Button size="lg" className="bg-white text-[var(--accent-navy)] hover:bg-white/90" asChild>
                     <Link href={getCreateListingUrl()}>
                       Start Your Listing
                       <ArrowRight className="ml-2 h-4 w-4" />

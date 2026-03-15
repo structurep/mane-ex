@@ -125,7 +125,7 @@
   --card-foreground: var(--ink-black);
   --popover: var(--paper-surface);
   --popover-foreground: var(--ink-black);
-  --primary: var(--ink-black);            /* Primary actions: ink black */
+  --primary: var(--accent-navy);           /* Primary actions: midnight navy */
   --primary-foreground: var(--paper-surface);
   --secondary: var(--paper-warm);
   --secondary-foreground: var(--ink-dark);
@@ -136,10 +136,10 @@
   --destructive: var(--accent-red);  /* real red for destructive actions */
   --border: var(--paper-border);
   --input: var(--paper-border);
-  --ring: var(--ink-black);
+  --ring: var(--accent-navy);
 
   /* Charts */
-  --chart-1: var(--ink-black);
+  --chart-1: var(--accent-navy);
   --chart-2: var(--accent-green);
   --chart-3: var(--accent-gold);
   --chart-4: var(--accent-blue);
@@ -148,7 +148,7 @@
   /* Sidebar */
   --sidebar: var(--paper-washi);
   --sidebar-foreground: var(--ink-black);
-  --sidebar-primary: var(--ink-black);
+  --sidebar-primary: var(--accent-navy);
   --sidebar-primary-foreground: var(--paper-surface);
   --sidebar-accent: var(--paper-warm);
   --sidebar-accent-foreground: var(--ink-dark);

@@ -60,7 +60,7 @@ export default function AboutPage() {
           <div className="relative px-4 py-24 md:px-8 md:py-32">
             <div className="mx-auto max-w-7xl">
               <div className="max-w-2xl">
-                <p className="overline mb-4 text-primary">OUR STORY</p>
+                <p className="overline mb-4 text-gold">OUR STORY</p>
                 <h1 className="mb-6 font-serif text-4xl text-white sm:text-5xl md:text-6xl">
                   We&apos;re riders too.
                 </h1>

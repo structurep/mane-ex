@@ -109,7 +109,7 @@ export default function Home() {
                 <div className="animate-fade-up mt-5 flex flex-col gap-3 sm:flex-row">
                   <Button
                     size="lg"
-                    className="bg-navy text-white hover:bg-navy-600 hover:scale-[1.02] transition-transform focus-visible:ring-white focus-visible:ring-offset-ink-black"
+                    className="bg-white text-[var(--accent-navy)] hover:bg-white/90 hover:scale-[1.02] transition-transform focus-visible:ring-white focus-visible:ring-offset-ink-black"
                     asChild
                   >
                     <Link href="/browse">
