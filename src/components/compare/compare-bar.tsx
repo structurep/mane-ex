@@ -5,6 +5,7 @@ import Image from "next/image";
 import { X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCompareStore, removeFromCompare, clearCompare } from "@/lib/compare-store";
+import { trackCompareEvent } from "@/lib/compare-analytics";
 
 /**
  * Floating comparison bar — appears at the bottom of the screen when ≥1 horse
@@ -42,7 +43,10 @@ export function CompareBar() {
               </div>
               <button
                 type="button"
-                onClick={() => removeFromCompare(item.id)}
+                onClick={() => {
+                  trackCompareEvent("compare_remove", { listingId: item.id, listingName: item.name, count: items.length - 1 });
+                  removeFromCompare(item.id);
+                }}
                 aria-label={`Remove ${item.name} from comparison`}
                 className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-ink-dark text-white opacity-0 transition-opacity group-hover:opacity-100"
               >
@@ -71,7 +75,10 @@ export function CompareBar() {
 
           <button
             type="button"
-            onClick={clearCompare}
+            onClick={() => {
+              trackCompareEvent("compare_clear", { count: items.length });
+              clearCompare();
+            }}
             className="text-xs text-ink-light hover:text-ink-mid"
           >
             Clear
@@ -79,7 +86,10 @@ export function CompareBar() {
 
           {canCompare ? (
             <Button size="sm" asChild>
-              <Link href={compareUrl}>
+              <Link
+                href={compareUrl}
+                onClick={() => trackCompareEvent("compare_open", { count: items.length })}
+              >
                 Compare
                 <ArrowRight className="ml-1 h-3.5 w-3.5" />
               </Link>

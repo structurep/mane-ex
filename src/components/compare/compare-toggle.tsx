@@ -8,6 +8,7 @@ import {
   useCompareStore,
   type CompareItem,
 } from "@/lib/compare-store";
+import { trackCompareEvent } from "@/lib/compare-analytics";
 
 interface CompareToggleProps {
   item: CompareItem;
@@ -29,7 +30,13 @@ export function CompareToggle({ item, className }: CompareToggleProps) {
       e.preventDefault();
       e.stopPropagation();
       if (full) return;
+      const wasActive = active;
       toggleCompare(item);
+      trackCompareEvent(wasActive ? "compare_remove" : "compare_add", {
+        listingId: item.id,
+        listingName: item.name,
+        count: wasActive ? compareItems.length - 1 : compareItems.length + 1,
+      });
     },
     [item, full]
   );
