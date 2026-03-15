@@ -12,6 +12,8 @@ export type DemandStats = DemandScore & {
   passes7d: number;
   views7d: number;
   favoriteRate: number;
+  pricePosition?: "Below Market" | "Fair Market" | "Above Market" | null;
+  pricePercentile?: number | null;
 };
 
 // ── In-memory cache (10-minute TTL) ──────────

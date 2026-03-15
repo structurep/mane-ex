@@ -8,7 +8,8 @@ import { Plus, Eye, Heart, ClipboardList, TrendingUp, Pencil } from "lucide-reac
 import type { ListingStatus } from "@/types/listings";
 import { DeleteListingButton } from "@/components/marketplace/delete-listing-button";
 import { getCreateListingUrl, getEditListingUrl } from "@/lib/urls";
-import { loadDemandStatsMap } from "@/lib/match/demand-score";
+import { loadDemandStatsMap, type DemandStats } from "@/lib/match/demand-score";
+import { getBatchPricePositioning } from "@/lib/match/price-positioning";
 import { DemandInsights } from "@/components/seller/demand-insights";
 
 export const metadata: Metadata = {
@@ -80,12 +81,24 @@ export default async function MyListingsPage() {
     supabase
       .from("horse_listings")
       .select(
-        "id, name, slug, status, price, breed, location_state, view_count, favorite_count, created_at, completeness_score, basics_score, details_score, trust_score, media_score, media:listing_media(url, is_primary)"
+        "id, name, slug, status, price, breed, location_state, view_count, favorite_count, created_at, completeness_score, basics_score, details_score, trust_score, media_score, discipline_ids, age_years, height_hands, media:listing_media(url, is_primary)"
       )
       .eq("seller_id", user.id)
       .order("created_at", { ascending: false }),
     loadDemandStatsMap(),
   ]);
+
+  // Compute price positioning for active listings (uses cached comps)
+  const activeForPricing = (listings ?? [])
+    .filter((l) => l.status === "active")
+    .map((l) => ({
+      id: l.id as string,
+      price: l.price as number | null,
+      discipline_ids: l.discipline_ids as string[] | null,
+      age_years: l.age_years as number | null,
+      height_hands: l.height_hands as number | null,
+    }));
+  const pricePositions = await getBatchPricePositioning(activeForPricing);
 
   const allListings = (listings ?? []) as Array<
     Record<string, unknown> & {
@@ -213,12 +226,20 @@ export default async function MyListingsPage() {
                   </div>
                 )}
 
-                {listing.status === "active" && demandStats.get(String(listing.id)) && (
-                  <DemandInsights
-                    stats={demandStats.get(String(listing.id))!}
-                    className="mt-3 rounded-md border border-crease-light bg-paper-white px-4 py-3"
-                  />
-                )}
+                {listing.status === "active" && demandStats.get(String(listing.id)) && (() => {
+                  const id = String(listing.id);
+                  const base = demandStats.get(id)!;
+                  const pos = pricePositions.get(id);
+                  const merged: DemandStats = pos
+                    ? { ...base, pricePosition: pos.position, pricePercentile: pos.percentile }
+                    : base;
+                  return (
+                    <DemandInsights
+                      stats={merged}
+                      className="mt-3 rounded-md border border-crease-light bg-paper-white px-4 py-3"
+                    />
+                  );
+                })()}
               </div>
             );
           })}
