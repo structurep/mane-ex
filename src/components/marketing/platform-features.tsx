@@ -18,13 +18,13 @@ const features = [
     icon: CreditCard,
     title: "Mane Pay",
     description: "Secure escrow payments",
-    color: "text-navy bg-red-light",
+    color: "text-navy bg-navy/10",
   },
   {
     icon: GitCompareArrows,
     title: "ISO Matching",
     description: "Buyers come to you",
-    color: "text-coral bg-coral/10",
+    color: "text-navy bg-navy/10",
   },
   {
     icon: FileCheck,

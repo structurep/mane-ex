@@ -16,7 +16,7 @@ export function BottomCTA() {
         <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
           <Button
             size="lg"
-            className="bg-coral text-white hover:bg-coral-hover focus-visible:ring-white focus-visible:ring-offset-ink-black"
+            className="bg-navy text-white hover:bg-navy-600 focus-visible:ring-white focus-visible:ring-offset-ink-black"
             asChild
           >
             <Link href="/browse">

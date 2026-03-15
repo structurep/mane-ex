@@ -62,7 +62,7 @@ export default function Home() {
         <section
           aria-label="Hero search"
           className="relative min-h-[85vh] overflow-hidden bg-hero-dark"
-          style={{ backgroundColor: "#0F1A12" }}
+          style={{ backgroundColor: "#0F1419" }}
         >
           <div className="absolute inset-0">
             <picture>
@@ -78,14 +78,14 @@ export default function Home() {
                 fetchPriority="high"
               />
             </picture>
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0F1A12]/90 via-[#0F1A12]/60 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0F1A12]/70 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0F1419]/90 via-[#16212B]/70 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#111315]/85 via-transparent to-transparent" />
           </div>
 
           <div className="relative flex min-h-[85vh] items-center px-4 md:px-8">
             <div className="mx-auto w-full max-w-7xl">
               <div className="max-w-2xl stagger-children">
-                <p className="animate-fade-up overline mb-4 text-coral">
+                <p className="animate-fade-up overline mb-4 text-gold">
                   THE EQUESTRIAN MARKETPLACE
                 </p>
                 <h1 className="animate-fade-up display-xl mb-6 text-white">
@@ -109,7 +109,7 @@ export default function Home() {
                 <div className="animate-fade-up mt-5 flex flex-col gap-3 sm:flex-row">
                   <Button
                     size="lg"
-                    className="bg-coral text-white hover:bg-coral-hover hover:scale-[1.02] transition-transform focus-visible:ring-white focus-visible:ring-offset-ink-black"
+                    className="bg-navy text-white hover:bg-navy-600 hover:scale-[1.02] transition-transform focus-visible:ring-white focus-visible:ring-offset-ink-black"
                     asChild
                   >
                     <Link href="/browse">
