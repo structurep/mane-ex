@@ -68,7 +68,7 @@ export function TrainerDirectoryFilters({ params }: Props) {
                 onClick={() =>
                   updateFilter("service", isActive ? "" : svc.value)
                 }
-                className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+                className={`flex items-center gap-1.5 rounded-[var(--radius-card)] px-3 py-1.5 text-xs font-medium transition-colors ${
                   isActive
                     ? "bg-ink-black text-paper-white"
                     : "bg-paper-white text-ink-mid shadow-flat hover:bg-paper-warm"
@@ -97,7 +97,7 @@ export function TrainerDirectoryFilters({ params }: Props) {
                 onClick={() =>
                   updateFilter("discipline", isActive ? "" : d)
                 }
-                className={`rounded-full px-2.5 py-1 text-xs font-medium transition-colors ${
+                className={`rounded-[var(--radius-card)] px-2.5 py-1 text-xs font-medium transition-colors ${
                   isActive
                     ? "bg-ink-black text-paper-white"
                     : "bg-paper-white text-ink-mid shadow-flat hover:bg-paper-warm"

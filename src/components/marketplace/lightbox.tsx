@@ -149,7 +149,7 @@ export function Lightbox({ items, initialIndex, onClose }: LightboxProps) {
 
       {/* Counter */}
       {items.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-ink-black/60 px-3 py-1 text-xs text-paper-white">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-[var(--radius-card)] bg-ink-black/60 px-3 py-1 text-xs text-paper-white">
           {index + 1} / {items.length}
         </div>
       )}

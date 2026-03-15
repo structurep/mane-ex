@@ -179,7 +179,7 @@ export default function FaqPage() {
                 <button
                   key={filter}
                   onClick={() => setActiveFilter(filter)}
-                  className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none ${
+                  className={`rounded-[var(--radius-card)] px-4 py-1.5 text-sm font-medium transition-all focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none ${
                     activeFilter === filter
                       ? "bg-ink-black text-white shadow-flat"
                       : "bg-paper-white text-ink-mid shadow-flat hover:shadow-folded"
@@ -218,7 +218,7 @@ export default function FaqPage() {
                     >
                       <div className="flex items-center gap-3">
                         <span
-                          className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-semibold ${categoryAccent[item.category]}`}
+                          className={`shrink-0 rounded-[var(--radius-card)] px-2.5 py-0.5 text-xs font-semibold ${categoryAccent[item.category]}`}
                         >
                           {item.category}
                         </span>

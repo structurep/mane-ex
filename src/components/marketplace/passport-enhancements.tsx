@@ -91,7 +91,7 @@ export function VerificationBadge({
   if (compact) {
     return (
       <span
-        className={`inline-flex items-center gap-1 rounded-full ${config.bgColor} px-2 py-0.5 text-[10px] font-medium ${config.color}`}
+        className={`inline-flex items-center gap-1 rounded-[var(--radius-card)] ${config.bgColor} px-2 py-0.5 text-[10px] font-medium ${config.color}`}
         title={config.label}
       >
         <Icon className="h-3 w-3" />
@@ -102,7 +102,7 @@ export function VerificationBadge({
 
   return (
     <div
-      className={`inline-flex items-center gap-1.5 rounded-full ${config.bgColor} px-3 py-1 text-xs font-medium ${config.color}`}
+      className={`inline-flex items-center gap-1.5 rounded-[var(--radius-card)] ${config.bgColor} px-3 py-1 text-xs font-medium ${config.color}`}
     >
       <Icon className="h-3.5 w-3.5" />
       {config.label}
@@ -645,7 +645,7 @@ export function SectionVisibilityToggle({
   return (
     <button
       onClick={onToggle}
-      className="flex items-center gap-1 rounded-full bg-paper-warm px-2 py-0.5 text-[10px] font-medium text-ink-light transition-colors hover:text-ink-mid"
+      className="flex items-center gap-1 rounded-[var(--radius-card)] bg-paper-warm px-2 py-0.5 text-[10px] font-medium text-ink-light transition-colors hover:text-ink-mid"
       title={isVisible ? `Hide ${section} from public view` : `Show ${section} publicly`}
     >
       {isVisible ? (

@@ -183,7 +183,7 @@ export function MatchStack({ onExit, filters = {}, onAnalytics, onProgress, debu
     return (
       <div className="flex flex-col items-center px-4" role="status" aria-label="Loading horses">
         <div className="relative mx-auto aspect-[3/4] w-full max-w-sm">
-          <div className="absolute inset-0 overflow-hidden rounded-2xl bg-paper-warm">
+          <div className="absolute inset-0 overflow-hidden rounded-[var(--radius-card)] bg-paper-warm">
             <div className="h-full w-full animate-shimmer" />
             <div className="absolute inset-x-0 bottom-0 space-y-3 p-5">
               <div className="h-7 w-2/3 animate-shimmer rounded bg-paper-white/20" />

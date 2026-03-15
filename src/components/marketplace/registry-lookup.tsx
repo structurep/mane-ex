@@ -357,7 +357,7 @@ export function RegistryBadges({ records }: RegistryBadgesProps) {
         return (
           <span
             key={i}
-            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${
+            className={`inline-flex items-center gap-1.5 rounded-[var(--radius-card)] px-3 py-1 text-xs font-medium ${
               isVerified
                 ? "bg-forest/10 text-forest"
                 : "bg-paper-warm text-ink-mid"

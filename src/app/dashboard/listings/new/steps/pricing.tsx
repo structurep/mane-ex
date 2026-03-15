@@ -151,7 +151,7 @@ export function StepPricing({ data, setField }: StepProps) {
                   onChange={() => setField("seller_role", role.value)}
                   className="peer sr-only"
                 />
-                <span className="block rounded-full border border-crease-light px-4 py-2 text-sm font-medium text-ink-mid transition-colors peer-checked:border-ink-black peer-checked:bg-ink-black peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-1">
+                <span className="block rounded-[var(--radius-card)] border border-crease-light px-4 py-2 text-sm font-medium text-ink-mid transition-colors peer-checked:border-ink-black peer-checked:bg-ink-black peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-1">
                   {role.label}
                 </span>
               </label>
@@ -173,7 +173,7 @@ export function StepPricing({ data, setField }: StepProps) {
                   onChange={() => setField("contact_preference", cp.value)}
                   className="peer sr-only"
                 />
-                <span className="block rounded-full border border-crease-light px-4 py-2 text-sm font-medium text-ink-mid transition-colors peer-checked:border-ink-black peer-checked:bg-ink-black peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-1">
+                <span className="block rounded-[var(--radius-card)] border border-crease-light px-4 py-2 text-sm font-medium text-ink-mid transition-colors peer-checked:border-ink-black peer-checked:bg-ink-black peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-1">
                   {cp.label}
                 </span>
               </label>

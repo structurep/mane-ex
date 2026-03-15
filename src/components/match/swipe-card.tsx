@@ -66,7 +66,7 @@ export const SwipeCard = forwardRef<SwipeCardHandle, SwipeCardProps>(
         ref={cardRef}
         role={active ? "button" : undefined}
         aria-label={active ? `${l.name}, ${priceStr}. Swipe right to like, left to pass, or tap for details` : undefined}
-        className={`absolute inset-0 select-none overflow-hidden rounded-2xl bg-ink-black ${
+        className={`absolute inset-0 select-none overflow-hidden rounded-[var(--radius-card)] bg-ink-black ${
           active ? "cursor-grab active:cursor-grabbing" : ""
         }`}
         style={{

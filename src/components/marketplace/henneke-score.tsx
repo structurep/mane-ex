@@ -141,7 +141,7 @@ export function HennekeScoreSelector({
             {assessmentAreas.map((area) => (
               <span
                 key={area}
-                className="rounded-full bg-paper-warm px-2.5 py-1 text-[10px] font-medium text-ink-mid"
+                className="rounded-[var(--radius-card)] bg-paper-warm px-2.5 py-1 text-[10px] font-medium text-ink-mid"
               >
                 {area}
               </span>
@@ -221,7 +221,7 @@ export function HennekeScoreSelector({
         >
           <div className="flex items-center gap-2">
             <span
-              className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+              className={`rounded-[var(--radius-card)] px-2.5 py-0.5 text-xs font-semibold ${
                 flagColors[selected.flag || "ideal"].badge
               }`}
             >
@@ -270,7 +270,7 @@ export function HennekeScoreDisplay({
   if (compact) {
     return (
       <span
-        className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${colors.badge}`}
+        className={`inline-flex items-center gap-1 rounded-[var(--radius-card)] px-2.5 py-1 text-xs font-semibold ${colors.badge}`}
         title={`Henneke Body Condition Score: ${score}/9 — ${desc.label}`}
       >
         BCS {score}/9
@@ -316,7 +316,7 @@ export function HennekeScoreDisplay({
             {assessmentAreas.map((area) => (
               <span
                 key={area}
-                className="rounded-full bg-paper-white px-2 py-0.5 text-[10px] text-ink-mid"
+                className="rounded-[var(--radius-card)] bg-paper-white px-2 py-0.5 text-[10px] text-ink-mid"
               >
                 {area}
               </span>

@@ -96,12 +96,12 @@ export default function AboutPage() {
                 </p>
               </div>
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                <div className="rounded-xl border border-crease-light bg-paper-cream p-5 text-center">
+                <div className="rounded-[var(--radius-card)] border border-crease-light bg-paper-cream p-5 text-center">
                   <Shield className="mx-auto mb-2 h-6 w-6 text-forest" />
                   <p className="font-heading text-sm font-semibold text-ink-black">Escrow-Protected</p>
                   <p className="mt-1 text-xs text-ink-mid">Every transaction secured by ManeVault</p>
                 </div>
-                <div className="rounded-xl border border-crease-light bg-paper-cream p-5 text-center">
+                <div className="rounded-[var(--radius-card)] border border-crease-light bg-paper-cream p-5 text-center">
                   <Eye className="mx-auto mb-2 h-6 w-6 text-gold" />
                   <p className="font-heading text-sm font-semibold text-ink-black">Verified Listings</p>
                   <p className="mt-1 text-xs text-ink-mid">Vet records, show history, and real pricing</p>
@@ -125,7 +125,7 @@ export default function AboutPage() {
                 return (
                   <div
                     key={v.title}
-                    className="rounded-2xl border border-crease-light bg-paper-white p-8"
+                    className="rounded-[var(--radius-card)] border border-crease-light bg-paper-white p-8"
                   >
                     <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
                       <Icon className="h-6 w-6 text-primary" />

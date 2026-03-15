@@ -114,7 +114,7 @@ export function SaveSearchButton({ params }: { params: Record<string, string | u
   return (
     <button
       onClick={() => setShowForm(true)}
-      className="flex items-center gap-1.5 rounded-full border border-crease-light bg-paper-white px-3 py-1.5 text-[13px] font-medium text-ink-mid transition-colors hover:border-ink-light hover:text-ink-dark"
+      className="flex items-center gap-1.5 rounded-[var(--radius-card)] border border-crease-light bg-paper-white px-3 py-1.5 text-[13px] font-medium text-ink-mid transition-colors hover:border-ink-light hover:text-ink-dark"
     >
       <Bookmark className="h-3.5 w-3.5" />
       Save Search

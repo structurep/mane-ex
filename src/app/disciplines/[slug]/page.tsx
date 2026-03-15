@@ -269,7 +269,7 @@ export default async function DisciplinePage({ params }: Props) {
                   <Link
                     key={breed}
                     href={`/browse?discipline=${encodeURIComponent(disc.searchTerms[0])}&breed=${encodeURIComponent(breed)}`}
-                    className="rounded-full bg-paper-cream px-2.5 py-1 text-xs font-medium text-ink-mid hover:bg-paper-warm"
+                    className="rounded-[var(--radius-card)] bg-paper-cream px-2.5 py-1 text-xs font-medium text-ink-mid hover:bg-paper-warm"
                   >
                     {breed}
                   </Link>
@@ -324,7 +324,7 @@ export default async function DisciplinePage({ params }: Props) {
                     >
                       <div className="relative aspect-[3/2] overflow-hidden bg-paper-warm">
                         {fomoBadge && (
-                          <div className={`absolute top-2.5 left-2.5 z-10 flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${fomoBadge.className}`}>
+                          <div className={`absolute top-2.5 left-2.5 z-10 flex items-center gap-1 rounded-[var(--radius-card)] px-2.5 py-1 text-xs font-semibold ${fomoBadge.className}`}>
                             <fomoBadge.icon className="h-3 w-3" />
                             {fomoBadge.label}
                           </div>
@@ -455,7 +455,7 @@ export default async function DisciplinePage({ params }: Props) {
                     <Link
                       key={relSlug}
                       href={`/disciplines/${relSlug}`}
-                      className="rounded-full border border-crease-light bg-paper-white px-4 py-2 text-sm font-medium text-ink-dark transition-colors hover:bg-paper-warm"
+                      className="rounded-[var(--radius-card)] border border-crease-light bg-paper-white px-4 py-2 text-sm font-medium text-ink-dark transition-colors hover:bg-paper-warm"
                     >
                       {rel.name}
                       <ArrowRight className="ml-1.5 inline h-3 w-3" />

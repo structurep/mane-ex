@@ -66,7 +66,7 @@ export default function ConformationPage() {
         {/* ── Hero ── */}
         <section className="with-grain bg-gradient-hero px-4 pt-24 pb-12 md:px-8 md:pt-36 md:pb-16">
           <div className="mx-auto max-w-[1200px] text-center">
-            <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full bg-blue/10 px-4 py-2">
+            <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-[var(--radius-card)] bg-blue/10 px-4 py-2">
               <Sparkles className="h-4 w-4 text-blue" />
               <span className="text-sm font-medium text-blue">
                 AI-Powered Assessment

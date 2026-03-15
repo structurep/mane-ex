@@ -207,7 +207,7 @@ export default function NewIsoPage() {
                         key={g.value}
                         type="button"
                         onClick={() => toggleGender(g.value)}
-                        className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all ${
+                        className={`rounded-[var(--radius-card)] px-4 py-1.5 text-sm font-medium transition-all ${
                           selectedGenders.includes(g.value)
                             ? "bg-ink-black text-paper-white shadow-flat"
                             : "bg-paper-warm text-ink-mid shadow-flat hover:shadow-folded"

@@ -134,7 +134,7 @@ export function MatchMode() {
           size="sm"
           onClick={open}
           aria-label="Open Match Mode to swipe through horses"
-          className="rounded-full border-coral/30 text-coral hover:bg-coral/5 hover:text-coral"
+          className="rounded-[var(--radius-card)] border-coral/30 text-coral hover:bg-coral/5 hover:text-coral"
         >
           <Sparkles className="mr-1.5 h-3.5 w-3.5" />
           Match

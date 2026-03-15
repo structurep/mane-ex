@@ -24,7 +24,7 @@ export function FeatureGrid({
   const sectionBg = dark ? "bg-paddock" : "bg-paper-cream";
   const headingColor = dark ? "text-white" : "text-ink-black";
   const subtitleColor = dark ? "text-white/60" : "text-ink-mid";
-  const cardBg = dark ? "bg-white/5" : "bg-paper-white";
+  const cardBg = dark ? "bg-[var(--paper-surface)]/5" : "bg-[var(--paper-surface)]";
   const cardText = dark ? "text-white/80" : "text-ink-mid";
   const titleColor = dark ? "text-white" : "text-ink-black";
   const iconBg = dark ? "bg-primary/20" : "bg-primary/10";

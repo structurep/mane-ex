@@ -195,7 +195,7 @@ export default function SellPage() {
               </div>
 
               {/* Right: Glass value card */}
-              <div className="rounded-2xl border border-white/10 bg-white/10 p-8 backdrop-blur-sm">
+              <div className="rounded-[var(--radius-card)] border border-white/10 bg-white/10 p-8 backdrop-blur-sm">
                 <div className="mb-6 flex items-center gap-2 text-sm text-white/60">
                   <Timer className="h-4 w-4" />
                   Why sellers switch to ManeExchange
@@ -253,7 +253,7 @@ export default function SellPage() {
               {steps.map((step) => (
                 <div
                   key={step.number}
-                  className="relative overflow-hidden rounded-2xl border border-crease-light bg-paper-cream p-6"
+                  className="relative overflow-hidden rounded-[var(--radius-card)] border border-crease-light bg-paper-cream p-6"
                 >
                   {/* Watermark step number */}
                   <span className="absolute -right-2 -top-4 font-serif text-[6rem] font-bold leading-none text-ink-black/[0.03]">
@@ -327,7 +327,7 @@ export default function SellPage() {
                 return (
                   <div
                     key={prop.title}
-                    className="rounded-2xl border border-crease-light bg-paper-white p-6 shadow-flat"
+                    className="rounded-[var(--radius-card)] border border-crease-light bg-paper-white p-6 shadow-flat"
                   >
                     <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
                       <Icon className="h-5 w-5 text-primary" />
@@ -349,7 +349,7 @@ export default function SellPage() {
             </div>
 
             {/* Inline CTA */}
-            <div className="mx-auto mt-12 max-w-lg rounded-2xl border border-crease-light bg-paper-white p-8 text-center shadow-flat">
+            <div className="mx-auto mt-12 max-w-lg rounded-[var(--radius-card)] border border-crease-light bg-paper-white p-8 text-center shadow-flat">
               <h3 className="mb-2 font-heading text-lg font-semibold text-ink-black">
                 Free to start. Upgrade when you&apos;re ready.
               </h3>

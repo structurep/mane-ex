@@ -20,7 +20,7 @@ export default function BrowseLoading() {
               <Skeleton className="h-9 w-full" />
               <div className="flex flex-wrap gap-1.5">
                 {Array.from({ length: 6 }).map((_, i) => (
-                  <Skeleton key={i} className="h-7 w-20 rounded-full" />
+                  <Skeleton key={i} className="h-7 w-20 rounded-[var(--radius-card)]" />
                 ))}
               </div>
               <div className="grid grid-cols-2 gap-2">
@@ -30,7 +30,7 @@ export default function BrowseLoading() {
               <Skeleton className="h-9 w-full" />
               <div className="flex gap-1.5">
                 {Array.from({ length: 3 }).map((_, i) => (
-                  <Skeleton key={i} className="h-7 w-16 rounded-full" />
+                  <Skeleton key={i} className="h-7 w-16 rounded-[var(--radius-card)]" />
                 ))}
               </div>
             </div>

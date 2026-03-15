@@ -72,7 +72,7 @@ export default function DisciplinesPage() {
               <Link
                 key={disc.slug}
                 href={`/disciplines/${disc.slug}`}
-                className="group relative overflow-hidden rounded-xl shadow-flat transition-all duration-300 hover:shadow-lifted"
+                className="group relative overflow-hidden rounded-[var(--radius-card)] shadow-flat transition-all duration-300 hover:shadow-lifted"
               >
                 <div className="aspect-[4/3] overflow-hidden">
                   <Image

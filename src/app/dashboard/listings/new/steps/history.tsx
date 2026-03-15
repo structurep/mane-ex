@@ -159,7 +159,7 @@ export function StepHistory({ data, setField }: StepProps) {
                 }}
                 className="peer sr-only"
               />
-              <span className="block rounded-full border border-crease-light px-3 py-1.5 text-xs font-medium text-ink-mid transition-colors peer-checked:border-forest peer-checked:bg-forest/10 peer-checked:text-forest peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-1">
+              <span className="block rounded-[var(--radius-card)] border border-crease-light px-3 py-1.5 text-xs font-medium text-ink-mid transition-colors peer-checked:border-forest peer-checked:bg-forest/10 peer-checked:text-forest peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-1">
                 {opt}
               </span>
             </label>
@@ -184,7 +184,7 @@ export function StepHistory({ data, setField }: StepProps) {
                 }}
                 className="peer sr-only"
               />
-              <span className="block rounded-full border border-crease-light px-3 py-1.5 text-xs font-medium text-ink-mid transition-colors peer-checked:border-forest peer-checked:bg-forest/10 peer-checked:text-forest peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-1">
+              <span className="block rounded-[var(--radius-card)] border border-crease-light px-3 py-1.5 text-xs font-medium text-ink-mid transition-colors peer-checked:border-forest peer-checked:bg-forest/10 peer-checked:text-forest peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-1">
                 {opt}
               </span>
             </label>

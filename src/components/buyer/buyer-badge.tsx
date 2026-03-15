@@ -24,7 +24,7 @@ export function BuyerBadge({ badge, className, compact = false }: BuyerBadgeProp
   const c = CONFIG[badge];
   return (
     <span className={cn(
-      "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold",
+      "inline-flex items-center gap-1 rounded-[var(--radius-card)] px-2 py-0.5 text-[11px] font-semibold",
       c.bg, c.text,
       className
     )}>

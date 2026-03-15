@@ -108,10 +108,10 @@ export function FlowToggle() {
       {/* Sticky path toggle */}
       <div className="mb-8 flex items-center justify-center gap-4">
         <span className="text-sm text-ink-mid">Choose your path</span>
-        <div className="flex gap-1 rounded-full bg-paddock p-1">
+        <div className="flex gap-1 rounded-[var(--radius-card)] bg-paddock p-1">
           <button
             onClick={() => setRole("buyer")}
-            className={`rounded-full px-5 py-2 text-sm font-semibold transition-colors ${
+            className={`rounded-[var(--radius-card)] px-5 py-2 text-sm font-semibold transition-colors ${
               role === "buyer"
                 ? "bg-white text-paddock"
                 : "text-white/70 hover:text-white"
@@ -121,7 +121,7 @@ export function FlowToggle() {
           </button>
           <button
             onClick={() => setRole("seller")}
-            className={`rounded-full px-5 py-2 text-sm font-semibold transition-colors ${
+            className={`rounded-[var(--radius-card)] px-5 py-2 text-sm font-semibold transition-colors ${
               role === "seller"
                 ? "bg-white text-paddock"
                 : "text-white/70 hover:text-white"
@@ -145,7 +145,7 @@ export function FlowToggle() {
           return (
             <div
               key={benefit.title}
-              className="rounded-2xl border border-crease-light bg-paper-white p-6 transition-elevation hover:shadow-folded"
+              className="rounded-[var(--radius-card)] border border-crease-light bg-paper-white p-6 transition-elevation hover:shadow-folded"
             >
               <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
                 <Icon className="h-5 w-5 text-primary" />

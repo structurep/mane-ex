@@ -156,7 +156,7 @@ export function TransportQuoteForm({
               ].map((req) => (
                 <label
                   key={req}
-                  className="flex cursor-pointer items-center gap-1.5 rounded-full bg-paper-cream px-2.5 py-1 text-xs text-ink-mid transition-colors hover:bg-paper-warm"
+                  className="flex cursor-pointer items-center gap-1.5 rounded-[var(--radius-card)] bg-paper-cream px-2.5 py-1 text-xs text-ink-mid transition-colors hover:bg-paper-warm"
                 >
                   <input type="checkbox" className="h-3 w-3 accent-primary" />
                   {req}
@@ -291,17 +291,17 @@ export function TransportTracker({
           </span>
         </div>
         {isCancelled ? (
-          <span className="flex items-center gap-1 rounded-full bg-red/10 px-2 py-0.5 text-xs font-medium text-red">
+          <span className="flex items-center gap-1 rounded-[var(--radius-card)] bg-red/10 px-2 py-0.5 text-xs font-medium text-red">
             <AlertCircle className="h-3 w-3" />
             Cancelled
           </span>
         ) : currentStatus === "delivered" ? (
-          <span className="flex items-center gap-1 rounded-full bg-forest/10 px-2 py-0.5 text-xs font-medium text-forest">
+          <span className="flex items-center gap-1 rounded-[var(--radius-card)] bg-forest/10 px-2 py-0.5 text-xs font-medium text-forest">
             <CheckCircle className="h-3 w-3" />
             Delivered
           </span>
         ) : (
-          <span className="flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
+          <span className="flex items-center gap-1 rounded-[var(--radius-card)] bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
             <Truck className="h-3 w-3" />
             In Progress
           </span>

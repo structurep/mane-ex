@@ -49,7 +49,7 @@ export function StepShowInfo({ data, setField }: StepProps) {
                 onChange={() => toggleDiscipline(d)}
                 className="peer sr-only"
               />
-              <span className="block rounded-full border border-crease-light px-3 py-1.5 text-xs font-medium text-ink-mid transition-colors peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground">
+              <span className="block rounded-[var(--radius-card)] border border-crease-light px-3 py-1.5 text-xs font-medium text-ink-mid transition-colors peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground">
                 {d}
               </span>
             </label>

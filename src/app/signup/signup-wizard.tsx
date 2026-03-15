@@ -173,7 +173,7 @@ export function SignupWizard() {
         {[1, 2, 3, 4].map((s) => (
           <div key={s} className="flex items-center gap-2">
             <div
-              className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium ${
+              className={`flex h-8 w-8 items-center justify-center rounded-[var(--radius-card)] text-sm font-medium ${
                 s < step
                   ? "bg-forest text-white"
                   : s === step
@@ -429,7 +429,7 @@ export function SignupWizard() {
                         key={d}
                         type="button"
                         onClick={() => toggleDiscipline(d)}
-                        className={`rounded-full border px-3 py-1.5 text-sm font-medium transition-all ${
+                        className={`rounded-[var(--radius-card)] border px-3 py-1.5 text-sm font-medium transition-all ${
                           isSelected
                             ? "border-primary bg-primary/10 text-primary"
                             : "border-crease-light bg-paper-white text-ink-mid hover:border-ink-light"

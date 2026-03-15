@@ -116,7 +116,7 @@ export default async function SellerProfilePage({ params }: Props) {
 
           {/* Cover photo */}
           {profile.cover_url && (
-            <div className="relative mb-6 h-48 overflow-hidden rounded-xl sm:h-56">
+            <div className="relative mb-6 h-48 overflow-hidden rounded-[var(--radius-card)] sm:h-56">
               <Image
                 src={profile.cover_url}
                 alt={`${displayName}'s cover`}

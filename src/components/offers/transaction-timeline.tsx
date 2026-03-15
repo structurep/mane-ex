@@ -256,7 +256,7 @@ export function TransactionTimeline(props: TransactionTimelineProps) {
   const stages = resolveStages(props);
 
   return (
-    <div className="rounded-xl border-0 bg-paper-cream p-6 shadow-flat">
+    <div className="rounded-[var(--radius-card)] border-0 bg-paper-cream p-6 shadow-flat">
       <h3 className="mb-6 font-heading text-base font-semibold text-ink-black">
         Transaction Progress
       </h3>
@@ -306,7 +306,7 @@ export function TransactionTimeline(props: TransactionTimelineProps) {
                 </p>
                 {stage.detail && (
                   <span
-                    className={`mt-1.5 inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                    className={`mt-1.5 inline-block rounded-[var(--radius-card)] px-2.5 py-0.5 text-xs font-medium ${
                       stage.status === "active"
                         ? "bg-primary/10 text-primary"
                         : stage.status === "error"

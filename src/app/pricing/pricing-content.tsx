@@ -144,10 +144,10 @@ export function PricingContent() {
         <section className="bg-paper-cream px-4 pb-12 md:px-8">
           <div className="flex flex-col items-center gap-5">
             {/* Plan type toggle */}
-            <div className="flex gap-1 rounded-full bg-paddock p-1">
+            <div className="flex gap-1 rounded-[var(--radius-card)] bg-paddock p-1">
               <button
                 onClick={() => setPlanType("seller")}
-                className={`rounded-full px-6 py-2.5 text-sm font-semibold transition-colors ${
+                className={`rounded-[var(--radius-card)] px-6 py-2.5 text-sm font-semibold transition-colors ${
                   planType === "seller"
                     ? "bg-white text-paddock"
                     : "text-white/70 hover:text-white"
@@ -157,7 +157,7 @@ export function PricingContent() {
               </button>
               <button
                 onClick={() => setPlanType("buyer")}
-                className={`rounded-full px-6 py-2.5 text-sm font-semibold transition-colors ${
+                className={`rounded-[var(--radius-card)] px-6 py-2.5 text-sm font-semibold transition-colors ${
                   planType === "buyer"
                     ? "bg-white text-paddock"
                     : "text-white/70 hover:text-white"
@@ -211,7 +211,7 @@ export function PricingContent() {
                   return (
                     <div
                       key={tier.name}
-                      className={`relative flex flex-col rounded-2xl p-6 ${
+                      className={`relative flex flex-col rounded-[var(--radius-card)] p-6 ${
                         isElite
                           ? "border-2 border-primary bg-paddock text-white"
                           : isHighlighted
@@ -310,7 +310,7 @@ export function PricingContent() {
               </div>
 
               {/* Elite Math Box */}
-              <div className="mx-auto mt-12 max-w-2xl rounded-2xl bg-paddock p-8 text-center">
+              <div className="mx-auto mt-12 max-w-2xl rounded-[var(--radius-card)] bg-paddock p-8 text-center">
                 <p className="overline text-white/50">THE ELITE MATH</p>
                 <p className="mt-3 text-lg text-white">
                   Pro Seller + Buyer Pro ={" "}
@@ -342,7 +342,7 @@ export function PricingContent() {
             <div className="mx-auto max-w-3xl">
               <div className="grid gap-6 md:grid-cols-2">
                 {/* Free Buyer */}
-                <div className="rounded-2xl border border-crease-light bg-paper-white p-6">
+                <div className="rounded-[var(--radius-card)] border border-crease-light bg-paper-white p-6">
                   <p className="text-xs font-semibold uppercase tracking-wider text-ink-light">
                     14-Day Trial
                   </p>
@@ -380,7 +380,7 @@ export function PricingContent() {
                 </div>
 
                 {/* Buyer Pro */}
-                <div className="relative rounded-2xl border-2 border-primary bg-paper-white p-6 shadow-lifted">
+                <div className="relative rounded-[var(--radius-card)] border-2 border-primary bg-paper-white p-6 shadow-lifted">
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                     <StatusBadge variant="oxblood">
                       Most Popular
@@ -461,7 +461,7 @@ export function PricingContent() {
               ].map((m) => (
                 <div
                   key={m.label}
-                  className="rounded-2xl border border-crease-light bg-paper-cream p-8 text-center"
+                  className="rounded-[var(--radius-card)] border border-crease-light bg-paper-cream p-8 text-center"
                 >
                   <p className="font-serif text-5xl font-bold text-ink-black">
                     {m.pct}

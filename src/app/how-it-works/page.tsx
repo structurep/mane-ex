@@ -95,7 +95,7 @@ export default function HowItWorksPage() {
           <div className="mx-auto max-w-7xl">
             <div className="grid items-center gap-12 md:grid-cols-2">
               <div>
-                <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                <span className="inline-flex items-center gap-2 rounded-[var(--radius-card)] bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
                   <BarChart3 className="h-3 w-3" /> MANE SCORE
                 </span>
                 <h2 className="mt-4 font-serif text-3xl text-ink-black md:text-4xl">
@@ -124,7 +124,7 @@ export default function HowItWorksPage() {
                 </ul>
               </div>
               {/* Mock Mane Score card */}
-              <div className="rounded-2xl border border-crease-light bg-paper-cream p-8">
+              <div className="rounded-[var(--radius-card)] border border-crease-light bg-paper-cream p-8">
                 <div className="text-center">
                   <p className="text-sm text-ink-light">Mane Score</p>
                   <p className="mt-2 font-serif text-6xl font-bold text-ink-black">
@@ -170,7 +170,7 @@ export default function HowItWorksPage() {
           <div className="mx-auto max-w-7xl">
             <div className="grid items-center gap-12 md:grid-cols-2">
               <div>
-                <span className="inline-flex items-center gap-2 rounded-full bg-primary/20 px-3 py-1 text-xs font-semibold text-primary">
+                <span className="inline-flex items-center gap-2 rounded-[var(--radius-card)] bg-primary/20 px-3 py-1 text-xs font-semibold text-primary">
                   MANEVAULT
                 </span>
                 <h2 className="mt-4 text-3xl text-white md:text-4xl">
@@ -199,7 +199,7 @@ export default function HowItWorksPage() {
                 </ul>
               </div>
               {/* Mock cost breakdown */}
-              <div className="rounded-2xl bg-ink-dark/60 p-8">
+              <div className="rounded-[var(--radius-card)] bg-ink-dark/60 p-8">
                 <p className="mb-4 text-sm font-medium text-white/60">
                   Sample Transaction
                 </p>
@@ -244,7 +244,7 @@ export default function HowItWorksPage() {
           <div className="mx-auto max-w-7xl">
             <div className="grid items-center gap-12 md:grid-cols-2">
               <div>
-                <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                <span className="inline-flex items-center gap-2 rounded-[var(--radius-card)] bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
                   <Search className="h-3 w-3" /> ISO POSTS
                 </span>
                 <h2 className="mt-4 font-serif text-3xl text-ink-black md:text-4xl">
@@ -261,7 +261,7 @@ export default function HowItWorksPage() {
                 </p>
               </div>
               {/* Mock ISO card */}
-              <div className="rounded-2xl border border-crease-light bg-paper-white p-8">
+              <div className="rounded-[var(--radius-card)] border border-crease-light bg-paper-white p-8">
                 <p className="text-xs font-semibold uppercase tracking-wider text-primary">
                   SAMPLE ISO
                 </p>
@@ -301,7 +301,7 @@ export default function HowItWorksPage() {
           <div className="mx-auto max-w-7xl">
             <div className="grid items-center gap-12 md:grid-cols-2">
               {/* Mock listing prices */}
-              <div className="rounded-2xl border border-crease-light bg-paper-cream p-8 md:order-1">
+              <div className="rounded-[var(--radius-card)] border border-crease-light bg-paper-cream p-8 md:order-1">
                 <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-primary">
                   PRICE TRANSPARENCY
                 </p>
@@ -345,7 +345,7 @@ export default function HowItWorksPage() {
               </div>
 
               <div className="md:order-0">
-                <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                <span className="inline-flex items-center gap-2 rounded-[var(--radius-card)] bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
                   <DollarSign className="h-3 w-3" /> REAL PRICES
                 </span>
                 <h2 className="mt-4 font-serif text-3xl text-ink-black md:text-4xl">
@@ -383,7 +383,7 @@ export default function HowItWorksPage() {
           <div className="mx-auto max-w-7xl">
             <div className="grid items-center gap-12 md:grid-cols-2">
               {/* Mock comparison */}
-              <div className="rounded-2xl border border-crease-light bg-paper-cream p-8 md:order-1">
+              <div className="rounded-[var(--radius-card)] border border-crease-light bg-paper-cream p-8 md:order-1">
                 <p className="text-xs font-semibold uppercase tracking-wider text-primary">
                   DREAM BARN
                 </p>
@@ -437,7 +437,7 @@ export default function HowItWorksPage() {
               </div>
 
               <div className="md:order-0">
-                <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                <span className="inline-flex items-center gap-2 rounded-[var(--radius-card)] bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
                   <Bookmark className="h-3 w-3" /> DREAM BARN
                 </span>
                 <h2 className="mt-4 font-serif text-3xl text-ink-black md:text-4xl">
@@ -476,7 +476,7 @@ export default function HowItWorksPage() {
           <div className="mx-auto max-w-7xl">
             <div className="grid items-center gap-12 md:grid-cols-2">
               <div>
-                <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                <span className="inline-flex items-center gap-2 rounded-[var(--radius-card)] bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
                   <Bell className="h-3 w-3" /> SAVED SEARCHES
                 </span>
                 <h2 className="mt-4 font-serif text-3xl text-ink-black md:text-4xl">
@@ -504,7 +504,7 @@ export default function HowItWorksPage() {
                 </ul>
               </div>
               {/* Mock saved searches */}
-              <div className="rounded-2xl border border-crease-light bg-paper-white p-8">
+              <div className="rounded-[var(--radius-card)] border border-crease-light bg-paper-white p-8">
                 <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-primary">
                   SAVED SEARCHES
                 </p>
@@ -539,7 +539,7 @@ export default function HowItWorksPage() {
                         </p>
                       </div>
                       {search.newCount > 0 ? (
-                        <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
+                        <span className="rounded-[var(--radius-card)] bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
                           {search.newCount} new
                         </span>
                       ) : (

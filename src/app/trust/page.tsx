@@ -80,7 +80,7 @@ export default function TrustPage() {
         {/* Hero */}
         <section className="with-grain bg-gradient-hero px-4 pt-24 pb-16 md:px-8 md:pt-36 md:pb-20">
           <div className="mx-auto max-w-[1200px] text-center">
-            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-forest/10">
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-[var(--radius-card)] bg-forest/10">
               <Shield className="h-8 w-8 text-forest" />
             </div>
             <p className="overline mb-3 text-forest">TRUST & SAFETY</p>

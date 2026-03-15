@@ -26,7 +26,7 @@ export function EscrowMilestonePreview({
       {steps.map((step, i) => (
         <div key={i} className="flex items-center gap-1">
           <div
-            className={`flex h-6 items-center gap-1 rounded-full px-2 text-[10px] font-medium ${
+            className={`flex h-6 items-center gap-1 rounded-[var(--radius-card)] px-2 text-[10px] font-medium ${
               step.status === "completed"
                 ? "bg-forest/10 text-forest"
                 : step.status === "active"

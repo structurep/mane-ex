@@ -77,7 +77,7 @@ export function DemandInsights({ stats, className }: DemandInsightsProps) {
             <DollarSign className={`h-3.5 w-3.5 ${priceColor.text}`} />
             <span className="text-xs text-ink-mid">Price Position</span>
           </div>
-          <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${priceColor.bg} ${priceColor.text}`}>
+          <span className={`rounded-[var(--radius-card)] px-2 py-0.5 text-[11px] font-semibold ${priceColor.bg} ${priceColor.text}`}>
             {stats.pricePosition} ({stats.pricePercentile}th percentile)
           </span>
         </div>
