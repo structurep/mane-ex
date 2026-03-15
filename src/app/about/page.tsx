@@ -44,7 +44,7 @@ export default function AboutPage() {
             ══════════════════════════════════════════════ */}
         <section
           className="relative flex min-h-[60vh] items-center overflow-hidden bg-hero-dark"
-          style={{ backgroundColor: "#0F1A12" }}
+          style={{ backgroundColor: "#0F1419" }}
         >
           <div className="absolute inset-0">
             <Image
@@ -53,8 +53,8 @@ export default function AboutPage() {
               fill
               className="object-cover opacity-20"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0F1A12]/90 via-[#0F1A12]/70 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0F1A12]/80 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0F1419]/90 via-[#16212B]/70 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#111315]/85 via-transparent to-transparent" />
           </div>
 
           <div className="relative px-4 py-24 md:px-8 md:py-32">

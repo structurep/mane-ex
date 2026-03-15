@@ -35,13 +35,13 @@ export default function GlobalError({
             style={{
               fontSize: "1.5rem",
               fontWeight: "bold",
-              color: "#0F1A12",
+              color: "#0B0B0C",
               marginTop: "1rem",
             }}
           >
             Something went wrong
           </h1>
-          <p style={{ color: "#728574", marginTop: "0.5rem" }}>
+          <p style={{ color: "#6B655D", marginTop: "0.5rem" }}>
             A critical error occurred. Please try refreshing the page.
           </p>
           <button

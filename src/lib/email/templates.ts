@@ -10,16 +10,16 @@ function layout(content: string): string {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { font-family: 'Inter', -apple-system, sans-serif; background: #F8F6F1; color: #0F1A12; margin: 0; padding: 0; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: #F8F6F1; color: #0B0B0C; margin: 0; padding: 0; }
     .container { max-width: 560px; margin: 0 auto; padding: 40px 20px; }
     .card { background: #FFFFFF; border: 1px solid #DDD8CE; border-radius: 8px; padding: 32px; }
-    .logo { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; color: #0F1A12; text-decoration: none; }
+    .logo { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; color: #0B0B0C; text-decoration: none; }
     .btn { display: inline-block; background: #223344; color: #FFFFFF; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; }
-    .btn-outline { display: inline-block; border: 1px solid #0F1A12; color: #0F1A12; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 14px; }
-    .footer { margin-top: 32px; text-align: center; font-size: 12px; color: #8E9B91; }
-    .footer a { color: #8E9B91; }
+    .btn-outline { display: inline-block; border: 1px solid #0B0B0C; color: #0B0B0C; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 14px; }
+    .footer { margin-top: 32px; text-align: center; font-size: 12px; color: #8A8278; }
+    .footer a { color: #8A8278; }
     h1 { font-family: 'Space Grotesk', sans-serif; font-size: 24px; margin: 0 0 16px; }
-    p { font-size: 15px; line-height: 1.6; color: #4A5D4E; margin: 0 0 16px; }
+    p { font-size: 15px; line-height: 1.6; color: #4A453E; margin: 0 0 16px; }
     .highlight { background: #F2EFE8; border-radius: 6px; padding: 16px; margin: 16px 0; }
   </style>
 </head>
@@ -79,7 +79,7 @@ export function newMessageEmail(
       <p style="text-align: center; margin-top: 24px;">
         <a href="${BASE_URL}/dashboard/messages/${conversationId}" class="btn">View Conversation</a>
       </p>
-      <p style="font-size: 13px; color: #8E9B91;">Do not share personal financial information in messages.</p>
+      <p style="font-size: 13px; color: #8A8278;">Do not share personal financial information in messages.</p>
     `),
   };
 }
@@ -117,13 +117,13 @@ export function offerReceivedEmail(
       <h1>You received an offer.</h1>
       <p>Hi ${sellerName}, a buyer has submitted an offer on <strong>${horseName}</strong>.</p>
       <div class="highlight">
-        <p style="margin:0; font-size: 24px; font-weight: 700; color: #0F1A12;">${offerAmount}</p>
+        <p style="margin:0; font-size: 24px; font-weight: 700; color: #0B0B0C;">${offerAmount}</p>
         <p style="margin:4px 0 0; font-size: 13px;">Offer expires in 72 hours</p>
       </div>
       <p style="text-align: center; margin-top: 24px;">
         <a href="${BASE_URL}/dashboard/offers/${offerId}" class="btn">Review Offer</a>
       </p>
-      <p style="font-size: 13px; color: #8E9B91;">You can accept, counter, or decline from your dashboard.</p>
+      <p style="font-size: 13px; color: #8A8278;">You can accept, counter, or decline from your dashboard.</p>
     `),
   };
 }
@@ -219,7 +219,7 @@ export function reviewRequestEmail(
       <p style="text-align: center; margin-top: 24px;">
         <a href="${BASE_URL}/horses/${listingSlug}#reviews" class="btn">Write a Review</a>
       </p>
-      <p style="font-size: 13px; color: #8E9B91;">Reviews are public and contribute to seller scoring.</p>
+      <p style="font-size: 13px; color: #8A8278;">Reviews are public and contribute to seller scoring.</p>
     `),
   };
 }
@@ -238,7 +238,7 @@ export function priceDropEmail(
       <p>Hi ${buyerName}, a horse in your Dream Barn has had a price change.</p>
       <div class="highlight">
         <p style="margin:0; font-size: 18px;"><strong>${horseName}</strong></p>
-        <p style="margin:4px 0 0;"><span style="text-decoration: line-through; color: #8E9B91;">${oldPrice}</span> &rarr; <strong style="color: #223344;">${newPrice}</strong></p>
+        <p style="margin:4px 0 0;"><span style="text-decoration: line-through; color: #8A8278;">${oldPrice}</span> &rarr; <strong style="color: #223344;">${newPrice}</strong></p>
       </div>
       <p style="text-align: center; margin-top: 24px;">
         <a href="${BASE_URL}/horses/${listingSlug}" class="btn">View Listing</a>
@@ -265,7 +265,7 @@ export function transportRequestEmail(
       <p style="text-align: center; margin-top: 24px;">
         <a href="${BASE_URL}/horses/${listingSlug}" class="btn">View Listing</a>
       </p>
-      <p style="font-size: 13px; color: #8E9B91;">Transport estimates are approximate. Final arrangements are between buyer, seller, and carrier.</p>
+      <p style="font-size: 13px; color: #8A8278;">Transport estimates are approximate. Final arrangements are between buyer, seller, and carrier.</p>
     `),
   };
 }
@@ -291,7 +291,7 @@ export function transportProviderLeadEmail(
       <p style="text-align: center; margin-top: 24px;">
         <a href="${BASE_URL}/horses/${listingSlug}" class="btn">View Listing</a>
       </p>
-      <p style="font-size: 13px; color: #8E9B91;">This lead was matched based on your service regions. Contact the seller through the listing page to discuss arrangements.</p>
+      <p style="font-size: 13px; color: #8A8278;">This lead was matched based on your service regions. Contact the seller through the listing page to discuss arrangements.</p>
     `),
   };
 }

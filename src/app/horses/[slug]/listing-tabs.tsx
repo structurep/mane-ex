@@ -280,7 +280,7 @@ export function ListingTabs({ listing, defaultTab = "overview", demandScore, dem
               {/* Seller quote */}
               {l.temperament && (
                 <div className="rounded-lg border border-crease-light bg-[var(--paper-surface)] p-5">
-                  <div className="border-l-[3px] border-coral pl-4">
+                  <div className="border-l-[3px] border-navy pl-4">
                     <p className="italic text-ink-mid leading-relaxed">
                       &ldquo;{l.temperament}&rdquo;
                     </p>

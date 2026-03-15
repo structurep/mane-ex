@@ -201,7 +201,7 @@ export function MatchStack({ onExit, filters = {}, onAnalytics, onProgress, debu
     return (
       <div className="flex flex-col items-center justify-center px-4 py-20 text-center" role="status">
         <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-paper-cream">
-          <Sparkles className="h-8 w-8 text-coral" />
+          <Sparkles className="h-8 w-8 text-navy" />
         </div>
         <h3 className="mb-2 font-serif text-2xl text-ink-black">
           {totalSeen > 0 ? "You\u2019ve seen them all!" : "No horses available"}
@@ -285,7 +285,7 @@ export function MatchStack({ onExit, filters = {}, onAnalytics, onProgress, debu
                 <div className="flex justify-between"><span>price</span><span>{d.price}</span></div>
                 <div className="flex justify-between"><span>location</span><span>{d.location}</span></div>
                 {d.sellerPenalty < 1 && (
-                  <div className="flex justify-between text-coral"><span>seller</span><span>×{d.sellerPenalty}</span></div>
+                  <div className="flex justify-between text-navy"><span>seller</span><span>×{d.sellerPenalty}</span></div>
                 )}
                 {d.exploration && <div className="mt-1 text-center text-gold">exploration</div>}
               </div>
@@ -301,7 +301,7 @@ export function MatchStack({ onExit, filters = {}, onAnalytics, onProgress, debu
               <div className="flex justify-between"><span>avg_time</span><span>{sessionStats.avg_swipe_time}ms</span></div>
               <div className="flex justify-between"><span>avg_dist</span><span>{sessionStats.avg_drag_distance}px</span></div>
               <div className="flex justify-between"><span>favs</span><span className="text-navy">{sessionStats.favorites}</span></div>
-              <div className="flex justify-between"><span>passes</span><span className="text-coral">{sessionStats.passes}</span></div>
+              <div className="flex justify-between"><span>passes</span><span className="text-ink-mid">{sessionStats.passes}</span></div>
             </div>
           )}
         </div>
