@@ -11,6 +11,7 @@ import {
 } from "@/components/tailwind-plus";
 import { getTrendingIds } from "@/actions/trending-listings";
 import { getDemandScores } from "@/lib/match/demand-score";
+import { CompareCardOverlay } from "@/components/compare/compare-card-overlay";
 
 type Props = {
   params: {
@@ -182,6 +183,7 @@ export async function BrowseResults({ params }: Props) {
             media: { url: string; is_primary: boolean }[];
             published_at: string | null;
           };
+          const primaryImg = l.media?.find((m) => m.is_primary) ?? l.media?.[0];
           return (
             <ListingCard
               key={l.id}
@@ -189,6 +191,11 @@ export async function BrowseResults({ params }: Props) {
               priority={listingIndex === 0}
               trending={trendingIds.has(l.id)}
               demandScore={demandScores.get(l.id)?.score ?? null}
+              overlay={
+                <CompareCardOverlay
+                  item={{ id: l.id, name: l.name, imageUrl: primaryImg?.url ?? null }}
+                />
+              }
               className="animate-fade-up"
             />
           );

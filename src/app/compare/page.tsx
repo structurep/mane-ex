@@ -3,7 +3,8 @@ import { createClient } from "@/lib/supabase/server";
 import { StatusBadge } from "@/components/tailwind-plus";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import Image from "next/image";
+import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { CompareShareButton } from "./share-button";
@@ -18,6 +19,7 @@ interface CompareListing {
   slug: string;
   breed: string | null;
   gender: string | null;
+  color: string | null;
   age_years: number | null;
   height_hands: number | null;
   price: number | null;
@@ -26,11 +28,13 @@ interface CompareListing {
   level: string | null;
   completeness_score: number;
   completeness_grade: string;
+  verification_tier: string | null;
   status: string;
   warranty: string;
   temperament: string | null;
   suitable_for: string | null;
   disciplines: { name: string }[];
+  media: { url: string; is_primary: boolean }[];
 }
 
 function formatPrice(cents: number | null): string {
@@ -47,10 +51,12 @@ function CompareRow({
   label,
   values,
   highlight,
+  zebra = false,
 }: {
   label: string;
   values: (string | null)[];
   highlight?: "lowest-price" | "highest-score";
+  zebra?: boolean;
 }) {
   let bestIdx = -1;
   if (highlight === "lowest-price") {
@@ -64,7 +70,10 @@ function CompareRow({
   }
 
   return (
-    <div className="grid items-center gap-4 py-3" style={{ gridTemplateColumns: `160px repeat(${values.length}, 1fr)` }}>
+    <div
+      className={`grid items-center gap-4 py-3 px-2 -mx-2 rounded ${zebra ? "bg-[var(--paper-warm)]" : ""}`}
+      style={{ gridTemplateColumns: `160px repeat(${values.length}, 1fr)` }}
+    >
       <span className="text-sm font-medium text-ink-mid">{label}</span>
       {values.map((value, i) => (
         <span
@@ -95,6 +104,7 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
   const ids = params.ids?.split(",").filter(Boolean).slice(0, 3) ?? [];
 
   if (ids.length < 2) {
+    const hasOne = ids.length === 1;
     return (
       <div className="min-h-screen">
         <Header />
@@ -104,10 +114,15 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
               Compare Horses
             </h1>
             <p className="text-lead text-ink-mid">
-              Select 2-3 horses to compare side by side.
+              {hasOne
+                ? "Select at least two horses to compare."
+                : "Select horses from browse to compare."}
             </p>
             <Button asChild className="mt-8" size="lg">
-              <Link href="/browse">View Current Offerings</Link>
+              <Link href="/browse">
+                {hasOne ? "Add Another Horse" : "Browse Horses"}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
             </Button>
           </div>
         </main>
@@ -121,10 +136,11 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
   const { data: listings } = await supabase
     .from("horse_listings")
     .select(`
-      id, name, slug, breed, gender, age_years, height_hands, price,
+      id, name, slug, breed, gender, color, age_years, height_hands, price,
       location_city, location_state, level, completeness_score, completeness_grade,
-      status, warranty, temperament, suitable_for,
-      disciplines(name)
+      verification_tier, status, warranty, temperament, suitable_for,
+      disciplines(name),
+      media:listing_media(url, is_primary)
     `)
     .in("id", ids)
     .in("status", ["active", "under_offer", "sold"]);
@@ -183,28 +199,48 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
         {/* ── Comparison Table ── */}
         <section className="bg-paper-cream section-premium">
           <div className="mx-auto max-w-5xl overflow-x-auto">
-            {/* Horse names header */}
+            {/* Horse header cards with images */}
             <div
               className="mb-6 grid gap-4"
-              style={{ gridTemplateColumns: `160px repeat(${ordered.length}, 1fr)` }}
+              style={{ gridTemplateColumns: `160px repeat(${ordered.length}, minmax(180px, 1fr))` }}
             >
               <div />
-              {ordered.map((horse) => (
-                <div key={horse.id} className="rounded-lg bg-paper-white p-4 shadow-flat">
-                  <Link
-                    href={`/horses/${horse.slug}`}
-                    className="group flex items-center gap-1 font-serif text-xl font-bold text-ink-black hover:text-blue"
-                  >
-                    {horse.name}
-                    <ExternalLink className="h-3.5 w-3.5 opacity-0 transition-opacity group-hover:opacity-100" />
-                  </Link>
-                  {horse.status === "sold" && (
-                    <StatusBadge variant="gray" className="mt-1">
-                      Sold
-                    </StatusBadge>
+              {ordered.map((horse) => {
+                const img = horse.media?.find((m) => m.is_primary) ?? horse.media?.[0];
+                return (
+                <div key={horse.id} className="overflow-hidden rounded-lg bg-paper-white shadow-flat">
+                  {img ? (
+                    <div className="relative aspect-[4/3]">
+                      <Image
+                        src={img.url}
+                        alt={horse.name}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        className="object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex aspect-[4/3] items-center justify-center bg-paper-cream text-sm text-ink-faint">
+                      No photo
+                    </div>
                   )}
+                  <div className="p-4">
+                    <Link
+                      href={`/horses/${horse.slug}`}
+                      className="group flex items-center gap-1 font-serif text-xl font-bold text-ink-black hover:text-blue"
+                    >
+                      {horse.name}
+                      <ExternalLink className="h-3.5 w-3.5 opacity-0 transition-opacity group-hover:opacity-100" />
+                    </Link>
+                    {horse.status === "sold" && (
+                      <StatusBadge variant="gray" className="mt-1">
+                        Sold
+                      </StatusBadge>
+                    )}
+                  </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Comparison rows */}
@@ -215,26 +251,24 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
                 values={ordered.map((h) => formatPrice(h.price))}
                 highlight="lowest-price"
               />
-              <div className="crease-divider" />
-              <CompareRow label="Breed" values={ordered.map((h) => h.breed)} />
-              <div className="crease-divider" />
+              <CompareRow label="Breed" values={ordered.map((h) => h.breed)} zebra />
+              <CompareRow label="Color" values={ordered.map((h) => h.color)} />
               <CompareRow
                 label="Gender"
+                zebra
                 values={ordered.map((h) =>
                   h.gender ? h.gender.charAt(0).toUpperCase() + h.gender.slice(1) : null
                 )}
               />
-              <div className="crease-divider" />
               <CompareRow
                 label="Age"
                 values={ordered.map((h) => (h.age_years !== null ? `${h.age_years} years` : null))}
               />
-              <div className="crease-divider" />
               <CompareRow
                 label="Height"
+                zebra
                 values={ordered.map((h) => formatHeight(h.height_hands))}
               />
-              <div className="crease-divider" />
               <CompareRow
                 label="Location"
                 values={ordered.map((h) =>
@@ -254,17 +288,15 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
                     : null
                 )}
               />
-              <div className="crease-divider" />
-              <CompareRow label="Level" values={ordered.map((h) => h.level)} />
-              <div className="crease-divider" />
+              <CompareRow label="Level" values={ordered.map((h) => h.level)} zebra />
               <CompareRow label="Suitable For" values={ordered.map((h) => h.suitable_for)} />
 
               <div className="my-6 h-px bg-crease-light" />
               <p className="overline mb-2 text-ink-light">DETAILS</p>
               <CompareRow label="Temperament" values={ordered.map((h) => h.temperament)} />
-              <div className="crease-divider" />
               <CompareRow
                 label="Warranty"
+                zebra
                 values={ordered.map((h) =>
                   h.warranty === "as_is"
                     ? "As Is"
@@ -275,20 +307,27 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
                     : null
                 )}
               />
-              <div className="crease-divider" />
               <CompareRow
                 label="Listing Score"
                 values={ordered.map((h) => String(h.completeness_score))}
                 highlight="highest-score"
               />
-              <div className="crease-divider" />
               <CompareRow
                 label="Grade"
+                zebra
                 values={ordered.map((h) =>
                   h.completeness_grade
                     ? h.completeness_grade.charAt(0).toUpperCase() +
                       h.completeness_grade.slice(1)
                     : null
+                )}
+              />
+              <CompareRow
+                label="Verification"
+                values={ordered.map((h) =>
+                  h.verification_tier && h.verification_tier !== "none"
+                    ? h.verification_tier.charAt(0).toUpperCase() + h.verification_tier.slice(1)
+                    : "Unverified"
                 )}
               />
             </div>

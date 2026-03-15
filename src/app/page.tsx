@@ -12,6 +12,7 @@ import { BottomCTA } from "@/components/marketing/bottom-cta";
 import { HeroSearch } from "@/components/marketing/hero-search";
 import { ArrowRight } from "lucide-react";
 import { FeaturedListings } from "./featured-listings";
+import { CompareBar } from "@/components/compare/compare-bar";
 
 export const metadata: Metadata = {
   title: "ManeExchange — Buy & Sell Horses with Confidence",
@@ -165,6 +166,7 @@ export default function Home() {
       </main>
 
       <Footer />
+      <CompareBar />
     </div>
   );
 }

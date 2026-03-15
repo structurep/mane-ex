@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { ArrowRight } from "lucide-react";
 import { ListingCard, SectionHeading } from "@/components/tailwind-plus";
+import { CompareCardOverlay } from "@/components/compare/compare-card-overlay";
 
 /**
  * Async server component that fetches and renders the featured listings grid.
@@ -51,7 +52,9 @@ export async function FeaturedListings() {
           className="mb-8"
         />
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {featuredListings.map((l) => (
+          {featuredListings.map((l) => {
+            const primaryImg = l.media?.find((m) => m.is_primary) ?? l.media?.[0];
+            return (
             <ListingCard
               key={String(l.id)}
               listing={{
@@ -70,9 +73,15 @@ export async function FeaturedListings() {
                 favorite_count: typeof l.favorite_count === "number" ? l.favorite_count : null,
                 media: l.media,
               }}
+              overlay={
+                <CompareCardOverlay
+                  item={{ id: String(l.id), name: String(l.name), imageUrl: primaryImg?.url ?? null }}
+                />
+              }
               priority={false}
             />
-          ))}
+            );
+          })}
         </div>
         <div className="mt-6 text-center md:hidden">
           <Link href="/browse" className="text-sm font-medium text-navy">

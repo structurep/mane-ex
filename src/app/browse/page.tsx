@@ -8,6 +8,7 @@ import { BasedOnSearches } from "./based-on-searches";
 import { MatchMode } from "@/components/match/match-mode";
 import { TrendingSection } from "./trending-section";
 import { RecommendedSection } from "./recommended-section";
+import { CompareBar } from "@/components/compare/compare-bar";
 
 export const metadata: Metadata = {
   title: "Current Offerings",
@@ -100,6 +101,7 @@ export default async function BrowsePage({ searchParams }: Props) {
         </div>
       </main>
       <Footer />
+      <CompareBar />
     </div>
   );
 }

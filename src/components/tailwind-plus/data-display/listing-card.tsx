@@ -11,6 +11,7 @@ import {
   Star,
   TrendingUp,
 } from "lucide-react";
+import type { ReactNode } from "react";
 import type { VerificationTier } from "@/lib/listings/verification-tier";
 import { VerificationBadge } from "@/components/listings/verification-badge";
 
@@ -46,6 +47,8 @@ interface ListingCardProps {
   matchPercent?: number | null;
   /** Show debug overlay with score breakdown */
   debugScores?: { discipline: number; price: number; location: number; height: number; verification: number } | null;
+  /** Slot rendered inside the image container (e.g. compare toggle) */
+  overlay?: ReactNode;
   className?: string;
 }
 
@@ -64,6 +67,7 @@ export function ListingCard({
   demandScore,
   matchPercent,
   debugScores,
+  overlay,
   className,
 }: ListingCardProps) {
   const priceStr = l.price
@@ -134,6 +138,9 @@ export function ListingCard({
             {l.favorite_count}
           </div>
         ) : null}
+
+        {/* Optional overlay slot (e.g. compare toggle) */}
+        {overlay}
 
         {/* Fold corner accent on image */}
         <div className="pointer-events-none absolute bottom-0 right-0 h-6 w-6 bg-gradient-to-tl from-[var(--paper-bg)]/60 to-transparent" />
