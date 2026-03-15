@@ -36,14 +36,12 @@ export function AlertCard({ alert }: { alert: MatchAlert }) {
       href={`/horses/${l.slug}`}
       onClick={handleClick}
       className={cn(
-        "flex gap-4 rounded-lg p-3 transition-colors hover:bg-paper-warm",
-        isUnread
-          ? "bg-gold/5 border border-gold/20"
-          : "bg-paper-white border border-crease-light"
+        "paper-flat flex gap-4 p-3 transition-elevation hover-lift",
+        isUnread && "border-l-2 border-l-[var(--accent-gold)] bg-[var(--accent-gold-soft)]"
       )}
     >
       {/* Thumbnail */}
-      <div className="relative h-20 w-20 flex-none overflow-hidden rounded-md bg-paper-warm">
+      <div className="relative h-20 w-20 flex-none overflow-hidden rounded-[var(--radius-card)] border border-[var(--paper-border)] bg-[var(--paper-warm)]">
         {primary ? (
           <Image
             src={primary.url}
@@ -53,7 +51,7 @@ export function AlertCard({ alert }: { alert: MatchAlert }) {
             className="object-cover"
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-xs text-ink-faint">
+          <div className="flex h-full items-center justify-center text-xs text-[var(--ink-faint)]">
             No photo
           </div>
         )}
@@ -63,18 +61,18 @@ export function AlertCard({ alert }: { alert: MatchAlert }) {
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
-            <h3 className="truncate text-sm font-semibold text-ink-black">
+            <h3 className="truncate text-sm font-semibold text-[var(--ink-black)]">
               {l.name}
             </h3>
-            <p className="text-sm font-medium text-ink-dark">{priceStr}</p>
+            <p className="text-sm font-medium text-[var(--ink-dark)]">{priceStr}</p>
           </div>
-          <div className="flex flex-none items-center gap-1 rounded-full bg-gold/10 px-2 py-0.5 text-xs font-bold text-gold">
+          <div className="badge-seal flex-none border-[var(--accent-gold)]/40 text-[var(--accent-gold)]">
             <Star className="h-3 w-3" />
             {alert.match_percent}%
           </div>
         </div>
 
-        <div className="mt-1 flex items-center gap-3 text-xs text-ink-mid">
+        <div className="mt-1 flex items-center gap-3 text-xs text-[var(--ink-mid)]">
           {l.breed && <span>{l.breed}</span>}
           {l.location_state && (
             <span className="flex items-center gap-0.5">
@@ -82,16 +80,16 @@ export function AlertCard({ alert }: { alert: MatchAlert }) {
               {l.location_state}
             </span>
           )}
-          <span className="ml-auto text-ink-light">
+          <span className="ml-auto text-[var(--ink-faint)]">
             {timeAgo(alert.created_at)}
           </span>
         </div>
       </div>
 
-      {/* Unread dot */}
+      {/* Unread indicator */}
       {isUnread && (
         <div className="flex flex-none items-center">
-          <div className="h-2 w-2 rounded-full bg-gold" />
+          <div className="h-2 w-2 rounded-full bg-[var(--accent-gold)]" />
         </div>
       )}
     </Link>

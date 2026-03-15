@@ -35,70 +35,29 @@ const socialLinks = [
 export function Footer() {
   return (
     <footer>
-      <div className="border-t border-crease-light bg-washi">
+      <div className="border-t border-[var(--paper-border)] bg-[var(--paper-washi)]">
         <div className="mx-auto max-w-[1200px] px-4 py-16 md:px-8">
           {/* Link grid */}
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-            <div>
-              <p className="mb-4 font-serif text-sm font-semibold text-ink-dark">Marketplace</p>
-              <ul className="space-y-3">
-                {footerLinks.marketplace.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="rounded-sm text-sm text-ink-mid transition-colors hover:text-primary focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p className="mb-4 font-serif text-sm font-semibold text-ink-dark">Sellers</p>
-              <ul className="space-y-3">
-                {footerLinks.sellers.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="rounded-sm text-sm text-ink-mid transition-colors hover:text-primary focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p className="mb-4 font-serif text-sm font-semibold text-ink-dark">Resources</p>
-              <ul className="space-y-3">
-                {footerLinks.resources.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="rounded-sm text-sm text-ink-mid transition-colors hover:text-primary focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p className="mb-4 font-serif text-sm font-semibold text-ink-dark">Legal</p>
-              <ul className="space-y-3">
-                {footerLinks.legal.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="rounded-sm text-sm text-ink-mid transition-colors hover:text-primary focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {Object.entries(footerLinks).map(([key, links]) => (
+              <div key={key}>
+                <p className="overline mb-4 text-[var(--ink-mid)]">
+                  {key.charAt(0).toUpperCase() + key.slice(1)}
+                </p>
+                <ul className="space-y-3">
+                  {links.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className="rounded-[var(--radius-paper)] text-[13px] text-[var(--ink-soft)] transition-colors hover:text-[var(--ink-black)] focus-visible:ring-2 focus-visible:ring-[var(--paper-border)] focus-visible:outline-none"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
 
           {/* Bottom bar */}
@@ -108,12 +67,11 @@ export function Footer() {
               <Image
                 src="/icon.svg"
                 alt="ManeExchange"
-                width={28}
-                height={28}
+                width={24}
+                height={24}
               />
-              <span className="text-sm text-ink-light">
-                &copy; {new Date().getFullYear()} ManeExchange. All rights
-                reserved.
+              <span className="text-[13px] text-[var(--ink-faint)]">
+                &copy; {new Date().getFullYear()} ManeExchange
               </span>
             </div>
             <div className="flex items-center gap-5">
@@ -126,18 +84,14 @@ export function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className="rounded-sm text-ink-light transition-colors hover:text-gold focus-visible:ring-2 focus-visible:ring-crease-light focus-visible:outline-none"
+                    className="rounded-[var(--radius-paper)] text-[var(--ink-faint)] transition-colors hover:text-[var(--ink-dark)] focus-visible:ring-2 focus-visible:ring-[var(--paper-border)] focus-visible:outline-none"
                   >
-                    <Icon className="h-[18px] w-[18px]" />
+                    <Icon className="h-4 w-4" />
                   </a>
                 );
               })}
             </div>
           </div>
-          <p className="mt-6 text-center text-xs text-ink-light md:text-left">
-            ManeExchange is a marketplace that connects buyers and sellers.
-            ManeExchange is not a party to any transaction.
-          </p>
         </div>
       </div>
     </footer>

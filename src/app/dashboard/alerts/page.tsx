@@ -17,16 +17,16 @@ export default async function AlertsPage() {
   const { alerts, unreadCount } = await getMatchAlerts(50);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex items-start justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-gold" />
-            <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">
+            <Sparkles className="h-4 w-4 text-[var(--accent-gold)]" />
+            <h1 className="display-md text-[var(--ink-black)]">
               Match Alerts
             </h1>
           </div>
-          <p className="mt-1 text-sm text-ink-mid">
+          <p className="mt-1 text-sm text-[var(--ink-mid)]">
             {unreadCount > 0
               ? `${unreadCount} new match${unreadCount !== 1 ? "es" : ""} found`
               : "We'll notify you when new listings match your preferences."}
@@ -35,6 +35,8 @@ export default async function AlertsPage() {
         {unreadCount > 0 && <MarkAllAlertsReadButton />}
       </div>
 
+      <div className="crease-divider" />
+
       {alerts.length === 0 ? (
         <EmptyState
           icon={<Bell className="size-10" />}
@@ -42,7 +44,7 @@ export default async function AlertsPage() {
           description="Keep browsing and favoriting horses — we'll alert you when new listings match your taste."
         />
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-2">
           {alerts.map((alert) => (
             <AlertCard key={alert.id} alert={alert} />
           ))}

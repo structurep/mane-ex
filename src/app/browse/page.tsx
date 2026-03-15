@@ -41,16 +41,17 @@ export default async function BrowsePage({ searchParams }: Props) {
   const params = await searchParams;
 
   return (
-    <div className="min-h-screen bg-paper-white">
+    <div className="min-h-screen bg-[var(--paper-bg)]">
       <Header />
-      <main className="px-4 pb-16 pt-6 md:px-8 md:pt-8">
+      <main className="px-4 pb-16 pt-8 md:px-8 md:pt-12">
         <div className="mx-auto max-w-[1280px]">
-          {/* Header */}
-          <div className="mb-6">
-            <p className="overline text-ink-faint">Browse</p>
-            <h1 className="mt-1 font-serif text-3xl font-bold tracking-tight text-ink-black md:text-4xl">
+          {/* Header — editorial */}
+          <div className="mb-8">
+            <p className="overline text-[var(--ink-faint)]">Browse</p>
+            <h1 className="display-lg mt-2 text-[var(--ink-black)]">
               Current Offerings
             </h1>
+            <div className="crease-divider mt-4" />
           </div>
 
           {/* Recommended For You (personalized) */}
@@ -72,16 +73,16 @@ export default async function BrowsePage({ searchParams }: Props) {
           </div>
 
           {/* Results */}
-          <div className="mt-6">
+          <div className="mt-8">
             <Suspense
               fallback={
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {Array.from({ length: 6 }).map((_, i) => (
-                    <div key={i} className="overflow-hidden rounded-lg">
-                      <div className="aspect-[4/3] animate-shimmer rounded-lg" />
+                    <div key={i} className="overflow-hidden rounded-[var(--radius-card)]">
+                      <div className="aspect-[4/3] animate-shimmer rounded-[var(--radius-card)]" />
                       <div className="space-y-2 pt-3">
-                        <div className="h-4 w-3/4 animate-shimmer rounded" />
-                        <div className="h-3 w-1/2 animate-shimmer rounded" />
+                        <div className="h-4 w-3/4 animate-shimmer rounded-[var(--radius-badge)]" />
+                        <div className="h-3 w-1/2 animate-shimmer rounded-[var(--radius-badge)]" />
                       </div>
                     </div>
                   ))}

@@ -187,7 +187,7 @@ export default async function ListingDetailPage({ params, searchParams }: Props)
   ) : null;
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[var(--paper-bg)]">
       <ViewTracker listingId={l.id} />
       <script
         type="application/ld+json"

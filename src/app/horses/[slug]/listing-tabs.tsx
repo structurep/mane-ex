@@ -166,9 +166,9 @@ export function ListingTabs({ listing, defaultTab = "overview", demandScore, dem
         <div className="mb-6">
           <div className="flex items-start justify-between">
             <div>
-              <h1 className="text-4xl font-bold tracking-tight text-ink-black md:text-5xl">{l.name}</h1>
-              <div className="mt-1 flex flex-wrap items-center gap-2">
-                <p className="text-ink-mid">
+              <h1 className="display-lg text-[var(--ink-black)]">{l.name}</h1>
+              <div className="mt-2 flex flex-wrap items-center gap-2">
+                <p className="text-[var(--ink-mid)]">
                   {[l.breed, l.color, l.gender].filter(Boolean).join(" · ")}
                 </p>
                 <VerificationBadge tier={l.verification_tier} />
@@ -191,15 +191,16 @@ export function ListingTabs({ listing, defaultTab = "overview", demandScore, dem
           </div>
 
           {/* Price — visible on mobile/tablet where sidebar is hidden */}
-          <p className="mt-3 font-serif text-3xl font-bold tracking-tight text-ink-black lg:hidden">
+          <p className="mt-3 font-serif text-3xl font-bold tracking-tight text-[var(--ink-black)] lg:hidden">
             {priceStr}
             {l.price_negotiable && (
-              <span className="ml-2 align-middle text-sm font-normal text-forest">Negotiable</span>
+              <span className="ml-2 align-middle text-sm font-normal text-[var(--accent-green)]">Negotiable</span>
             )}
           </p>
 
           {/* Quick stats bar */}
-          <div className="mt-4 flex flex-wrap gap-4 text-sm text-ink-mid">
+          <div className="crease-divider mt-4 mb-4" />
+          <div className="flex flex-wrap gap-4 text-sm text-[var(--ink-mid)]">
             {l.age_years != null && (
               <span className="flex items-center gap-1.5">
                 <Calendar className="h-4 w-4" />

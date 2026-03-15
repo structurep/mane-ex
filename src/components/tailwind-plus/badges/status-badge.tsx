@@ -14,31 +14,31 @@ export type BadgeVariant =
   | "gold";
 
 const variantStyles: Record<BadgeVariant, string> = {
-  gray: "bg-ink-black/5 text-ink-mid",
-  red: "bg-red-100 text-red-700",
-  yellow: "bg-yellow-100 text-yellow-800",
-  green: "bg-forest/10 text-forest",
-  blue: "bg-blue-100 text-blue-700",
-  indigo: "bg-indigo-100 text-indigo-700",
-  purple: "bg-purple-100 text-purple-700",
-  pink: "bg-pink-100 text-pink-700",
-  oxblood: "bg-oxblood/10 text-oxblood",
-  forest: "bg-forest/10 text-forest",
-  gold: "bg-gold/10 text-gold",
+  gray: "border-[var(--ink-faint)]/30 text-[var(--ink-mid)]",
+  red: "border-red-400/30 text-red-700",
+  yellow: "border-yellow-400/30 text-yellow-800",
+  green: "border-[var(--accent-green)]/30 text-[var(--accent-green)]",
+  blue: "border-[var(--accent-blue)]/30 text-[var(--accent-blue)]",
+  indigo: "border-indigo-400/30 text-indigo-700",
+  purple: "border-purple-400/30 text-purple-700",
+  pink: "border-pink-400/30 text-pink-700",
+  oxblood: "border-[var(--accent-red)]/30 text-[var(--accent-red)]",
+  forest: "border-[var(--accent-green)]/30 text-[var(--accent-green)]",
+  gold: "border-[var(--accent-gold)]/30 text-[var(--accent-gold)]",
 };
 
 const dotStyles: Record<BadgeVariant, string> = {
-  gray: "fill-ink-faint",
+  gray: "fill-[var(--ink-faint)]",
   red: "fill-red-500",
   yellow: "fill-yellow-500",
-  green: "fill-forest",
-  blue: "fill-blue-500",
+  green: "fill-[var(--accent-green)]",
+  blue: "fill-[var(--accent-blue)]",
   indigo: "fill-indigo-500",
   purple: "fill-purple-500",
   pink: "fill-pink-500",
-  oxblood: "fill-oxblood",
-  forest: "fill-forest",
-  gold: "fill-gold",
+  oxblood: "fill-[var(--accent-red)]",
+  forest: "fill-[var(--accent-green)]",
+  gold: "fill-[var(--accent-gold)]",
 };
 
 interface StatusBadgeProps {
@@ -50,6 +50,9 @@ interface StatusBadgeProps {
   onRemove?: () => void;
 }
 
+/**
+ * Status badge — Origami seal style with thin border, no background fill.
+ */
 export function StatusBadge({
   label,
   children,
@@ -62,7 +65,7 @@ export function StatusBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-x-1.5 rounded-full px-2 py-1 text-xs font-medium",
+        "badge-seal",
         variantStyles[variant],
         className
       )}
@@ -81,7 +84,7 @@ export function StatusBadge({
         <button
           type="button"
           onClick={onRemove}
-          className="-mr-0.5 ml-0.5 inline-flex size-4 items-center justify-center rounded-full hover:bg-ink-black/10"
+          className="-mr-0.5 ml-0.5 inline-flex size-4 items-center justify-center rounded-[var(--radius-paper)] hover:bg-[var(--ink-black)]/10"
         >
           <span className="sr-only">Remove {label || ""}</span>
           <svg viewBox="0 0 14 14" className="size-3 stroke-current stroke-[1.5]">

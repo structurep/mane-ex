@@ -11,35 +11,39 @@ type AlertVariant = "success" | "warning" | "info" | "error";
 
 const variantConfig: Record<
   AlertVariant,
-  { bg: string; icon: typeof CheckCircle; iconColor: string; titleColor: string; textColor: string }
+  { border: string; bg: string; icon: typeof CheckCircle; iconColor: string; titleColor: string; textColor: string }
 > = {
   success: {
-    bg: "bg-forest/5 border-forest/20",
+    border: "border-l-[var(--accent-green)]",
+    bg: "bg-[var(--accent-green-soft)]",
     icon: CheckCircle,
-    iconColor: "text-forest",
-    titleColor: "text-forest",
-    textColor: "text-forest/80",
+    iconColor: "text-[var(--accent-green)]",
+    titleColor: "text-[var(--accent-green)]",
+    textColor: "text-[var(--ink-mid)]",
   },
   warning: {
-    bg: "bg-gold/5 border-gold/20",
+    border: "border-l-[var(--accent-gold)]",
+    bg: "bg-[var(--accent-gold-soft)]",
     icon: AlertTriangle,
-    iconColor: "text-gold",
-    titleColor: "text-yellow-800",
-    textColor: "text-yellow-700",
+    iconColor: "text-[var(--accent-gold)]",
+    titleColor: "text-[var(--ink-dark)]",
+    textColor: "text-[var(--ink-mid)]",
   },
   info: {
-    bg: "bg-blue-50 border-blue-200",
+    border: "border-l-[var(--accent-blue)]",
+    bg: "bg-[var(--accent-blue-soft)]",
     icon: Info,
-    iconColor: "text-blue-500",
-    titleColor: "text-blue-800",
-    textColor: "text-blue-700",
+    iconColor: "text-[var(--accent-blue)]",
+    titleColor: "text-[var(--ink-dark)]",
+    textColor: "text-[var(--ink-mid)]",
   },
   error: {
-    bg: "bg-oxblood/5 border-oxblood/20",
+    border: "border-l-[var(--accent-red)]",
+    bg: "bg-[var(--accent-red-soft)]",
     icon: XCircle,
-    iconColor: "text-oxblood",
-    titleColor: "text-oxblood",
-    textColor: "text-oxblood/80",
+    iconColor: "text-[var(--accent-red)]",
+    titleColor: "text-[var(--accent-red)]",
+    textColor: "text-[var(--ink-mid)]",
   },
 };
 
@@ -52,6 +56,9 @@ export interface AlertBannerProps {
   className?: string;
 }
 
+/**
+ * Alert banner — Origami style with left accent border and paper surface.
+ */
 export function AlertBanner({
   variant,
   title,
@@ -66,7 +73,8 @@ export function AlertBanner({
   return (
     <div
       className={cn(
-        "rounded-lg border p-4",
+        "paper-flat border-l-2 p-4",
+        config.border,
         config.bg,
         className
       )}
@@ -77,12 +85,12 @@ export function AlertBanner({
         </div>
         <div className="ml-3 flex-1">
           {title && (
-            <h3 className={cn("text-sm font-medium", config.titleColor)}>
+            <h3 className={cn("text-sm font-semibold", config.titleColor)}>
               {title}
             </h3>
           )}
           {children && (
-            <div className={cn(title ? "mt-2" : "", "text-sm", title ? config.textColor : config.titleColor)}>
+            <div className={cn(title ? "mt-1.5" : "", "text-sm", config.textColor)}>
               {children}
             </div>
           )}
@@ -94,7 +102,7 @@ export function AlertBanner({
           <button
             type="button"
             onClick={onDismiss}
-            className={cn("ml-auto -mr-1 -mt-1 rounded p-1 hover:bg-ink-black/5", config.iconColor)}
+            className={cn("ml-auto -mr-1 -mt-1 rounded-[var(--radius-paper)] p-1 hover:bg-[var(--ink-black)]/5", config.iconColor)}
           >
             <span className="sr-only">Dismiss</span>
             <svg className="size-4" viewBox="0 0 20 20" fill="currentColor">

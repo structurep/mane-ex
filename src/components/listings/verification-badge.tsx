@@ -2,20 +2,20 @@ import { ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { VerificationTier } from "@/lib/listings/verification-tier";
 
-const tierConfig: Record<Exclude<VerificationTier, "none">, { bg: string; text: string; label: string }> = {
+const tierConfig: Record<Exclude<VerificationTier, "none">, { border: string; text: string; label: string }> = {
   bronze: {
-    bg: "bg-amber-700/10",
+    border: "border-amber-700/40",
     text: "text-amber-700",
     label: "HorseProof Bronze",
   },
   silver: {
-    bg: "bg-slate-400/10",
+    border: "border-slate-400/40",
     text: "text-slate-500",
     label: "HorseProof Silver",
   },
   gold: {
-    bg: "bg-gold/10",
-    text: "text-gold",
+    border: "border-[var(--accent-gold)]/40",
+    text: "text-[var(--accent-gold)]",
     label: "HorseProof Gold",
   },
 };
@@ -28,8 +28,8 @@ interface VerificationBadgeProps {
 }
 
 /**
- * HorseProof verification badge.
- * Returns null for "none" tier — unverified listings show nothing.
+ * HorseProof verification badge — paper-seal style.
+ * Returns null for "none" tier.
  */
 export function VerificationBadge({ tier, compact = false, className }: VerificationBadgeProps) {
   if (tier === "none") return null;
@@ -39,11 +39,9 @@ export function VerificationBadge({ tier, compact = false, className }: Verifica
   return (
     <div
       className={cn(
-        "inline-flex items-center gap-1 rounded-full font-semibold",
-        compact
-          ? "px-2 py-0.5 text-[11px]"
-          : "px-2.5 py-1 text-xs",
-        config.bg,
+        "badge-seal",
+        compact ? "text-[10px]" : "text-[11px]",
+        config.border,
         config.text,
         className
       )}

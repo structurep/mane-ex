@@ -1,0 +1,68 @@
+/* ─────────────────────────────────────────────────────
+   Origami Design System — ManeExchange
+   Precision · Transformation · Restraint
+   ───────────────────────────────────────────────────── */
+
+:root {
+  /* ── Paper Surfaces ── */
+  --paper-bg: #F7F4EF;
+  --paper-surface: #FFFFFF;
+  --paper-surface-raised: #FDFCF9;
+  --paper-warm: #F1ECE3;
+  --paper-washi: #EAE5DA;
+  --paper-border: #DDD8CE;
+  --paper-border-strong: #C8C1B4;
+  --paper-crease: #E8E3D9;
+
+  /* ── Ink System ── */
+  --ink-black: #0B0B0C;
+  --ink-dark: #1A1918;
+  --ink-mid: #4A453E;
+  --ink-soft: #6B655D;
+  --ink-faint: #8A8278;
+  --ink-ghost: #B5AFA6;
+
+  /* ── Accent System (restrained, institutional) ── */
+  --accent-red: #7A1E2B;
+  --accent-red-soft: rgba(122, 30, 43, 0.08);
+  --accent-gold: #B8973F;
+  --accent-gold-soft: rgba(184, 151, 63, 0.10);
+  --accent-green: #2D6A4F;
+  --accent-green-soft: rgba(45, 106, 79, 0.08);
+  --accent-blue: #3B6FC2;
+  --accent-blue-soft: rgba(59, 111, 194, 0.08);
+
+  /* ── Paper-Stack Shadows ── */
+  --shadow-fold-sm: 0 1px 2px rgba(11, 11, 12, 0.04),
+                    0 0 0 1px rgba(11, 11, 12, 0.02);
+  --shadow-fold-md: 0 2px 8px rgba(11, 11, 12, 0.06),
+                    0 1px 2px rgba(11, 11, 12, 0.03);
+  --shadow-fold-lg: 0 8px 24px rgba(11, 11, 12, 0.08),
+                    0 2px 6px rgba(11, 11, 12, 0.04);
+  --shadow-fold-hover: 0 12px 32px rgba(11, 11, 12, 0.10),
+                       0 4px 8px rgba(11, 11, 12, 0.05);
+
+  /* ── Spacing Scale (8px grid) ── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+
+  /* ── Radii (sharp, geometric) ── */
+  --radius-paper: 3px;
+  --radius-card: 4px;
+  --radius-panel: 6px;
+  --radius-badge: 2px;
+
+  /* ── Transitions (paper-like, deliberate) ── */
+  --ease-paper: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --duration-lift: 0.3s;
+  --duration-fold: 0.2s;
+}

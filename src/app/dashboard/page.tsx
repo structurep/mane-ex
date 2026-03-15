@@ -261,10 +261,10 @@ export default async function DashboardPage() {
       {/* Header */}
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="font-serif text-2xl font-semibold tracking-tight text-ink-black">
+          <h1 className="display-md text-[var(--ink-black)]">
             Dashboard
           </h1>
-          <p className="mt-1 text-sm text-ink-mid">Your marketplace at a glance.</p>
+          <p className="mt-1 text-sm text-[var(--ink-mid)]">Your marketplace at a glance.</p>
         </div>
         <Button asChild>
           <Link href={getCreateListingUrl()}>

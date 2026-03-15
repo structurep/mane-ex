@@ -1,12 +1,13 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "../styles/origami-tokens.css";
 
 @custom-variant dark (&:is(.dark *));
 
 /* ─────────────────────────────────────────────
-   ManeExchange Design System: Institutional Equestrian
-   Keeneland precision. Tattersalls authority.
+   ManeExchange × Origami Design System
+   Precision · Transformation · Restraint
    ───────────────────────────────────────────── */
 
 @theme inline {
@@ -47,139 +48,142 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
 
-  /* Radii */
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+  /* Radii — geometric, sharp */
+  --radius-sm: 2px;
+  --radius-md: 3px;
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
+  --radius-xl: calc(var(--radius) + 2px);
+  --radius-2xl: calc(var(--radius) + 4px);
+  --radius-3xl: calc(var(--radius) + 8px);
+  --radius-4xl: calc(var(--radius) + 12px);
 
-  /* Fonts */
+  /* Fonts — Origami typography */
   --font-sans: var(--font-inter);
   --font-heading: var(--font-space-grotesk);
-  --font-serif: var(--font-playfair-display), ui-serif, Georgia, serif;
+  --font-serif: var(--font-noto-serif-jp), "Noto Serif JP", ui-serif, Georgia, serif;
+  --font-display: var(--font-noto-serif-jp), "Noto Serif JP", ui-serif, Georgia, serif;
 
-  /* ── Institutional Equestrian Palette ── */
+  /* ── Origami Palette (token-backed) ── */
 
-  /* Surfaces (Keeneland sale catalog paper) */
-  --color-paper-white: #F8F6F1;
-  --color-paper-cream: #FFFFFF;
-  --color-paper-warm: #F2EFE8;
-  --color-washi: #EBE7DE;
+  /* Surfaces */
+  --color-paper-white: var(--paper-bg);
+  --color-paper-cream: var(--paper-surface);
+  --color-paper-warm: var(--paper-warm);
+  --color-washi: var(--paper-washi);
+  --color-paper-raised: var(--paper-surface-raised);
 
-  /* Inks (forest-tinted) */
-  --color-ink-black: #0F1A12;
-  --color-ink-dark: #1C2B1F;
-  --color-ink-mid: #4A5D4E;
-  --color-ink-light: #586A5A;
-  --color-ink-faint: #8E9B91;
+  /* Inks */
+  --color-ink-black: var(--ink-black);
+  --color-ink-dark: var(--ink-dark);
+  --color-ink-mid: var(--ink-mid);
+  --color-ink-light: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-ink-ghost: var(--ink-ghost);
 
-  /* Creases (parchment borders) */
-  --color-crease-light: #DDD8CE;
-  --color-crease-mid: #C2BAA9;
+  /* Creases (paper borders) */
+  --color-crease-light: var(--paper-border);
+  --color-crease-mid: var(--paper-border-strong);
   --color-crease-dark: #9A9285;
 
   /* Accents */
-  --color-red: #6B1D29;
-  --color-red-light: rgba(107, 29, 41, 0.06);
-  --color-oxblood: #7A1E2B;
-  --color-forest: #2D6A4F;
-  --color-gold: #C4A265;
-  --color-blue: #3B6FC2;
+  --color-red: var(--accent-red);
+  --color-red-light: var(--accent-red-soft);
+  --color-oxblood: var(--accent-red);
+  --color-forest: var(--accent-green);
+  --color-gold: var(--accent-gold);
+  --color-blue: var(--accent-blue);
 
-  /* Warm CTA accent (coral/salmon) */
+  /* Warm CTA accent */
   --color-coral: #D4715E;
   --color-coral-hover: #C4624F;
 
-  /* Accent tints (premium backgrounds) */
-  --color-gold-light: rgba(196, 162, 101, 0.08);
-  --color-forest-light: rgba(45, 106, 79, 0.08);
-  --color-blue-light: rgba(59, 111, 194, 0.08);
+  /* Accent tints */
+  --color-gold-light: var(--accent-gold-soft);
+  --color-forest-light: var(--accent-green-soft);
+  --color-blue-light: var(--accent-blue-soft);
 
-  /* Shadows (forest-tinted, restrained) */
-  --shadow-flat: 0 1px 2px rgba(15, 26, 18, 0.03);
-  --shadow-folded: 0 2px 6px rgba(15, 26, 18, 0.05), 0 1px 2px rgba(15, 26, 18, 0.02);
-  --shadow-lifted: 0 4px 12px rgba(15, 26, 18, 0.07), 0 2px 4px rgba(15, 26, 18, 0.03);
-  --shadow-hovering: 0 12px 24px rgba(15, 26, 18, 0.09), 0 4px 8px rgba(15, 26, 18, 0.04);
+  /* Shadows — paper-stack system */
+  --shadow-flat: var(--shadow-fold-sm);
+  --shadow-folded: var(--shadow-fold-md);
+  --shadow-lifted: var(--shadow-fold-lg);
+  --shadow-hovering: var(--shadow-fold-hover);
 }
 
 :root {
-  --radius: 0.5rem;
+  --radius: 4px;
 
-  /* ── shadcn semantic → Institutional Equestrian mapping ── */
-  --background: #F8F6F1;
-  --foreground: #0F1A12;
-  --card: #FFFFFF;
-  --card-foreground: #0F1A12;
-  --popover: #FFFFFF;
-  --popover-foreground: #0F1A12;
-  --primary: #1B4332;             /* Keeneland green — CTAs, primary buttons */
-  --primary-foreground: #FFFFFF;
-  --secondary: #F2EFE8;
-  --secondary-foreground: #1C2B1F;
-  --muted: #EBE7DE;
-  --muted-foreground: #728574;
-  --accent: #EBE7DE;
-  --accent-foreground: #1C2B1F;
-  --destructive: #6B1D29;         /* Deep wine — destructive actions */
-  --border: #DDD8CE;
-  --input: #DDD8CE;
-  --ring: #1B4332;                /* Keeneland green — focus rings */
+  /* ── shadcn semantic → Origami mapping ── */
+  --background: var(--paper-bg);
+  --foreground: var(--ink-black);
+  --card: var(--paper-surface);
+  --card-foreground: var(--ink-black);
+  --popover: var(--paper-surface);
+  --popover-foreground: var(--ink-black);
+  --primary: var(--ink-black);            /* Primary actions: ink black */
+  --primary-foreground: var(--paper-surface);
+  --secondary: var(--paper-warm);
+  --secondary-foreground: var(--ink-dark);
+  --muted: var(--paper-washi);
+  --muted-foreground: var(--ink-soft);
+  --accent: var(--paper-washi);
+  --accent-foreground: var(--ink-dark);
+  --destructive: var(--accent-red);
+  --border: var(--paper-border);
+  --input: var(--paper-border);
+  --ring: var(--ink-black);
 
   /* Charts */
-  --chart-1: #1B4332;
-  --chart-2: #2D6A4F;
-  --chart-3: #C4A265;
-  --chart-4: #3B6FC2;
-  --chart-5: #4A5D4E;
+  --chart-1: var(--ink-black);
+  --chart-2: var(--accent-green);
+  --chart-3: var(--accent-gold);
+  --chart-4: var(--accent-blue);
+  --chart-5: var(--ink-mid);
 
   /* Sidebar */
-  --sidebar: #EBE7DE;
-  --sidebar-foreground: #0F1A12;
-  --sidebar-primary: #1B4332;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #F2EFE8;
-  --sidebar-accent-foreground: #1C2B1F;
-  --sidebar-border: #DDD8CE;
-  --sidebar-ring: #1B4332;
+  --sidebar: var(--paper-washi);
+  --sidebar-foreground: var(--ink-black);
+  --sidebar-primary: var(--ink-black);
+  --sidebar-primary-foreground: var(--paper-surface);
+  --sidebar-accent: var(--paper-warm);
+  --sidebar-accent-foreground: var(--ink-dark);
+  --sidebar-border: var(--paper-border);
+  --sidebar-ring: var(--ink-black);
 }
 
 .dark {
-  --background: #0F1A12;
-  --foreground: #F8F6F1;
-  --card: #1C2B1F;
+  --background: #0B0B0C;
+  --foreground: #F7F4EF;
+  --card: #1A1918;
   --card-foreground: #FFFFFF;
-  --popover: #1C2B1F;
-  --popover-foreground: #F8F6F1;
-  --primary: #3D7A5C;
-  --primary-foreground: #FFFFFF;
-  --secondary: #1C2B1F;
-  --secondary-foreground: #F8F6F1;
-  --muted: #1C2B1F;
-  --muted-foreground: #8E9B91;
-  --accent: #1C2B1F;
-  --accent-foreground: #F8F6F1;
+  --popover: #1A1918;
+  --popover-foreground: #F7F4EF;
+  --primary: #E8E3D9;
+  --primary-foreground: #0B0B0C;
+  --secondary: #1A1918;
+  --secondary-foreground: #F7F4EF;
+  --muted: #1A1918;
+  --muted-foreground: #8A8278;
+  --accent: #1A1918;
+  --accent-foreground: #F7F4EF;
   --destructive: #8A2E3C;
   --border: rgba(255, 255, 255, 0.1);
   --input: rgba(255, 255, 255, 0.15);
-  --ring: #3D7A5C;
+  --ring: #E8E3D9;
 
-  --chart-1: #3D7A5C;
+  --chart-1: #E8E3D9;
   --chart-2: #4DA872;
   --chart-3: #D4B65E;
   --chart-4: #5B8FD4;
-  --chart-5: #8E9B91;
+  --chart-5: #8A8278;
 
-  --sidebar: #1C2B1F;
-  --sidebar-foreground: #F8F6F1;
-  --sidebar-primary: #3D7A5C;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #1C2B1F;
-  --sidebar-accent-foreground: #F8F6F1;
+  --sidebar: #1A1918;
+  --sidebar-foreground: #F7F4EF;
+  --sidebar-primary: #E8E3D9;
+  --sidebar-primary-foreground: #0B0B0C;
+  --sidebar-accent: #1A1918;
+  --sidebar-accent-foreground: #F7F4EF;
   --sidebar-border: rgba(255, 255, 255, 0.1);
-  --sidebar-ring: #3D7A5C;
+  --sidebar-ring: #E8E3D9;
 }
 
 @layer base {
@@ -187,7 +191,7 @@
     @apply border-border outline-ring/50;
   }
 
-  /* ── Global overflow guard: prevent horizontal scroll on all viewports ── */
+  /* ── Global overflow guard ── */
   html,
   body {
     max-width: 100%;
@@ -198,35 +202,80 @@
     @apply bg-background text-foreground font-sans;
     word-break: break-word;
     overflow-wrap: anywhere;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Typography hierarchy: serif editorial (h1-h2) + Swiss precision (h3+) */
+  /* ── Origami Typography Hierarchy ──
+     Display: Noto Serif JP — editorial, restrained
+     Body: Inter — clean, functional */
   h1 {
-    font-family: var(--font-serif), Georgia, serif;
+    font-family: var(--font-display), Georgia, serif;
     font-weight: 700;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.02em;
     line-height: 0.95;
   }
   h2 {
-    font-family: var(--font-serif), Georgia, serif;
+    font-family: var(--font-display), Georgia, serif;
     font-weight: 600;
     letter-spacing: -0.015em;
     line-height: 1.1;
   }
   h3 {
-    font-family: var(--font-space-grotesk), var(--font-inter), system-ui, sans-serif;
-    font-weight: 500;
+    font-family: var(--font-inter), system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
     line-height: 1.3;
   }
 }
 
 @layer components {
-  /* Overline labels — Swiss style */
+  /* ── Display Typography Classes ── */
+  .display-xl {
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: -0.03em;
+    line-height: 0.9;
+  }
+  .display-lg {
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(1.875rem, 3.5vw, 2.5rem);
+    letter-spacing: -0.025em;
+    line-height: 0.95;
+  }
+  .display-md {
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+  }
+
+  /* ── Body Typography ── */
+  .body-lg {
+    font-family: var(--font-inter), system-ui, sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+  .body-md {
+    font-family: var(--font-inter), system-ui, sans-serif;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+  .body-sm {
+    font-family: var(--font-inter), system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  /* Overline labels — Swiss precision */
   .overline {
     font-family: var(--font-inter), system-ui, sans-serif;
     font-weight: 600;
     font-size: 0.6875rem;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.14em;
     line-height: 1;
     text-transform: uppercase;
   }
@@ -237,22 +286,184 @@
     line-height: 1.55;
   }
 
-  /* Origami fold-corner card accent */
+  /* ── Origami Card Surfaces ── */
+
+  /* Paper surface — flat paper */
+  .paper-flat {
+    background: var(--paper-surface);
+    border: 1px solid var(--paper-border);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-fold-sm);
+  }
+
+  /* Paper surface — raised (stacked paper effect) */
+  .paper-raised {
+    background: var(--paper-surface);
+    border: 1px solid var(--paper-border);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-fold-md);
+  }
+
+  /* Paper surface — folded (with diagonal crease) */
+  .paper-folded {
+    position: relative;
+    background: var(--paper-surface);
+    border: 1px solid var(--paper-border);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-fold-md);
+  }
+
+  /* ── Origami Fold-Corner Accents ── */
+
+  /* Top-right fold corner — paper triangle */
   .fold-corner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: linear-gradient(
+      225deg,
+      var(--paper-warm) 0%,
+      var(--paper-warm) 50%,
+      transparent 50%
+    );
+    border-bottom-left-radius: var(--radius-paper);
+    border-left: 1px solid var(--paper-crease);
+    border-bottom: 1px solid var(--paper-crease);
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  /* Larger fold for premium cards */
+  .fold-corner-lg::before {
     content: '';
     position: absolute;
     top: 0;
     right: 0;
     width: 2rem;
     height: 2rem;
-    background: linear-gradient(135deg, transparent 50%, var(--color-paper-warm) 50%);
+    background: linear-gradient(
+      225deg,
+      var(--paper-warm) 0%,
+      var(--paper-warm) 50%,
+      transparent 50%
+    );
+    border-bottom-left-radius: var(--radius-paper);
+    border-left: 1px solid var(--paper-crease);
+    border-bottom: 1px solid var(--paper-crease);
+    z-index: 5;
     pointer-events: none;
   }
 
-  /* Origami gradient crease divider */
+  /* ── Origami Crease Dividers ── */
+
   .crease-divider {
     height: 1px;
-    background: linear-gradient(to right, var(--color-crease-light), transparent);
+    background: linear-gradient(to right, var(--paper-border), transparent);
+  }
+
+  .crease-divider-full {
+    height: 1px;
+    background: var(--paper-border);
+  }
+
+  /* Diagonal crease accent — subtle angled line */
+  .crease-diagonal::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 3rem;
+    height: 3rem;
+    background: linear-gradient(
+      45deg,
+      var(--paper-crease) 0%,
+      transparent 2px,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+
+  /* ── Origami Badge Styles ── */
+
+  /* Corner flag badge — top-left triangular accent */
+  .badge-flag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    padding: 4px 12px 4px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  }
+
+  /* Right-aligned corner flag */
+  .badge-flag-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    padding: 4px 8px 4px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  /* Seal badge — premium paper stamp */
+  .badge-seal {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    border: 1.5px solid currentColor;
+    border-radius: var(--radius-badge);
+  }
+
+  /* ── Paper-field inputs ── */
+  .input-paper {
+    border: 1px solid var(--paper-border);
+    border-radius: var(--radius-card);
+    background: var(--paper-surface);
+    padding: 10px 12px;
+    font-size: 14px;
+    transition: border-color var(--duration-fold) var(--ease-paper),
+                box-shadow var(--duration-fold) var(--ease-paper);
+  }
+  .input-paper:hover {
+    border-color: var(--paper-border-strong);
+  }
+  .input-paper:focus {
+    border-color: var(--ink-black);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(11, 11, 12, 0.08);
+  }
+
+  /* Swiss bottom-border input style */
+  .input-swiss {
+    border: none;
+    border-bottom: 2px solid var(--paper-border);
+    border-radius: 0;
+    background: transparent;
+    padding: 0.75rem 0;
+    transition: border-color 0.2s ease;
+  }
+  .input-swiss:hover {
+    border-bottom-color: var(--ink-black);
+  }
+  .input-swiss:focus {
+    border-bottom-color: var(--accent-blue);
+    outline: none;
+    box-shadow: 0 0 0 3px var(--accent-blue-soft);
   }
 
   /* Paper grain texture — opt-in per section */
@@ -274,36 +485,19 @@
   .section-premium { @apply px-4 py-24 md:px-8 md:py-32 lg:px-12; }
   .section-compact { @apply px-4 py-16 md:px-8 md:py-20; }
   .section-editorial { @apply px-4 py-28 md:px-8 md:py-36 lg:px-12; }
-
-  /* Swiss bottom-border input style */
-  .input-swiss {
-    border: none;
-    border-bottom: 2px solid var(--color-crease-light);
-    border-radius: 0;
-    background: transparent;
-    padding: 0.75rem 0;
-    transition: border-color 0.2s ease;
-  }
-  .input-swiss:hover {
-    border-bottom-color: var(--color-ink-black);
-  }
-  .input-swiss:focus {
-    border-bottom-color: var(--color-blue);
-    outline: none;
-    box-shadow: 0 0 0 3px var(--color-blue-light);
-  }
 }
 
 @layer utilities {
   /* Origami elevation transitions */
   .transition-elevation {
-    transition: transform 0.35s cubic-bezier(0.25, 0.1, 0.25, 1),
-                box-shadow 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+    transition: transform var(--duration-lift) var(--ease-paper),
+                box-shadow var(--duration-lift) var(--ease-paper);
   }
 
-  /* Card hover lift */
+  /* Card hover lift — paper rising from stack */
   .hover-lift:hover {
     transform: translateY(-2px);
+    box-shadow: var(--shadow-fold-lg);
   }
 
   /* Hide scrollbar but keep scrolling */
@@ -317,7 +511,6 @@
 
   /* ── Entrance animations ── */
 
-  /* Fade up — subtle, 8px travel */
   .animate-fade-up {
     animation: fadeUp 0.4s ease-out both;
   }
@@ -340,7 +533,6 @@
   .stagger-children > :nth-child(11) { animation-delay: 600ms; }
   .stagger-children > :nth-child(12) { animation-delay: 660ms; }
 
-  /* Image reveal — smooth scale settle */
   .animate-image-reveal {
     animation: imageReveal 0.5s ease-out both;
   }
@@ -349,9 +541,8 @@
     to { opacity: 1; transform: scale(1); }
   }
 
-  /* Directional shimmer for skeleton loading */
   .animate-shimmer {
-    background: linear-gradient(90deg, var(--color-paper-warm) 0%, var(--color-paper-cream) 50%, var(--color-paper-warm) 100%);
+    background: linear-gradient(90deg, var(--paper-warm) 0%, var(--paper-surface) 50%, var(--paper-warm) 100%);
     background-size: 200% 100%;
     animation: shimmer 1.5s ease-in-out infinite;
   }
@@ -360,7 +551,6 @@
     100% { background-position: -200% 0; }
   }
 
-  /* Number count-up reveal */
   .animate-count-up {
     animation: countUp 0.5s ease-out both;
   }
@@ -372,29 +562,26 @@
   /* ── Gradient utilities ── */
 
   .bg-gradient-hero {
-    background: linear-gradient(180deg, #F8F6F1, #FFFFFF);
+    background: linear-gradient(180deg, var(--paper-bg), var(--paper-surface));
   }
   .bg-gradient-card-hover {
-    background: linear-gradient(180deg, transparent 60%, rgba(15, 26, 18, 0.03) 100%);
+    background: linear-gradient(180deg, transparent 60%, rgba(11, 11, 12, 0.02) 100%);
   }
 
-  /* Dark hero — Keeneland paddock at dusk */
+  /* Dark hero */
   .bg-hero-dark {
-    background: linear-gradient(180deg, #0F1A12, #1B4332);
+    background: linear-gradient(180deg, #0B0B0C, #1A1918);
   }
-
-  /* Deep forest-black for dark sections */
   .bg-paddock {
-    background: #0F1A12;
+    background: #0B0B0C;
   }
 
-  /* ── Scroll-reveal gate: pause animations until parent removes this class ── */
+  /* Scroll-reveal gate */
   .animate-paused > * {
     animation-play-state: paused !important;
   }
 
   /* ── Accessibility ── */
-
   @media (prefers-reduced-motion: reduce) {
     .animate-fade-up,
     .animate-image-reveal,
@@ -404,7 +591,6 @@
       animation: none !important;
       transition: none !important;
     }
-    /* Disable accordion grid-row and hover transforms */
     *[style*="grid-template-rows"],
     button:hover,
     a:hover {
@@ -413,7 +599,7 @@
   }
 }
 
-/* ── View Transitions (class-based kill switch) ── */
+/* ── View Transitions ── */
 html.vt-enabled::view-transition-old(root) {
   animation: vtFadeOut 0.15s ease-out;
 }

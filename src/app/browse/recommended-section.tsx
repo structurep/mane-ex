@@ -4,10 +4,9 @@ import { checkForNewMatches } from "@/lib/match/match-alerts";
 import { ListingCard, type ListingCardData } from "@/components/tailwind-plus";
 
 /**
- * "Recommended For You" section on browse page.
+ * "Recommended For You" editorial rail on browse page.
  * Shows AI-matched listings with match percentage badges.
  * Renders null if user is anonymous or has insufficient interaction data.
- * Also fires match alert check as a side effect.
  */
 export async function RecommendedSection() {
   const result = await getRecommendedHorses();
@@ -20,14 +19,14 @@ export async function RecommendedSection() {
   const { listings } = result;
 
   return (
-    <section className="mb-8">
+    <section className="mb-10">
       <div className="mb-4 flex items-center gap-2">
-        <Sparkles className="h-5 w-5 text-gold" />
+        <Sparkles className="h-4 w-4 text-[var(--accent-gold)]" />
         <div>
-          <h2 className="font-serif text-xl font-bold tracking-tight text-ink-black">
+          <h2 className="overline text-[var(--ink-mid)]">
             Recommended For You
           </h2>
-          <p className="text-sm text-ink-light">
+          <p className="mt-1 text-[13px] text-[var(--ink-soft)]">
             Based on your browsing and favorites
           </p>
         </div>
@@ -43,6 +42,7 @@ export async function RecommendedSection() {
           </div>
         ))}
       </div>
+      <div className="crease-divider mt-6" />
     </section>
   );
 }

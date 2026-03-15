@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, Playfair_Display } from "next/font/google";
+import { Inter, Space_Grotesk, Noto_Serif_JP } from "next/font/google";
 import { ServiceWorkerRegister } from "@/components/sw-register";
 import { Toaster } from "@/components/ui/sonner";
 import { WebVitals } from "@/components/web-vitals";
@@ -17,11 +17,11 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 });
 
-const playfairDisplay = Playfair_Display({
-  variable: "--font-playfair-display",
+const notoSerifJP = Noto_Serif_JP({
+  variable: "--font-noto-serif-jp",
   subsets: ["latin"],
   display: "optional",
-  weight: ["600", "700"],
+  weight: ["500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -62,7 +62,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://assets.mixkit.co" />
       </head>
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} ${playfairDisplay.variable} antialiased`}
+        className={`${inter.variable} ${spaceGrotesk.variable} ${notoSerifJP.variable} antialiased`}
       >
         {children}
         <Toaster />
