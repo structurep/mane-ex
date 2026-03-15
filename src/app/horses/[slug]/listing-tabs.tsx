@@ -791,6 +791,8 @@ export function ListingTabs({ listing, defaultTab = "overview", demandScore, dem
               originCity={l.location_city}
               listingId={l.id}
               listingName={l.name}
+              sellerId={l.seller_id}
+              sellerName={l.seller?.display_name || "Seller"}
               buyerState={buyerState}
             />
           )}

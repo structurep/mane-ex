@@ -82,7 +82,7 @@ export function MessageSellerModal({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         {trigger ?? (
-          <Button className="w-full" size="lg">
+          <Button className="w-full" size="lg" data-contact-seller>
             <MessageCircle className="mr-2 h-4 w-4" />
             Message Seller
           </Button>

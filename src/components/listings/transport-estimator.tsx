@@ -1,19 +1,22 @@
 "use client";
 
-import { useState, useCallback, useEffect, useRef } from "react";
-import { Truck, MapPin, ArrowRight, Locate } from "lucide-react";
+import { useState, useCallback, useEffect, useRef, useTransition } from "react";
+import { Truck, MapPin, ArrowRight, Locate, MessageCircle, CheckCircle2 } from "lucide-react";
 import {
   estimateTransportByState,
   nearestState,
   getUSStates,
   type TransportEstimate,
 } from "@/lib/transport/estimate-transport";
+import { submitTransportRequest } from "@/actions/transport";
 
 interface TransportEstimatorProps {
   originState: string;
   originCity?: string | null;
   listingId: string;
   listingName: string;
+  sellerId: string;
+  sellerName: string;
   /** Pre-fill destination from buyer profile */
   buyerState?: string | null;
 }
@@ -25,6 +28,8 @@ export function TransportEstimator({
   originCity,
   listingId,
   listingName,
+  sellerId,
+  sellerName,
   buyerState,
 }: TransportEstimatorProps) {
   const [destState, setDestState] = useState(buyerState ?? "");
@@ -37,6 +42,9 @@ export function TransportEstimator({
   const [source, setSource] = useState<LocationSource>(buyerState ? "profile" : null);
   const [geoLoading, setGeoLoading] = useState(false);
   const [showResult, setShowResult] = useState(!!buyerState);
+  const [requestSent, setRequestSent] = useState(false);
+  const [requestError, setRequestError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
   const geoAttempted = useRef(false);
 
   const states = getUSStates();
@@ -57,13 +65,11 @@ export function TransportEstimator({
           setDestState(detected);
           setEstimate(estimateTransportByState(originState, detected));
           setSource("geo");
-          // Fade in after a tick
           requestAnimationFrame(() => setShowResult(true));
         }
         setGeoLoading(false);
       },
       () => {
-        // Permission denied or error — silent fallback
         setGeoLoading(false);
       },
       { timeout: 5000, maximumAge: 300000 }
@@ -74,6 +80,8 @@ export function TransportEstimator({
     (value: string) => {
       setDestState(value);
       setSource(value ? "manual" : null);
+      setRequestSent(false);
+      setRequestError(null);
       if (value) {
         setEstimate(estimateTransportByState(originState, value));
         setShowResult(true);
@@ -85,15 +93,35 @@ export function TransportEstimator({
     [originState]
   );
 
+  const handleTransportRequest = () => {
+    if (!estimate || !destState) return;
+
+    startTransition(async () => {
+      const result = await submitTransportRequest({
+        listingId,
+        originState,
+        destinationState: destState,
+        estimatedLow: estimate.estimatedCostLow,
+        estimatedHigh: estimate.estimatedCostHigh,
+        distanceMiles: estimate.distanceMiles,
+      });
+
+      if (result.error) {
+        setRequestError(result.error);
+      } else {
+        setRequestSent(true);
+        setRequestError(null);
+      }
+    });
+  };
+
   const originLabel = originCity
     ? `${originCity}, ${originState}`
     : originState;
 
-  const quoteMailto = estimate
-    ? `mailto:transport@maneexchange.com?subject=Transport Quote Request&body=${encodeURIComponent(
-        `Horse: ${listingName} (ID: ${listingId})\nRoute: ${originState} → ${destState}\nEstimated Distance: ${estimate.distanceMiles} miles\n\nPlease provide a detailed quote for this route.`
-      )}`
-    : "#";
+  const contactMessage = estimate
+    ? `Hello — I'm interested in ${listingName} and would like to discuss shipping to ${destState}.\n\nEstimated transport range shown was $${estimate.estimatedCostLow.toLocaleString()}–$${estimate.estimatedCostHigh.toLocaleString()}.\nIs transport assistance available?`
+    : `Hello — I'm interested in ${listingName} and would like to discuss shipping options.`;
 
   const sourceLabel =
     source === "profile"
@@ -174,13 +202,63 @@ export function TransportEstimator({
             Estimates based on standard commercial hauler rates. Actual costs vary by carrier, season, and horse count.
           </p>
 
-          <a
-            href={quoteMailto}
-            className="flex w-full items-center justify-center gap-2 rounded-[var(--radius-card)] border border-[var(--paper-border)] bg-[var(--paper-surface)] px-3 py-2 text-xs font-medium text-[var(--ink-dark)] transition-colors hover:border-[var(--paper-border-strong)] hover:text-[var(--ink-black)]"
-          >
-            Request Transport Quote
-            <ArrowRight className="h-3 w-3" />
-          </a>
+          {/* ── Lead capture actions ── */}
+          {!requestSent ? (
+            <div className="space-y-2">
+              <p className="text-[11px] font-medium text-[var(--ink-mid)]">
+                Need help arranging transport?
+              </p>
+
+              <div className="grid grid-cols-2 gap-2">
+                {/* Contact Seller — scrolls to message modal */}
+                <a
+                  href={`#contact-seller?message=${encodeURIComponent(contactMessage)}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    // Find and click the message seller button on the page
+                    const msgBtn = document.querySelector<HTMLButtonElement>('[data-contact-seller]');
+                    if (msgBtn) {
+                      msgBtn.click();
+                    } else {
+                      // Fallback: scroll to contact section
+                      document.getElementById("contact-seller")?.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                  className="flex items-center justify-center gap-1.5 rounded-[var(--radius-card)] border border-[var(--paper-border)] bg-[var(--paper-surface)] px-2 py-2 text-[11px] font-medium text-[var(--ink-dark)] transition-colors hover:border-[var(--paper-border-strong)] hover:text-[var(--ink-black)]"
+                >
+                  <MessageCircle className="h-3 w-3" />
+                  Contact Seller
+                </a>
+
+                {/* Request Transport Help — inserts DB row */}
+                <button
+                  type="button"
+                  onClick={handleTransportRequest}
+                  disabled={isPending}
+                  className="flex items-center justify-center gap-1.5 rounded-[var(--radius-card)] border border-[var(--accent-blue)]/30 bg-[var(--accent-blue)]/5 px-2 py-2 text-[11px] font-medium text-[var(--accent-blue)] transition-colors hover:bg-[var(--accent-blue)]/10 disabled:opacity-50"
+                >
+                  <Truck className="h-3 w-3" />
+                  {isPending ? "Sending..." : "Transport Help"}
+                </button>
+              </div>
+
+              {requestError && (
+                <p className="text-[10px] text-[var(--accent-red)]">{requestError}</p>
+              )}
+            </div>
+          ) : (
+            <div className="animate-fade-up flex items-start gap-2 rounded-[var(--radius-card)] bg-[var(--accent-green)]/5 p-3">
+              <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[var(--accent-green)]" />
+              <div>
+                <p className="text-xs font-medium text-[var(--accent-green)]">
+                  Transport request sent
+                </p>
+                <p className="mt-0.5 text-[10px] text-[var(--ink-mid)]">
+                  A transporter will contact you soon.
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       )}
 

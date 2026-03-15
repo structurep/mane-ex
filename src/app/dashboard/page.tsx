@@ -16,11 +16,13 @@ import {
   Send,
   HandshakeIcon,
   UserCheck,
+  Truck,
 } from "lucide-react";
 import type { ListingStatus } from "@/types/listings";
 import { getMyScore } from "@/actions/scoring";
 import { GRADE_LABELS, MANE_SCORE_DISCLAIMER } from "@/types/scoring";
 import { getCreateListingUrl } from "@/lib/urls";
+import { getTransportRequestCounts } from "@/actions/transport";
 import { SavedSearchesWidget } from "./saved-searches";
 import { DeleteListingButton } from "@/components/marketplace/delete-listing-button";
 import {
@@ -162,6 +164,10 @@ export default async function DashboardPage() {
 
   const pendingReviewCount = statusCounts["pending_review"] || 0;
   const draftCount = statusCounts["draft"] || 0;
+
+  // Transport request counts for listing rows
+  const listingIds = (recentListings || []).map((l) => l.id);
+  const transportCounts = await getTransportRequestCounts(listingIds);
 
   const pipelineStages = [
     { stage: "Draft", count: draftCount, textColor: "text-blue" },
@@ -432,6 +438,12 @@ export default async function DashboardPage() {
                       <Heart className="h-3 w-3" />
                       {(listing.favorite_count || 0).toLocaleString()}
                     </span>
+                    {(transportCounts[listing.id] || 0) > 0 && (
+                      <span className="flex items-center gap-1 text-[var(--accent-blue)]">
+                        <Truck className="h-3 w-3" />
+                        {transportCounts[listing.id]}
+                      </span>
+                    )}
                     <StatusBadge variant={variant}>{statusLabel}</StatusBadge>
                   </div>
                   {status !== "sold" && status !== "removed" && (
