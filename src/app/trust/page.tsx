@@ -222,7 +222,7 @@ export default function TrustPage() {
               hours.
             </p>
             <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-              <Button size="lg" className="bg-white text-[var(--accent-navy)] hover:bg-white/90" asChild>
+              <Button size="lg" className="btn-inverse" asChild>
                 <Link href="/contact">
                   Report a Problem
                   <ArrowRight className="ml-2 h-4 w-4" />

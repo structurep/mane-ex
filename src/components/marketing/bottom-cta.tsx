@@ -16,7 +16,7 @@ export function BottomCTA() {
         <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
           <Button
             size="lg"
-            className="bg-white text-[var(--accent-navy)] hover:bg-white/90 focus-visible:ring-white focus-visible:ring-offset-ink-black"
+            className="btn-inverse focus-visible:ring-white focus-visible:ring-offset-ink-black"
             asChild
           >
             <Link href="/browse">

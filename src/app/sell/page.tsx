@@ -174,7 +174,7 @@ export default function SellPage() {
                   minutes, reach serious buyers, skip the tire-kickers.
                 </p>
                 <div className="flex flex-col gap-3 sm:flex-row">
-                  <Button size="lg" className="bg-white text-[var(--accent-navy)] hover:bg-white/90" asChild>
+                  <Button size="lg" className="btn-inverse" asChild>
                     <Link href={getCreateListingUrl()}>
                       Start Your Listing
                       <ArrowRight className="ml-2 h-4 w-4" />

@@ -236,6 +236,17 @@
 }
 
 @layer components {
+  /* ── Button Helpers ── */
+
+  /* Inverse primary for dark sections (bg-paddock, bg-hero-dark) */
+  .btn-inverse {
+    background: white !important;
+    color: var(--accent-navy) !important;
+  }
+  .btn-inverse:hover {
+    background: rgba(255, 255, 255, 0.9) !important;
+  }
+
   /* ── Display Typography Classes ── */
   .display-xl {
     font-family: var(--font-display), Georgia, serif;
