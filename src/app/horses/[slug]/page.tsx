@@ -18,6 +18,7 @@ import Image from "next/image";
 import { ListingGallery } from "@/components/marketplace/listing-gallery";
 import { ListingTabs, type ListingTabsData } from "./listing-tabs";
 import { ViewTracker } from "@/components/marketplace/view-tracker";
+import { getListingDemand } from "@/lib/match/demand-score";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -114,6 +115,8 @@ export default async function ListingDetailPage({ params, searchParams }: Props)
   if (!listing) {
     notFound();
   }
+
+  const demand = await getListingDemand(listing.id);
 
   const l = listing as unknown as HorseListing & {
     seller: { id: string; display_name: string; full_name: string; avatar_url: string | null; seller_tier: string; identity_verified: boolean };
@@ -225,7 +228,7 @@ export default async function ListingDetailPage({ params, searchParams }: Props)
           </div>
 
           {/* Tabbed layout + sidebar */}
-          <ListingTabs listing={l as unknown as ListingTabsData} defaultTab={tab} />
+          <ListingTabs listing={l as unknown as ListingTabsData} defaultTab={tab} demandScore={demand?.score ?? null} demandLabel={demand?.label ?? null} />
         </div>
       </main>
 

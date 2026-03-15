@@ -10,6 +10,7 @@ import {
   type ListingCardData,
 } from "@/components/tailwind-plus";
 import { getTrendingIds } from "@/actions/trending-listings";
+import { getDemandScores } from "@/lib/match/demand-score";
 
 type Props = {
   params: {
@@ -107,7 +108,11 @@ export async function BrowseResults({ params }: Props) {
       query = query.order("published_at", { ascending: false, nullsFirst: false });
   }
 
-  const [queryResult, trendingIds] = await Promise.all([query, getTrendingIds()]);
+  const [queryResult, trendingIds, demandScores] = await Promise.all([
+    query,
+    getTrendingIds(),
+    getDemandScores(),
+  ]);
   const { data: listings, count, error } = queryResult;
 
   if (error) {
@@ -173,6 +178,7 @@ export async function BrowseResults({ params }: Props) {
               listing={l}
               priority={listingIndex === 0}
               trending={trendingIds.has(l.id)}
+              demandScore={demandScores.get(l.id)?.score ?? null}
               className="animate-fade-up"
             />
           );

@@ -122,7 +122,7 @@ function getCompletenessColor(grade: string | null) {
   }
 }
 
-export function ListingTabs({ listing, defaultTab = "overview" }: { listing: ListingTabsData; defaultTab?: string }) {
+export function ListingTabs({ listing, defaultTab = "overview", demandScore, demandLabel }: { listing: ListingTabsData; defaultTab?: string; demandScore?: number | null; demandLabel?: string | null }) {
   const l = listing;
   const [saved, setSaved] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -732,6 +732,30 @@ export function ListingTabs({ listing, defaultTab = "overview" }: { listing: Lis
             )}
 
           </div>
+
+          {/* Market Demand */}
+          {demandScore != null && demandScore > 0 && (
+            <div className="rounded-lg border border-crease-light bg-paper-cream p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <TrendingUp className={`h-4 w-4 ${demandScore >= 70 ? "text-oxblood" : demandScore >= 40 ? "text-forest" : "text-ink-light"}`} />
+                  <span className="text-sm font-medium text-ink-dark">Market Demand</span>
+                </div>
+                <span className={`text-sm font-bold ${demandScore >= 70 ? "text-oxblood" : demandScore >= 40 ? "text-forest" : "text-ink-mid"}`}>
+                  {demandLabel}
+                </span>
+              </div>
+              <div className="mt-2 h-1.5 rounded-full bg-surface-wash">
+                <div
+                  className={`h-1.5 rounded-full transition-all ${demandScore >= 70 ? "bg-oxblood" : demandScore >= 40 ? "bg-forest" : "bg-ink-faint"}`}
+                  style={{ width: `${demandScore}%` }}
+                />
+              </div>
+              <p className="mt-1.5 text-[10px] text-ink-faint">
+                Based on buyer engagement in the last 7 days
+              </p>
+            </div>
+          )}
 
           {/* ManeVault teaser */}
           <div className="rounded-lg border border-forest/20 bg-forest-light p-4">

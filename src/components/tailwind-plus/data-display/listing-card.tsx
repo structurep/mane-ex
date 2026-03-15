@@ -9,6 +9,7 @@ import {
   Sparkles,
   Flame,
   Star,
+  TrendingUp,
 } from "lucide-react";
 
 export interface ListingCardData {
@@ -36,6 +37,8 @@ interface ListingCardProps {
   priority?: boolean;
   /** Show 🔥 Hot badge (top trending listings) */
   trending?: boolean;
+  /** Demand score 0–100 from swipe engagement */
+  demandScore?: number | null;
   className?: string;
 }
 
@@ -51,6 +54,7 @@ export function ListingCard({
   listing: l,
   priority = false,
   trending = false,
+  demandScore,
   className,
 }: ListingCardProps) {
   const priceStr = l.price
@@ -133,6 +137,18 @@ export function ListingCard({
 
         {subtitle && (
           <p className="mt-0.5 truncate text-[13px] text-ink-mid">{subtitle}</p>
+        )}
+
+        {demandScore != null && demandScore >= 40 && (
+          <div className={cn(
+            "mt-1.5 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold",
+            demandScore >= 70
+              ? "bg-oxblood/10 text-oxblood"
+              : "bg-forest/10 text-forest"
+          )}>
+            {demandScore >= 70 ? <Flame className="h-3 w-3" /> : <TrendingUp className="h-3 w-3" />}
+            {demandScore >= 70 ? "High Demand" : "Popular"}
+          </div>
         )}
 
         <div className="mt-2 flex items-center gap-3 text-[12px] text-ink-light">
