@@ -10,6 +10,7 @@ import {
   XCircle,
   Heart,
   Search,
+  Truck,
 } from "lucide-react";
 
 function timeAgo(dateStr: string): string {
@@ -30,6 +31,7 @@ const typeConfig: Record<string, { icon: typeof Bell; bg: string; iconClass: str
   listing_rejected: { icon: XCircle, bg: "bg-red-light", iconClass: "text-red" },
   favorite: { icon: Heart, bg: "bg-oxblood/5", iconClass: "text-oxblood" },
   saved_search: { icon: Search, bg: "bg-forest/10", iconClass: "text-forest" },
+  transport_request: { icon: Truck, bg: "bg-[var(--accent-blue)]/10", iconClass: "text-[var(--accent-blue)]" },
 };
 
 type Notification = {

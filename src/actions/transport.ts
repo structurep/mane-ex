@@ -53,6 +53,28 @@ export async function submitTransportRequest(input: {
     return { error: "Failed to submit transport request. Please try again." };
   }
 
+  // Notify the listing's seller (fire-and-forget)
+  supabase
+    .from("horse_listings")
+    .select("seller_id, name, slug")
+    .eq("id", input.listingId)
+    .single()
+    .then(({ data: listing }) => {
+      if (!listing) return;
+      supabase.from("notifications").insert({
+        user_id: listing.seller_id,
+        type: "transport_request",
+        title: "New transport request",
+        body: `A buyer wants help shipping ${listing.name} to ${input.destinationState}.`,
+        link: `/horses/${listing.slug}`,
+        metadata: {
+          transport_request_id: data.id,
+          listing_id: input.listingId,
+          destination_state: input.destinationState,
+        },
+      });
+    });
+
   return { id: data.id };
 }
 

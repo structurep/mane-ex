@@ -90,6 +90,7 @@ export default async function DashboardPage() {
     { data: allListingsData },
     { data: recentMessages },
     { data: recentOffers },
+    { data: transportNotifs },
   ] = await Promise.all([
     supabase
       .from("horse_listings")
@@ -144,6 +145,13 @@ export default async function DashboardPage() {
       .from("offers")
       .select("id, amount, status, created_at, listing:horse_listings!listing_id(name, slug), buyer:profiles!buyer_id(display_name)")
       .eq("seller_id", user.id)
+      .order("created_at", { ascending: false })
+      .limit(5),
+    supabase
+      .from("notifications")
+      .select("id, title, body, link, created_at")
+      .eq("user_id", user.id)
+      .eq("type", "transport_request")
       .order("created_at", { ascending: false })
       .limit(5),
   ]);
@@ -227,6 +235,22 @@ export default async function DashboardPage() {
       ),
       timestamp: timeAgo(offer.created_at),
       dateTime: offer.created_at,
+    });
+  });
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (transportNotifs || []).forEach((n: any) => {
+    activityItems.push({
+      id: `transport-${n.id}`,
+      icon: <Truck className="h-4 w-4 text-[var(--accent-blue)]" />,
+      iconBg: "bg-[var(--accent-blue)]/10",
+      content: (
+        <p>
+          {n.body || n.title}
+        </p>
+      ),
+      timestamp: timeAgo(n.created_at),
+      dateTime: n.created_at,
     });
   });
 

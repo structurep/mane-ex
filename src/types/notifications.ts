@@ -20,7 +20,8 @@ export type NotificationType =
   | "barn_invite"
   | "barn_post"
   | "barn_comment"
-  | "barn_join";
+  | "barn_join"
+  | "transport_request";
 
 export interface Notification {
   id: string;
