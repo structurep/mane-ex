@@ -85,15 +85,16 @@
   --color-crease-mid: var(--paper-border-strong);
   --color-crease-dark: #9A9285;
 
-  /* Accents — oxblood is the primary brand accent */
+  /* Accents — midnight navy is the primary brand accent */
+  --color-navy: var(--accent-navy);
+  --color-navy-900: var(--accent-navy-900);
+  --color-navy-800: var(--accent-navy-800);
+  --color-navy-700: var(--accent-navy-700);
+  --color-navy-600: var(--accent-navy-600);
+  --color-navy-500: var(--accent-navy-500);
+  /* Semantic red — destructive/error only */
   --color-red: var(--accent-red);
   --color-red-light: var(--accent-red-soft);
-  --color-oxblood: var(--accent-red);
-  --color-oxblood-900: var(--accent-red-900);
-  --color-oxblood-800: var(--accent-red-800);
-  --color-oxblood-700: var(--accent-red-700);
-  --color-oxblood-600: var(--accent-red-600);
-  --color-oxblood-500: var(--accent-red-500);
   --color-forest: var(--accent-green);
   --color-gold: var(--accent-gold);
   --color-blue: var(--accent-blue);
@@ -132,7 +133,7 @@
   --muted-foreground: var(--ink-soft);
   --accent: var(--paper-washi);
   --accent-foreground: var(--ink-dark);
-  --destructive: var(--accent-red);
+  --destructive: var(--accent-red);  /* real red for destructive actions */
   --border: var(--paper-border);
   --input: var(--paper-border);
   --ring: var(--ink-black);
@@ -170,7 +171,7 @@
   --muted-foreground: #8A8278;
   --accent: #1A1918;
   --accent-foreground: #F7F4EF;
-  --destructive: #8A2E3C;
+  --destructive: #E53E3E;
   --border: rgba(255, 255, 255, 0.1);
   --input: rgba(255, 255, 255, 0.15);
   --ring: #E8E3D9;

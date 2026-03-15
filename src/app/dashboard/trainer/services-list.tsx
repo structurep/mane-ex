@@ -170,7 +170,7 @@ function AddServiceForm({
             id="service-category"
             name="category"
             required
-            className="mt-1.5 h-10 w-full cursor-pointer appearance-none rounded-lg border border-crease-light bg-paper-cream px-3 text-sm text-ink-dark transition-colors focus:border-oxblood focus:outline-none focus:ring-1 focus:ring-oxblood/20"
+            className="mt-1.5 h-10 w-full cursor-pointer appearance-none rounded-lg border border-crease-light bg-paper-cream px-3 text-sm text-ink-dark transition-colors focus:border-navy focus:outline-none focus:ring-1 focus:ring-navy/20"
           >
             <option value="">Select category</option>
             {(Object.entries(SERVICE_CATEGORY_LABELS) as [ServiceCategory, string][]).map(
@@ -210,7 +210,7 @@ function AddServiceForm({
           <select
             id="service-price-type"
             name="price_type"
-            className="mt-1.5 h-10 w-full cursor-pointer appearance-none rounded-lg border border-crease-light bg-paper-cream px-3 text-sm text-ink-dark transition-colors focus:border-oxblood focus:outline-none focus:ring-1 focus:ring-oxblood/20"
+            className="mt-1.5 h-10 w-full cursor-pointer appearance-none rounded-lg border border-crease-light bg-paper-cream px-3 text-sm text-ink-dark transition-colors focus:border-navy focus:outline-none focus:ring-1 focus:ring-navy/20"
           >
             <option value="fixed">Fixed</option>
             <option value="hourly">Hourly</option>

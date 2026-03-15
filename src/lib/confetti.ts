@@ -5,7 +5,7 @@ export async function celebrateSuccess() {
     particleCount: 80,
     spread: 60,
     origin: { y: 0.7 },
-    colors: ['#C4A265', '#7A3139', '#4A1F24'],
+    colors: ['#C4A265', '#223344', '#16212B'],
     disableForReducedMotion: true,
     decay: 0.92,
     ticks: 60,

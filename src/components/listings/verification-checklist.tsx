@@ -74,7 +74,7 @@ export function VerificationChecklist({ listing, className }: VerificationCheckl
           checked={l.ppe_on_file}
           label="Pre-purchase exam on file"
           detail={l.ppe_on_file && l.ppe_document_url ? (
-            <a href={l.ppe_document_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-oxblood hover:underline">
+            <a href={l.ppe_document_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-navy hover:underline">
               View PPE document <ExternalLink className="h-3 w-3" />
             </a>
           ) : undefined}
@@ -83,7 +83,7 @@ export function VerificationChecklist({ listing, className }: VerificationCheckl
           checked={l.show_record_linked}
           label="Show record linked"
           detail={l.show_record_linked && l.show_record_url ? (
-            <a href={l.show_record_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-oxblood hover:underline">
+            <a href={l.show_record_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-navy hover:underline">
               View show record <ExternalLink className="h-3 w-3" />
             </a>
           ) : undefined}

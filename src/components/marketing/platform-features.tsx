@@ -18,7 +18,7 @@ const features = [
     icon: CreditCard,
     title: "Mane Pay",
     description: "Secure escrow payments",
-    color: "text-oxblood bg-red-light",
+    color: "text-navy bg-red-light",
   },
   {
     icon: GitCompareArrows,

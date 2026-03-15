@@ -54,7 +54,7 @@ export default async function TrainerProfilePage({ params }: PageProps) {
       icon: <Globe className="h-4 w-4" />,
       label: "Website",
       value: (
-        <a href={trainer.website_url} target="_blank" rel="noopener noreferrer" className="text-oxblood hover:underline">
+        <a href={trainer.website_url} target="_blank" rel="noopener noreferrer" className="text-navy hover:underline">
           {new URL(trainer.website_url).hostname}
         </a>
       ),
@@ -93,7 +93,7 @@ export default async function TrainerProfilePage({ params }: PageProps) {
                   </span>
                 )}
                 {trainer.accepting_clients && (
-                  <span className="flex items-center gap-1 text-oxblood">
+                  <span className="flex items-center gap-1 text-navy">
                     <CheckCircle className="h-3 w-3" />
                     Accepting clients
                   </span>

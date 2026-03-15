@@ -23,14 +23,17 @@
   --ink-ghost: #B5AFA6;
 
   /* ── Accent System (restrained, institutional) ── */
-  /* Oxblood — primary brand accent (deep merlot) */
-  --accent-red: #7A3139;
-  --accent-red-soft: rgba(122, 49, 57, 0.08);
-  --accent-red-900: #4A1F24;
-  --accent-red-800: #5E252C;
-  --accent-red-700: #7A3139;
-  --accent-red-600: #943B44;
-  --accent-red-500: #AE4A54;
+  /* Midnight Navy — primary brand accent */
+  --accent-navy: #223344;
+  --accent-navy-soft: rgba(34, 51, 68, 0.08);
+  --accent-navy-900: #16212B;
+  --accent-navy-800: #1C2A36;
+  --accent-navy-700: #223344;
+  --accent-navy-600: #2D4358;
+  --accent-navy-500: #3B5A73;
+  /* Red — destructive / error / warning only */
+  --accent-red: #C53030;
+  --accent-red-soft: rgba(197, 48, 48, 0.08);
   /* Gold — premium states only */
   --accent-gold: #B8973F;
   --accent-gold-soft: rgba(184, 151, 63, 0.10);

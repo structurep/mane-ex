@@ -31,7 +31,7 @@ export default async function TrainerPortalPage() {
         {profile && (
           <Link
             href={`/trainers/${profile.id}`}
-            className="flex items-center gap-1.5 text-xs font-medium text-oxblood hover:underline"
+            className="flex items-center gap-1.5 text-xs font-medium text-navy hover:underline"
           >
             <ExternalLink className="h-3 w-3" />
             View public profile

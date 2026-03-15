@@ -29,8 +29,8 @@ const typeConfig: Record<string, { icon: typeof Bell; bg: string; iconClass: str
   offer: { icon: DollarSign, bg: "bg-gold/10", iconClass: "text-gold" },
   listing_status: { icon: CheckCircle2, bg: "bg-forest/10", iconClass: "text-forest" },
   listing_rejected: { icon: XCircle, bg: "bg-red-light", iconClass: "text-red" },
-  favorite: { icon: Heart, bg: "bg-oxblood/5", iconClass: "text-oxblood" },
-  saved_search: { icon: Search, bg: "bg-oxblood/10", iconClass: "text-oxblood" },
+  favorite: { icon: Heart, bg: "bg-navy/5", iconClass: "text-navy" },
+  saved_search: { icon: Search, bg: "bg-navy/10", iconClass: "text-navy" },
   transport_request: { icon: Truck, bg: "bg-[var(--accent-blue)]/10", iconClass: "text-[var(--accent-blue)]" },
 };
 
@@ -70,7 +70,7 @@ export function NotificationCard({ n }: { n: Notification }) {
         <p className="mt-1 text-xs text-ink-light">{timeAgo(n.created_at)}</p>
       </div>
       {isUnread && (
-        <div className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-oxblood" />
+        <div className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-navy" />
       )}
     </div>
   );

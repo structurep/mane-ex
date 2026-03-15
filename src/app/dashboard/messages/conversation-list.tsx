@@ -87,7 +87,7 @@ export function ConversationList({
       subtitle: subtitleFull,
       meta: <span className="text-xs text-ink-faint">{timeStr}</span>,
       badge: c.unreadCount > 0 ? (
-        <StatusBadge variant="oxblood">{c.unreadCount}</StatusBadge>
+        <StatusBadge variant="navy">{c.unreadCount}</StatusBadge>
       ) : undefined,
     };
   });

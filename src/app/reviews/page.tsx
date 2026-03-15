@@ -178,7 +178,7 @@ export default async function ReviewsPage() {
                 <p className="mt-1 text-sm text-ink-mid">Total Reviews</p>
               </div>
               <div className="animate-fade-up text-center">
-                <p className="font-serif text-4xl font-bold text-oxblood">
+                <p className="font-serif text-4xl font-bold text-navy">
                   {verifiedPercent}%
                 </p>
                 <p className="mt-1 text-sm text-ink-mid">Verified Purchases</p>

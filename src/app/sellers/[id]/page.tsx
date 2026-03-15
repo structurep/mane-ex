@@ -283,7 +283,7 @@ export default async function SellerProfilePage({ params }: Props) {
                   }) => {
                     const gradeColor =
                       listing.completeness_grade === "excellent"
-                        ? "text-oxblood"
+                        ? "text-navy"
                         : listing.completeness_grade === "good"
                           ? "text-blue"
                           : listing.completeness_grade === "fair"

@@ -14,7 +14,7 @@ export async function TrendingSection() {
   return (
     <section className="mb-10">
       <div className="mb-4 flex items-center gap-2">
-        <Flame className="h-4 w-4 text-[var(--accent-red)]" />
+        <Flame className="h-4 w-4 text-[var(--accent-navy)]" />
         <h2 className="overline text-[var(--ink-mid)]">
           Trending
         </h2>

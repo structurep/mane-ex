@@ -183,9 +183,9 @@ export default async function DashboardPage() {
   const pipelineStages = [
     { stage: "Draft", count: draftCount, textColor: "text-blue" },
     { stage: "In Review", count: pendingReviewCount, textColor: "text-gold" },
-    { stage: "Active", count: statusCounts["active"] || 0, textColor: "text-oxblood" },
-    { stage: "Offer", count: pendingOfferCount || 0, textColor: "text-oxblood" },
-    { stage: "Sold", count: statusCounts["sold"] || 0, textColor: "text-oxblood" },
+    { stage: "Active", count: statusCounts["active"] || 0, textColor: "text-navy" },
+    { stage: "Offer", count: pendingOfferCount || 0, textColor: "text-navy" },
+    { stage: "Sold", count: statusCounts["sold"] || 0, textColor: "text-navy" },
   ];
 
   // Mane Score
@@ -281,11 +281,11 @@ export default async function DashboardPage() {
 
   // KPI stats
   const kpis = [
-    { label: "Active Listings", value: (listingCount || 0).toLocaleString(), icon: ClipboardList, href: "/dashboard/listings", accent: "text-oxblood" },
+    { label: "Active Listings", value: (listingCount || 0).toLocaleString(), icon: ClipboardList, href: "/dashboard/listings", accent: "text-navy" },
     { label: "Total Views", value: totalViews.toLocaleString(), icon: Eye, accent: "text-ink-mid" },
     { label: "Unread Messages", value: unreadCount.toLocaleString(), icon: MessageCircle, href: "/dashboard/messages", accent: "text-gold" },
-    { label: "Saves", value: totalFavorites.toLocaleString(), icon: Heart, accent: "text-oxblood/70" },
-    { label: "Pending Offers", value: (pendingOfferCount || 0).toLocaleString(), icon: DollarSign, href: "/dashboard/offers", accent: "text-oxblood" },
+    { label: "Saves", value: totalFavorites.toLocaleString(), icon: Heart, accent: "text-navy/70" },
+    { label: "Pending Offers", value: (pendingOfferCount || 0).toLocaleString(), icon: DollarSign, href: "/dashboard/offers", accent: "text-navy" },
     { label: "Avg. Rating", value: avgRating ? `${avgRating} \u2605` : "\u2014", icon: Star, accent: "text-gold" },
   ];
 
@@ -325,7 +325,7 @@ export default async function DashboardPage() {
               {actions.map((a, i) => (
                 <span key={i}>
                   {i > 0 && " · "}
-                  <Link href={a.href} className="font-medium text-oxblood hover:underline">{a.text}</Link>
+                  <Link href={a.href} className="font-medium text-navy hover:underline">{a.text}</Link>
                 </span>
               ))}
             </p>
@@ -338,7 +338,7 @@ export default async function DashboardPage() {
         <AlertBanner variant="info" title="Improve your buyer profile" className="mb-6">
           <p className="text-sm">
             Complete your buyer profile to increase seller response rates.{" "}
-            <Link href="/dashboard/settings" className="font-medium text-oxblood hover:underline">
+            <Link href="/dashboard/settings" className="font-medium text-navy hover:underline">
               Complete profile
             </Link>
           </p>
@@ -371,7 +371,7 @@ export default async function DashboardPage() {
           <SectionHeading
             title="Recent Inquiries"
             actions={
-              <Link href="/dashboard/messages" className="text-sm font-medium text-oxblood hover:underline">
+              <Link href="/dashboard/messages" className="text-sm font-medium text-navy hover:underline">
                 View all
               </Link>
             }
@@ -434,7 +434,7 @@ export default async function DashboardPage() {
           <SectionHeading
             title="Your Listings"
             actions={
-              <Link href="/dashboard/listings" className="text-sm font-medium text-oxblood hover:underline">
+              <Link href="/dashboard/listings" className="text-sm font-medium text-navy hover:underline">
                 View all <ArrowRight className="ml-1 inline h-3 w-3" />
               </Link>
             }
@@ -538,7 +538,7 @@ export default async function DashboardPage() {
                     className="flex items-center justify-between rounded-md bg-paper-white px-3 py-2 text-xs shadow-flat transition-colors hover:bg-paper-warm"
                   >
                     <span className="text-ink-mid">{s.action}</span>
-                    <span className="ml-2 whitespace-nowrap font-semibold text-oxblood">{s.points}</span>
+                    <span className="ml-2 whitespace-nowrap font-semibold text-navy">{s.points}</span>
                   </Link>
                 ))}
               </div>
@@ -553,10 +553,10 @@ export default async function DashboardPage() {
         <ActionPanel
           className="mt-2"
           items={[
-            { label: "New Listing", icon: <Plus className="h-4 w-4" />, href: getCreateListingUrl(), accent: "text-oxblood" },
+            { label: "New Listing", icon: <Plus className="h-4 w-4" />, href: getCreateListingUrl(), accent: "text-navy" },
             { label: "View Offers", icon: <HandshakeIcon className="h-4 w-4" />, href: "/dashboard/offers", accent: "text-gold" },
             { label: "Edit Profile", icon: <UserCheck className="h-4 w-4" />, href: "/dashboard/settings", accent: "text-ink-mid" },
-            { label: "View Analytics", icon: <BarChart3 className="h-4 w-4" />, href: "/dashboard/analytics", accent: "text-oxblood" },
+            { label: "View Analytics", icon: <BarChart3 className="h-4 w-4" />, href: "/dashboard/analytics", accent: "text-navy" },
           ] satisfies ActionPanelItem[]}
         />
       </section>

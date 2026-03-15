@@ -44,7 +44,7 @@ export function SelectMenu({
           "cursor-pointer appearance-none border pr-8 text-ink-dark transition-colors focus:outline-none",
           isPill
             ? "h-9 rounded-full border-crease-light bg-paper-white py-1.5 pl-3.5 text-[13px] font-medium hover:border-ink-light focus:border-ink-black"
-            : "h-10 w-full rounded-lg border-crease-light bg-paper-cream px-3 text-sm focus:border-oxblood focus:ring-1 focus:ring-oxblood/20",
+            : "h-10 w-full rounded-lg border-crease-light bg-paper-cream px-3 text-sm focus:border-navy focus:ring-1 focus:ring-navy/20",
           icon && (isPill ? "pl-9" : "pl-9")
         )}
       >

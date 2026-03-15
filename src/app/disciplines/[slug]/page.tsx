@@ -378,7 +378,7 @@ export default async function DisciplinePage({ params }: Props) {
                           <span
                             className={`flex items-center gap-1 font-medium ${
                               l.completeness_grade === "excellent"
-                                ? "text-oxblood"
+                                ? "text-navy"
                                 : l.completeness_grade === "good"
                                   ? "text-blue"
                                   : "text-ink-light"

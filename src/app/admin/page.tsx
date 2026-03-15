@@ -43,7 +43,7 @@ const actionConfig: Record<string, { label: string; icon: ReactNode; bg: string 
   resolve_report: { label: "Resolved report", icon: <ShieldCheck className="h-4 w-4 text-ink-mid" />, bg: "bg-paper-warm" },
   override_escrow: { label: "Override escrow", icon: <Wallet className="h-4 w-4 text-gold" />, bg: "bg-gold/10" },
   update_score_config: { label: "Updated score config", icon: <Settings className="h-4 w-4 text-ink-mid" />, bg: "bg-paper-warm" },
-  manual_notification: { label: "Sent notification", icon: <Bell className="h-4 w-4 text-oxblood" />, bg: "bg-oxblood/5" },
+  manual_notification: { label: "Sent notification", icon: <Bell className="h-4 w-4 text-navy" />, bg: "bg-navy/5" },
 };
 
 export default async function AdminOverviewPage() {
@@ -51,7 +51,7 @@ export default async function AdminOverviewPage() {
 
   const kpis = [
     { label: "Total Users", value: stats.totalUsers, icon: Users, accent: "text-ink-mid" },
-    { label: "Active Listings", value: stats.activeListings, icon: ListChecks, accent: "text-oxblood" },
+    { label: "Active Listings", value: stats.activeListings, icon: ListChecks, accent: "text-navy" },
     { label: "Pending Review", value: stats.pendingReview, icon: Clock, accent: "text-gold" },
     { label: "Open Reports", value: stats.openReports, icon: Flag, accent: "text-red" },
     { label: "Active Escrows", value: stats.activeEscrows, icon: DollarSign, accent: "text-gold" },

@@ -124,7 +124,7 @@ export function StepHistory({ data, setField }: StepProps) {
           rows={5}
           className="mt-1.5"
         />
-        <p id="description-count" className={`mt-1 text-xs ${((data.description as string) || "").length >= 100 ? "text-oxblood" : "text-ink-light"}`}>
+        <p id="description-count" className={`mt-1 text-xs ${((data.description as string) || "").length >= 100 ? "text-navy" : "text-ink-light"}`}>
           {((data.description as string) || "").length}/100 characters minimum
         </p>
       </div>
@@ -159,7 +159,7 @@ export function StepHistory({ data, setField }: StepProps) {
                 }}
                 className="peer sr-only"
               />
-              <span className="block rounded-[var(--radius-card)] border border-crease-light px-3 py-1.5 text-xs font-medium text-ink-mid transition-colors peer-checked:border-oxblood peer-checked:bg-oxblood/10 peer-checked:text-oxblood peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-1">
+              <span className="block rounded-[var(--radius-card)] border border-crease-light px-3 py-1.5 text-xs font-medium text-ink-mid transition-colors peer-checked:border-navy peer-checked:bg-navy/10 peer-checked:text-navy peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-1">
                 {opt}
               </span>
             </label>
@@ -184,7 +184,7 @@ export function StepHistory({ data, setField }: StepProps) {
                 }}
                 className="peer sr-only"
               />
-              <span className="block rounded-[var(--radius-card)] border border-crease-light px-3 py-1.5 text-xs font-medium text-ink-mid transition-colors peer-checked:border-oxblood peer-checked:bg-oxblood/10 peer-checked:text-oxblood peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-1">
+              <span className="block rounded-[var(--radius-card)] border border-crease-light px-3 py-1.5 text-xs font-medium text-ink-mid transition-colors peer-checked:border-navy peer-checked:bg-navy/10 peer-checked:text-navy peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-1">
                 {opt}
               </span>
             </label>

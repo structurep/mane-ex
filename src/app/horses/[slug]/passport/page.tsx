@@ -169,7 +169,7 @@ export default async function HorsePassportPage({ params }: Props) {
       sortDate: l.coggins_date,
       label: "Coggins Test",
       detail: l.coggins_expiry ? `Valid through ${fmtDate(l.coggins_expiry)}` : "Negative result on file",
-      color: "bg-oxblood",
+      color: "bg-navy",
     });
   }
   if (l.last_vet_check) {
@@ -196,7 +196,7 @@ export default async function HorsePassportPage({ params }: Props) {
       sortDate: l.last_vet_check || "2000-01-01",
       label: "Vaccinations",
       detail: l.vaccination_status,
-      color: "bg-oxblood",
+      color: "bg-navy",
     });
   }
 
@@ -833,7 +833,7 @@ function OwnershipEntry({
       <div className="relative flex flex-col items-center">
         <div
           className={`h-3 w-3 rounded-full ring-2 ring-paper-white ${
-            isCurrent ? "bg-oxblood" : "bg-ink-faint"
+            isCurrent ? "bg-navy" : "bg-ink-faint"
           }`}
         />
         <div className="mt-1 h-full w-[1px] bg-crease-light last:hidden" />

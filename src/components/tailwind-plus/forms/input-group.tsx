@@ -42,7 +42,7 @@ export function InputGroup({
           "border text-ink-dark transition-colors focus:outline-none",
           isPill
             ? "h-9 rounded-full border-crease-light bg-paper-white text-[13px] placeholder:text-ink-faint"
-            : "h-10 w-full rounded-lg border-crease-light bg-paper-cream text-sm focus:border-oxblood focus:ring-1 focus:ring-oxblood/20",
+            : "h-10 w-full rounded-lg border-crease-light bg-paper-cream text-sm focus:border-navy focus:ring-1 focus:ring-navy/20",
           prefix ? (isPill ? "pl-7" : "pl-7") : isPill ? "pl-3" : "px-3",
           suffix ? "pr-10" : isPill ? "pr-3" : "pr-3",
           isPill && "w-[88px] text-center",

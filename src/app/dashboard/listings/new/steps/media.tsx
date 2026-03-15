@@ -222,7 +222,7 @@ export function StepMedia({ data, setField }: StepProps) {
                 key={angle.id}
                 className={`flex cursor-pointer items-start gap-3 rounded-lg border p-3 transition-colors ${
                   checked
-                    ? "border-oxblood/30 bg-oxblood/5"
+                    ? "border-navy/30 bg-navy/5"
                     : "border-crease-light bg-paper-white hover:bg-paper-warm"
                 }`}
               >
@@ -230,7 +230,7 @@ export function StepMedia({ data, setField }: StepProps) {
                   type="checkbox"
                   checked={checked}
                   onChange={() => toggleAngle(angle.id)}
-                  className="mt-0.5 h-4 w-4 rounded border-crease-mid text-oxblood accent-oxblood"
+                  className="mt-0.5 h-4 w-4 rounded border-crease-mid text-navy accent-navy"
                 />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
@@ -313,7 +313,7 @@ export function StepMedia({ data, setField }: StepProps) {
                 key={vid.id}
                 className={`flex cursor-pointer items-start gap-3 rounded-lg border p-3 transition-colors ${
                   checked
-                    ? "border-oxblood/30 bg-oxblood/5"
+                    ? "border-navy/30 bg-navy/5"
                     : "border-crease-light bg-paper-white hover:bg-paper-warm"
                 }`}
               >
@@ -321,7 +321,7 @@ export function StepMedia({ data, setField }: StepProps) {
                   type="checkbox"
                   checked={checked}
                   onChange={() => toggleVideo(vid.id)}
-                  className="mt-0.5 h-4 w-4 rounded border-crease-mid text-oxblood accent-oxblood"
+                  className="mt-0.5 h-4 w-4 rounded border-crease-mid text-navy accent-navy"
                 />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">

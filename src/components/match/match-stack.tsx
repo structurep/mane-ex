@@ -300,7 +300,7 @@ export function MatchStack({ onExit, filters = {}, onAnalytics, onProgress, debu
               <div className="flex justify-between"><span>fav_rate</span><span className="font-bold">{sessionStats.favorite_rate}%</span></div>
               <div className="flex justify-between"><span>avg_time</span><span>{sessionStats.avg_swipe_time}ms</span></div>
               <div className="flex justify-between"><span>avg_dist</span><span>{sessionStats.avg_drag_distance}px</span></div>
-              <div className="flex justify-between"><span>favs</span><span className="text-oxblood">{sessionStats.favorites}</span></div>
+              <div className="flex justify-between"><span>favs</span><span className="text-navy">{sessionStats.favorites}</span></div>
               <div className="flex justify-between"><span>passes</span><span className="text-coral">{sessionStats.passes}</span></div>
             </div>
           )}
@@ -313,7 +313,7 @@ export function MatchStack({ onExit, filters = {}, onAnalytics, onProgress, debu
           type="button"
           onClick={() => handleButton("pass")}
           aria-label="Pass on this horse"
-          className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-crease-light bg-paper-white text-ink-mid shadow-folded transition-all hover:border-oxblood hover:text-oxblood active:scale-90"
+          className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-crease-light bg-paper-white text-ink-mid shadow-folded transition-all hover:border-navy hover:text-navy active:scale-90"
         >
           <X className="h-7 w-7" strokeWidth={2.5} />
         </button>
