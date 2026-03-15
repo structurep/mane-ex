@@ -101,6 +101,26 @@ export function estimateTransportByState(
 }
 
 /**
+ * Find the nearest US state to a given lat/lng coordinate.
+ * Used for browser geolocation → state mapping.
+ */
+export function nearestState(lat: number, lng: number): string | null {
+  let best: string | null = null;
+  let bestDist = Infinity;
+
+  for (const [state, [sLat, sLng]] of Object.entries(STATE_CENTROIDS)) {
+    if (state === "AK" || state === "HI") continue; // skip non-contiguous
+    const d = haversineDistance(lat, lng, sLat, sLng);
+    if (d < bestDist) {
+      bestDist = d;
+      best = state;
+    }
+  }
+
+  return best;
+}
+
+/**
  * Get all US state abbreviations for the destination selector.
  */
 export function getUSStates(): { value: string; label: string }[] {

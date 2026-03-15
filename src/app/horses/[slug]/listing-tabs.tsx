@@ -125,7 +125,7 @@ function getCompletenessColor(grade: string | null) {
   }
 }
 
-export function ListingTabs({ listing, defaultTab = "overview", demandScore, demandLabel }: { listing: ListingTabsData; defaultTab?: string; demandScore?: number | null; demandLabel?: string | null }) {
+export function ListingTabs({ listing, defaultTab = "overview", demandScore, demandLabel, buyerState }: { listing: ListingTabsData; defaultTab?: string; demandScore?: number | null; demandLabel?: string | null; buyerState?: string | null }) {
   const l = listing;
   const [saved, setSaved] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -791,6 +791,7 @@ export function ListingTabs({ listing, defaultTab = "overview", demandScore, dem
               originCity={l.location_city}
               listingId={l.id}
               listingName={l.name}
+              buyerState={buyerState}
             />
           )}
 

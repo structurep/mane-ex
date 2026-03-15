@@ -118,7 +118,22 @@ export default async function ListingDetailPage({ params, searchParams }: Props)
     notFound();
   }
 
-  const demand = await getListingDemand(listing.id);
+  const [demand, buyerProfile] = await Promise.all([
+    getListingDemand(listing.id),
+    (async () => {
+      const supabase = await createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return null;
+      const { data } = await supabase
+        .from("profiles")
+        .select("state")
+        .eq("id", user.id)
+        .single();
+      return data;
+    })(),
+  ]);
+
+  const buyerState = buyerProfile?.state ?? null;
 
   const l = listing as unknown as HorseListing & {
     seller: { id: string; display_name: string; full_name: string; avatar_url: string | null; seller_tier: string; identity_verified: boolean };
@@ -235,7 +250,7 @@ export default async function ListingDetailPage({ params, searchParams }: Props)
           </Suspense>
 
           {/* Tabbed layout + sidebar */}
-          <ListingTabs listing={l as unknown as ListingTabsData} defaultTab={tab} demandScore={demand?.score ?? null} demandLabel={demand?.label ?? null} />
+          <ListingTabs listing={l as unknown as ListingTabsData} defaultTab={tab} demandScore={demand?.score ?? null} demandLabel={demand?.label ?? null} buyerState={buyerState} />
         </div>
       </main>
 
