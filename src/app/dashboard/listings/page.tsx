@@ -8,6 +8,8 @@ import { Plus, Eye, Heart, ClipboardList, TrendingUp, Pencil } from "lucide-reac
 import type { ListingStatus } from "@/types/listings";
 import { DeleteListingButton } from "@/components/marketplace/delete-listing-button";
 import { getCreateListingUrl, getEditListingUrl } from "@/lib/urls";
+import { loadDemandStatsMap } from "@/lib/match/demand-score";
+import { DemandInsights } from "@/components/seller/demand-insights";
 
 export const metadata: Metadata = {
   title: "My Listings",
@@ -74,13 +76,16 @@ export default async function MyListingsPage() {
 
   if (!user) return null;
 
-  const { data: listings } = await supabase
-    .from("horse_listings")
-    .select(
-      "id, name, slug, status, price, breed, location_state, view_count, favorite_count, created_at, completeness_score, basics_score, details_score, trust_score, media_score, media:listing_media(url, is_primary)"
-    )
-    .eq("seller_id", user.id)
-    .order("created_at", { ascending: false });
+  const [{ data: listings }, demandStats] = await Promise.all([
+    supabase
+      .from("horse_listings")
+      .select(
+        "id, name, slug, status, price, breed, location_state, view_count, favorite_count, created_at, completeness_score, basics_score, details_score, trust_score, media_score, media:listing_media(url, is_primary)"
+      )
+      .eq("seller_id", user.id)
+      .order("created_at", { ascending: false }),
+    loadDemandStatsMap(),
+  ]);
 
   const allListings = (listings ?? []) as Array<
     Record<string, unknown> & {
@@ -206,6 +211,13 @@ export default async function MyListingsPage() {
                       </Link>
                     </Button>
                   </div>
+                )}
+
+                {listing.status === "active" && demandStats.get(String(listing.id)) && (
+                  <DemandInsights
+                    stats={demandStats.get(String(listing.id))!}
+                    className="mt-3 rounded-md border border-crease-light bg-paper-white px-4 py-3"
+                  />
                 )}
               </div>
             );
