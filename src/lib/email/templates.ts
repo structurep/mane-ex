@@ -270,6 +270,32 @@ export function transportRequestEmail(
   };
 }
 
+export function transportProviderLeadEmail(
+  providerName: string,
+  horseName: string,
+  originState: string,
+  destinationState: string,
+  distanceMiles: number,
+  listingSlug: string
+): { subject: string; html: string } {
+  return {
+    subject: `New horse transport lead: ${originState} → ${destinationState}`,
+    html: layout(`
+      <h1>New transport lead.</h1>
+      <p>Hi ${providerName}, a buyer on ManeExchange needs transport for a horse.</p>
+      <div class="highlight">
+        <p style="margin:0"><strong>Horse:</strong> ${horseName}</p>
+        <p style="margin:8px 0 0"><strong>Route:</strong> ${originState} → ${destinationState}</p>
+        <p style="margin:8px 0 0"><strong>Est. Distance:</strong> ${distanceMiles.toLocaleString()} miles</p>
+      </div>
+      <p style="text-align: center; margin-top: 24px;">
+        <a href="${BASE_URL}/horses/${listingSlug}" class="btn">View Listing</a>
+      </p>
+      <p style="font-size: 13px; color: #8E9B91;">This lead was matched based on your service regions. Contact the seller through the listing page to discuss arrangements.</p>
+    `),
+  };
+}
+
 export function weeklyDigestEmail(
   name: string,
   stats: {

@@ -22,7 +22,7 @@ import type { ListingStatus } from "@/types/listings";
 import { getMyScore } from "@/actions/scoring";
 import { GRADE_LABELS, MANE_SCORE_DISCLAIMER } from "@/types/scoring";
 import { getCreateListingUrl } from "@/lib/urls";
-import { getTransportRequestCounts } from "@/actions/transport";
+import { getTransportRequestCounts, getProviderLeadCounts } from "@/actions/transport";
 import { SavedSearchesWidget } from "./saved-searches";
 import { DeleteListingButton } from "@/components/marketplace/delete-listing-button";
 import {
@@ -173,9 +173,12 @@ export default async function DashboardPage() {
   const pendingReviewCount = statusCounts["pending_review"] || 0;
   const draftCount = statusCounts["draft"] || 0;
 
-  // Transport request counts for listing rows
+  // Transport request + provider lead counts for listing rows
   const listingIds = (recentListings || []).map((l) => l.id);
-  const transportCounts = await getTransportRequestCounts(listingIds);
+  const [transportCounts, providerLeadCounts] = await Promise.all([
+    getTransportRequestCounts(listingIds),
+    getProviderLeadCounts(listingIds),
+  ]);
 
   const pipelineStages = [
     { stage: "Draft", count: draftCount, textColor: "text-blue" },
@@ -463,9 +466,12 @@ export default async function DashboardPage() {
                       {(listing.favorite_count || 0).toLocaleString()}
                     </span>
                     {(transportCounts[listing.id] || 0) > 0 && (
-                      <span className="flex items-center gap-1 text-[var(--accent-blue)]">
+                      <span className="flex items-center gap-1 text-[var(--accent-blue)]" title={`${transportCounts[listing.id]} transport request${transportCounts[listing.id] > 1 ? "s" : ""}${(providerLeadCounts[listing.id] || 0) > 0 ? `, ${providerLeadCounts[listing.id]} provider${providerLeadCounts[listing.id] > 1 ? "s" : ""} contacted` : ""}`}>
                         <Truck className="h-3 w-3" />
                         {transportCounts[listing.id]}
+                        {(providerLeadCounts[listing.id] || 0) > 0 && (
+                          <span className="text-[10px] text-ink-faint">/{providerLeadCounts[listing.id]}p</span>
+                        )}
                       </span>
                     )}
                     <StatusBadge variant={variant}>{statusLabel}</StatusBadge>
