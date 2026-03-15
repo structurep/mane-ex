@@ -176,7 +176,7 @@ export function PricingContent() {
               </span>
               <button
                 onClick={() => setAnnual(!annual)}
-                className={`relative h-7 w-12 rounded-full transition-colors ${annual ? "bg-forest" : "bg-ink-light/30"}`}
+                className={`relative h-7 w-12 rounded-full transition-colors ${annual ? "bg-oxblood" : "bg-ink-light/30"}`}
               >
                 <span
                   className={`absolute top-0.5 h-6 w-6 rounded-full bg-white shadow transition-transform ${annual ? "translate-x-5.5" : "translate-x-0.5"}`}

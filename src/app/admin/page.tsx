@@ -51,7 +51,7 @@ export default async function AdminOverviewPage() {
 
   const kpis = [
     { label: "Total Users", value: stats.totalUsers, icon: Users, accent: "text-ink-mid" },
-    { label: "Active Listings", value: stats.activeListings, icon: ListChecks, accent: "text-forest" },
+    { label: "Active Listings", value: stats.activeListings, icon: ListChecks, accent: "text-oxblood" },
     { label: "Pending Review", value: stats.pendingReview, icon: Clock, accent: "text-gold" },
     { label: "Open Reports", value: stats.openReports, icon: Flag, accent: "text-red" },
     { label: "Active Escrows", value: stats.activeEscrows, icon: DollarSign, accent: "text-gold" },

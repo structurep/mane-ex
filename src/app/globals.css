@@ -85,10 +85,15 @@
   --color-crease-mid: var(--paper-border-strong);
   --color-crease-dark: #9A9285;
 
-  /* Accents */
+  /* Accents — oxblood is the primary brand accent */
   --color-red: var(--accent-red);
   --color-red-light: var(--accent-red-soft);
   --color-oxblood: var(--accent-red);
+  --color-oxblood-900: var(--accent-red-900);
+  --color-oxblood-800: var(--accent-red-800);
+  --color-oxblood-700: var(--accent-red-700);
+  --color-oxblood-600: var(--accent-red-600);
+  --color-oxblood-500: var(--accent-red-500);
   --color-forest: var(--accent-green);
   --color-gold: var(--accent-gold);
   --color-blue: var(--accent-blue);

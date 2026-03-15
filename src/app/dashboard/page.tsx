@@ -183,9 +183,9 @@ export default async function DashboardPage() {
   const pipelineStages = [
     { stage: "Draft", count: draftCount, textColor: "text-blue" },
     { stage: "In Review", count: pendingReviewCount, textColor: "text-gold" },
-    { stage: "Active", count: statusCounts["active"] || 0, textColor: "text-forest" },
+    { stage: "Active", count: statusCounts["active"] || 0, textColor: "text-oxblood" },
     { stage: "Offer", count: pendingOfferCount || 0, textColor: "text-oxblood" },
-    { stage: "Sold", count: statusCounts["sold"] || 0, textColor: "text-forest" },
+    { stage: "Sold", count: statusCounts["sold"] || 0, textColor: "text-oxblood" },
   ];
 
   // Mane Score
@@ -285,7 +285,7 @@ export default async function DashboardPage() {
     { label: "Total Views", value: totalViews.toLocaleString(), icon: Eye, accent: "text-ink-mid" },
     { label: "Unread Messages", value: unreadCount.toLocaleString(), icon: MessageCircle, href: "/dashboard/messages", accent: "text-gold" },
     { label: "Saves", value: totalFavorites.toLocaleString(), icon: Heart, accent: "text-oxblood/70" },
-    { label: "Pending Offers", value: (pendingOfferCount || 0).toLocaleString(), icon: DollarSign, href: "/dashboard/offers", accent: "text-forest" },
+    { label: "Pending Offers", value: (pendingOfferCount || 0).toLocaleString(), icon: DollarSign, href: "/dashboard/offers", accent: "text-oxblood" },
     { label: "Avg. Rating", value: avgRating ? `${avgRating} \u2605` : "\u2014", icon: Star, accent: "text-gold" },
   ];
 
@@ -538,7 +538,7 @@ export default async function DashboardPage() {
                     className="flex items-center justify-between rounded-md bg-paper-white px-3 py-2 text-xs shadow-flat transition-colors hover:bg-paper-warm"
                   >
                     <span className="text-ink-mid">{s.action}</span>
-                    <span className="ml-2 whitespace-nowrap font-semibold text-forest">{s.points}</span>
+                    <span className="ml-2 whitespace-nowrap font-semibold text-oxblood">{s.points}</span>
                   </Link>
                 ))}
               </div>
@@ -556,7 +556,7 @@ export default async function DashboardPage() {
             { label: "New Listing", icon: <Plus className="h-4 w-4" />, href: getCreateListingUrl(), accent: "text-oxblood" },
             { label: "View Offers", icon: <HandshakeIcon className="h-4 w-4" />, href: "/dashboard/offers", accent: "text-gold" },
             { label: "Edit Profile", icon: <UserCheck className="h-4 w-4" />, href: "/dashboard/settings", accent: "text-ink-mid" },
-            { label: "View Analytics", icon: <BarChart3 className="h-4 w-4" />, href: "/dashboard/analytics", accent: "text-forest" },
+            { label: "View Analytics", icon: <BarChart3 className="h-4 w-4" />, href: "/dashboard/analytics", accent: "text-oxblood" },
           ] satisfies ActionPanelItem[]}
         />
       </section>

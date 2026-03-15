@@ -40,8 +40,8 @@ const pillars = [
   },
   {
     icon: UserCheck,
-    iconColor: "text-forest",
-    iconBg: "bg-forest/10",
+    iconColor: "text-oxblood",
+    iconBg: "bg-oxblood/10",
     title: "Seller Verification",
     description:
       "Verified sellers complete identity verification through Stripe. Look for the verified badge when browsing listings.",
@@ -80,10 +80,10 @@ export default function TrustPage() {
         {/* Hero */}
         <section className="with-grain bg-gradient-hero px-4 pt-24 pb-16 md:px-8 md:pt-36 md:pb-20">
           <div className="mx-auto max-w-[1200px] text-center">
-            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-[var(--radius-card)] bg-forest/10">
-              <Shield className="h-8 w-8 text-forest" />
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-[var(--radius-card)] bg-oxblood/10">
+              <Shield className="h-8 w-8 text-oxblood" />
             </div>
-            <p className="overline mb-3 text-forest">TRUST & SAFETY</p>
+            <p className="overline mb-3 text-oxblood">TRUST & SAFETY</p>
             <h1 className="mb-4 text-4xl tracking-tight text-ink-black md:text-5xl">
               Your safety is our foundation.
             </h1>
@@ -160,7 +160,7 @@ export default function TrustPage() {
         <section className="bg-paper-white section-premium">
           <div className="mx-auto max-w-[800px]">
             <div className="mb-8 text-center">
-              <p className="overline mb-3 text-forest">MANEVAULT ESCROW</p>
+              <p className="overline mb-3 text-oxblood">MANEVAULT ESCROW</p>
               <h2 className="text-3xl tracking-tight text-ink-black">
                 How your money is protected.
               </h2>
@@ -192,7 +192,7 @@ export default function TrustPage() {
                   key={item.step}
                   className="flex gap-4 rounded-lg border border-crease-light bg-paper-cream p-5"
                 >
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-forest text-sm font-bold text-white">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-oxblood text-sm font-bold text-white">
                     {item.step}
                   </span>
                   <div>

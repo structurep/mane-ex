@@ -8,12 +8,12 @@ type DemandInsightsProps = {
 
 function getDemandColor(score: number) {
   if (score >= 70) return { bar: "bg-oxblood", text: "text-oxblood" };
-  if (score >= 40) return { bar: "bg-forest", text: "text-forest" };
+  if (score >= 40) return { bar: "bg-oxblood/60", text: "text-oxblood" };
   return { bar: "bg-ink-faint", text: "text-ink-mid" };
 }
 
 function getPriceColor(position: string | null | undefined) {
-  if (position === "Below Market") return { text: "text-forest", bg: "bg-forest/10" };
+  if (position === "Below Market") return { text: "text-oxblood", bg: "bg-oxblood/10" };
   if (position === "Above Market") return { text: "text-gold", bg: "bg-gold/10" };
   return { text: "text-ink-mid", bg: "bg-ink-black/5" };
 }

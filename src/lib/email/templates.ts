@@ -14,7 +14,7 @@ function layout(content: string): string {
     .container { max-width: 560px; margin: 0 auto; padding: 40px 20px; }
     .card { background: #FFFFFF; border: 1px solid #DDD8CE; border-radius: 8px; padding: 32px; }
     .logo { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; color: #0F1A12; text-decoration: none; }
-    .btn { display: inline-block; background: #1B4332; color: #FFFFFF; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; }
+    .btn { display: inline-block; background: #7A3139; color: #FFFFFF; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; }
     .btn-outline { display: inline-block; border: 1px solid #0F1A12; color: #0F1A12; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 14px; }
     .footer { margin-top: 32px; text-align: center; font-size: 12px; color: #8E9B91; }
     .footer a { color: #8E9B91; }
@@ -238,7 +238,7 @@ export function priceDropEmail(
       <p>Hi ${buyerName}, a horse in your Dream Barn has had a price change.</p>
       <div class="highlight">
         <p style="margin:0; font-size: 18px;"><strong>${horseName}</strong></p>
-        <p style="margin:4px 0 0;"><span style="text-decoration: line-through; color: #8E9B91;">${oldPrice}</span> &rarr; <strong style="color: #1B4332;">${newPrice}</strong></p>
+        <p style="margin:4px 0 0;"><span style="text-decoration: line-through; color: #8E9B91;">${oldPrice}</span> &rarr; <strong style="color: #7A3139;">${newPrice}</strong></p>
       </div>
       <p style="text-align: center; margin-top: 24px;">
         <a href="${BASE_URL}/horses/${listingSlug}" class="btn">View Listing</a>

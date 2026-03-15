@@ -115,7 +115,7 @@ export function CollectionPicker({ listingId, trigger }: CollectionPickerProps) 
                   disabled={isAdded || adding === coll.id}
                   className={`flex w-full items-center justify-between rounded-md px-3 py-2.5 text-left text-sm transition-colors ${
                     isAdded
-                      ? "bg-forest/5 text-forest"
+                      ? "bg-oxblood/5 text-oxblood"
                       : "hover:bg-paper-warm"
                   }`}
                 >
@@ -126,7 +126,7 @@ export function CollectionPicker({ listingId, trigger }: CollectionPickerProps) 
                     </span>
                   </div>
                   {isAdded ? (
-                    <Check className="h-4 w-4 text-forest" />
+                    <Check className="h-4 w-4 text-oxblood" />
                   ) : adding === coll.id ? (
                     <span className="text-xs text-ink-light">Adding...</span>
                   ) : (

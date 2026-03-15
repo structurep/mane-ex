@@ -70,8 +70,8 @@ export function ReviewForm({
 
   if (success) {
     return (
-      <div className="rounded-lg border border-forest/20 bg-forest/5 p-6 text-center">
-        <p className="font-medium text-forest">Thank you for your review!</p>
+      <div className="rounded-lg border border-oxblood/20 bg-oxblood/5 p-6 text-center">
+        <p className="font-medium text-oxblood">Thank you for your review!</p>
         <p className="mt-1 text-sm text-ink-mid">
           Your feedback helps the ManeExchange community.
         </p>

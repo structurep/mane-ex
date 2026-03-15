@@ -161,9 +161,9 @@ export function OfferActions({
 
       {/* Buyer: initiate escrow after acceptance */}
       {isBuyer && offerStatus === "accepted" && !escrowId && (
-        <div className="rounded-lg border border-forest/30 bg-forest/5 p-4">
+        <div className="rounded-lg border border-oxblood/30 bg-oxblood/5 p-4">
           <div className="flex items-center gap-2">
-            <Shield className="h-4 w-4 text-forest" />
+            <Shield className="h-4 w-4 text-oxblood" />
             <span className="font-medium text-ink-dark">
               Offer accepted — proceed to payment
             </span>

@@ -12,7 +12,7 @@ interface BadgeFlagProps {
 
 const variantStyles: Record<BadgeFlagVariant, string> = {
   match: "bg-[var(--accent-gold)] text-[var(--paper-surface)]",
-  horseproof: "bg-[var(--accent-green)] text-[var(--paper-surface)]",
+  horseproof: "bg-[var(--accent-red)] text-[var(--paper-surface)]",
   demand: "bg-[var(--accent-red)] text-[var(--paper-surface)]",
   hot: "bg-[var(--accent-red)] text-[var(--paper-surface)]",
   verified: "bg-[var(--ink-black)] text-[var(--paper-surface)]",
@@ -53,7 +53,7 @@ export function BadgeSeal({
 }: Omit<BadgeFlagProps, "position">) {
   const sealStyles: Record<BadgeFlagVariant, string> = {
     match: "text-[var(--accent-gold)]",
-    horseproof: "text-[var(--accent-green)]",
+    horseproof: "text-[var(--accent-red)]",
     demand: "text-[var(--accent-red)]",
     hot: "text-[var(--accent-red)]",
     verified: "text-[var(--ink-black)]",

@@ -30,7 +30,7 @@ const typeConfig: Record<string, { icon: typeof Bell; bg: string; iconClass: str
   listing_status: { icon: CheckCircle2, bg: "bg-forest/10", iconClass: "text-forest" },
   listing_rejected: { icon: XCircle, bg: "bg-red-light", iconClass: "text-red" },
   favorite: { icon: Heart, bg: "bg-oxblood/5", iconClass: "text-oxblood" },
-  saved_search: { icon: Search, bg: "bg-forest/10", iconClass: "text-forest" },
+  saved_search: { icon: Search, bg: "bg-oxblood/10", iconClass: "text-oxblood" },
   transport_request: { icon: Truck, bg: "bg-[var(--accent-blue)]/10", iconClass: "text-[var(--accent-blue)]" },
 };
 

@@ -93,7 +93,7 @@ export default async function TrainerProfilePage({ params }: PageProps) {
                   </span>
                 )}
                 {trainer.accepting_clients && (
-                  <span className="flex items-center gap-1 text-forest">
+                  <span className="flex items-center gap-1 text-oxblood">
                     <CheckCircle className="h-3 w-3" />
                     Accepting clients
                   </span>

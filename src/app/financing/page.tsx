@@ -97,7 +97,7 @@ export default function FinancingPage() {
                         {option.terms}
                       </span>
                     </div>
-                    <span className="rounded-[var(--radius-card)] bg-forest/10 px-2.5 py-0.5 text-xs font-medium text-forest">
+                    <span className="rounded-[var(--radius-card)] bg-oxblood/10 px-2.5 py-0.5 text-xs font-medium text-oxblood">
                       {option.highlight}
                     </span>
                   </div>

@@ -115,7 +115,7 @@ function daysSincePublished(dateStr: string): number {
 function getCompletenessColor(grade: string | null) {
   switch (grade) {
     case "excellent":
-      return "text-forest";
+      return "text-oxblood";
     case "good":
       return "text-blue";
     case "fair":
@@ -195,7 +195,7 @@ export function ListingTabs({ listing, defaultTab = "overview", demandScore, dem
           <p className="mt-3 font-serif text-3xl font-bold tracking-tight text-[var(--ink-black)] lg:hidden">
             {priceStr}
             {l.price_negotiable && (
-              <span className="ml-2 align-middle text-sm font-normal text-[var(--accent-green)]">Negotiable</span>
+              <span className="ml-2 align-middle text-sm font-normal text-[var(--accent-red)]">Negotiable</span>
             )}
           </p>
 
@@ -765,16 +765,16 @@ export function ListingTabs({ listing, defaultTab = "overview", demandScore, dem
             <div className="rounded-lg border border-crease-light bg-paper-cream p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <TrendingUp className={`h-4 w-4 ${demandScore >= 70 ? "text-oxblood" : demandScore >= 40 ? "text-forest" : "text-ink-light"}`} />
+                  <TrendingUp className={`h-4 w-4 ${demandScore >= 70 ? "text-oxblood" : demandScore >= 40 ? "text-oxblood" : "text-ink-light"}`} />
                   <span className="text-sm font-medium text-ink-dark">Market Demand</span>
                 </div>
-                <span className={`text-sm font-bold ${demandScore >= 70 ? "text-oxblood" : demandScore >= 40 ? "text-forest" : "text-ink-mid"}`}>
+                <span className={`text-sm font-bold ${demandScore >= 70 ? "text-oxblood" : demandScore >= 40 ? "text-oxblood" : "text-ink-mid"}`}>
                   {demandLabel}
                 </span>
               </div>
               <div className="mt-2 h-1.5 rounded-full bg-surface-wash">
                 <div
-                  className={`h-1.5 rounded-full transition-all ${demandScore >= 70 ? "bg-oxblood" : demandScore >= 40 ? "bg-forest" : "bg-ink-faint"}`}
+                  className={`h-1.5 rounded-full transition-all ${demandScore >= 70 ? "bg-oxblood" : demandScore >= 40 ? "bg-oxblood" : "bg-ink-faint"}`}
                   style={{ width: `${demandScore}%` }}
                 />
               </div>

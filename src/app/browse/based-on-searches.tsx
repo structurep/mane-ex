@@ -275,7 +275,7 @@ export async function BasedOnSearches({
                         l.match_reason === "Similar breed"
                           ? "bg-[var(--accent-blue)] text-white"
                           : l.match_reason === "Your price range"
-                            ? "bg-[var(--accent-green)] text-white"
+                            ? "bg-[var(--accent-red)] text-white"
                             : "bg-[var(--accent-red)] text-white"
                       }`}
                     >

@@ -300,7 +300,7 @@ export function MatchStack({ onExit, filters = {}, onAnalytics, onProgress, debu
               <div className="flex justify-between"><span>fav_rate</span><span className="font-bold">{sessionStats.favorite_rate}%</span></div>
               <div className="flex justify-between"><span>avg_time</span><span>{sessionStats.avg_swipe_time}ms</span></div>
               <div className="flex justify-between"><span>avg_dist</span><span>{sessionStats.avg_drag_distance}px</span></div>
-              <div className="flex justify-between"><span>favs</span><span className="text-forest">{sessionStats.favorites}</span></div>
+              <div className="flex justify-between"><span>favs</span><span className="text-oxblood">{sessionStats.favorites}</span></div>
               <div className="flex justify-between"><span>passes</span><span className="text-coral">{sessionStats.passes}</span></div>
             </div>
           )}

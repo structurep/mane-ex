@@ -103,10 +103,10 @@ export const SwipeCard = forwardRef<SwipeCardHandle, SwipeCardProps>(
           {active && (
             <div
               ref={likeBadgeRef}
-              className="pointer-events-none absolute left-4 top-4 z-20 rounded-lg border-[3px] border-forest bg-forest/20 px-5 py-2 backdrop-blur-sm"
+              className="pointer-events-none absolute left-4 top-4 z-20 rounded-lg border-[3px] border-oxblood bg-oxblood/20 px-5 py-2 backdrop-blur-sm"
               style={{ opacity: 0, transform: `rotate(-${BADGE_ROTATION_DEG}deg) scale(${BADGE_SCALE_MIN})` }}
             >
-              <span className="text-lg font-black tracking-wider text-forest">LIKE</span>
+              <span className="text-lg font-black tracking-wider text-oxblood">LIKE</span>
             </div>
           )}
 

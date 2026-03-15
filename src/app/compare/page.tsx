@@ -72,8 +72,8 @@ function CompareRow({
           className={`text-sm ${
             i === bestIdx
               ? highlight === "lowest-price"
-                ? "font-serif font-bold text-forest"
-                : "font-semibold text-forest"
+                ? "font-serif font-bold text-oxblood"
+                : "font-semibold text-oxblood"
               : "text-ink-black"
           }`}
         >

@@ -517,7 +517,7 @@ export function BrowseFilters({ params }: Props) {
                     if (selected) return "bg-oxblood text-paper-white shadow-sm";
                     const n = parseInt(val);
                     return n >= 4 && n <= 6
-                      ? "bg-forest/8 text-forest hover:bg-forest/15"
+                      ? "bg-oxblood/8 text-oxblood hover:bg-oxblood/15"
                       : "bg-paper-cream text-ink-light hover:bg-paper-warm hover:text-ink-mid";
                   }}
                   className="gap-0.5"

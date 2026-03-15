@@ -84,7 +84,7 @@ export function SavedSearchesWidget() {
             onClick={() => handleToggleAlerts(search.id, search.alerts)}
             className={`rounded-md p-1.5 transition-colors ${
               search.alerts
-                ? "text-forest hover:bg-forest/10"
+                ? "text-oxblood hover:bg-oxblood/10"
                 : "text-ink-faint hover:bg-paper-warm"
             }`}
             title={search.alerts ? "Disable alerts" : "Enable alerts"}

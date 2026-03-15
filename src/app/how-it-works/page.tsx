@@ -130,11 +130,11 @@ export default function HowItWorksPage() {
                   <p className="mt-2 font-serif text-6xl font-bold text-ink-black">
                     87
                   </p>
-                  <p className="mt-1 text-sm font-medium text-forest">
+                  <p className="mt-1 text-sm font-medium text-oxblood">
                     Excellent
                   </p>
                   <div className="mx-auto mt-4 h-2 w-48 rounded-full bg-paper-warm">
-                    <div className="h-2 w-[87%] rounded-full bg-forest" />
+                    <div className="h-2 w-[87%] rounded-full bg-oxblood" />
                   </div>
                 </div>
                 <div className="mt-8 space-y-3">
@@ -286,7 +286,7 @@ export default function HowItWorksPage() {
                     3&apos;6&quot;+ experience, amateur-friendly
                   </p>
                 </div>
-                <div className="mt-4 rounded-lg bg-forest/10 px-4 py-2 text-xs text-forest">
+                <div className="mt-4 rounded-lg bg-oxblood/10 px-4 py-2 text-xs text-oxblood">
                   3 matching listings found
                 </div>
               </div>
