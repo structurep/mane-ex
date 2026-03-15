@@ -1,6 +1,8 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { sendEmail } from "@/lib/email/resend";
+import { transportRequestEmail } from "@/lib/email/templates";
 
 export type TransportRequestResult = {
   error?: string;
@@ -56,11 +58,13 @@ export async function submitTransportRequest(input: {
   // Notify the listing's seller (fire-and-forget)
   supabase
     .from("horse_listings")
-    .select("seller_id, name, slug")
+    .select("seller_id, name, slug, seller:profiles!seller_id(email, display_name)")
     .eq("id", input.listingId)
     .single()
     .then(({ data: listing }) => {
       if (!listing) return;
+
+      // In-app notification
       supabase.from("notifications").insert({
         user_id: listing.seller_id,
         type: "transport_request",
@@ -73,6 +77,23 @@ export async function submitTransportRequest(input: {
           destination_state: input.destinationState,
         },
       });
+
+      // Email notification
+      const seller = Array.isArray(listing.seller) ? listing.seller[0] : listing.seller;
+      if (seller?.email) {
+        const { subject, html } = transportRequestEmail(
+          seller.display_name || "Seller",
+          listing.name,
+          input.destinationState,
+          listing.slug,
+        );
+        sendEmail({
+          to: seller.email,
+          subject,
+          html,
+          idempotencyKey: `transport-req-${data.id}`,
+        });
+      }
     });
 
   return { id: data.id };

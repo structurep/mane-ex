@@ -247,6 +247,29 @@ export function priceDropEmail(
   };
 }
 
+export function transportRequestEmail(
+  sellerName: string,
+  horseName: string,
+  destinationState: string,
+  listingSlug: string
+): { subject: string; html: string } {
+  return {
+    subject: `New transport request for ${horseName}`,
+    html: layout(`
+      <h1>Transport request received.</h1>
+      <p>Hi ${sellerName}, a buyer has requested help arranging transport for <strong>${horseName}</strong>.</p>
+      <div class="highlight">
+        <p style="margin:0"><strong>Destination:</strong> ${destinationState}</p>
+        <p style="margin:8px 0 0; font-size: 13px;">The buyer is interested in your listing and needs shipping assistance. You can reach out to discuss options.</p>
+      </div>
+      <p style="text-align: center; margin-top: 24px;">
+        <a href="${BASE_URL}/horses/${listingSlug}" class="btn">View Listing</a>
+      </p>
+      <p style="font-size: 13px; color: #8E9B91;">Transport estimates are approximate. Final arrangements are between buyer, seller, and carrier.</p>
+    `),
+  };
+}
+
 export function weeklyDigestEmail(
   name: string,
   stats: {
