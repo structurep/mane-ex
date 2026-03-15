@@ -24,9 +24,9 @@ export const metadata: Metadata = {
 
 const sourceColors: Record<string, string> = {
   Direct: "bg-blue",
-  Browse: "bg-navy",
+  Browse: "bg-saddle",
   Search: "bg-gold",
-  "External Links": "bg-navy",
+  "External Links": "bg-saddle",
 };
 
 export default async function AnalyticsPage() {
@@ -103,7 +103,7 @@ export default async function AnalyticsPage() {
                 <div>
                   <div className="mb-1 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <FileCheck className="h-4 w-4 text-navy" />
+                      <FileCheck className="h-4 w-4 text-saddle" />
                       <span className="text-sm font-medium text-ink-dark">
                         Completeness
                       </span>
@@ -115,7 +115,7 @@ export default async function AnalyticsPage() {
                   </div>
                   <div className="h-2 overflow-hidden rounded-full bg-paper-warm">
                     <div
-                      className="h-full rounded-full bg-navy transition-all duration-500"
+                      className="h-full rounded-full bg-saddle transition-all duration-500"
                       style={{
                         width: `${Math.min((score.completeness_component / 500) * 100, 100)}%`,
                       }}
@@ -213,7 +213,7 @@ export default async function AnalyticsPage() {
                       </p>
                     </div>
                     <div className="ml-4 flex items-center gap-2">
-                      <span className="whitespace-nowrap text-xs font-semibold text-navy">
+                      <span className="whitespace-nowrap text-xs font-semibold text-saddle">
                         {suggestion.points}
                       </span>
                       <ArrowRight className="h-3 w-3 text-ink-light" />
@@ -244,7 +244,7 @@ export default async function AnalyticsPage() {
                 <div key={day.label} className="flex-1 flex flex-col items-center gap-1">
                   <span className="text-xs text-ink-mid">{day.value}</span>
                   <div
-                    className="w-full rounded-t-md bg-navy/20 transition-all"
+                    className="w-full rounded-t-md bg-saddle/20 transition-all"
                     style={{ height: `${maxView > 0 ? (day.value / maxView) * 100 : 0}%`, minHeight: day.value > 0 ? "4px" : "0" }}
                   />
                   <span className="text-xs text-ink-light">{day.label}</span>
@@ -302,7 +302,7 @@ export default async function AnalyticsPage() {
                       </div>
                       <div className="h-2 rounded-full bg-paper-warm">
                         <div
-                          className="h-2 rounded-full bg-navy"
+                          className="h-2 rounded-full bg-saddle"
                           style={{ width: `${item.percent}%`, minWidth: item.percent > 0 ? "4px" : "0" }}
                         />
                       </div>
@@ -335,7 +335,7 @@ export default async function AnalyticsPage() {
                 {listingPerf.map((listing) => (
                   <tr key={listing.slug} className="border-b border-crease-light last:border-0">
                     <td className="px-4 py-3">
-                      <Link href={`/horses/${listing.slug}`} className="text-sm font-medium text-ink-black hover:text-navy">
+                      <Link href={`/horses/${listing.slug}`} className="text-sm font-medium text-ink-black hover:text-saddle">
                         {listing.name}
                       </Link>
                     </td>
@@ -343,7 +343,7 @@ export default async function AnalyticsPage() {
                     <td className="px-4 py-3 text-right text-sm text-ink-mid">{listing.saves}</td>
                     <td className="px-4 py-3 text-right text-sm text-ink-mid">{listing.inquiries}</td>
                     <td className="px-4 py-3 text-right text-sm text-ink-mid">{listing.offers}</td>
-                    <td className="px-4 py-3 text-right text-sm font-medium text-navy">{listing.score}</td>
+                    <td className="px-4 py-3 text-right text-sm font-medium text-saddle">{listing.score}</td>
                   </tr>
                 ))}
               </tbody>

@@ -179,7 +179,7 @@ export function Header() {
               className={`rounded-[var(--radius-card)] px-3 py-2 text-[13px] font-semibold transition-colors ${
                 pathname === "/sell"
                   ? "bg-[var(--ink-black)]/5 text-[var(--ink-black)]"
-                  : "text-[var(--accent-navy)] hover:bg-[var(--accent-navy-soft)]"
+                  : "text-[var(--accent-saddle)] hover:bg-[var(--accent-saddle-soft)]"
               }`}
             >
               Sell Your Horse
@@ -201,7 +201,7 @@ export function Header() {
               </Link>
               <Link
                 href="/dashboard/dream-barn"
-                className="rounded-[var(--radius-card)] p-2.5 text-[var(--ink-mid)] transition-colors hover:bg-[var(--accent-navy-soft)] hover:text-[var(--accent-navy)]"
+                className="rounded-[var(--radius-card)] p-2.5 text-[var(--ink-mid)] transition-colors hover:bg-[var(--accent-saddle-soft)] hover:text-[var(--accent-saddle)]"
                 aria-label="Saved"
               >
                 <Heart className="h-5 w-5" />

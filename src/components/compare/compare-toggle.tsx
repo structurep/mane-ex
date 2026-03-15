@@ -18,7 +18,7 @@ interface CompareToggleProps {
 /**
  * Compare checkbox overlay — position absolute over a listing card image.
  * Stops event propagation so the parent <Link> doesn't navigate.
- * When active: shows navy ring around image container + dim overlay.
+ * When active: shows saddle ring around image container + dim overlay.
  */
 export function CompareToggle({ item, className }: CompareToggleProps) {
   const compareItems = useCompareStore();
@@ -45,8 +45,8 @@ export function CompareToggle({ item, className }: CompareToggleProps) {
     <>
       {/* Selection ring + dim overlay */}
       {active && (
-        <div className="pointer-events-none absolute inset-0 z-10 rounded-[var(--radius-card)] ring-2 ring-inset ring-navy">
-          <div className="absolute inset-0 bg-navy/10" />
+        <div className="pointer-events-none absolute inset-0 z-10 rounded-[var(--radius-card)] ring-2 ring-inset ring-saddle">
+          <div className="absolute inset-0 bg-saddle/10" />
         </div>
       )}
 
@@ -59,7 +59,7 @@ export function CompareToggle({ item, className }: CompareToggleProps) {
         className={cn(
           "absolute bottom-2 left-2 z-20 flex items-center gap-1.5 rounded-[var(--radius-badge)] px-2.5 py-1.5 text-[11px] font-semibold backdrop-blur-sm transition-all",
           active
-            ? "bg-navy text-white shadow-lifted"
+            ? "bg-saddle text-white shadow-lifted"
             : "bg-[var(--ink-black)]/50 text-white hover:bg-[var(--ink-black)]/70",
           full && !active && "cursor-not-allowed opacity-50",
           className

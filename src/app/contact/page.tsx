@@ -140,7 +140,7 @@ export default function ContactPage() {
                   <select
                     name="subject"
                     required
-                    className="h-10 w-full cursor-pointer appearance-none rounded-lg border border-crease-light bg-paper-cream px-3 text-sm text-ink-dark transition-colors focus:border-navy focus:outline-none focus:ring-1 focus:ring-navy/20"
+                    className="h-10 w-full cursor-pointer appearance-none rounded-lg border border-crease-light bg-paper-cream px-3 text-sm text-ink-dark transition-colors focus:border-saddle focus:outline-none focus:ring-1 focus:ring-saddle/20"
                   >
                     <option value="">Select a topic</option>
                     <option value="general">General Inquiry</option>

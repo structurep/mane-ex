@@ -7,8 +7,8 @@ export function ISOBanner() {
       <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-2">
         {/* Looking for a horse */}
         <div className="paper-flat flex items-start gap-5 p-6">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[var(--radius-card)] bg-navy/10">
-            <Search className="h-5 w-5 text-navy" />
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[var(--radius-card)] bg-saddle/10">
+            <Search className="h-5 w-5 text-saddle" />
           </div>
           <div>
             <h3 className="font-heading text-base font-semibold text-ink-black">
@@ -20,7 +20,7 @@ export function ISOBanner() {
             </p>
             <Link
               href="/iso/new"
-              className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-navy hover:text-navy-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-sm"
+              className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-saddle hover:text-saddle-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-sm"
             >
               Create an ISO
               <ArrowRight className="h-3.5 w-3.5" />

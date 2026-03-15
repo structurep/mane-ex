@@ -54,7 +54,7 @@ export function RadioCardGroup({
             className={cn(
               "rounded-lg border px-3 py-3 text-center text-sm font-medium transition-all",
               selected
-                ? "border-navy bg-navy/5 text-navy ring-1 ring-navy/20"
+                ? "border-saddle bg-saddle/5 text-saddle ring-1 ring-saddle/20"
                 : "border-crease-light bg-paper-cream text-ink-mid hover:border-ink-light hover:text-ink-dark"
             )}
           >

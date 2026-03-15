@@ -66,7 +66,7 @@ export function LoginForm() {
           onClick={() => setMode("password")}
           className={`flex-1 border-b-2 pb-2.5 text-sm font-medium transition-colors ${
             mode === "password"
-              ? "border-navy text-navy"
+              ? "border-saddle text-saddle"
               : "border-transparent text-ink-faint hover:text-ink-mid"
           }`}
         >
@@ -77,7 +77,7 @@ export function LoginForm() {
           onClick={() => setMode("magic")}
           className={`flex-1 border-b-2 pb-2.5 text-sm font-medium transition-colors ${
             mode === "magic"
-              ? "border-navy text-navy"
+              ? "border-saddle text-saddle"
               : "border-transparent text-ink-faint hover:text-ink-mid"
           }`}
         >
@@ -106,7 +106,7 @@ export function LoginForm() {
               type="email"
               required
               autoComplete="email"
-              className="h-10 w-full rounded-lg border border-crease-light bg-paper-white px-3 text-sm text-ink-dark placeholder:text-ink-faint focus:border-navy focus:outline-none focus:ring-1 focus:ring-navy/20"
+              className="h-10 w-full rounded-lg border border-crease-light bg-paper-white px-3 text-sm text-ink-dark placeholder:text-ink-faint focus:border-saddle focus:outline-none focus:ring-1 focus:ring-saddle/20"
               placeholder="you@example.com"
             />
           </div>
@@ -123,7 +123,7 @@ export function LoginForm() {
               type="password"
               required
               autoComplete="current-password"
-              className="h-10 w-full rounded-lg border border-crease-light bg-paper-white px-3 text-sm text-ink-dark placeholder:text-ink-faint focus:border-navy focus:outline-none focus:ring-1 focus:ring-navy/20"
+              className="h-10 w-full rounded-lg border border-crease-light bg-paper-white px-3 text-sm text-ink-dark placeholder:text-ink-faint focus:border-saddle focus:outline-none focus:ring-1 focus:ring-saddle/20"
               placeholder="••••••••"
             />
           </div>
@@ -146,7 +146,7 @@ export function LoginForm() {
               type="email"
               required
               autoComplete="email"
-              className="h-10 w-full rounded-lg border border-crease-light bg-paper-white px-3 text-sm text-ink-dark placeholder:text-ink-faint focus:border-navy focus:outline-none focus:ring-1 focus:ring-navy/20"
+              className="h-10 w-full rounded-lg border border-crease-light bg-paper-white px-3 text-sm text-ink-dark placeholder:text-ink-faint focus:border-saddle focus:outline-none focus:ring-1 focus:ring-saddle/20"
               placeholder="you@example.com"
             />
           </div>

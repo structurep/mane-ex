@@ -76,11 +76,11 @@ export function ListingCard({
 
   const daysListed = l.published_at ? daysSince(l.published_at) : 999;
   const badge = trending
-    ? { label: "Hot", Icon: Flame, color: "bg-[var(--accent-navy)] text-white" }
+    ? { label: "Hot", Icon: Flame, color: "bg-[var(--accent-saddle)] text-white" }
     : daysListed < 3
       ? { label: "Just Listed", Icon: Sparkles, color: "bg-[var(--ink-black)] text-white" }
       : (l.favorite_count ?? 0) > 5
-        ? { label: "Popular", Icon: Flame, color: "bg-[var(--accent-navy)] text-white" }
+        ? { label: "Popular", Icon: Flame, color: "bg-[var(--accent-saddle)] text-white" }
         : (l.completeness_score ?? 0) > 800
           ? { label: "Top Rated", Icon: Star, color: "bg-[var(--accent-gold)] text-white" }
           : null;
@@ -192,7 +192,7 @@ export function ListingCard({
           <div className={cn(
             "badge-seal mt-1.5",
             demandScore >= 70
-              ? "border-[var(--accent-navy)] text-[var(--accent-navy)]"
+              ? "border-[var(--accent-saddle)] text-[var(--accent-saddle)]"
               : "border-[var(--accent-green)] text-[var(--accent-green)]"
           )}>
             {demandScore >= 70 ? <Flame className="h-3 w-3" /> : <TrendingUp className="h-3 w-3" />}

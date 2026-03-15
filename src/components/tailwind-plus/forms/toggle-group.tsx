@@ -51,10 +51,10 @@ export function ToggleGroup({
         const defaultClass =
           selectedStyle === "solid"
             ? selected
-              ? "bg-navy text-paper-white shadow-sm"
+              ? "bg-saddle text-paper-white shadow-sm"
               : "bg-paper-cream text-ink-light hover:bg-paper-warm hover:text-ink-mid"
             : selected
-              ? "border-navy bg-navy/5 text-navy ring-1 ring-navy/20"
+              ? "border-saddle bg-saddle/5 text-saddle ring-1 ring-saddle/20"
               : "border-crease-light bg-paper-cream text-ink-mid hover:border-ink-light";
 
         return (

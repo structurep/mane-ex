@@ -65,7 +65,7 @@ export function SaveSearchButton({ params }: { params: Record<string, string | u
             onChange={(e) => setName(e.target.value)}
             placeholder="e.g., Hunter mare under $30K"
             autoFocus
-            className="mt-1.5 w-full rounded-lg border border-crease-light bg-paper-white px-3 py-2 text-sm text-ink-black placeholder:text-ink-faint focus:border-navy focus:outline-none focus:ring-1 focus:ring-navy/20"
+            className="mt-1.5 w-full rounded-lg border border-crease-light bg-paper-white px-3 py-2 text-sm text-ink-black placeholder:text-ink-faint focus:border-saddle focus:outline-none focus:ring-1 focus:ring-saddle/20"
           />
         </div>
 
@@ -75,7 +75,7 @@ export function SaveSearchButton({ params }: { params: Record<string, string | u
           onClick={() => setAlerts(!alerts)}
           className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium transition-all ${
             alerts
-              ? "border-navy/20 bg-navy/5 text-navy"
+              ? "border-saddle/20 bg-saddle/5 text-saddle"
               : "border-crease-light bg-paper-white text-ink-mid hover:border-ink-light"
           }`}
         >

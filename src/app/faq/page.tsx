@@ -102,7 +102,7 @@ const categoryAccent: Record<Category, string> = {
   Buying: "bg-blue-light text-blue",
   Selling: "bg-primary/10 text-primary",
   Payments: "bg-gold-light text-gold",
-  "Trust & Safety": "bg-red-light text-navy",
+  "Trust & Safety": "bg-red-light text-saddle",
 };
 
 export default function FaqPage() {

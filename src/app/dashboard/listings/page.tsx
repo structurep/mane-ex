@@ -216,7 +216,7 @@ export default async function MyListingsPage() {
 
                 {weakest && score != null && (score < 850 || weakest.pct < 0.70) && (
                   <div className="mt-2 flex items-center gap-3 rounded-md bg-surface-wash px-3 py-2">
-                    <TrendingUp className="h-4 w-4 shrink-0 text-navy" />
+                    <TrendingUp className="h-4 w-4 shrink-0 text-saddle" />
                     <p className="flex-1 text-xs text-ink-mid">{weakest.message}</p>
                     <Button variant="outline" size="sm" className="shrink-0 text-xs" asChild>
                       <Link href={`/horses/${String(listing.slug)}?tab=${weakest.tab}`}>

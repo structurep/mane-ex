@@ -108,7 +108,7 @@ export function EditPageClient({
           {listingSlug && (
             <Link
               href={`/horses/${listingSlug}`}
-              className="inline-flex items-center gap-1 rounded-md border border-surface-wash px-2.5 py-1 text-xs font-medium text-ink-mid transition-colors hover:border-navy/30 hover:text-navy"
+              className="inline-flex items-center gap-1 rounded-md border border-surface-wash px-2.5 py-1 text-xs font-medium text-ink-mid transition-colors hover:border-saddle/30 hover:text-saddle"
             >
               View listing
               <ExternalLink className="h-3 w-3" />

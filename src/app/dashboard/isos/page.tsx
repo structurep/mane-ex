@@ -78,7 +78,7 @@ export default async function DashboardIsosPage() {
           <p className="mt-1 text-xs text-ink-light">Total ISOs</p>
         </Card>
         <Card className="border-0 p-4 text-center shadow-flat">
-          <p className="font-serif text-3xl font-bold text-navy">{activeCount}</p>
+          <p className="font-serif text-3xl font-bold text-saddle">{activeCount}</p>
           <p className="mt-1 text-xs text-ink-light">Active</p>
         </Card>
         <Card className="border-0 p-4 text-center shadow-flat">

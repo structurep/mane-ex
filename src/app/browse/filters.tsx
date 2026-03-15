@@ -325,10 +325,10 @@ export function BrowseFilters({ params }: Props) {
               key={chip.label}
               type="button"
               onClick={chip.onClear}
-              className="group flex items-center gap-1 rounded-[var(--radius-card)] border border-[var(--paper-border)] bg-[var(--paper-surface)] px-2.5 py-1 text-[12px] font-medium text-[var(--ink-dark)] transition-all hover:border-[var(--accent-navy)]/30 hover:bg-[var(--accent-navy-soft)] hover:text-[var(--accent-navy)]"
+              className="group flex items-center gap-1 rounded-[var(--radius-card)] border border-[var(--paper-border)] bg-[var(--paper-surface)] px-2.5 py-1 text-[12px] font-medium text-[var(--ink-dark)] transition-all hover:border-[var(--accent-saddle)]/30 hover:bg-[var(--accent-saddle-soft)] hover:text-[var(--accent-saddle)]"
             >
               {chip.label}
-              <X className="h-3 w-3 text-[var(--ink-faint)] transition-colors group-hover:text-[var(--accent-navy)]" />
+              <X className="h-3 w-3 text-[var(--ink-faint)] transition-colors group-hover:text-[var(--accent-saddle)]" />
             </button>
           ))}
           <button
@@ -514,10 +514,10 @@ export function BrowseFilters({ params }: Props) {
                   onChange={(v) => updateFilter("henneke", v)}
                   selectedStyle="solid"
                   optionClassName={(val, selected) => {
-                    if (selected) return "bg-navy text-paper-white shadow-sm";
+                    if (selected) return "bg-saddle text-paper-white shadow-sm";
                     const n = parseInt(val);
                     return n >= 4 && n <= 6
-                      ? "bg-navy/8 text-navy hover:bg-navy/15"
+                      ? "bg-saddle/8 text-saddle hover:bg-saddle/15"
                       : "bg-paper-cream text-ink-light hover:bg-paper-warm hover:text-ink-mid";
                   }}
                   className="gap-0.5"

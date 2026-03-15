@@ -63,7 +63,7 @@ export default function Home() {
         <section
           aria-label="Hero search"
           className="relative min-h-[85vh] overflow-hidden bg-hero-dark"
-          style={{ backgroundColor: "#0F1419" }}
+          style={{ backgroundColor: "#1C1410" }}
         >
           <div className="absolute inset-0">
             <picture>
@@ -79,8 +79,8 @@ export default function Home() {
                 fetchPriority="high"
               />
             </picture>
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0F1419]/90 via-[#16212B]/70 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#111315]/85 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#1C1410]/90 via-[#2E241D]/70 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1C1410]/85 via-transparent to-transparent" />
           </div>
 
           <div className="relative flex min-h-[85vh] items-center px-4 md:px-8">

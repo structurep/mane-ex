@@ -84,7 +84,7 @@ export async function FeaturedListings() {
           })}
         </div>
         <div className="mt-6 text-center md:hidden">
-          <Link href="/browse" className="text-sm font-medium text-navy">
+          <Link href="/browse" className="text-sm font-medium text-saddle">
             View All Horses
             <ArrowRight className="ml-1 inline h-4 w-4" />
           </Link>

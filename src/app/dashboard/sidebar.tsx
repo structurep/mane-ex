@@ -177,7 +177,7 @@ export function DashboardSidebar() {
                           <Icon
                             className={cn(
                               "h-4 w-4 shrink-0",
-                              isActive ? "text-[var(--accent-navy)]" : "text-[var(--ink-faint)] group-hover:text-[var(--ink-mid)]"
+                              isActive ? "text-[var(--accent-saddle)]" : "text-[var(--ink-faint)] group-hover:text-[var(--ink-mid)]"
                             )}
                           />
                           {item.label}

@@ -134,12 +134,12 @@ export function MatchMode() {
           size="sm"
           onClick={open}
           aria-label="Open Match Mode to swipe through horses"
-          className="rounded-[var(--radius-card)] border-navy/30 text-navy hover:bg-navy/5 hover:text-navy"
+          className="rounded-[var(--radius-card)] border-saddle/30 text-saddle hover:bg-saddle/5 hover:text-saddle"
         >
           <Sparkles className="mr-1.5 h-3.5 w-3.5" />
           Match
           {activeFilterCount > 0 && (
-            <span className="ml-1.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-navy px-1 text-[10px] font-bold text-paper-white">
+            <span className="ml-1.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-saddle px-1 text-[10px] font-bold text-paper-white">
               {activeFilterCount}
             </span>
           )}
@@ -178,10 +178,10 @@ export function MatchMode() {
           <div className="absolute left-1/2 top-1.5 h-1 w-8 -translate-x-1/2 rounded-full bg-crease-mid" aria-hidden="true" />
 
           <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-navy" aria-hidden="true" />
+            <Sparkles className="h-4 w-4 text-saddle" aria-hidden="true" />
             <h2 className="font-serif text-lg font-bold text-ink-black">Match Mode</h2>
             {activeFilterCount > 0 && (
-              <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-navy/10 px-1.5 text-[10px] font-bold text-navy">
+              <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-saddle/10 px-1.5 text-[10px] font-bold text-saddle">
                 {activeFilterCount} filter{activeFilterCount !== 1 ? "s" : ""}
               </span>
             )}

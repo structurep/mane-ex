@@ -19,8 +19,8 @@ interface AuthLayoutProps {
 
 const trustBadges = [
   { icon: Lock, label: "Encrypted", mobileColor: "text-gold" },
-  { icon: Shield, label: "Stripe KYC", mobileColor: "text-navy" },
-  { icon: CheckCircle2, label: "Verified", mobileColor: "text-navy" },
+  { icon: Shield, label: "Stripe KYC", mobileColor: "text-saddle" },
+  { icon: CheckCircle2, label: "Verified", mobileColor: "text-saddle" },
 ];
 
 /**

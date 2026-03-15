@@ -115,7 +115,7 @@ function daysSincePublished(dateStr: string): number {
 function getCompletenessColor(grade: string | null) {
   switch (grade) {
     case "excellent":
-      return "text-navy";
+      return "text-saddle";
     case "good":
       return "text-blue";
     case "fair":
@@ -195,7 +195,7 @@ export function ListingTabs({ listing, defaultTab = "overview", demandScore, dem
           <p className="mt-3 font-serif text-3xl font-bold tracking-tight text-[var(--ink-black)] lg:hidden">
             {priceStr}
             {l.price_negotiable && (
-              <span className="ml-2 align-middle text-sm font-normal text-[var(--accent-navy)]">Negotiable</span>
+              <span className="ml-2 align-middle text-sm font-normal text-[var(--accent-saddle)]">Negotiable</span>
             )}
           </p>
 
@@ -280,7 +280,7 @@ export function ListingTabs({ listing, defaultTab = "overview", demandScore, dem
               {/* Seller quote */}
               {l.temperament && (
                 <div className="rounded-lg border border-crease-light bg-[var(--paper-surface)] p-5">
-                  <div className="border-l-[3px] border-navy pl-4">
+                  <div className="border-l-[3px] border-saddle pl-4">
                     <p className="italic text-ink-mid leading-relaxed">
                       &ldquo;{l.temperament}&rdquo;
                     </p>
@@ -748,7 +748,7 @@ export function ListingTabs({ listing, defaultTab = "overview", demandScore, dem
                     </div>
                     <div className="mt-0.5 h-1.5 rounded-full bg-surface-wash">
                       <div
-                        className="h-1.5 rounded-full bg-navy transition-all"
+                        className="h-1.5 rounded-full bg-saddle transition-all"
                         style={{ width: `${Math.min(100, Math.max(0, b.max > 0 ? Math.round((b.score / b.max) * 100) : 0))}%` }}
                       />
                     </div>
@@ -765,16 +765,16 @@ export function ListingTabs({ listing, defaultTab = "overview", demandScore, dem
             <div className="rounded-lg border border-crease-light bg-paper-cream p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <TrendingUp className={`h-4 w-4 ${demandScore >= 70 ? "text-navy" : demandScore >= 40 ? "text-navy" : "text-ink-light"}`} />
+                  <TrendingUp className={`h-4 w-4 ${demandScore >= 70 ? "text-saddle" : demandScore >= 40 ? "text-saddle" : "text-ink-light"}`} />
                   <span className="text-sm font-medium text-ink-dark">Market Demand</span>
                 </div>
-                <span className={`text-sm font-bold ${demandScore >= 70 ? "text-navy" : demandScore >= 40 ? "text-navy" : "text-ink-mid"}`}>
+                <span className={`text-sm font-bold ${demandScore >= 70 ? "text-saddle" : demandScore >= 40 ? "text-saddle" : "text-ink-mid"}`}>
                   {demandLabel}
                 </span>
               </div>
               <div className="mt-2 h-1.5 rounded-full bg-surface-wash">
                 <div
-                  className={`h-1.5 rounded-full transition-all ${demandScore >= 70 ? "bg-navy" : demandScore >= 40 ? "bg-navy" : "bg-ink-faint"}`}
+                  className={`h-1.5 rounded-full transition-all ${demandScore >= 70 ? "bg-saddle" : demandScore >= 40 ? "bg-saddle" : "bg-ink-faint"}`}
                   style={{ width: `${demandScore}%` }}
                 />
               </div>
@@ -901,7 +901,7 @@ function SellerBarnTab({ listing }: { listing: ListingTabsData }) {
         <p className="overline mb-3 text-[11px] tracking-widest text-ink-light">CONTACT</p>
         <IconDetailList
           items={[
-            { icon: <ExternalLink className="h-4 w-4" />, label: "View Seller", value: <Link href={`/sellers/${seller.id}`} className="text-sm font-medium text-navy hover:underline">View Profile <ExternalLink className="ml-0.5 inline h-3 w-3" /></Link> },
+            { icon: <ExternalLink className="h-4 w-4" />, label: "View Seller", value: <Link href={`/sellers/${seller.id}`} className="text-sm font-medium text-saddle hover:underline">View Profile <ExternalLink className="ml-0.5 inline h-3 w-3" /></Link> },
             { icon: <MessageCircle className="h-4 w-4" />, label: "Messaging", value: "Available" },
             { icon: <CalendarCheck className="h-4 w-4" />, label: "Trial Requests", value: l.trial_available ? "Available" : "Not available" },
           ]}

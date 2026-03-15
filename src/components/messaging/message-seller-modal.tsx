@@ -123,7 +123,7 @@ export function MessageSellerModal({
         </div>
 
         <div className="flex items-start gap-2 rounded-md bg-paper-warm p-3">
-          <Shield className="mt-0.5 h-4 w-4 shrink-0 text-navy" />
+          <Shield className="mt-0.5 h-4 w-4 shrink-0 text-saddle" />
           <p className="text-xs text-ink-mid">
             Messages are private between you and the seller. Never share bank
             account numbers, SSNs, or other financial credentials. Use ManeVault

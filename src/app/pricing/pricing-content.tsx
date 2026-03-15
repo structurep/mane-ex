@@ -176,7 +176,7 @@ export function PricingContent() {
               </span>
               <button
                 onClick={() => setAnnual(!annual)}
-                className={`relative h-7 w-12 rounded-full transition-colors ${annual ? "bg-navy" : "bg-ink-light/30"}`}
+                className={`relative h-7 w-12 rounded-full transition-colors ${annual ? "bg-saddle" : "bg-ink-light/30"}`}
               >
                 <span
                   className={`absolute top-0.5 h-6 w-6 rounded-full bg-white shadow transition-transform ${annual ? "translate-x-5.5" : "translate-x-0.5"}`}
@@ -221,7 +221,7 @@ export function PricingContent() {
                     >
                       {isHighlighted && (
                         <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                          <StatusBadge variant="navy">
+                          <StatusBadge variant="saddle">
                             Most Popular
                           </StatusBadge>
                         </div>
@@ -382,7 +382,7 @@ export function PricingContent() {
                 {/* Buyer Pro */}
                 <div className="relative rounded-[var(--radius-card)] border-2 border-primary bg-paper-white p-6 shadow-lifted">
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <StatusBadge variant="navy">
+                    <StatusBadge variant="saddle">
                       Most Popular
                     </StatusBadge>
                   </div>

@@ -4,55 +4,55 @@
    ───────────────────────────────────────────────────── */
 
 :root {
-  /* ── Paper Surfaces ── */
-  --paper-bg: #F7F4EF;
+  /* ── Paper Surfaces (warm linen) ── */
+  --paper-bg: #FAF6F1;
   --paper-surface: #FFFFFF;
-  --paper-surface-raised: #FDFCF9;
-  --paper-warm: #F1ECE3;
-  --paper-washi: #EAE5DA;
-  --paper-border: #DDD8CE;
-  --paper-border-strong: #C8C1B4;
-  --paper-crease: #E8E3D9;
+  --paper-surface-raised: #FDFAF6;
+  --paper-warm: #F3EDE5;
+  --paper-washi: #E8DFD4;
+  --paper-border: #DDD4C6;
+  --paper-border-strong: #C8BCA8;
+  --paper-crease: #EBE3D8;
 
-  /* ── Ink System ── */
-  --ink-black: #0B0B0C;
-  --ink-dark: #1A1918;
-  --ink-mid: #4A453E;
-  --ink-soft: #6B655D;
-  --ink-faint: #8A8278;
-  --ink-ghost: #B5AFA6;
+  /* ── Ink System (espresso) ── */
+  --ink-black: #1C1410;
+  --ink-dark: #2E241D;
+  --ink-mid: #5A4E42;
+  --ink-soft: #7D7165;
+  --ink-faint: #9A8E82;
+  --ink-ghost: #BDB3A6;
 
   /* ── Accent System (restrained, institutional) ── */
-  /* Midnight Navy — primary brand accent */
-  --accent-navy: #223344;
-  --accent-navy-soft: rgba(34, 51, 68, 0.08);
-  --accent-navy-900: #16212B;
-  --accent-navy-800: #1C2A36;
-  --accent-navy-700: #223344;
-  --accent-navy-600: #2D4358;
-  --accent-navy-500: #3B5A73;
+  /* Saddle Brown — primary brand accent */
+  --accent-saddle: #8B5E3C;
+  --accent-saddle-soft: rgba(139, 94, 60, 0.08);
+  --accent-saddle-900: #5C3D27;
+  --accent-saddle-800: #6E4A31;
+  --accent-saddle-700: #8B5E3C;
+  --accent-saddle-600: #A87B5A;
+  --accent-saddle-500: #C4A07A;
   /* Red — destructive / error / warning only */
-  --accent-red: #C53030;
-  --accent-red-soft: rgba(197, 48, 48, 0.08);
+  --accent-red: #B83B2E;
+  --accent-red-soft: rgba(184, 59, 46, 0.08);
   /* Gold — premium states only */
-  --accent-gold: #B8973F;
-  --accent-gold-soft: rgba(184, 151, 63, 0.10);
+  --accent-gold: #BF9530;
+  --accent-gold-soft: rgba(191, 149, 48, 0.10);
   /* Green — semantic success/confirmation only */
-  --accent-green: #2D6A4F;
-  --accent-green-soft: rgba(45, 106, 79, 0.08);
+  --accent-green: #4E7A5B;
+  --accent-green-soft: rgba(78, 122, 91, 0.08);
   /* Blue — informational */
-  --accent-blue: #3B6FC2;
-  --accent-blue-soft: rgba(59, 111, 194, 0.08);
+  --accent-blue: #4A7BAD;
+  --accent-blue-soft: rgba(74, 123, 173, 0.08);
 
-  /* ── Paper-Stack Shadows ── */
-  --shadow-fold-sm: 0 1px 2px rgba(11, 11, 12, 0.04),
-                    0 0 0 1px rgba(11, 11, 12, 0.02);
-  --shadow-fold-md: 0 2px 8px rgba(11, 11, 12, 0.06),
-                    0 1px 2px rgba(11, 11, 12, 0.03);
-  --shadow-fold-lg: 0 8px 24px rgba(11, 11, 12, 0.08),
-                    0 2px 6px rgba(11, 11, 12, 0.04);
-  --shadow-fold-hover: 0 12px 32px rgba(11, 11, 12, 0.10),
-                       0 4px 8px rgba(11, 11, 12, 0.05);
+  /* ── Paper-Stack Shadows (warmer tint) ── */
+  --shadow-fold-sm: 0 1px 2px rgba(28, 20, 16, 0.04),
+                    0 0 0 1px rgba(28, 20, 16, 0.02);
+  --shadow-fold-md: 0 2px 8px rgba(28, 20, 16, 0.06),
+                    0 1px 2px rgba(28, 20, 16, 0.03);
+  --shadow-fold-lg: 0 8px 24px rgba(28, 20, 16, 0.08),
+                    0 2px 6px rgba(28, 20, 16, 0.04);
+  --shadow-fold-hover: 0 12px 32px rgba(28, 20, 16, 0.10),
+                       0 4px 8px rgba(28, 20, 16, 0.05);
 
   /* ── Spacing Scale (8px grid) ── */
   --space-1: 4px;

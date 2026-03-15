@@ -68,7 +68,7 @@ export function ComparisonSection() {
           </div>
 
           {/* ManeExchange way */}
-          <div className="paper-flat border-[var(--accent-navy)]/20 bg-[var(--accent-navy)]/[0.02] p-6 md:p-8">
+          <div className="paper-flat border-[var(--accent-saddle)]/20 bg-[var(--accent-saddle)]/[0.02] p-6 md:p-8">
             <h3 className="mb-6 font-heading text-lg font-semibold text-ink-black">
               The ManeExchange way
             </h3>

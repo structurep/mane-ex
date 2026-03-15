@@ -39,12 +39,12 @@ export function StepPanels({ steps, onStepClick, className }: StepPanelsProps) {
             >
               <span className="flex items-center px-5 py-3.5 text-sm font-medium">
                 {step.status === "complete" ? (
-                  <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-navy group-hover:bg-navy/80">
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-saddle group-hover:bg-saddle/80">
                     <Check className="size-4 text-paper-white" />
                   </span>
                 ) : step.status === "current" ? (
-                  <span className="flex size-8 shrink-0 items-center justify-center rounded-full border-2 border-navy">
-                    <span className="text-[13px] font-semibold text-navy">{step.id}</span>
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-full border-2 border-saddle">
+                    <span className="text-[13px] font-semibold text-saddle">{step.id}</span>
                   </span>
                 ) : (
                   <span className="flex size-8 shrink-0 items-center justify-center rounded-full border-2 border-crease-mid group-hover:border-crease-dark">
@@ -57,7 +57,7 @@ export function StepPanels({ steps, onStepClick, className }: StepPanelsProps) {
                   className={cn(
                     "ml-3 text-sm font-medium",
                     step.status === "complete" && "text-ink-dark",
-                    step.status === "current" && "text-navy",
+                    step.status === "current" && "text-saddle",
                     step.status === "upcoming" &&
                       "text-ink-faint group-hover:text-ink-mid"
                   )}

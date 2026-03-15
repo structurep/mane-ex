@@ -39,8 +39,8 @@ export function BarnConnectStep({
 
         {/* Accept an invite */}
         <div className="flex items-center gap-4 rounded-lg border-2 border-crease-light bg-paper-cream p-5">
-          <div className="rounded-full bg-navy/10 p-3">
-            <Users className="h-5 w-5 text-navy" />
+          <div className="rounded-full bg-saddle/10 p-3">
+            <Users className="h-5 w-5 text-saddle" />
           </div>
           <div>
             <p className="font-medium text-ink-black">I have an invite</p>

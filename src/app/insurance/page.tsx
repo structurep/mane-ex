@@ -44,8 +44,8 @@ const coverageTypes = [
   {
     title: "Liability Coverage",
     icon: AlertTriangle,
-    color: "text-navy",
-    bgColor: "bg-navy/10",
+    color: "text-saddle",
+    bgColor: "bg-saddle/10",
     description:
       "Protects against third-party claims for bodily injury or property damage caused by your horse. Essential for boarding, training, and show environments.",
   },

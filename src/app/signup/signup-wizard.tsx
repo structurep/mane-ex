@@ -175,7 +175,7 @@ export function SignupWizard() {
             <div
               className={`flex h-8 w-8 items-center justify-center rounded-[var(--radius-card)] text-sm font-medium ${
                 s < step
-                  ? "bg-navy text-white"
+                  ? "bg-saddle text-white"
                   : s === step
                     ? "bg-paddock text-white"
                     : "bg-paper-cream text-ink-light"
@@ -185,7 +185,7 @@ export function SignupWizard() {
             </div>
             {s < 4 && (
               <div
-                className={`h-0.5 w-8 ${s < step ? "bg-navy" : "bg-paper-cream"}`}
+                className={`h-0.5 w-8 ${s < step ? "bg-saddle" : "bg-paper-cream"}`}
               />
             )}
           </div>

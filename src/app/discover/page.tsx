@@ -29,14 +29,14 @@ const SECTION_ICONS: Record<string, React.ReactNode> = {
   for_you: <Sparkles className="h-5 w-5 text-gold" />,
   new_this_week: <Clock className="h-5 w-5 text-blue" />,
   trending: <TrendingUp className="h-5 w-5 text-gold" />,
-  just_sold: <Award className="h-5 w-5 text-navy" />,
+  just_sold: <Award className="h-5 w-5 text-saddle" />,
 };
 
 const SECTION_ACCENTS: Record<string, string> = {
   for_you: "bg-gold-light text-gold",
   new_this_week: "bg-blue-light text-blue",
   trending: "bg-gold-light text-gold",
-  just_sold: "bg-red-light text-navy",
+  just_sold: "bg-red-light text-saddle",
 };
 
 export default async function DiscoverPage() {

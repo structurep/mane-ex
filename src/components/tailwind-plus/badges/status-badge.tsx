@@ -9,7 +9,7 @@ export type BadgeVariant =
   | "indigo"
   | "purple"
   | "pink"
-  | "navy"
+  | "saddle"
   | "forest"
   | "gold";
 
@@ -22,7 +22,7 @@ const variantStyles: Record<BadgeVariant, string> = {
   indigo: "border-indigo-400/30 text-indigo-700",
   purple: "border-purple-400/30 text-purple-700",
   pink: "border-pink-400/30 text-pink-700",
-  navy: "border-[var(--accent-navy)]/30 text-[var(--accent-navy)]",
+  saddle: "border-[var(--accent-saddle)]/30 text-[var(--accent-saddle)]",
   forest: "border-[var(--accent-green)]/30 text-[var(--accent-green)]",
   gold: "border-[var(--accent-gold)]/30 text-[var(--accent-gold)]",
 };
@@ -36,7 +36,7 @@ const dotStyles: Record<BadgeVariant, string> = {
   indigo: "fill-indigo-500",
   purple: "fill-purple-500",
   pink: "fill-pink-500",
-  navy: "fill-[var(--accent-navy)]",
+  saddle: "fill-[var(--accent-saddle)]",
   forest: "fill-[var(--accent-green)]",
   gold: "fill-[var(--accent-gold)]",
 };
