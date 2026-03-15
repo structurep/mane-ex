@@ -46,6 +46,7 @@ import { HennekeScoreDisplay } from "@/components/marketplace/henneke-score";
 import { RegistryBadges, type RegistryRecord, type RegistryType } from "@/components/marketplace/registry-lookup";
 import { VerificationChecklist } from "@/components/listings/verification-checklist";
 import { VerificationBadge } from "@/components/listings/verification-badge";
+import { TransportEstimator } from "@/components/listings/transport-estimator";
 import type { ListingRegistryRecord } from "@/types/listings";
 import { toggleFavorite } from "@/actions/listings";
 import {
@@ -781,6 +782,16 @@ export function ListingTabs({ listing, defaultTab = "overview", demandScore, dem
                 Based on buyer engagement in the last 7 days
               </p>
             </div>
+          )}
+
+          {/* Transport Estimator */}
+          {l.location_state && (
+            <TransportEstimator
+              originState={l.location_state}
+              originCity={l.location_city}
+              listingId={l.id}
+              listingName={l.name}
+            />
           )}
 
           {/* ManeVault teaser */}
