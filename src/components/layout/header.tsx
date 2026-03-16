@@ -106,7 +106,7 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b border-[var(--paper-border)] bg-[var(--paper-surface)]/95 backdrop-blur-sm transition-[height,box-shadow] duration-300 ease-out ${
+      className={`sticky top-0 z-50 border-b border-glass bg-warmwhite/95 backdrop-blur-sm transition-[height,box-shadow] duration-300 ease-out ${
         scrolled ? "shadow-[var(--shadow-fold-sm)]" : ""
       }`}
     >
@@ -118,7 +118,7 @@ export function Header() {
         {/* ─── Logo ─── */}
         <Link
           href="/"
-          className="flex shrink-0 items-center gap-3 rounded-[var(--radius-card)] focus-visible:ring-2 focus-visible:ring-[var(--paper-border)] focus-visible:outline-none"
+          className="flex shrink-0 items-center gap-3 rounded-xl focus-visible:ring-2 focus-visible:ring-glass focus-visible:outline-none"
         >
           <Image
             src="/icon.svg"
@@ -129,8 +129,8 @@ export function Header() {
               scrolled ? "h-7 w-7" : "h-8 w-8"
             }`}
           />
-          <span className="hidden font-serif text-xl font-semibold tracking-tight text-[var(--ink-black)] sm:inline">
-            Mane<span className="font-normal text-[var(--ink-mid)]">Exchange</span>
+          <span className="hidden font-serif text-xl font-semibold tracking-tight text-ink sm:inline">
+            Mane<span className="font-normal text-ink-mid">Exchange</span>
           </span>
         </Link>
 
@@ -139,7 +139,7 @@ export function Header() {
           <form onSubmit={handleSearchSubmit} role="search">
             <div className="relative">
               <label htmlFor="header-search" className="sr-only">Search horses</label>
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--ink-faint)]" />
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-faint" />
               <input
                 id="header-search"
                 type="text"
@@ -163,10 +163,10 @@ export function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`rounded-[var(--radius-card)] px-3 py-2 text-[13px] font-medium transition-colors focus-visible:ring-2 focus-visible:ring-[var(--paper-border)] focus-visible:outline-none ${
+                  className={`rounded-xl px-3 py-2 text-[13px] font-medium transition-colors focus-visible:ring-2 focus-visible:ring-glass focus-visible:outline-none ${
                     isActive
-                      ? "bg-[var(--ink-black)]/5 text-[var(--ink-black)]"
-                      : "text-[var(--ink-mid)] hover:bg-[var(--paper-warm)] hover:text-[var(--ink-dark)]"
+                      ? "bg-ink/5 text-ink"
+                      : "text-ink-mid hover:bg-stable hover:text-ink-dark"
                   }`}
                 >
                   {link.label}
@@ -176,32 +176,32 @@ export function Header() {
 
             <Link
               href="/sell"
-              className={`rounded-[var(--radius-card)] px-3 py-2 text-[13px] font-semibold transition-colors ${
+              className={`rounded-xl px-3 py-2 text-[13px] font-semibold transition-colors ${
                 pathname === "/sell"
-                  ? "bg-[var(--ink-black)]/5 text-[var(--ink-black)]"
-                  : "text-[var(--accent-saddle)] hover:bg-[var(--accent-saddle-soft)]"
+                  ? "bg-ink/5 text-ink"
+                  : "text-bronze hover:bg-bronze/[0.08]"
               }`}
             >
               Sell Your Horse
             </Link>
           </nav>
 
-          <div className="mx-2 h-5 w-px bg-[var(--paper-border)]" />
+          <div className="mx-2 h-5 w-px bg-glass" />
 
           {loading ? (
-            <div className="h-8 w-24 animate-shimmer rounded-[var(--radius-card)]" />
+            <div className="h-8 w-24 animate-shimmer rounded-xl" />
           ) : user ? (
             <>
               <Link
                 href="/dashboard/messages"
-                className="rounded-[var(--radius-card)] p-2.5 text-[var(--ink-mid)] transition-colors hover:bg-[var(--paper-warm)] hover:text-[var(--ink-dark)]"
+                className="rounded-xl p-2.5 text-ink-mid transition-colors hover:bg-stable hover:text-ink-dark"
                 aria-label="Messages"
               >
                 <MessageCircle className="h-5 w-5" />
               </Link>
               <Link
                 href="/dashboard/dream-barn"
-                className="rounded-[var(--radius-card)] p-2.5 text-[var(--ink-mid)] transition-colors hover:bg-[var(--accent-saddle-soft)] hover:text-[var(--accent-saddle)]"
+                className="rounded-xl p-2.5 text-ink-mid transition-colors hover:bg-bronze/[0.08] hover:text-bronze"
                 aria-label="Saved"
               >
                 <Heart className="h-5 w-5" />
@@ -213,11 +213,11 @@ export function Header() {
                   onClick={() => setMenuOpen(!menuOpen)}
                   aria-expanded={menuOpen}
                   aria-haspopup="true"
-                  className="flex items-center gap-1.5 rounded-[var(--radius-card)] border border-[var(--paper-border)] py-1 pl-1 pr-2.5 text-sm font-medium text-[var(--ink-dark)] transition-colors hover:bg-[var(--paper-warm)] focus-visible:ring-2 focus-visible:ring-[var(--ink-black)]/20 focus-visible:outline-none"
+                  className="flex items-center gap-1.5 rounded-xl border border-glass py-1 pl-1 pr-2.5 text-sm font-medium text-ink-dark transition-colors hover:bg-stable focus-visible:ring-2 focus-visible:ring-ink/20 focus-visible:outline-none"
                 >
                   <AvatarCircle initials={initials} size={32} />
                   <ChevronDown
-                    className={`h-3.5 w-3.5 text-[var(--ink-faint)] transition-transform ${
+                    className={`h-3.5 w-3.5 text-ink-faint transition-transform ${
                       menuOpen ? "rotate-180" : ""
                     }`}
                   />
@@ -227,23 +227,23 @@ export function Header() {
                   <div className="paper-raised absolute right-0 mt-2 w-48 p-1">
                     <Link
                       href="/dashboard"
-                      className="flex items-center gap-2.5 rounded-[var(--radius-card)] px-3 py-2 text-sm text-[var(--ink-dark)] transition-colors hover:bg-[var(--paper-warm)]"
+                      className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-ink-dark transition-colors hover:bg-stable"
                     >
-                      <LayoutDashboard className="h-4 w-4 text-[var(--ink-faint)]" />
+                      <LayoutDashboard className="h-4 w-4 text-ink-faint" />
                       Dashboard
                     </Link>
                     <Link
                       href="/dashboard/settings"
-                      className="flex items-center gap-2.5 rounded-[var(--radius-card)] px-3 py-2 text-sm text-[var(--ink-dark)] transition-colors hover:bg-[var(--paper-warm)]"
+                      className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-ink-dark transition-colors hover:bg-stable"
                     >
-                      <Settings className="h-4 w-4 text-[var(--ink-faint)]" />
+                      <Settings className="h-4 w-4 text-ink-faint" />
                       Settings
                     </Link>
                     <div className="crease-divider-full my-1" />
                     <form action={signOut}>
                       <button
                         type="submit"
-                        className="flex w-full items-center gap-2.5 rounded-[var(--radius-card)] px-3 py-2 text-sm text-[var(--ink-faint)] transition-colors hover:bg-[var(--paper-warm)] hover:text-[var(--ink-dark)]"
+                        className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-ink-faint transition-colors hover:bg-stable hover:text-ink-dark"
                       >
                         <LogOut className="h-4 w-4" />
                         Sign Out
@@ -269,7 +269,7 @@ export function Header() {
         <div className="flex items-center gap-1 lg:hidden">
           <button
             onClick={() => setSearchOpen(!searchOpen)}
-            className="rounded-[var(--radius-card)] p-2 text-[var(--ink-mid)] hover:bg-[var(--paper-warm)]"
+            className="rounded-xl p-2 text-ink-mid hover:bg-stable"
             aria-label="Search"
           >
             <Search className="h-5 w-5" />
@@ -280,10 +280,10 @@ export function Header() {
 
       {/* ─── Mobile search bar (expandable) ─── */}
       {searchOpen && (
-        <div className="border-t border-[var(--paper-border)] bg-[var(--paper-surface)] px-4 py-3 lg:hidden">
+        <div className="border-t border-glass bg-warmwhite px-4 py-3 lg:hidden">
           <form onSubmit={handleSearchSubmit}>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--ink-faint)]" />
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-faint" />
               <input
                 ref={searchRef}
                 type="text"

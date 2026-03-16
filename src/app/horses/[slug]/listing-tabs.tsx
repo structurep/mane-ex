@@ -167,9 +167,9 @@ export function ListingTabs({ listing, defaultTab = "overview", demandScore, dem
         <div className="mb-6">
           <div className="flex items-start justify-between">
             <div>
-              <h1 className="display-lg text-[var(--ink-black)]">{l.name}</h1>
+              <h1 className="display-lg text-ink">{l.name}</h1>
               <div className="mt-2 flex flex-wrap items-center gap-2">
-                <p className="text-[var(--ink-mid)]">
+                <p className="text-ink-mid">
                   {[l.breed, l.color, l.gender].filter(Boolean).join(" · ")}
                 </p>
                 <VerificationBadge tier={l.verification_tier} />
@@ -192,16 +192,16 @@ export function ListingTabs({ listing, defaultTab = "overview", demandScore, dem
           </div>
 
           {/* Price — visible on mobile/tablet where sidebar is hidden */}
-          <p className="mt-3 font-serif text-3xl font-bold tracking-tight text-[var(--ink-black)] lg:hidden">
+          <p className="mt-3 font-serif text-3xl font-bold tracking-tight text-ink lg:hidden">
             {priceStr}
             {l.price_negotiable && (
-              <span className="ml-2 align-middle text-sm font-normal text-[var(--accent-saddle)]">Negotiable</span>
+              <span className="ml-2 align-middle text-sm font-normal text-bronze">Negotiable</span>
             )}
           </p>
 
           {/* Quick stats bar */}
           <div className="crease-divider mt-4 mb-4" />
-          <div className="flex flex-wrap gap-4 text-sm text-[var(--ink-mid)]">
+          <div className="flex flex-wrap gap-4 text-sm text-ink-mid">
             {l.age_years != null && (
               <span className="flex items-center gap-1.5">
                 <Calendar className="h-4 w-4" />
@@ -279,7 +279,7 @@ export function ListingTabs({ listing, defaultTab = "overview", demandScore, dem
             <div className="space-y-8">
               {/* Seller quote */}
               {l.temperament && (
-                <div className="rounded-lg border border-crease-light bg-[var(--paper-surface)] p-5">
+                <div className="rounded-lg border border-crease-light bg-warmwhite p-5">
                   <div className="border-l-[3px] border-saddle pl-4">
                     <p className="italic text-ink-mid leading-relaxed">
                       &ldquo;{l.temperament}&rdquo;

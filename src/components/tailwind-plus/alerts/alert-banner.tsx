@@ -14,28 +14,28 @@ const variantConfig: Record<
   { border: string; bg: string; icon: typeof CheckCircle; iconColor: string; titleColor: string; textColor: string }
 > = {
   success: {
-    border: "border-l-[var(--accent-green)]",
-    bg: "bg-[var(--accent-green-soft)]",
+    border: "border-l-sage",
+    bg: "bg-sage/[0.08]",
     icon: CheckCircle,
-    iconColor: "text-[var(--accent-green)]",
-    titleColor: "text-[var(--accent-green)]",
-    textColor: "text-[var(--ink-mid)]",
+    iconColor: "text-sage",
+    titleColor: "text-sage",
+    textColor: "text-ink-mid",
   },
   warning: {
-    border: "border-l-[var(--accent-gold)]",
-    bg: "bg-[var(--accent-gold-soft)]",
+    border: "border-l-gold",
+    bg: "bg-gold/[0.08]",
     icon: AlertTriangle,
-    iconColor: "text-[var(--accent-gold)]",
-    titleColor: "text-[var(--ink-dark)]",
-    textColor: "text-[var(--ink-mid)]",
+    iconColor: "text-gold",
+    titleColor: "text-ink-dark",
+    textColor: "text-ink-mid",
   },
   info: {
-    border: "border-l-[var(--accent-blue)]",
-    bg: "bg-[var(--accent-blue-soft)]",
+    border: "border-l-blue",
+    bg: "bg-blue/[0.08]",
     icon: Info,
-    iconColor: "text-[var(--accent-blue)]",
-    titleColor: "text-[var(--ink-dark)]",
-    textColor: "text-[var(--ink-mid)]",
+    iconColor: "text-blue",
+    titleColor: "text-ink-dark",
+    textColor: "text-ink-mid",
   },
   error: {
     border: "border-l-[var(--accent-red)]",
@@ -43,7 +43,7 @@ const variantConfig: Record<
     icon: XCircle,
     iconColor: "text-[var(--accent-red)]",
     titleColor: "text-[var(--accent-red)]",
-    textColor: "text-[var(--ink-mid)]",
+    textColor: "text-ink-mid",
   },
 };
 
@@ -102,7 +102,7 @@ export function AlertBanner({
           <button
             type="button"
             onClick={onDismiss}
-            className={cn("ml-auto -mr-1 -mt-1 rounded-[var(--radius-paper)] p-1 hover:bg-[var(--ink-black)]/5", config.iconColor)}
+            className={cn("ml-auto -mr-1 -mt-1 rounded-[var(--radius-paper)] p-1 hover:bg-ink/5", config.iconColor)}
           >
             <span className="sr-only">Dismiss</span>
             <svg className="size-4" viewBox="0 0 20 20" fill="currentColor">

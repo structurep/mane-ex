@@ -14,7 +14,7 @@ export async function MatchBanner({ listingId }: { listingId: string }) {
   return (
     <div className="paper-flat relative mb-4 flex items-center gap-3 border-l-2 border-l-[var(--accent-gold)] px-4 py-3">
       <Sparkles className="h-4 w-4 flex-none text-[var(--accent-gold)]" />
-      <p className="text-sm text-[var(--ink-dark)]">
+      <p className="text-sm text-ink-dark">
         <span className="font-bold text-[var(--accent-gold)]">{matchPercent}% match</span>
         <span className="mx-1.5 text-[var(--paper-border-strong)]">/</span>
         Excellent match for your preferences

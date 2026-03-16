@@ -222,7 +222,7 @@ export function StepMedia({ data, setField }: StepProps) {
                 key={angle.id}
                 className={`flex cursor-pointer items-start gap-3 rounded-lg border p-3 transition-colors ${
                   checked
-                    ? "border-saddle/30 bg-saddle/5"
+                    ? "border-bronze/30 bg-bronze/5"
                     : "border-crease-light bg-paper-white hover:bg-paper-warm"
                 }`}
               >
@@ -230,7 +230,7 @@ export function StepMedia({ data, setField }: StepProps) {
                   type="checkbox"
                   checked={checked}
                   onChange={() => toggleAngle(angle.id)}
-                  className="mt-0.5 h-4 w-4 rounded border-crease-mid text-saddle accent-saddle"
+                  className="mt-0.5 h-4 w-4 rounded border-glass text-bronze accent-bronze"
                 />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
@@ -256,7 +256,7 @@ export function StepMedia({ data, setField }: StepProps) {
       {/* Photo upload zone */}
       <div>
         <Label>Upload Photos</Label>
-        <div className="relative mt-1.5 rounded-lg border-2 border-dashed border-crease-mid p-8 text-center transition-colors hover:border-ink-black">
+        <div className="relative mt-1.5 rounded-lg border-2 border-dashed border-glass p-8 text-center transition-colors hover:border-ink-black">
           <ImageIcon className="mx-auto h-10 w-10 text-ink-faint" />
           <p className="mt-3 text-sm font-medium text-ink-dark">
             Drag photos here or click to browse
@@ -313,7 +313,7 @@ export function StepMedia({ data, setField }: StepProps) {
                 key={vid.id}
                 className={`flex cursor-pointer items-start gap-3 rounded-lg border p-3 transition-colors ${
                   checked
-                    ? "border-saddle/30 bg-saddle/5"
+                    ? "border-bronze/30 bg-bronze/5"
                     : "border-crease-light bg-paper-white hover:bg-paper-warm"
                 }`}
               >
@@ -321,7 +321,7 @@ export function StepMedia({ data, setField }: StepProps) {
                   type="checkbox"
                   checked={checked}
                   onChange={() => toggleVideo(vid.id)}
-                  className="mt-0.5 h-4 w-4 rounded border-crease-mid text-saddle accent-saddle"
+                  className="mt-0.5 h-4 w-4 rounded border-glass text-bronze accent-bronze"
                 />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
@@ -347,7 +347,7 @@ export function StepMedia({ data, setField }: StepProps) {
       {/* Video upload zone */}
       <div>
         <Label>Upload Videos</Label>
-        <div className="relative mt-1.5 rounded-lg border-2 border-dashed border-crease-mid p-8 text-center transition-colors hover:border-ink-black">
+        <div className="relative mt-1.5 rounded-lg border-2 border-dashed border-glass p-8 text-center transition-colors hover:border-ink-black">
           <Film className="mx-auto h-10 w-10 text-ink-faint" />
           <p className="mt-3 text-sm font-medium text-ink-dark">
             Upload riding or flatwork videos

@@ -1,27 +1,23 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, Noto_Serif_JP } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import { ServiceWorkerRegister } from "@/components/sw-register";
 import { Toaster } from "@/components/ui/sonner";
 import { WebVitals } from "@/components/web-vitals";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const cormorant = Cormorant_Garamond({
+  variable: "--font-display",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const dmSans = DM_Sans({
+  variable: "--font-body",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
   display: "swap",
-});
-
-const notoSerifJP = Noto_Serif_JP({
-  variable: "--font-noto-serif-jp",
-  subsets: ["latin"],
-  display: "optional",
-  weight: ["500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -62,7 +58,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://assets.mixkit.co" />
       </head>
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} ${notoSerifJP.variable} antialiased`}
+        className={`${cormorant.variable} ${dmSans.variable} antialiased`}
       >
         {children}
         <Toaster />

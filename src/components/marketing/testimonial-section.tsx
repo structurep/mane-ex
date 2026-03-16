@@ -26,10 +26,10 @@ export const TestimonialSection = ValuePropsSection;
 
 export function ValuePropsSection() {
   return (
-    <section className="bg-[var(--paper-warm)] px-4 py-12 md:px-8">
+    <section className="bg-stable px-4 py-12 md:px-8">
       <div className="mx-auto max-w-6xl">
-        <p className="overline mb-2 text-center text-[var(--ink-faint)]">WHY MANEEXCHANGE</p>
-        <h2 className="display-lg mb-10 text-center text-[var(--ink-black)]">
+        <p className="overline mb-2 text-center text-ink-faint">WHY MANEEXCHANGE</p>
+        <h2 className="display-lg mb-10 text-center text-ink">
           Built for the way you buy and sell.
         </h2>
         <div className="grid gap-5 md:grid-cols-3">
@@ -40,7 +40,7 @@ export function ValuePropsSection() {
                 key={v.title}
                 className="paper-raised p-6"
               >
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-[var(--radius-card)] bg-primary/10">
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
                   <Icon className="h-5 w-5 text-primary" />
                 </div>
                 <h3 className="text-base font-semibold text-ink-black">

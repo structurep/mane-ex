@@ -133,21 +133,21 @@ export function TransportEstimator({
   return (
     <div className="paper-flat p-5">
       <div className="mb-3 flex items-center gap-2">
-        <Truck className="h-4 w-4 text-[var(--accent-blue)]" />
-        <span className="text-sm font-medium text-[var(--ink-dark)]">
+        <Truck className="h-4 w-4 text-blue" />
+        <span className="text-sm font-medium text-ink-dark">
           Transport Estimate
         </span>
       </div>
 
       {/* Origin */}
-      <div className="mb-3 flex items-center gap-2 text-xs text-[var(--ink-mid)]">
+      <div className="mb-3 flex items-center gap-2 text-xs text-ink-mid">
         <MapPin className="h-3 w-3" />
-        <span>From: <span className="font-medium text-[var(--ink-dark)]">{originLabel}</span></span>
+        <span>From: <span className="font-medium text-ink-dark">{originLabel}</span></span>
       </div>
 
       {/* Destination selector */}
       <div className="mb-1">
-        <label htmlFor="transport-dest" className="body-sm mb-1 block text-[var(--ink-faint)]">
+        <label htmlFor="transport-dest" className="body-sm mb-1 block text-ink-faint">
           Your state
         </label>
         <div className="relative">
@@ -165,14 +165,14 @@ export function TransportEstimator({
             ))}
           </select>
           {geoLoading && (
-            <Locate className="absolute right-9 top-1/2 h-3.5 w-3.5 -translate-y-1/2 animate-pulse text-[var(--accent-blue)]" />
+            <Locate className="absolute right-9 top-1/2 h-3.5 w-3.5 -translate-y-1/2 animate-pulse text-blue" />
           )}
         </div>
       </div>
 
       {/* Source indicator */}
       {sourceLabel && (
-        <p className="mb-3 flex items-center gap-1 text-[10px] text-[var(--accent-blue)]">
+        <p className="mb-3 flex items-center gap-1 text-[10px] text-blue">
           <Locate className="h-2.5 w-2.5" />
           {sourceLabel}
         </p>
@@ -185,27 +185,27 @@ export function TransportEstimator({
           <div className="crease-divider" />
 
           <div className="flex items-center justify-between text-sm">
-            <span className="text-[var(--ink-mid)]">Est. Distance</span>
-            <span className="font-medium text-[var(--ink-dark)]">
+            <span className="text-ink-mid">Est. Distance</span>
+            <span className="font-medium text-ink-dark">
               {estimate.distanceMiles.toLocaleString()} mi
             </span>
           </div>
 
           <div className="flex items-center justify-between text-sm">
-            <span className="text-[var(--ink-mid)]">Est. Cost</span>
-            <span className="font-serif text-lg font-bold text-[var(--ink-black)]">
+            <span className="text-ink-mid">Est. Cost</span>
+            <span className="font-serif text-lg font-bold text-ink">
               ${estimate.estimatedCostLow.toLocaleString()} – ${estimate.estimatedCostHigh.toLocaleString()}
             </span>
           </div>
 
-          <p className="text-[10px] text-[var(--ink-faint)]">
+          <p className="text-[10px] text-ink-faint">
             Estimates based on standard commercial hauler rates. Actual costs vary by carrier, season, and horse count.
           </p>
 
           {/* ── Lead capture actions ── */}
           {!requestSent ? (
             <div className="space-y-2">
-              <p className="text-[11px] font-medium text-[var(--ink-mid)]">
+              <p className="text-[11px] font-medium text-ink-mid">
                 Need help arranging transport?
               </p>
 
@@ -224,7 +224,7 @@ export function TransportEstimator({
                       document.getElementById("contact-seller")?.scrollIntoView({ behavior: "smooth" });
                     }
                   }}
-                  className="flex items-center justify-center gap-1.5 rounded-[var(--radius-card)] border border-[var(--paper-border)] bg-[var(--paper-surface)] px-2 py-2 text-[11px] font-medium text-[var(--ink-dark)] transition-colors hover:border-[var(--paper-border-strong)] hover:text-[var(--ink-black)]"
+                  className="flex items-center justify-center gap-1.5 rounded-xl border border-glass bg-warmwhite px-2 py-2 text-[11px] font-medium text-ink-dark transition-colors hover:border-[var(--paper-border-strong)] hover:text-ink"
                 >
                   <MessageCircle className="h-3 w-3" />
                   Contact Seller
@@ -235,7 +235,7 @@ export function TransportEstimator({
                   type="button"
                   onClick={handleTransportRequest}
                   disabled={isPending}
-                  className="flex items-center justify-center gap-1.5 rounded-[var(--radius-card)] border border-[var(--accent-blue)]/30 bg-[var(--accent-blue)]/5 px-2 py-2 text-[11px] font-medium text-[var(--accent-blue)] transition-colors hover:bg-[var(--accent-blue)]/10 disabled:opacity-50"
+                  className="flex items-center justify-center gap-1.5 rounded-xl border border-blue/30 bg-blue/5 px-2 py-2 text-[11px] font-medium text-blue transition-colors hover:bg-blue/10 disabled:opacity-50"
                 >
                   <Truck className="h-3 w-3" />
                   {isPending ? "Sending..." : "Transport Help"}
@@ -244,16 +244,17 @@ export function TransportEstimator({
 
               {requestError && (
                 <p className="text-[10px] text-[var(--accent-red)]">{requestError}</p>
+
               )}
             </div>
           ) : (
-            <div className="animate-fade-up flex items-start gap-2 rounded-[var(--radius-card)] bg-[var(--accent-green)]/5 p-3">
-              <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[var(--accent-green)]" />
+            <div className="animate-fade-up flex items-start gap-2 rounded-xl bg-sage/5 p-3">
+              <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-sage" />
               <div>
-                <p className="text-xs font-medium text-[var(--accent-green)]">
+                <p className="text-xs font-medium text-sage">
                   Transport request sent
                 </p>
-                <p className="mt-0.5 text-[10px] text-[var(--ink-mid)]">
+                <p className="mt-0.5 text-[10px] text-ink-mid">
                   A transporter will contact you soon.
                 </p>
               </div>
@@ -266,13 +267,13 @@ export function TransportEstimator({
       {geoLoading && !estimate && (
         <div className="space-y-2">
           <div className="crease-divider" />
-          <div className="h-4 w-2/3 animate-shimmer rounded-[var(--radius-card)]" />
-          <div className="h-6 w-1/2 animate-shimmer rounded-[var(--radius-card)]" />
+          <div className="h-4 w-2/3 animate-shimmer rounded-xl" />
+          <div className="h-6 w-1/2 animate-shimmer rounded-xl" />
         </div>
       )}
 
       {!estimate && !geoLoading && destState === "" && (
-        <p className="text-[11px] text-[var(--ink-faint)]">
+        <p className="text-[11px] text-ink-faint">
           Select your state to see estimated shipping costs.
         </p>
       )}

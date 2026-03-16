@@ -41,7 +41,7 @@ export function AlertCard({ alert }: { alert: MatchAlert }) {
       )}
     >
       {/* Thumbnail */}
-      <div className="relative h-20 w-20 flex-none overflow-hidden rounded-[var(--radius-card)] border border-[var(--paper-border)] bg-[var(--paper-warm)]">
+      <div className="relative h-20 w-20 flex-none overflow-hidden rounded-xl border border-glass bg-stable">
         {primary ? (
           <Image
             src={primary.url}
@@ -51,7 +51,7 @@ export function AlertCard({ alert }: { alert: MatchAlert }) {
             className="object-cover"
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-xs text-[var(--ink-faint)]">
+          <div className="flex h-full items-center justify-center text-xs text-ink-faint">
             No photo
           </div>
         )}
@@ -61,10 +61,10 @@ export function AlertCard({ alert }: { alert: MatchAlert }) {
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
-            <h3 className="truncate text-sm font-semibold text-[var(--ink-black)]">
+            <h3 className="truncate text-sm font-semibold text-ink">
               {l.name}
             </h3>
-            <p className="text-sm font-medium text-[var(--ink-dark)]">{priceStr}</p>
+            <p className="text-sm font-medium text-ink-dark">{priceStr}</p>
           </div>
           <div className="badge-seal flex-none border-[var(--accent-gold)]/40 text-[var(--accent-gold)]">
             <Star className="h-3 w-3" />
@@ -72,7 +72,7 @@ export function AlertCard({ alert }: { alert: MatchAlert }) {
           </div>
         </div>
 
-        <div className="mt-1 flex items-center gap-3 text-xs text-[var(--ink-mid)]">
+        <div className="mt-1 flex items-center gap-3 text-xs text-ink-mid">
           {l.breed && <span>{l.breed}</span>}
           {l.location_state && (
             <span className="flex items-center gap-0.5">
@@ -80,7 +80,7 @@ export function AlertCard({ alert }: { alert: MatchAlert }) {
               {l.location_state}
             </span>
           )}
-          <span className="ml-auto text-[var(--ink-faint)]">
+          <span className="ml-auto text-ink-faint">
             {timeAgo(alert.created_at)}
           </span>
         </div>

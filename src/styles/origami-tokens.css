@@ -1,58 +1,81 @@
 /* ─────────────────────────────────────────────────────
-   Origami Design System — ManeExchange
-   Precision · Transformation · Restraint
+   Soft Precision Design System — ManeExchange
+   Warmth · Glass · Restraint
    ───────────────────────────────────────────────────── */
 
 :root {
-  /* ── Paper Surfaces (warm linen) ── */
-  --paper-bg: #FAF6F1;
-  --paper-surface: #FFFFFF;
-  --paper-surface-raised: #FDFAF6;
-  --paper-warm: #F3EDE5;
-  --paper-washi: #E8DFD4;
-  --paper-border: #DDD4C6;
-  --paper-border-strong: #C8BCA8;
-  --paper-crease: #EBE3D8;
+  /* ── Paper & Ground (warm cloud tones) ── */
+  --paper-bg: #F6F4F0;           /* cloud — primary page bg */
+  --paper-surface: #FEFDFB;      /* warmwhite — card interiors */
+  --paper-surface-raised: #FAF8F5; /* linen — elevated surfaces */
+  --paper-warm: #F5F2EC;         /* stable — nav/header bg */
+  --paper-washi: #EDE8DF;        /* washi — secondary bg, fold reveals */
+  --paper-border: rgba(42, 37, 32, 0.06); /* glass border */
+  --paper-border-strong: rgba(42, 37, 32, 0.12);
+  --paper-crease: #EDE8DF;
 
-  /* ── Ink System (espresso) ── */
-  --ink-black: #1C1410;
-  --ink-dark: #2E241D;
-  --ink-mid: #5A4E42;
-  --ink-soft: #7D7165;
-  --ink-faint: #9A8E82;
-  --ink-ghost: #BDB3A6;
+  /* ── Ink System (warm brown-blacks) ── */
+  --ink-black: #1C1B18;
+  --ink-dark: #2E2D28;
+  --ink-mid: #5A5750;
+  --ink-soft: #8A8078;
+  --ink-faint: #B8B0A0;
+  --ink-ghost: #D8D3C8;
 
-  /* ── Accent System (restrained, institutional) ── */
-  /* Saddle Brown — primary brand accent */
-  --accent-saddle: #8B5E3C;
-  --accent-saddle-soft: rgba(139, 94, 60, 0.08);
-  --accent-saddle-900: #5C3D27;
-  --accent-saddle-800: #6E4A31;
-  --accent-saddle-700: #8B5E3C;
-  --accent-saddle-600: #A87B5A;
-  --accent-saddle-500: #C4A07A;
-  /* Red — destructive / error / warning only */
-  --accent-red: #B83B2E;
-  --accent-red-soft: rgba(184, 59, 46, 0.08);
-  /* Gold — premium states only */
+  /* ── Rose Bronze — Brand Signature ── */
+  --accent-bronze: #B07A6E;
+  --accent-bronze-deep: #8E5E54;
+  --accent-bronze-muted: #C9A098;
+  --accent-bronze-light: #E0C4BE;
+
+  /* Legacy alias — saddle maps to bronze for backward compat */
+  --accent-saddle: #B07A6E;
+  --accent-saddle-soft: rgba(176, 122, 110, 0.08);
+  --accent-saddle-900: #8E5E54;
+  --accent-saddle-800: #9A6A5E;
+  --accent-saddle-700: #B07A6E;
+  --accent-saddle-600: #C9A098;
+  --accent-saddle-500: #E0C4BE;
+
+  /* ── Nature Accents ── */
+  --accent-sage: #7A9B7E;
+  --accent-sage-soft: #A8C4AA;
+  --accent-sage-muted: #C5D8C7;
+  --accent-leather: #8B6E52;
+  --accent-leather-soft: #B8986E;
+  --accent-blush: #C4A09A;
+  --accent-blush-soft: #DCC4BE;
+  --accent-dusk: #8B7B9B;
+  --accent-dusk-soft: #B8AEC4;
+  --accent-earth: #9B8870;
+  --accent-earth-soft: #C4B49C;
+
+  /* Red — destructive / error only */
+  --accent-red: #B07070;
+  --accent-red-soft: rgba(176, 112, 112, 0.08);
+  /* Gold — premium states */
   --accent-gold: #BF9530;
   --accent-gold-soft: rgba(191, 149, 48, 0.10);
-  /* Green — semantic success/confirmation only */
-  --accent-green: #4E7A5B;
-  --accent-green-soft: rgba(78, 122, 91, 0.08);
+  /* Green — semantic success/confirmation */
+  --accent-green: #7A9B7E;
+  --accent-green-soft: rgba(122, 155, 126, 0.08);
   /* Blue — informational */
   --accent-blue: #4A7BAD;
   --accent-blue-soft: rgba(74, 123, 173, 0.08);
 
-  /* ── Paper-Stack Shadows (warmer tint) ── */
-  --shadow-fold-sm: 0 1px 2px rgba(28, 20, 16, 0.04),
-                    0 0 0 1px rgba(28, 20, 16, 0.02);
-  --shadow-fold-md: 0 2px 8px rgba(28, 20, 16, 0.06),
-                    0 1px 2px rgba(28, 20, 16, 0.03);
-  --shadow-fold-lg: 0 8px 24px rgba(28, 20, 16, 0.08),
-                    0 2px 6px rgba(28, 20, 16, 0.04);
-  --shadow-fold-hover: 0 12px 32px rgba(28, 20, 16, 0.10),
-                       0 4px 8px rgba(28, 20, 16, 0.05);
+  /* ── Shadows — Soft Precision ── */
+  --shadow-rest: 0 1px 3px rgba(28,27,24,0.04),
+                 0 1px 2px rgba(28,27,24,0.03);
+  --shadow-fold-sm: 0 1px 3px rgba(28,27,24,0.04),
+                    0 1px 2px rgba(28,27,24,0.03);
+  --shadow-fold-md: 0 4px 12px rgba(28,27,24,0.06),
+                    0 2px 4px rgba(28,27,24,0.04);
+  --shadow-fold-lg: 0 12px 32px rgba(28,27,24,0.08),
+                    0 4px 8px rgba(28,27,24,0.04);
+  --shadow-fold-hover: 0 20px 48px rgba(28,27,24,0.10),
+                       0 8px 16px rgba(28,27,24,0.05);
+  --shadow-bronze: 0 8px 24px rgba(176,122,110,0.12),
+                   0 2px 6px rgba(176,122,110,0.08);
 
   /* ── Spacing Scale (8px grid) ── */
   --space-1: 4px;
@@ -67,14 +90,15 @@
   --space-16: 64px;
   --space-24: 96px;
 
-  /* ── Radii (sharp, geometric) ── */
-  --radius-paper: 3px;
-  --radius-card: 4px;
-  --radius-panel: 6px;
-  --radius-badge: 2px;
+  /* ── Radii (soft, rounded) ── */
+  --radius-paper: 8px;
+  --radius-card: 12px;
+  --radius-panel: 16px;
+  --radius-badge: 999px;
 
-  /* ── Transitions (paper-like, deliberate) ── */
-  --ease-paper: cubic-bezier(0.25, 0.1, 0.25, 1);
-  --duration-lift: 0.3s;
+  /* ── Transitions (smooth, expressive) ── */
+  --ease-paper: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-lift: 0.5s;
   --duration-fold: 0.2s;
 }

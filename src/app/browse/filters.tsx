@@ -88,10 +88,10 @@ function FilterPill({
     <button
       type="button"
       onClick={onClick}
-      className={`rounded-[var(--radius-card)] border px-3 py-1.5 text-[13px] font-medium transition-all duration-150 ${
+      className={`rounded-xl border px-3 py-1.5 text-[13px] font-medium transition-all duration-150 ${
         active
-          ? "border-[var(--accent-gold)] bg-[var(--accent-gold)]/10 text-[var(--ink-black)]"
-          : "border-[var(--paper-border)] bg-[var(--paper-surface)] text-[var(--ink-mid)] hover:border-[var(--paper-border-strong)] hover:text-[var(--ink-dark)]"
+          ? "border-gold bg-gold/10 text-ink"
+          : "border-border bg-warmwhite text-ink-mid hover:border-crease-mid hover:text-ink-dark"
       }`}
     >
       {label}
@@ -206,11 +206,11 @@ export function BrowseFilters({ params }: Props) {
       <div className="flex flex-wrap items-center gap-2">
         {/* Search (desktop only) */}
         <div className="relative hidden md:block">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--ink-faint)]" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-faint" />
           <Input
             placeholder="Search..."
             defaultValue={params.q || ""}
-            className="input-paper h-9 w-44 pl-9 text-[13px] placeholder:text-[var(--ink-faint)]"
+            className="input-paper h-9 w-44 pl-9 text-[13px] placeholder:text-ink-faint"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 updateFilter("q", (e.target as HTMLInputElement).value);
@@ -224,12 +224,12 @@ export function BrowseFilters({ params }: Props) {
           variant="outline"
           size="sm"
           onClick={() => setSheetOpen(true)}
-          className="rounded-[var(--radius-card)] border-[var(--paper-border)] md:hidden"
+          className="rounded-xl border-border md:hidden"
         >
           <SlidersHorizontal className="mr-1.5 h-3.5 w-3.5" />
           Filters
           {totalFilterCount > 0 && (
-            <span className="ml-1 inline-flex h-4 min-w-4 items-center justify-center rounded-[var(--radius-badge)] bg-[var(--accent-gold)] px-1 text-[10px] font-bold text-[var(--paper-surface)]">
+            <span className="ml-1 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-gold px-1 text-[10px] font-bold text-warmwhite">
               {totalFilterCount}
             </span>
           )}
@@ -288,12 +288,12 @@ export function BrowseFilters({ params }: Props) {
         <button
           type="button"
           onClick={() => setSheetOpen(true)}
-          className="hidden items-center gap-1.5 rounded-[var(--radius-card)] border border-[var(--paper-border)] px-3.5 py-1.5 text-[13px] font-medium text-[var(--ink-mid)] transition-colors hover:border-[var(--paper-border-strong)] hover:text-[var(--ink-dark)] md:flex"
+          className="hidden items-center gap-1.5 rounded-xl border border-border px-3.5 py-1.5 text-[13px] font-medium text-ink-mid transition-colors hover:border-crease-mid hover:text-ink-dark md:flex"
         >
           <SlidersHorizontal className="h-3.5 w-3.5" />
           More
           {advancedFilterCount > 0 && (
-            <span className="inline-flex h-4 min-w-4 items-center justify-center rounded-[var(--radius-badge)] bg-[var(--accent-gold)] px-1 text-[10px] font-bold text-[var(--paper-surface)]">
+            <span className="inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-gold px-1 text-[10px] font-bold text-warmwhite">
               {advancedFilterCount}
             </span>
           )}
@@ -325,10 +325,10 @@ export function BrowseFilters({ params }: Props) {
               key={chip.label}
               type="button"
               onClick={chip.onClear}
-              className="group flex items-center gap-1 rounded-[var(--radius-card)] border border-[var(--paper-border)] bg-[var(--paper-surface)] px-2.5 py-1 text-[12px] font-medium text-[var(--ink-dark)] transition-all hover:border-[var(--accent-saddle)]/30 hover:bg-[var(--accent-saddle-soft)] hover:text-[var(--accent-saddle)]"
+              className="group flex items-center gap-1 rounded-xl border border-border bg-warmwhite px-2.5 py-1 text-[12px] font-medium text-ink-dark transition-all hover:border-bronze/30 hover:bg-bronze/[0.08] hover:text-bronze"
             >
               {chip.label}
-              <X className="h-3 w-3 text-[var(--ink-faint)] transition-colors group-hover:text-[var(--accent-saddle)]" />
+              <X className="h-3 w-3 text-ink-faint transition-colors group-hover:text-bronze" />
             </button>
           ))}
           <button
@@ -343,18 +343,18 @@ export function BrowseFilters({ params }: Props) {
 
       {/* ─── Filter Sheet (mobile + advanced) ─── */}
       <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-        <SheetContent side="right" className="flex flex-col overflow-hidden bg-[var(--paper-bg)] sm:max-w-sm">
+        <SheetContent side="right" className="flex flex-col overflow-hidden bg-cloud sm:max-w-sm">
           {/* Sticky header */}
-          <SheetHeader className="border-b border-[var(--paper-border)] bg-[var(--paper-surface)] px-5 pb-4">
+          <SheetHeader className="border-b border-border bg-warmwhite px-5 pb-4">
             <div className="flex items-center justify-between">
-              <SheetTitle className="display-md text-[var(--ink-black)]">Filters</SheetTitle>
+              <SheetTitle className="display-md text-ink">Filters</SheetTitle>
               {totalFilterCount > 0 && (
-                <span className="badge-seal text-[var(--accent-gold)]">
+                <span className="badge-seal text-gold">
                   {totalFilterCount}
                 </span>
               )}
             </div>
-            <SheetDescription className="text-[13px] text-[var(--ink-faint)]">
+            <SheetDescription className="text-[13px] text-ink-faint">
               {totalFilterCount > 0
                 ? `${totalFilterCount} filter${totalFilterCount !== 1 ? "s" : ""} applied`
                 : "Refine your search results"}
@@ -534,16 +534,16 @@ export function BrowseFilters({ params }: Props) {
                         key={opt.value}
                         type="button"
                         onClick={() => updateFilter("soundness", opt.value)}
-                        className={`flex w-full items-center gap-3 rounded-[var(--radius-card)] px-3 py-3 text-left text-sm transition-colors ${
+                        className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm transition-colors ${
                           selected
-                            ? "bg-[var(--accent-gold)]/5 text-[var(--ink-black)]"
-                            : "text-[var(--ink-mid)] hover:bg-[var(--paper-warm)]"
+                            ? "bg-gold/5 text-ink"
+                            : "text-ink-mid hover:bg-stable"
                         }`}
                       >
                         <span className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 transition-colors ${
-                          selected ? "border-[var(--ink-black)]" : "border-[var(--paper-border-strong)]"
+                          selected ? "border-ink" : "border-crease-mid"
                         }`}>
-                          {selected && <span className="h-2 w-2 rounded-full bg-[var(--ink-black)]" />}
+                          {selected && <span className="h-2 w-2 rounded-full bg-ink" />}
                         </span>
                         {opt.label}
                       </button>
@@ -577,12 +577,12 @@ export function BrowseFilters({ params }: Props) {
           </div>
 
           {/* Sticky footer with apply/reset */}
-          <SheetFooter className="border-t border-[var(--paper-border)] bg-[var(--paper-surface)] px-5 py-4">
+          <SheetFooter className="border-t border-border bg-warmwhite px-5 py-4">
             <div className="flex w-full gap-3">
               {hasFilters && (
                 <Button
                   variant="outline"
-                  className="flex-1 border-[var(--paper-border)] text-[var(--ink-mid)] hover:text-[var(--ink-dark)]"
+                  className="flex-1 border-border text-ink-mid hover:text-ink-dark"
                   onClick={() => {
                     clearFilters();
                     setSheetOpen(false);

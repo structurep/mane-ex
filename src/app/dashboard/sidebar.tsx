@@ -102,7 +102,7 @@ export function DashboardSidebar() {
   });
 
   return (
-    <aside className="sticky top-14 hidden h-[calc(100vh-3.5rem)] w-56 shrink-0 border-r border-[var(--paper-border)] bg-[var(--paper-washi)] md:block">
+    <aside className="sticky top-14 hidden h-[calc(100vh-3.5rem)] w-56 shrink-0 border-r border-glass bg-washi md:block">
       <div className="flex h-full flex-col overflow-y-auto">
         {/* New listing CTA */}
         <div className="p-4 pb-2">
@@ -137,7 +137,7 @@ export function DashboardSidebar() {
                       isCollapsible && "cursor-pointer hover:text-ink-mid"
                     )}
                   >
-                    <span className="overline text-[var(--ink-faint)]">
+                    <span className="overline text-ink-faint">
                       {group.label}
                     </span>
                     {isCollapsible && (
@@ -168,16 +168,16 @@ export function DashboardSidebar() {
                           key={item.href}
                           href={item.href}
                           className={cn(
-                            "group flex items-center gap-2.5 rounded-[var(--radius-card)] px-2.5 py-2 text-[13px] font-medium transition-colors",
+                            "group flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-[13px] font-medium transition-colors",
                             isActive
-                              ? "bg-[var(--paper-surface)] text-[var(--ink-black)] shadow-[var(--shadow-fold-sm)]"
-                              : "text-[var(--ink-mid)] hover:bg-[var(--paper-surface)]/60 hover:text-[var(--ink-dark)]"
+                              ? "bg-warmwhite text-ink shadow-[var(--shadow-fold-sm)]"
+                              : "text-ink-mid hover:bg-warmwhite/60 hover:text-ink-dark"
                           )}
                         >
                           <Icon
                             className={cn(
                               "h-4 w-4 shrink-0",
-                              isActive ? "text-[var(--accent-saddle)]" : "text-[var(--ink-faint)] group-hover:text-[var(--ink-mid)]"
+                              isActive ? "text-bronze" : "text-ink-faint group-hover:text-ink-mid"
                             )}
                           />
                           {item.label}
@@ -192,11 +192,11 @@ export function DashboardSidebar() {
         </nav>
 
         {/* Sign out */}
-        <div className="border-t border-[var(--paper-border)] px-3 py-3">
+        <div className="border-t border-glass px-3 py-3">
           <form action={signOut}>
             <button
               type="submit"
-              className="flex w-full items-center gap-2.5 rounded-[var(--radius-card)] px-2.5 py-2 text-[13px] font-medium text-[var(--ink-faint)] transition-colors hover:bg-[var(--paper-warm)] hover:text-[var(--ink-dark)]"
+              className="flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-[13px] font-medium text-ink-faint transition-colors hover:bg-stable hover:text-ink-dark"
             >
               <LogOut className="h-4 w-4" />
               Sign Out

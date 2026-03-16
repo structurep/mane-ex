@@ -35,13 +35,13 @@ const socialLinks = [
 export function Footer() {
   return (
     <footer>
-      <div className="border-t border-[var(--paper-border)] bg-[var(--paper-washi)]">
+      <div className="border-t border-glass bg-washi">
         <div className="mx-auto max-w-[1200px] px-4 py-16 md:px-8">
           {/* Link grid */}
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
             {Object.entries(footerLinks).map(([key, links]) => (
               <div key={key}>
-                <p className="overline mb-4 text-[var(--ink-mid)]">
+                <p className="overline mb-4 text-ink-mid">
                   {key.charAt(0).toUpperCase() + key.slice(1)}
                 </p>
                 <ul className="space-y-3">
@@ -49,7 +49,7 @@ export function Footer() {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="rounded-[var(--radius-paper)] text-[13px] text-[var(--ink-soft)] transition-colors hover:text-[var(--ink-black)] focus-visible:ring-2 focus-visible:ring-[var(--paper-border)] focus-visible:outline-none"
+                        className="rounded-lg text-[13px] text-ink-soft transition-colors hover:text-ink focus-visible:ring-2 focus-visible:ring-glass focus-visible:outline-none"
                       >
                         {link.label}
                       </Link>
@@ -70,7 +70,7 @@ export function Footer() {
                 width={24}
                 height={24}
               />
-              <span className="text-[13px] text-[var(--ink-faint)]">
+              <span className="text-[13px] text-ink-faint">
                 &copy; {new Date().getFullYear()} ManeExchange
               </span>
             </div>
@@ -84,7 +84,7 @@ export function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className="rounded-[var(--radius-paper)] text-[var(--ink-faint)] transition-colors hover:text-[var(--ink-dark)] focus-visible:ring-2 focus-visible:ring-[var(--paper-border)] focus-visible:outline-none"
+                    className="rounded-lg text-ink-faint transition-colors hover:text-ink-dark focus-visible:ring-2 focus-visible:ring-glass focus-visible:outline-none"
                   >
                     <Icon className="h-4 w-4" />
                   </a>

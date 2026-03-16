@@ -294,10 +294,10 @@ export default async function DashboardPage() {
       {/* Header */}
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="display-md text-[var(--ink-black)]">
+          <h1 className="display-md text-ink">
             Dashboard
           </h1>
-          <p className="mt-1 text-sm text-[var(--ink-mid)]">Your marketplace at a glance.</p>
+          <p className="mt-1 text-sm text-ink-mid">Your marketplace at a glance.</p>
         </div>
         <Button asChild>
           <Link href={getCreateListingUrl()}>
@@ -352,8 +352,8 @@ export default async function DashboardPage() {
           const inner = (
             <div className="paper-raised p-4 transition-all hover:shadow-folded">
               <Icon className={`h-4 w-4 ${kpi.accent}`} />
-              <p className="mt-2 font-serif text-2xl font-bold text-[var(--ink-black)]">{kpi.value}</p>
-              <p className="overline mt-1 text-[var(--ink-faint)]">{kpi.label}</p>
+              <p className="mt-2 font-serif text-2xl font-bold text-ink">{kpi.value}</p>
+              <p className="overline mt-1 text-ink-faint">{kpi.label}</p>
             </div>
           );
           return kpi.href ? (
@@ -418,7 +418,7 @@ export default async function DashboardPage() {
             <div key={item.stage} className="flex items-center gap-1.5">
               <div className="paper-flat min-w-[100px] flex-1 px-4 py-3 text-center">
                 <p className={`font-serif text-xl font-bold ${item.textColor}`}>{item.count}</p>
-                <p className="overline mt-1 text-[var(--ink-faint)]">{item.stage}</p>
+                <p className="overline mt-1 text-ink-faint">{item.stage}</p>
               </div>
               {i < pipelineStages.length - 1 && (
                 <ArrowRight className="h-3 w-3 shrink-0 text-crease-mid" />

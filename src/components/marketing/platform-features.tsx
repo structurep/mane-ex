@@ -18,13 +18,13 @@ const features = [
     icon: CreditCard,
     title: "Mane Pay",
     description: "Secure escrow payments",
-    color: "text-saddle bg-saddle/10",
+    color: "text-bronze bg-bronze/10",
   },
   {
     icon: GitCompareArrows,
     title: "ISO Matching",
     description: "Buyers come to you",
-    color: "text-saddle bg-saddle/10",
+    color: "text-bronze bg-bronze/10",
   },
   {
     icon: FileCheck,
@@ -48,14 +48,14 @@ const features = [
 
 export function PlatformFeatures() {
   return (
-    <section aria-label="Platform features" className="bg-[var(--paper-surface)] px-4 py-14 md:px-8 md:py-18">
+    <section aria-label="Platform features" className="bg-warmwhite px-4 py-14 md:px-8 md:py-18">
       <div className="mx-auto max-w-5xl">
         <div className="mb-10 text-center">
-          <p className="overline mb-2 text-[var(--ink-faint)]">PLATFORM</p>
-          <h2 className="display-lg text-[var(--ink-black)]">
+          <p className="overline mb-2 text-ink-faint">PLATFORM</p>
+          <h2 className="display-lg text-ink">
             Everything you need. One platform.
           </h2>
-          <p className="mt-3 text-[var(--ink-mid)]">
+          <p className="mt-3 text-ink-mid">
             Search, compare, verify, pay, and ship &mdash; all without leaving
             ManeExchange.
           </p>
@@ -69,7 +69,7 @@ export function PlatformFeatures() {
                 className="flex flex-col items-center text-center"
               >
                 <div
-                  className={`mb-3 flex h-14 w-14 items-center justify-center rounded-[var(--radius-card)] ${f.color}`}
+                  className={`mb-3 flex h-14 w-14 items-center justify-center rounded-xl ${f.color}`}
                 >
                   <Icon className="h-6 w-6" />
                 </div>

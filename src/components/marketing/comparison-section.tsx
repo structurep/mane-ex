@@ -41,11 +41,11 @@ export function ComparisonSection() {
     <section aria-label="How ManeExchange compares" className="bg-paper-white px-4 py-16 md:px-8 md:py-20">
       <div className="mx-auto max-w-5xl">
         <div className="mb-10 text-center">
-          <p className="overline mb-2 text-[var(--ink-faint)]">COMPARISON</p>
-          <h2 className="display-lg text-[var(--ink-black)]">
+          <p className="overline mb-2 text-ink-faint">COMPARISON</p>
+          <h2 className="display-lg text-ink">
             A better way to find your horse.
           </h2>
-          <p className="mt-3 text-[var(--ink-mid)]">
+          <p className="mt-3 text-ink-mid">
             The horse market has been broken for decades. We&apos;re fixing it.
           </p>
         </div>
@@ -68,7 +68,7 @@ export function ComparisonSection() {
           </div>
 
           {/* ManeExchange way */}
-          <div className="paper-flat border-[var(--accent-saddle)]/20 bg-[var(--accent-saddle)]/[0.02] p-6 md:p-8">
+          <div className="paper-flat border-bronze/20 bg-bronze/[0.02] p-6 md:p-8">
             <h3 className="mb-6 font-heading text-lg font-semibold text-ink-black">
               The ManeExchange way
             </h3>

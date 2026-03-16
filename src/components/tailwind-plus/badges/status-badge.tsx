@@ -14,31 +14,31 @@ export type BadgeVariant =
   | "gold";
 
 const variantStyles: Record<BadgeVariant, string> = {
-  gray: "border-[var(--ink-faint)]/30 text-[var(--ink-mid)]",
+  gray: "border-ink-faint/30 text-ink-mid",
   red: "border-red-400/30 text-red-700",
   yellow: "border-yellow-400/30 text-yellow-800",
-  green: "border-[var(--accent-green)]/30 text-[var(--accent-green)]",
-  blue: "border-[var(--accent-blue)]/30 text-[var(--accent-blue)]",
+  green: "border-sage/30 text-sage",
+  blue: "border-blue/30 text-blue",
   indigo: "border-indigo-400/30 text-indigo-700",
   purple: "border-purple-400/30 text-purple-700",
   pink: "border-pink-400/30 text-pink-700",
-  saddle: "border-[var(--accent-saddle)]/30 text-[var(--accent-saddle)]",
-  forest: "border-[var(--accent-green)]/30 text-[var(--accent-green)]",
-  gold: "border-[var(--accent-gold)]/30 text-[var(--accent-gold)]",
+  saddle: "border-bronze/30 text-bronze",
+  forest: "border-sage/30 text-sage",
+  gold: "border-gold/30 text-gold",
 };
 
 const dotStyles: Record<BadgeVariant, string> = {
-  gray: "fill-[var(--ink-faint)]",
+  gray: "fill-ink-faint",
   red: "fill-red-500",
   yellow: "fill-yellow-500",
-  green: "fill-[var(--accent-green)]",
-  blue: "fill-[var(--accent-blue)]",
+  green: "fill-sage",
+  blue: "fill-blue",
   indigo: "fill-indigo-500",
   purple: "fill-purple-500",
   pink: "fill-pink-500",
-  saddle: "fill-[var(--accent-saddle)]",
-  forest: "fill-[var(--accent-green)]",
-  gold: "fill-[var(--accent-gold)]",
+  saddle: "fill-bronze",
+  forest: "fill-sage",
+  gold: "fill-gold",
 };
 
 interface StatusBadgeProps {
@@ -84,7 +84,7 @@ export function StatusBadge({
         <button
           type="button"
           onClick={onRemove}
-          className="-mr-0.5 ml-0.5 inline-flex size-4 items-center justify-center rounded-[var(--radius-paper)] hover:bg-[var(--ink-black)]/10"
+          className="-mr-0.5 ml-0.5 inline-flex size-4 items-center justify-center rounded-[var(--radius-paper)] hover:bg-ink/10"
         >
           <span className="sr-only">Remove {label || ""}</span>
           <svg viewBox="0 0 14 14" className="size-3 stroke-current stroke-[1.5]">

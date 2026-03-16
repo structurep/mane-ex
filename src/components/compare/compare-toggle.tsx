@@ -45,8 +45,8 @@ export function CompareToggle({ item, className }: CompareToggleProps) {
     <>
       {/* Selection ring + dim overlay */}
       {active && (
-        <div className="pointer-events-none absolute inset-0 z-10 rounded-[var(--radius-card)] ring-2 ring-inset ring-saddle">
-          <div className="absolute inset-0 bg-saddle/10" />
+        <div className="pointer-events-none absolute inset-0 z-10 rounded-xl ring-2 ring-inset ring-bronze">
+          <div className="absolute inset-0 bg-bronze/10" />
         </div>
       )}
 
@@ -57,10 +57,10 @@ export function CompareToggle({ item, className }: CompareToggleProps) {
         aria-label={active ? `Remove ${item.name} from comparison` : `Add ${item.name} to comparison`}
         title={full ? "Remove a horse to compare another" : active ? "Remove from compare" : "Add to compare"}
         className={cn(
-          "absolute bottom-2 left-2 z-20 flex items-center gap-1.5 rounded-[var(--radius-badge)] px-2.5 py-1.5 text-[11px] font-semibold backdrop-blur-sm transition-all",
+          "absolute bottom-2 left-2 z-20 flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-[11px] font-semibold backdrop-blur-sm transition-all",
           active
-            ? "bg-saddle text-white shadow-lifted"
-            : "bg-[var(--ink-black)]/50 text-white hover:bg-[var(--ink-black)]/70",
+            ? "bg-bronze text-white shadow-lifted"
+            : "bg-ink/50 text-white hover:bg-ink/70",
           full && !active && "cursor-not-allowed opacity-50",
           className
         )}

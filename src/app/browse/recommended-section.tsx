@@ -21,12 +21,12 @@ export async function RecommendedSection() {
   return (
     <section className="mb-10">
       <div className="mb-4 flex items-center gap-2">
-        <Sparkles className="h-4 w-4 text-[var(--accent-gold)]" />
+        <Sparkles className="h-4 w-4 text-gold" />
         <div>
-          <h2 className="overline text-[var(--ink-mid)]">
+          <h2 className="overline text-ink-mid">
             Recommended For You
           </h2>
-          <p className="mt-1 text-[13px] text-[var(--ink-soft)]">
+          <p className="mt-1 text-[13px] text-ink-soft">
             Based on your browsing and favorites
           </p>
         </div>

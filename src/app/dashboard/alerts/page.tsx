@@ -22,11 +22,11 @@ export default async function AlertsPage() {
         <div>
           <div className="flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-[var(--accent-gold)]" />
-            <h1 className="display-md text-[var(--ink-black)]">
+            <h1 className="display-md text-ink">
               Match Alerts
             </h1>
           </div>
-          <p className="mt-1 text-sm text-[var(--ink-mid)]">
+          <p className="mt-1 text-sm text-ink-mid">
             {unreadCount > 0
               ? `${unreadCount} new match${unreadCount !== 1 ? "es" : ""} found`
               : "We'll notify you when new listings match your preferences."}

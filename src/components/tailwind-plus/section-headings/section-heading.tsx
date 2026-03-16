@@ -35,17 +35,17 @@ export function SectionHeading({
   return (
     <div
       className={cn(
-        tabs ? "border-b border-[var(--paper-border)] pb-0" : "pb-4",
+        tabs ? "border-b border-glass pb-0" : "pb-4",
         className
       )}
     >
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="display-md text-[var(--ink-black)]">
+          <h3 className="display-md text-ink">
             {title}
           </h3>
           {description && (
-            <p className="mt-1 text-sm text-[var(--ink-mid)]">{description}</p>
+            <p className="mt-1 text-sm text-ink-mid">{description}</p>
           )}
         </div>
         {actions && <div className="flex items-center gap-2">{actions}</div>}
@@ -70,7 +70,7 @@ export function SectionHeading({
             </select>
             <ChevronDown
               aria-hidden="true"
-              className="pointer-events-none col-start-1 row-start-1 mr-2 size-4 self-center justify-self-end text-[var(--ink-faint)]"
+              className="pointer-events-none col-start-1 row-start-1 mr-2 size-4 self-center justify-self-end text-ink-faint"
             />
           </div>
 
@@ -85,18 +85,18 @@ export function SectionHeading({
                   className={cn(
                     "border-b-2 px-1 pb-3 text-sm font-medium whitespace-nowrap transition-colors",
                     activeTab === tab.id
-                      ? "border-[var(--ink-black)] text-[var(--ink-black)]"
-                      : "border-transparent text-[var(--ink-mid)] hover:border-[var(--paper-border-strong)] hover:text-[var(--ink-dark)]"
+                      ? "border-ink text-ink"
+                      : "border-transparent text-ink-mid hover:border-[var(--paper-border-strong)] hover:text-ink-dark"
                   )}
                 >
                   {tab.label}
                   {tab.count != null && (
                     <span
                       className={cn(
-                        "ml-2 rounded-[var(--radius-badge)] px-1.5 py-0.5 text-[11px] font-semibold",
+                        "ml-2 rounded-full px-1.5 py-0.5 text-[11px] font-semibold",
                         activeTab === tab.id
-                          ? "bg-[var(--ink-black)]/10 text-[var(--ink-black)]"
-                          : "bg-[var(--ink-black)]/5 text-[var(--ink-faint)]"
+                          ? "bg-ink/10 text-ink"
+                          : "bg-ink/5 text-ink-faint"
                       )}
                     >
                       {tab.count}

@@ -57,8 +57,8 @@ function daysSince(dateStr: string): number {
 }
 
 /**
- * Listing card — Origami design system.
- * Paper-framed image with fold corner, corner-flag badges, and editorial typography.
+ * Listing card — Soft Precision design system.
+ * Glass surface with fold corner, bronze badges, and editorial typography.
  */
 export function ListingCard({
   listing: l,
@@ -76,13 +76,13 @@ export function ListingCard({
 
   const daysListed = l.published_at ? daysSince(l.published_at) : 999;
   const badge = trending
-    ? { label: "Hot", Icon: Flame, color: "bg-[var(--accent-saddle)] text-white" }
+    ? { label: "Hot", Icon: Flame, color: "bg-bronze text-warmwhite" }
     : daysListed < 3
-      ? { label: "Just Listed", Icon: Sparkles, color: "bg-[var(--ink-black)] text-white" }
+      ? { label: "Just Listed", Icon: Sparkles, color: "bg-ink text-warmwhite" }
       : (l.favorite_count ?? 0) > 5
-        ? { label: "Popular", Icon: Flame, color: "bg-[var(--accent-saddle)] text-white" }
+        ? { label: "Popular", Icon: Flame, color: "bg-bronze text-warmwhite" }
         : (l.completeness_score ?? 0) > 800
-          ? { label: "Top Rated", Icon: Star, color: "bg-[var(--accent-gold)] text-white" }
+          ? { label: "Top Rated", Icon: Star, color: "bg-gold text-warmwhite" }
           : null;
 
   const subtitleParts = [l.breed, l.color, l.gender].filter(Boolean);
@@ -95,16 +95,19 @@ export function ListingCard({
       href={`/horses/${l.slug}`}
       data-testid="listing-card"
       className={cn(
-        "group relative block transition-elevation hover-lift",
+        "group relative block rounded-2xl transition-all duration-500 hover:-translate-y-1 hover:shadow-lifted",
         className
       )}
     >
-      {/* Paper-framed image container */}
-      <div className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-card)] border border-[var(--paper-border)] bg-[var(--paper-warm)]">
-        {/* Top-left corner flag badge */}
+      {/* Glass-framed image container */}
+      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-glass bg-washi">
+        {/* Top-left corner badge */}
         {badge && (
           <div
-            className={`badge-flag flex items-center gap-1 ${badge.color}`}
+            className={cn(
+              "absolute top-3 left-3 z-10 flex items-center gap-1 rounded-full px-3 py-1 text-[11px] font-semibold tracking-wide",
+              badge.color
+            )}
           >
             <badge.Icon className="h-3 w-3" />
             {badge.label}
@@ -121,19 +124,19 @@ export function ListingCard({
             {...(priority ? { priority: true, fetchPriority: "high" as const } : {})}
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-sm text-[var(--ink-faint)]">
+          <div className="flex h-full items-center justify-center text-sm text-ink-faint">
             No photo
           </div>
         )}
 
-        {/* Match % — right corner flag */}
+        {/* Match % — right corner */}
         {matchPercent != null && matchPercent >= 70 ? (
-          <div className="badge-flag-right flex items-center gap-1 bg-[var(--accent-gold)] text-white">
+          <div className="absolute top-3 right-3 z-10 flex items-center gap-1 rounded-full bg-gold px-3 py-1 text-[11px] font-semibold text-warmwhite">
             <Star className="h-3 w-3" />
             {matchPercent}% Match
           </div>
         ) : (l.favorite_count ?? 0) > 0 ? (
-          <div className="absolute right-2 top-2 z-10 flex items-center gap-1 rounded-[var(--radius-badge)] bg-[var(--ink-black)]/50 px-2 py-1 text-[11px] font-medium text-white backdrop-blur-sm">
+          <div className="absolute right-3 top-3 z-10 flex items-center gap-1 rounded-full bg-ink/50 px-2.5 py-1 text-[11px] font-medium text-warmwhite backdrop-blur-sm">
             <Heart className="h-3 w-3" />
             {l.favorite_count}
           </div>
@@ -142,11 +145,8 @@ export function ListingCard({
         {/* Optional overlay slot (e.g. compare toggle) */}
         {overlay}
 
-        {/* Fold corner accent on image */}
-        <div className="pointer-events-none absolute bottom-0 right-0 h-6 w-6 bg-gradient-to-tl from-[var(--paper-bg)]/60 to-transparent" />
-
         {debugScores && (
-          <div className="absolute bottom-0 left-0 right-0 z-10 bg-[var(--ink-black)]/80 px-2 py-1.5 text-[9px] font-mono text-white">
+          <div className="absolute bottom-0 left-0 right-0 z-10 bg-ink/80 px-2 py-1.5 text-[9px] font-mono text-warmwhite">
             <div className="grid grid-cols-3 gap-x-2">
               <span>disc: {debugScores.discipline}</span>
               <span>price: {debugScores.price}</span>
@@ -161,11 +161,11 @@ export function ListingCard({
       {/* Content — editorial layout */}
       <div className="pt-3">
         <div className="flex items-baseline justify-between">
-          <p className="font-serif text-lg font-bold tracking-tight text-[var(--ink-black)]">
+          <p className="font-display text-lg font-medium tracking-tight text-ink">
             {priceStr}
           </p>
           {l.location_state && (
-            <span className="flex items-center gap-0.5 text-[12px] text-[var(--ink-mid)]">
+            <span className="flex items-center gap-0.5 text-[12px] text-ink-mid">
               <MapPin className="h-3 w-3" />
               {l.location_city
                 ? `${l.location_city}, ${l.location_state}`
@@ -174,12 +174,12 @@ export function ListingCard({
           )}
         </div>
 
-        <h3 className="mt-0.5 truncate text-[15px] font-medium text-[var(--ink-dark)] group-hover:text-[var(--ink-black)]">
+        <h3 className="mt-0.5 truncate text-[15px] font-medium text-ink-dark group-hover:text-ink">
           {l.name}
         </h3>
 
         {subtitle && (
-          <p className="mt-0.5 truncate text-[13px] text-[var(--ink-mid)]">{subtitle}</p>
+          <p className="overline mt-1">{subtitle}</p>
         )}
 
         {l.verification_tier && l.verification_tier !== "none" && (
@@ -190,17 +190,17 @@ export function ListingCard({
 
         {demandScore != null && demandScore >= 40 && (
           <div className={cn(
-            "badge-seal mt-1.5",
+            "inline-flex items-center gap-1 mt-1.5 rounded-full border px-2.5 py-0.5 text-[11px] font-semibold",
             demandScore >= 70
-              ? "border-[var(--accent-saddle)] text-[var(--accent-saddle)]"
-              : "border-[var(--accent-green)] text-[var(--accent-green)]"
+              ? "border-bronze text-bronze"
+              : "border-sage text-sage"
           )}>
             {demandScore >= 70 ? <Flame className="h-3 w-3" /> : <TrendingUp className="h-3 w-3" />}
             {demandScore >= 70 ? "High Demand" : "Popular"}
           </div>
         )}
 
-        <div className="mt-2 flex items-center gap-3 text-[12px] text-[var(--ink-soft)]">
+        <div className="mt-2 flex items-center gap-3 text-[12px] text-ink-soft">
           {l.age_years != null && (
             <span className="flex items-center gap-1">
               <Calendar className="h-3 w-3" />
@@ -216,12 +216,12 @@ export function ListingCard({
           {l.completeness_grade && (
             <span
               className={cn(
-                "ml-auto rounded-[var(--radius-badge)] px-1.5 py-0.5 text-[11px] font-semibold capitalize leading-none",
+                "ml-auto rounded-full px-2 py-0.5 text-[11px] font-semibold capitalize leading-none",
                 l.completeness_grade === "excellent"
-                  ? "bg-[var(--accent-green-soft)] text-[var(--accent-green)]"
+                  ? "bg-sage/10 text-sage"
                   : l.completeness_grade === "good"
-                    ? "bg-[var(--ink-black)]/5 text-[var(--ink-dark)]"
-                    : "bg-[var(--ink-black)]/5 text-[var(--ink-faint)]"
+                    ? "bg-ink/5 text-ink-dark"
+                    : "bg-ink/5 text-ink-faint"
               )}
             >
               {l.completeness_grade}

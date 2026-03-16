@@ -6,123 +6,158 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ─────────────────────────────────────────────
-   ManeExchange × Origami Design System
-   Precision · Transformation · Restraint
+   ManeExchange × Soft Precision Design System
+   Warmth · Glass · Restraint
    ───────────────────────────────────────────── */
 
 @theme inline {
   /* shadcn semantic colors */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
+  --color-background: var(--paper-bg);
+  --color-foreground: var(--ink-black);
+  --color-card: var(--paper-surface);
+  --color-card-foreground: var(--ink-black);
+  --color-popover: var(--paper-surface);
+  --color-popover-foreground: var(--ink-black);
+  --color-primary: var(--accent-bronze);
+  --color-primary-foreground: var(--paper-surface);
+  --color-secondary: var(--paper-warm);
+  --color-secondary-foreground: var(--ink-dark);
+  --color-muted: var(--paper-washi);
+  --color-muted-foreground: var(--ink-soft);
+  --color-accent: var(--paper-washi);
+  --color-accent-foreground: var(--ink-dark);
+  --color-destructive: var(--accent-red);
+  --color-border: var(--paper-border);
+  --color-input: var(--paper-border);
+  --color-ring: var(--accent-bronze);
 
   /* Sidebar */
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
+  --color-sidebar-ring: var(--accent-bronze);
+  --color-sidebar-border: var(--paper-border);
+  --color-sidebar-accent-foreground: var(--ink-dark);
+  --color-sidebar-accent: var(--paper-warm);
+  --color-sidebar-primary-foreground: var(--paper-surface);
+  --color-sidebar-primary: var(--accent-bronze);
+  --color-sidebar-foreground: var(--ink-black);
+  --color-sidebar: var(--paper-washi);
 
   /* Charts */
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
+  --color-chart-1: var(--accent-bronze);
+  --color-chart-2: var(--accent-sage);
+  --color-chart-3: var(--accent-gold);
+  --color-chart-4: var(--accent-blue);
+  --color-chart-5: var(--ink-mid);
 
-  /* Radii — geometric, sharp */
-  --radius-sm: 2px;
-  --radius-md: 3px;
+  /* Radii — soft, rounded */
+  --radius-sm: 4px;
+  --radius-md: 8px;
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 2px);
-  --radius-2xl: calc(var(--radius) + 4px);
-  --radius-3xl: calc(var(--radius) + 8px);
-  --radius-4xl: calc(var(--radius) + 12px);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 16px);
+  --radius-4xl: calc(var(--radius) + 24px);
 
-  /* Fonts — Origami typography */
-  --font-sans: var(--font-inter);
-  --font-heading: var(--font-space-grotesk);
-  --font-serif: var(--font-noto-serif-jp), "Noto Serif JP", ui-serif, Georgia, serif;
-  --font-display: var(--font-noto-serif-jp), "Noto Serif JP", ui-serif, Georgia, serif;
+  /* Fonts — Soft Precision typography */
+  --font-sans: var(--font-body), "DM Sans", system-ui, sans-serif;
+  --font-heading: var(--font-display), "Cormorant Garamond", Georgia, serif;
+  --font-serif: var(--font-display), "Cormorant Garamond", Georgia, serif;
+  --font-display: var(--font-display), "Cormorant Garamond", Georgia, serif;
 
-  /* ── Origami Palette (token-backed) ── */
+  /* ── Soft Precision Palette ── */
 
-  /* Surfaces */
+  /* Paper & Ground */
+  --color-cloud: #F6F4F0;
+  --color-washi: #EDE8DF;
+  --color-parchment: #F0ECE4;
+  --color-linen: #FAF8F5;
+  --color-warmwhite: #FEFDFB;
+  --color-stable: #F5F2EC;
+
+  /* Rose Bronze — Brand Signature */
+  --color-bronze: #B07A6E;
+  --color-bronze-deep: #8E5E54;
+  --color-bronze-muted: #C9A098;
+  --color-bronze-light: #E0C4BE;
+
+  /* Nature */
+  --color-sage: #7A9B7E;
+  --color-sage-soft: #A8C4AA;
+  --color-sage-muted: #C5D8C7;
+  --color-leather: #8B6E52;
+  --color-leather-soft: #B8986E;
+  --color-leather-muted: #D4BFA0;
+  --color-blush: #C4A09A;
+  --color-blush-soft: #DCC4BE;
+  --color-dusk: #8B7B9B;
+  --color-dusk-soft: #B8AEC4;
+  --color-earth: #9B8870;
+  --color-earth-soft: #C4B49C;
+
+  /* Ink & Text */
+  --color-ink: #1C1B18;
+  --color-ink-dark: #2E2D28;
+  --color-ink-mid: #5A5750;
+  --color-ink-soft: #8A8078;
+  --color-ink-faint: #B8B0A0;
+  --color-ink-ghost: #D8D3C8;
+
+  /* Legacy aliases for backward compat */
   --color-paper-white: var(--paper-bg);
   --color-paper-cream: var(--paper-surface);
   --color-paper-warm: var(--paper-warm);
-  --color-washi: var(--paper-washi);
   --color-paper-raised: var(--paper-surface-raised);
-
-  /* Inks */
   --color-ink-black: var(--ink-black);
-  --color-ink-dark: var(--ink-dark);
-  --color-ink-mid: var(--ink-mid);
   --color-ink-light: var(--ink-soft);
-  --color-ink-faint: var(--ink-faint);
-  --color-ink-ghost: var(--ink-ghost);
-
-  /* Creases (paper borders) */
   --color-crease-light: var(--paper-border);
   --color-crease-mid: var(--paper-border-strong);
   --color-crease-dark: #9A8E7E;
-
-  /* Accents — saddle brown is the primary brand accent */
-  --color-saddle: var(--accent-saddle);
-  --color-saddle-900: var(--accent-saddle-900);
-  --color-saddle-800: var(--accent-saddle-800);
-  --color-saddle-700: var(--accent-saddle-700);
-  --color-saddle-600: var(--accent-saddle-600);
-  --color-saddle-500: var(--accent-saddle-500);
-  /* Semantic red — destructive/error only */
+  --color-saddle: var(--accent-bronze);
+  --color-saddle-900: var(--accent-bronze-deep);
+  --color-saddle-800: #9A6A5E;
+  --color-saddle-700: var(--accent-bronze);
+  --color-saddle-600: var(--accent-bronze-muted);
+  --color-saddle-500: var(--accent-bronze-light);
+  --color-saddle-light: rgba(176, 122, 110, 0.08);
   --color-red: var(--accent-red);
   --color-red-light: var(--accent-red-soft);
-  --color-forest: var(--accent-green);
+  --color-forest: var(--accent-sage);
   --color-gold: var(--accent-gold);
   --color-blue: var(--accent-blue);
-
-  /* Accent tints */
   --color-gold-light: var(--accent-gold-soft);
   --color-forest-light: var(--accent-green-soft);
   --color-blue-light: var(--accent-blue-soft);
-  --color-saddle-light: var(--accent-saddle-soft);
 
-  /* Shadows — paper-stack system */
-  --shadow-flat: var(--shadow-fold-sm);
+  /* Shadows — soft precision system */
+  --shadow-flat: var(--shadow-rest);
+  --shadow-rest: var(--shadow-rest);
   --shadow-folded: var(--shadow-fold-md);
   --shadow-lifted: var(--shadow-fold-lg);
   --shadow-hovering: var(--shadow-fold-hover);
+  --shadow-bronze: var(--shadow-bronze);
+  --shadow-bronze-glow: var(--shadow-bronze);
+
+  /* Animations */
+  --animate-fade-up: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) forwards;
+  --animate-fade-up-delay: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
+  --animate-drift: drift 22s ease-in-out infinite alternate;
+  --animate-drift-reverse: drift 28s ease-in-out infinite alternate-reverse;
+
+  /* Transition timing */
+  --ease-out-soft: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 :root {
-  --radius: 4px;
+  --radius: 12px;
 
-  /* ── shadcn semantic → Origami mapping ── */
+  /* ── shadcn semantic → Soft Precision mapping ── */
   --background: var(--paper-bg);
   --foreground: var(--ink-black);
   --card: var(--paper-surface);
   --card-foreground: var(--ink-black);
   --popover: var(--paper-surface);
   --popover-foreground: var(--ink-black);
-  --primary: var(--accent-saddle);           /* Primary actions: saddle brown */
+  --primary: var(--accent-bronze);
   --primary-foreground: var(--paper-surface);
   --secondary: var(--paper-warm);
   --secondary-foreground: var(--ink-dark);
@@ -130,14 +165,14 @@
   --muted-foreground: var(--ink-soft);
   --accent: var(--paper-washi);
   --accent-foreground: var(--ink-dark);
-  --destructive: var(--accent-red);  /* real red for destructive actions */
+  --destructive: var(--accent-red);
   --border: var(--paper-border);
   --input: var(--paper-border);
-  --ring: var(--accent-saddle);
+  --ring: var(--accent-bronze);
 
   /* Charts */
-  --chart-1: var(--accent-saddle);
-  --chart-2: var(--accent-green);
+  --chart-1: var(--accent-bronze);
+  --chart-2: var(--accent-sage);
   --chart-3: var(--accent-gold);
   --chart-4: var(--accent-blue);
   --chart-5: var(--ink-mid);
@@ -145,48 +180,58 @@
   /* Sidebar */
   --sidebar: var(--paper-washi);
   --sidebar-foreground: var(--ink-black);
-  --sidebar-primary: var(--accent-saddle);
+  --sidebar-primary: var(--accent-bronze);
   --sidebar-primary-foreground: var(--paper-surface);
   --sidebar-accent: var(--paper-warm);
   --sidebar-accent-foreground: var(--ink-dark);
   --sidebar-border: var(--paper-border);
-  --sidebar-ring: var(--ink-black);
+  --sidebar-ring: var(--accent-bronze);
 }
 
 .dark {
-  --background: #1C1410;
-  --foreground: #FAF6F1;
-  --card: #2E241D;
-  --card-foreground: #FFFFFF;
-  --popover: #2E241D;
-  --popover-foreground: #FAF6F1;
-  --primary: #C4A07A;
-  --primary-foreground: #1C1410;
-  --secondary: #2E241D;
-  --secondary-foreground: #FAF6F1;
-  --muted: #2E241D;
-  --muted-foreground: #9A8E82;
-  --accent: #2E241D;
-  --accent-foreground: #FAF6F1;
-  --destructive: #E54A3A;
-  --border: rgba(255, 255, 255, 0.1);
-  --input: rgba(255, 255, 255, 0.15);
-  --ring: #C4A07A;
+  --background: #1C1B18;
+  --foreground: #F6F4F0;
+  --card: #2E2D28;
+  --card-foreground: #F6F4F0;
+  --popover: #2E2D28;
+  --popover-foreground: #F6F4F0;
+  --primary: #C9A098;
+  --primary-foreground: #1C1B18;
+  --secondary: #2E2D28;
+  --secondary-foreground: #F6F4F0;
+  --muted: #2E2D28;
+  --muted-foreground: #8A8078;
+  --accent: #2E2D28;
+  --accent-foreground: #F6F4F0;
+  --destructive: #B07070;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #C9A098;
 
-  --chart-1: #C4A07A;
-  --chart-2: #6B9E78;
+  --chart-1: #C9A098;
+  --chart-2: #A8C4AA;
   --chart-3: #D4B65E;
   --chart-4: #6B9AD4;
-  --chart-5: #9A8E82;
+  --chart-5: #8A8078;
 
-  --sidebar: #2E241D;
-  --sidebar-foreground: #FAF6F1;
-  --sidebar-primary: #C4A07A;
-  --sidebar-primary-foreground: #1C1410;
-  --sidebar-accent: #2E241D;
-  --sidebar-accent-foreground: #FAF6F1;
-  --sidebar-border: rgba(255, 255, 255, 0.1);
-  --sidebar-ring: #C4A07A;
+  --sidebar: #2E2D28;
+  --sidebar-foreground: #F6F4F0;
+  --sidebar-primary: #C9A098;
+  --sidebar-primary-foreground: #1C1B18;
+  --sidebar-accent: #2E2D28;
+  --sidebar-accent-foreground: #F6F4F0;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: #C9A098;
+}
+
+/* Keyframes */
+@keyframes fadeUp {
+  0%   { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(35px, -25px) scale(1.08); }
 }
 
 @layer base {
@@ -199,46 +244,157 @@
   body {
     max-width: 100%;
     overflow-x: hidden;
+    scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-cloud text-ink font-sans;
+    line-height: 1.7;
     word-break: break-word;
     overflow-wrap: anywhere;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* ── Origami Typography Hierarchy ──
-     Display: Noto Serif JP — editorial, restrained
-     Body: Inter — clean, functional */
+  /* Smooth transitions on all interactive elements */
+  a, button, input, select, textarea {
+    transition: all 0.2s var(--ease-out-soft);
+  }
+
+  /* Focus ring — rose bronze instead of default blue */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-bronze/20 ring-offset-2 ring-offset-cloud;
+  }
+
+  /* ── Soft Precision Typography Hierarchy ──
+     Display: Cormorant Garamond — editorial, elegant
+     Body: DM Sans — clean, modern */
   h1 {
     font-family: var(--font-display), Georgia, serif;
-    font-weight: 700;
+    font-weight: 300;
     letter-spacing: -0.02em;
-    line-height: 0.95;
+    line-height: 1.05;
   }
   h2 {
     font-family: var(--font-display), Georgia, serif;
-    font-weight: 600;
+    font-weight: 400;
     letter-spacing: -0.015em;
     line-height: 1.1;
   }
   h3 {
-    font-family: var(--font-inter), system-ui, sans-serif;
-    font-weight: 600;
+    font-family: var(--font-body), system-ui, sans-serif;
+    font-weight: 500;
     letter-spacing: -0.01em;
     line-height: 1.3;
   }
 }
 
 @layer components {
+  /* ── Glass Surfaces ──
+     Frosted glass with backdrop blur.
+     Use: cards, panels, nav, modals */
+  .glass {
+    background: rgba(254, 253, 251, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .glass-bronze {
+    background: linear-gradient(
+      135deg,
+      rgba(254, 253, 251, 0.65),
+      rgba(176, 122, 110, 0.06)
+    );
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .glass-sage {
+    background: linear-gradient(
+      135deg,
+      rgba(254, 253, 251, 0.65),
+      rgba(122, 155, 126, 0.06)
+    );
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .glass-blush {
+    background: linear-gradient(
+      135deg,
+      rgba(254, 253, 251, 0.65),
+      rgba(196, 160, 154, 0.06)
+    );
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .glass-leather {
+    background: linear-gradient(
+      135deg,
+      rgba(254, 253, 251, 0.65),
+      rgba(139, 110, 82, 0.05)
+    );
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* ── Glass border ── */
+  .border-glass {
+    border-color: rgba(42, 37, 32, 0.06);
+  }
+
+  /* ── Bronze glow shadow ── */
+  .shadow-bronze-glow {
+    box-shadow: 0 8px 24px rgba(176, 122, 110, 0.12),
+                0 2px 6px rgba(176, 122, 110, 0.08);
+  }
+
+  /* ── Origami Folded Corner ──
+     Add class "fold" to any card. Corner grows on hover.
+     Requires: relative, overflow-hidden on the element. */
+  .fold {
+    @apply relative overflow-hidden;
+  }
+
+  .fold::before {
+    content: "";
+    @apply absolute top-0 right-0 z-10;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(225deg, #f6f4f0 50%, #ede8df 50%);
+    border-bottom-left-radius: 4px;
+    transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .fold:hover::before {
+    width: 52px;
+    height: 52px;
+  }
+
+  /* ── Card Accent Bar ──
+     Colored top stripe on cards. Use inside a relative container. */
+  .accent-bar {
+    @apply absolute top-0 left-0 right-0 h-[3px];
+  }
+
+  /* ── Section Number / Overline ── */
+  .overline {
+    @apply text-[11px] font-semibold uppercase tracking-[0.22em] text-bronze;
+  }
+
+  /* ── Section Title ── */
+  .section-title {
+    font-family: var(--font-display), Georgia, serif;
+    @apply text-4xl sm:text-5xl font-light tracking-tight;
+  }
+
   /* ── Button Helpers ── */
 
-  /* Inverse primary for dark sections (bg-paddock, bg-hero-dark) */
+  /* Inverse primary for dark sections */
   .btn-inverse {
     background: white !important;
-    color: var(--accent-saddle) !important;
+    color: var(--accent-bronze) !important;
   }
   .btn-inverse:hover {
     background: rgba(255, 255, 255, 0.9) !important;
@@ -247,70 +403,58 @@
   /* ── Display Typography Classes ── */
   .display-xl {
     font-family: var(--font-display), Georgia, serif;
-    font-weight: 700;
+    font-weight: 300;
     font-size: clamp(2.5rem, 5vw, 4rem);
     letter-spacing: -0.03em;
-    line-height: 0.9;
+    line-height: 1.05;
   }
   .display-lg {
     font-family: var(--font-display), Georgia, serif;
-    font-weight: 700;
+    font-weight: 300;
     font-size: clamp(1.875rem, 3.5vw, 2.5rem);
     letter-spacing: -0.025em;
-    line-height: 0.95;
+    line-height: 1.1;
   }
   .display-md {
     font-family: var(--font-display), Georgia, serif;
-    font-weight: 600;
+    font-weight: 400;
     font-size: clamp(1.25rem, 2vw, 1.5rem);
     letter-spacing: -0.015em;
-    line-height: 1.1;
+    line-height: 1.15;
   }
 
   /* ── Body Typography ── */
   .body-lg {
-    font-family: var(--font-inter), system-ui, sans-serif;
+    font-family: var(--font-body), system-ui, sans-serif;
     font-size: 1.125rem;
     line-height: 1.6;
   }
   .body-md {
-    font-family: var(--font-inter), system-ui, sans-serif;
+    font-family: var(--font-body), system-ui, sans-serif;
     font-size: 0.9375rem;
     line-height: 1.5;
   }
   .body-sm {
-    font-family: var(--font-inter), system-ui, sans-serif;
+    font-family: var(--font-body), system-ui, sans-serif;
     font-size: 0.8125rem;
     line-height: 1.5;
-  }
-
-  /* Overline labels — Swiss precision */
-  .overline {
-    font-family: var(--font-inter), system-ui, sans-serif;
-    font-weight: 600;
-    font-size: 0.6875rem;
-    letter-spacing: 0.14em;
-    line-height: 1;
-    text-transform: uppercase;
   }
 
   /* Lead text */
   .text-lead {
     font-size: 1.25rem;
     line-height: 1.55;
+    font-weight: 300;
   }
 
-  /* ── Origami Card Surfaces ── */
-
-  /* Paper surface — flat paper */
+  /* ── Paper Surfaces (backward compat) ── */
   .paper-flat {
     background: var(--paper-surface);
     border: 1px solid var(--paper-border);
     border-radius: var(--radius-card);
-    box-shadow: var(--shadow-fold-sm);
+    box-shadow: var(--shadow-rest);
   }
 
-  /* Paper surface — raised (stacked paper effect) */
   .paper-raised {
     background: var(--paper-surface);
     border: 1px solid var(--paper-border);
@@ -318,7 +462,6 @@
     box-shadow: var(--shadow-fold-md);
   }
 
-  /* Paper surface — folded (with diagonal crease) */
   .paper-folded {
     position: relative;
     background: var(--paper-surface);
@@ -327,52 +470,35 @@
     box-shadow: var(--shadow-fold-md);
   }
 
-  /* ── Origami Fold-Corner Accents ── */
-
-  /* Top-right fold corner — paper triangle */
+  /* ── Fold-Corner Accents (backward compat) ── */
   .fold-corner::before {
     content: '';
     position: absolute;
     top: 0;
     right: 0;
-    width: 1.5rem;
-    height: 1.5rem;
-    background: linear-gradient(
-      225deg,
-      var(--paper-warm) 0%,
-      var(--paper-warm) 50%,
-      transparent 50%
-    );
-    border-bottom-left-radius: var(--radius-paper);
-    border-left: 1px solid var(--paper-crease);
-    border-bottom: 1px solid var(--paper-crease);
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(225deg, #f6f4f0 50%, #ede8df 50%);
+    border-bottom-left-radius: 4px;
     z-index: 5;
     pointer-events: none;
+    transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* Larger fold for premium cards */
   .fold-corner-lg::before {
     content: '';
     position: absolute;
     top: 0;
     right: 0;
-    width: 2rem;
-    height: 2rem;
-    background: linear-gradient(
-      225deg,
-      var(--paper-warm) 0%,
-      var(--paper-warm) 50%,
-      transparent 50%
-    );
-    border-bottom-left-radius: var(--radius-paper);
-    border-left: 1px solid var(--paper-crease);
-    border-bottom: 1px solid var(--paper-crease);
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(225deg, #f6f4f0 50%, #ede8df 50%);
+    border-bottom-left-radius: 4px;
     z-index: 5;
     pointer-events: none;
   }
 
-  /* ── Origami Crease Dividers ── */
-
+  /* ── Crease Dividers ── */
   .crease-divider {
     height: 1px;
     background: linear-gradient(to right, var(--paper-border), transparent);
@@ -383,26 +509,7 @@
     background: var(--paper-border);
   }
 
-  /* Diagonal crease accent — subtle angled line */
-  .crease-diagonal::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 3rem;
-    height: 3rem;
-    background: linear-gradient(
-      45deg,
-      var(--paper-crease) 0%,
-      transparent 2px,
-      transparent 100%
-    );
-    pointer-events: none;
-  }
-
-  /* ── Origami Badge Styles ── */
-
-  /* Corner flag badge — top-left triangular accent */
+  /* ── Badge Styles ── */
   .badge-flag {
     position: absolute;
     top: 0;
@@ -416,7 +523,6 @@
     clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
   }
 
-  /* Right-aligned corner flag */
   .badge-flag-right {
     position: absolute;
     top: 0;
@@ -430,7 +536,6 @@
     clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%);
   }
 
-  /* Seal badge — premium paper stamp */
   .badge-seal {
     display: inline-flex;
     align-items: center;
@@ -457,9 +562,9 @@
     border-color: var(--paper-border-strong);
   }
   .input-paper:focus {
-    border-color: var(--ink-black);
+    border-color: var(--accent-bronze);
     outline: none;
-    box-shadow: 0 0 0 2px rgba(11, 11, 12, 0.08);
+    box-shadow: 0 0 0 2px rgba(176, 122, 110, 0.12);
   }
 
   /* Swiss bottom-border input style */
@@ -475,9 +580,9 @@
     border-bottom-color: var(--ink-black);
   }
   .input-swiss:focus {
-    border-bottom-color: var(--accent-blue);
+    border-bottom-color: var(--accent-bronze);
     outline: none;
-    box-shadow: 0 0 0 3px var(--accent-blue-soft);
+    box-shadow: 0 0 0 3px rgba(176, 122, 110, 0.08);
   }
 
   /* Paper grain texture — opt-in per section */
@@ -502,13 +607,24 @@
 }
 
 @layer utilities {
-  /* Origami elevation transitions */
-  .transition-elevation {
-    transition: transform var(--duration-lift) var(--ease-paper),
-                box-shadow var(--duration-lift) var(--ease-paper);
+  /* Accent color for native checkboxes/radios */
+  .accent-bronze {
+    accent-color: #b07a6e;
   }
 
-  /* Card hover lift — paper rising from stack */
+  /* Text selection color */
+  ::selection {
+    background: rgba(176, 122, 110, 0.2);
+    color: #1c1b18;
+  }
+
+  /* Elevation transitions */
+  .transition-elevation {
+    transition: transform var(--duration-lift) var(--ease-expo),
+                box-shadow var(--duration-lift) var(--ease-expo);
+  }
+
+  /* Card hover lift */
   .hover-lift:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-fold-lg);
@@ -526,11 +642,7 @@
   /* ── Entrance animations ── */
 
   .animate-fade-up {
-    animation: fadeUp 0.4s ease-out both;
-  }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
+    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   /* Stagger delays (60ms increments, up to 12) */
@@ -579,15 +691,15 @@
     background: linear-gradient(180deg, var(--paper-bg), var(--paper-surface));
   }
   .bg-gradient-card-hover {
-    background: linear-gradient(180deg, transparent 60%, rgba(11, 11, 12, 0.02) 100%);
+    background: linear-gradient(180deg, transparent 60%, rgba(28, 27, 24, 0.02) 100%);
   }
 
   /* Dark hero — warm espresso */
   .bg-hero-dark {
-    background: linear-gradient(180deg, #1C1410, #2E241D);
+    background: linear-gradient(180deg, #1C1B18, #2E2D28);
   }
   .bg-paddock {
-    background: #1C1410;
+    background: #1C1B18;
   }
 
   /* Scroll-reveal gate */

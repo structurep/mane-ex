@@ -227,13 +227,13 @@ export async function BasedOnSearches({
         {/* Section header */}
         <div className="mb-1 flex items-center gap-2">
           {isPersonalized ? (
-            <Sparkles className="h-4 w-4 text-[var(--accent-gold)]" />
+            <Sparkles className="h-4 w-4 text-gold" />
           ) : (
-            <TrendingUp className="h-4 w-4 text-[var(--ink-mid)]" />
+            <TrendingUp className="h-4 w-4 text-ink-mid" />
           )}
-          <p className="overline text-[var(--ink-faint)]">{sectionSubtitle}</p>
+          <p className="overline text-ink-faint">{sectionSubtitle}</p>
         </div>
-        <h2 className="display-md mb-4 text-[var(--ink-black)]">{sectionTitle}</h2>
+        <h2 className="display-md mb-4 text-ink">{sectionTitle}</h2>
         <div className="crease-divider mb-4" />
 
         {/* Horizontal scrollable row */}
@@ -273,10 +273,10 @@ export async function BasedOnSearches({
                     <span
                       className={`badge-flag ${
                         l.match_reason === "Similar breed"
-                          ? "bg-[var(--accent-blue)] text-white"
+                          ? "bg-blue text-white"
                           : l.match_reason === "Your price range"
-                            ? "bg-[var(--accent-saddle)] text-white"
-                            : "bg-[var(--accent-saddle)] text-white"
+                            ? "bg-bronze text-white"
+                            : "bg-bronze text-white"
                       }`}
                     >
                       {l.match_reason}
@@ -286,19 +286,19 @@ export async function BasedOnSearches({
 
                 {/* Content */}
                 <div className="p-3">
-                  <h3 className="truncate font-medium text-[var(--ink-black)] group-hover:text-[var(--ink-dark)]">
+                  <h3 className="truncate font-medium text-ink group-hover:text-ink-dark">
                     {l.name}
                   </h3>
-                  <p className="mt-0.5 truncate text-xs text-[var(--ink-mid)]">
+                  <p className="mt-0.5 truncate text-xs text-ink-mid">
                     {[l.breed, l.age_years != null ? `${l.age_years}yo` : null]
                       .filter(Boolean)
                       .join(" · ")}
                   </p>
                   <div className="mt-2 flex items-center justify-between">
-                    <span className="text-sm font-bold text-[var(--ink-black)]">
+                    <span className="text-sm font-bold text-ink">
                       {priceStr}
                     </span>
-                    <span className="flex items-center gap-1 text-xs text-[var(--ink-faint)]">
+                    <span className="flex items-center gap-1 text-xs text-ink-faint">
                       <Heart className="h-3 w-3" />
                       {l.favorite_count ?? 0}
                     </span>

@@ -11,11 +11,11 @@ interface BadgeFlagProps {
 }
 
 const variantStyles: Record<BadgeFlagVariant, string> = {
-  match: "bg-[var(--accent-gold)] text-[var(--paper-surface)]",
-  horseproof: "bg-[var(--accent-saddle)] text-[var(--paper-surface)]",
-  demand: "bg-[var(--accent-saddle)] text-[var(--paper-surface)]",
-  hot: "bg-[var(--accent-saddle)] text-[var(--paper-surface)]",
-  verified: "bg-[var(--ink-black)] text-[var(--paper-surface)]",
+  match: "bg-gold text-warmwhite",
+  horseproof: "bg-bronze text-warmwhite",
+  demand: "bg-bronze text-warmwhite",
+  hot: "bg-bronze text-warmwhite",
+  verified: "bg-ink text-warmwhite",
 };
 
 /**
@@ -52,11 +52,11 @@ export function BadgeSeal({
   children,
 }: Omit<BadgeFlagProps, "position">) {
   const sealStyles: Record<BadgeFlagVariant, string> = {
-    match: "text-[var(--accent-gold)]",
-    horseproof: "text-[var(--accent-saddle)]",
-    demand: "text-[var(--accent-saddle)]",
-    hot: "text-[var(--accent-saddle)]",
-    verified: "text-[var(--ink-black)]",
+    match: "text-gold",
+    horseproof: "text-bronze",
+    demand: "text-bronze",
+    hot: "text-bronze",
+    verified: "text-ink",
   };
 
   return (
